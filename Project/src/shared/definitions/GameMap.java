@@ -5,6 +5,7 @@ import shared.locations.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Class to represent the entire map
@@ -43,7 +44,7 @@ public class GameMap {
 	 */
 	private HexLocation robber;
 	private List<EdgeValue>allRoads = new ArrayList<EdgeValue>();
-	private List<VertexObject>allSettlements = new ArrayList<VertexObject>();
+	private Vector<VertexObject>allSettlements;
 	private List<VertexObject>allCities = new ArrayList<VertexObject>();
 	
 	/**
@@ -69,12 +70,12 @@ public class GameMap {
 		this.radius = radius;
 		this.robber = robber;
 		this.allRoads = Arrays.asList(roads);
-		this.allSettlements = Arrays.asList(settlements);
+		this.allSettlements = new Vector<VertexObject>(Arrays.asList(settlements));
 		this.allCities = Arrays.asList(cities);
 	}
 	
 	public GameMap(){
-		
+		allSettlements = new Vector<VertexObject>();
 	}
 
 	/**
@@ -482,7 +483,7 @@ public class GameMap {
 	/**
 	 * Determines if any player has a city or settlement built in a location
 	 * @param municipalityLocation
-	 * @return true or false
+	 * @return True if there's a municipality at the vertex
 	 */
 	public boolean hasMunicipality(VertexLocation municipalityLocation) throws IllegalArgumentException {
 		int x = municipalityLocation.getHexLoc().getX();
@@ -526,14 +527,35 @@ public class GameMap {
 	 * @return true or false
 	 */
 	public Boolean hasCity(VertexObject city) throws IllegalArgumentException {
-		return true;
+		int owner = city.getOwner();
+		HexLocation coordinates = city.getLocation().getHexLoc();
+		VertexDirection direction = city.getLocation().getDir();
+
+		for(VertexObject temp: cities){
+			int xTemp = temp.getLocation().getHexLoc().getX();
+			int yTemp = temp.getLocation().getHexLoc().getY();
+			VertexDirection directionTemp = temp.getLocation().getDir();
+			int ownerTemp = temp.getOwner();
+
+			if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+				if(direction == directionTemp){
+					if(owner == ownerTemp)
+					{
+
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 	
 /**
 	 * Determines if the player has a settlement built in a location
 	 * settlement contains the location at which the city is to be built and the player index of the player that wants to build it
 	 * @param settlement
-	 * @return true or false
+	 * @return True if the player has settlement at the vertex
 	 */
 	public boolean hasSettlement(VertexObject settlement) throws IllegalArgumentException {
 		int owner = settlement.getOwner();
@@ -579,6 +601,7 @@ public class GameMap {
 	 */
 	public void setRoads(EdgeValue[] roads) throws IllegalArgumentException  {
 		this.roads = roads;
+		this.allRoads = Arrays.asList(roads);
 	}
 	/**
 	 * sets all the settlements on the map
@@ -586,6 +609,7 @@ public class GameMap {
 	 */
 	public void setSettlements(VertexObject[] settlements) throws IllegalArgumentException  {
 		this.settlements = settlements;
+		this.allSettlements = new Vector<VertexObject>(Arrays.asList(settlements));
 	}
 	/**
 	 * sets all the cities on the map
@@ -593,6 +617,7 @@ public class GameMap {
 	 */
 	public void setCities(VertexObject[] cities) throws IllegalArgumentException  {
 		this.cities = cities;
+		this.allCities = Arrays.asList(cities);
 	}
 	/**
 	 * sets the radius of the map
@@ -762,7 +787,8 @@ public class GameMap {
 	 * from the ArrayList AllSettlements (because a city was built instead)
 	 */
 	public void updateSettlementArray(){
-		settlements = allSettlements.toArray(settlements);
+		settlements = allSettlements.toArray(new VertexObject[allSettlements.size()]); 
+	
 	}
 
 	/**
@@ -774,6 +800,8 @@ public class GameMap {
 		int x = location.getHexLoc().getX();
 		int y = location.getHexLoc().getY();
 		VertexDirection direction = location.getDir();
+		
+		
 
 		for(int i = 0; i < allSettlements.size(); i++){
 			int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
@@ -783,10 +811,11 @@ public class GameMap {
 			if( (x == xTemp) && (y == yTemp)){
 				if(direction == directionTemp){
 					allSettlements.remove(i);
+					updateSettlementArray();
 				}
 			}
 		}
-		updateSettlementArray();
+		
 
 	}
 	
@@ -809,13 +838,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x-1,y))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y, VertexDirection.East);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y-1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y-1,VertexDirection.SouthWest);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 
 		}
@@ -824,13 +853,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x,y-1))){
 				VertexObject temp = vertexObjectFactory(owner, x, y-1, VertexDirection.SouthEast);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x+1,y-1))){
 				VertexObject temp = vertexObjectFactory(owner,x+1,y-1,VertexDirection.West);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 
 		}
@@ -839,13 +868,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x+1,y-1))){
 				VertexObject temp = vertexObjectFactory(owner, x+1, y-1, VertexDirection.SouthWest);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x+1,y))){
 				VertexObject temp = vertexObjectFactory(owner,x+1,y,VertexDirection.NorthWest);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 		}
 		else if(direction == VertexDirection.SouthEast){
@@ -853,13 +882,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x+1,y))){
 				VertexObject temp = vertexObjectFactory(owner, x+1, y, VertexDirection.West);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y+1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y+1,VertexDirection.NorthEast);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 		}
 		else if(direction == VertexDirection.SouthWest){
@@ -867,13 +896,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x-1,y+1))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y, VertexDirection.East);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y+1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y-1,VertexDirection.NorthWest);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 
 		}
@@ -882,13 +911,13 @@ public class GameMap {
 			if(isLand(new HexLocation(x-1,y+1))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y, VertexDirection.NorthEast);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 			//Hex2
 			if(isLand(new HexLocation(x-1,y))){
 				VertexObject temp = vertexObjectFactory(owner,x,y-1,VertexDirection.SouthEast);
 				buildCity(temp);
-				deleteSettlement(location.getLocation());
+				deleteSettlement(temp.getLocation());
 			}
 		}
 

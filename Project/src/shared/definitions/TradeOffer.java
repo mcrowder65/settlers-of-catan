@@ -11,7 +11,7 @@ public class TradeOffer {
 	private int sender;
 	private int receiver; //player index that is recieving the trade
 	private ResourceList offer;
-	
+
 	/**
 	 * Constructor for TradeOffer
 	 * Sets all attributes 
@@ -31,12 +31,20 @@ public class TradeOffer {
 		this.offer = offer;
 	}
 
+	public void setSender(int sender){
+		this.sender = sender;
+	}
+	
 	/**
 	 * retrieves the player index of the sender of the trade
 	 * @return
 	 */
 	public int getSender() {
 		return sender;
+	}
+
+	public void setReceiver(int receiver){
+		this.receiver = receiver;
 	}
 
 	/**
@@ -47,6 +55,10 @@ public class TradeOffer {
 		return receiver;
 	}
 
+	public void setOffer(ResourceList offer){
+		this.offer = offer;
+	}
+	
 	/**
 	 * retrieves the offer which is in the form of a ResourceList
 	 * @return offer
@@ -54,9 +66,13 @@ public class TradeOffer {
 	public ResourceList getOffer() {
 		return offer;
 	}
+
+
+
 	
-	
-	
-	
-	
+
+
+
+
+
 }

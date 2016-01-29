@@ -372,22 +372,15 @@ public class Facade {
 	//^^^^^^^^^^^^^^^^^^^^  TA'S   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	//*******************************************************
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * This method determines if it's the user's turn
 	 * @return True if it's the user's turn
 	 */
 	public boolean isTurn(){
+		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			return true;
+		}
 		return false;
 		
 	}

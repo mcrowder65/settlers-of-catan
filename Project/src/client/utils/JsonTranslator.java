@@ -8,145 +8,231 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import shared.definitions.*;
+import shared.locations.*;
 
 public class JsonTranslator {
 	public JsonTranslator(){}
 	
-	public Object makeObject(String json){
+	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
 		JsonObject jsonObj = (JsonObject) parser.parse(json);
+		
+		GameModel gameModel = new GameModel();
+		
 		ResourceList bank = getResourceList((JsonObject)jsonObj.get("bank"));
-		makeChat((JsonObject)jsonObj.get("chat"));
-		makeLog((JsonObject)jsonObj.get("log"));
-		makeMap((JsonObject)jsonObj.get("map"));
-		makePlayers(jsonObj.get("players").getAsJsonArray());
-		makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
-		makeTurnTracker((JsonObject)jsonObj.get("turnTracker"));
+		gameModel.setBank(bank);
+		
+		MessageList chat = makeMessageList((JsonObject)jsonObj.get("chat"));
+		gameModel.setChat(chat);
+		
+		MessageList log = makeMessageList((JsonObject)jsonObj.get("log"));
+		gameModel.setLog(log);
+		
+		GameMap map = makeMap((JsonObject)jsonObj.get("map"));
+		gameModel.setMap(map);
+		
+		Player[] players =  makePlayers(jsonObj.get("players").getAsJsonArray());
+		gameModel.setPlayers(players);
+		
+		TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
+		gameModel.setTradeOffer(tradeOffer);
+		
+		TurnTracker turnTracker = makeTurnTracker((JsonObject)jsonObj.get("turnTracker"));
+		gameModel.setTurnTracker(turnTracker);
+		
 		int version = jsonObj.get("version").getAsInt();
+		gameModel.setVersion(version);
+		
 		int winner = jsonObj.get("winner").getAsInt();
-		return new Object();
+		gameModel.setWinner(winner);
+		
+		return gameModel;
 	}
-	public void makeChat(JsonObject jsChat){
-		System.out.println("************** CHAT **************");
-		//MessageList messageList = new MessageList();
-		JsonArray messages = jsChat.get("lines").getAsJsonArray();
+	public MessageList makeMessageList(JsonObject jsMessageList){
+		MessageList messageList = new MessageList();
+		JsonArray messages = jsMessageList.get("lines").getAsJsonArray();
 		for(int i = 0; i < messages.size(); i++){
 			JsonObject temp = (JsonObject)messages.get(i);
-			System.out.println("message: " + temp.get("message").getAsString());
-			System.out.println("source: " + temp.get("source").getAsString());
+			String message = temp.get("message").getAsString();
+			String source = temp.get("source").getAsString();
+			messageList.addMessage(new MessageLine(message, source));
 		}
-	}
-	public void makeLog(JsonObject jsLog){
-	//	MessageList messageList = new MessageList();
-		System.out.println("************** LOG **************");
-		JsonArray messages = jsLog.get("lines").getAsJsonArray();
-		for(int i = 0; i < messages.size(); i++){
-			JsonObject temp = (JsonObject)messages.get(i);
-			System.out.println("message: " + temp.get("message").getAsString());
-			System.out.println("source: " + temp.get("source").getAsString());
-		}
+		return messageList;
 	}
 	
-	public void makeMap(JsonObject jsMap){
-		System.out.println("************** MAP **************");
+	
+	public GameMap makeMap(JsonObject jsMap){
+		GameMap map = new GameMap();
+		
 		int radius = jsMap.get("radius").getAsInt();
-		System.out.println("radius: " + radius);
+		map.setRadius(radius);
+		
 		JsonObject jsRobber = (JsonObject)jsMap.get("robber");
 		int rX = jsRobber.get("x").getAsInt();
 		int rY = jsRobber.get("y").getAsInt();
-		System.out.println("robberX: " + rX);
-		System.out.println("robberY: " + rY);
-		makeHexes(jsMap.get("hexes").getAsJsonArray());
-		makePorts(jsMap.get("ports").getAsJsonArray());
-		makeRoads(jsMap.get("roads").getAsJsonArray());
-		makeSettlements(jsMap.get("settlements").getAsJsonArray());
-		makeCities(jsMap.get("cities").getAsJsonArray());
+		HexLocation robber = new HexLocation(rX, rY);
+		map.setRobber(robber);
 		
+		Hex[] hexes = makeHexes(jsMap.get("hexes").getAsJsonArray());
+		Port[] ports = makePorts(jsMap.get("ports").getAsJsonArray());
+		EdgeValue[] roads = makeRoads(jsMap.get("roads").getAsJsonArray());
+		VertexObject[] settlements = makeSettlements(jsMap.get("settlements").getAsJsonArray());
+		VertexObject[] cities = makeCities(jsMap.get("cities").getAsJsonArray());
+		
+		
+		
+		
+		
+		return map;
 	}
-	public void makeHexes(JsonArray jsHexes){
-		System.out.println("**** HEXES ****");
+	public Hex[] makeHexes(JsonArray jsHexes){
+		ArrayList<Hex> hexes = new ArrayList<Hex>();
 		for(int i = 0; i < jsHexes.size(); i++){
 			JsonObject temp = (JsonObject)jsHexes.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
 			
 			String resource = temp.get("resource").getAsString();
 			int number = temp.get("number").getAsInt();
-			System.out.println("resource: " + resource);
-			System.out.println("number: " + number);
+			Hex hex = new Hex(new HexLocation(x,y), getResourceType(resource), number);
+			hexes.add(hex);
+		}
+		return (Hex[]) hexes.toArray(); 
+	}
+	public ResourceType getResourceType(String resource){
+		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
+		switch (resource){
+			default:
+				return ResourceType.NONE;
+			case "WOOD":
+				return ResourceType.WOOD;
+			case "BRICK":
+				return ResourceType.BRICK;
+			case "SHEEP":
+				return ResourceType.SHEEP;
+			case "WHEAT":
+				return ResourceType.WHEAT;
+			case "ORE":
+				return ResourceType.ORE;	
 		}
 	}
-	public void makePorts(JsonArray jsPorts){
-		System.out.println("**** PORTS ****");
+	public Port[] makePorts(JsonArray jsPorts){
+		ArrayList<Port> ports = new ArrayList<Port>();
 		for(int i = 0; i < jsPorts.size(); i++){
+			
 			JsonObject temp = (JsonObject)jsPorts.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
+			HexLocation hex = new HexLocation(x,y);
 			
 			String direction = temp.get("direction").getAsString();
-			String resource = temp.get("resource").getAsString();
-			String ratio = temp.get("ratio").getAsString();
+			EdgeDirection edgeDirection = getEdgeDirection(direction);
 			
-			System.out.println("direction: " + direction);
-			System.out.println("resource: " + resource);
-			System.out.println("ratio: " + ratio);
+			String resource = temp.get("resource").getAsString();
+			ResourceType resourceType = getResourceType(resource);
+			int ratio = temp.get("ratio").getAsInt();
+			 
+			Port port = new Port(resourceType, hex, edgeDirection, ratio);
+			ports.add(port);
+		}
+		return (Port[]) ports.toArray();
+	}
+	public EdgeDirection getEdgeDirection(String direction){
+		//NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+		switch (direction){
+			default:
+				return EdgeDirection.NorthWest;
+			case "North":
+				return EdgeDirection.North;
+			case "NorthEast":
+				return EdgeDirection.NorthEast;
+			case "SouthEast":
+				return EdgeDirection.SouthEast;
+			case "South":
+				return EdgeDirection.South;
+			case "SouthWest":
+				return EdgeDirection.SouthWest;
 		}
 	}
-	public void makeRoads(JsonArray jsRoads){
-		System.out.println("**** ROADS ****");
+	public VertexDirection getVertexDirection(String direction){
+		//West, NorthWest, NorthEast, East, SouthEast, SouthWest;
+		switch (direction){
+			default:
+				return VertexDirection.West;
+			case "NorthWest":
+				return VertexDirection.NorthWest;
+			case "NorthEast":
+				return VertexDirection.NorthEast;
+			case "East":
+				return VertexDirection.East;
+			case "SouthEast":
+				return VertexDirection.SouthEast;
+			case "SouthWest":
+				return VertexDirection.SouthWest;	
+		}	
+		
+	}
+	public EdgeValue[] makeRoads(JsonArray jsRoads){
+		ArrayList<EdgeValue> roads = new ArrayList<EdgeValue>();
 		for(int i = 0; i < jsRoads.size(); i++){
 			JsonObject temp = (JsonObject)jsRoads.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
-			String direction = location.get("direction").getAsString();
-			System.out.println("direction: " + direction);
+			HexLocation hex = new HexLocation(x,y);
 			
+			String direction = location.get("direction").getAsString();
+			EdgeDirection edgeDirection = getEdgeDirection(direction);
+			
+			EdgeLocation edgeLocation = new EdgeLocation(hex, edgeDirection);
 			
 			int owner = temp.get("owner").getAsInt();
-			System.out.println("owner: " + owner);			
+			roads.add(new EdgeValue(owner, edgeLocation));
 		}
+		return (EdgeValue[]) roads.toArray();
 	}
-	public void makeSettlements(JsonArray jsSettlements){
-		System.out.println("**** Settlements ****");
+	public VertexObject[] makeSettlements(JsonArray jsSettlements){
+		ArrayList<VertexObject> settlements = new ArrayList<VertexObject>();
 		for(int i = 0; i < jsSettlements.size(); i++){
 			JsonObject temp = (JsonObject)jsSettlements.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
+			
 			String direction = location.get("direction").getAsString();
-			System.out.println("direction: " + direction);
+			VertexLocation vertexLocation = 
+					new VertexLocation(new HexLocation(x,y), 
+					getVertexDirection(direction));
 			int owner = temp.get("owner").getAsInt();
-			System.out.println("owner: " + owner);
+			settlements.add(new VertexObject(owner, vertexLocation));
 		}
+		return (VertexObject[])settlements.toArray();
 	}
-	public void makeCities(JsonArray jsCities){
-		System.out.println("**** Cities ****");
+	public VertexObject[] makeCities(JsonArray jsCities){
+		ArrayList<VertexObject> cities = new ArrayList<VertexObject>();
 		for(int i = 0; i < jsCities.size(); i++){
 			JsonObject temp = (JsonObject)jsCities.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
+			//hexlocation
+			//vertexdirection
+			
+			
 			String direction = location.get("direction").getAsString();
-			System.out.println("direction: " + direction);
+			VertexLocation vertexLocation = new VertexLocation(
+					new HexLocation(x,y), getVertexDirection(direction));
+			
 			int owner = temp.get("owner").getAsInt();
+			VertexObject vertexObject = new VertexObject(owner, vertexLocation);
 			System.out.println("owner: " + owner);
 		}
+		return (VertexObject[])cities.toArray();
 	}
-	public void makePlayers(JsonArray jsPlayers){
-		System.out.println("**** PLAYERS ****");
+	public Player[] makePlayers(JsonArray jsPlayers){
+		ArrayList<Player> players = new ArrayList<Player>();
 		for(int i = 0; i < jsPlayers.size(); i++){
 			JsonObject player = (JsonObject)jsPlayers.get(i);
 			int cities = player.get("cities").getAsInt();
@@ -165,10 +251,39 @@ public class JsonTranslator {
 			DevCardList newDevCards = getDevCards((JsonObject)player.get("newDevCards"));
 			DevCardList oldDevCards = getDevCards((JsonObject)player.get("oldDevCards"));
 			ResourceList resources = getResourceList((JsonObject)player.get("resources"));
-		
+			
+			Player playerObj = new Player(cities,  getCatanColor(color), discarded, monuments,
+					name, newDevCards, oldDevCards,
+					playerIndex, playedDevCard, playerID,
+				    resources, roads, settlements, soldiers,
+					victoryPoints);
+			players.add(playerObj);
 		}
 
-
+		return (Player[])players.toArray();
+	}
+	public CatanColor getCatanColor(String color){
+		//RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+		switch(color){
+			default:
+				return CatanColor.RED;
+			case "ORANGE":
+				return CatanColor.ORANGE;
+			case "YELLOW":
+				return CatanColor.YELLOW;
+			case "BLUE":
+				return CatanColor.BLUE;
+			case "GREEN":
+				return CatanColor.GREEN;
+			case "PURPLE":
+				return CatanColor.PURPLE;
+			case "PUCE":
+				return CatanColor.PUCE;
+			case "WHITE":
+				return CatanColor.WHITE;
+			case "BROWN":
+				return CatanColor.BROWN;
+		}	
 	}
 	public ResourceList getResourceList(JsonObject jsObject){
 		int brick = jsObject.get("brick").getAsInt();
@@ -188,17 +303,18 @@ public class JsonTranslator {
 		return new DevCardList(monopoly, monument, 
 				roadBuilding, soldier, yearOfPlenty);
 	}
-	public void makeTradeOffer(JsonObject jsTradeOffer){
+	public TradeOffer makeTradeOffer(JsonObject jsTradeOffer){
 		int sender = jsTradeOffer.get("sender").getAsInt();
 		int receiver = jsTradeOffer.get("receiver").getAsInt();
 		ResourceList offer = getResourceList((JsonObject)jsTradeOffer.get("offer"));
-		
+		return new TradeOffer(sender, receiver, offer);
 	}
-	public void makeTurnTracker(JsonObject jsTurnTracker){
+	public TurnTracker makeTurnTracker(JsonObject jsTurnTracker){
 		int currentTurn = jsTurnTracker.get("currentTurn").getAsInt();
 		String status = jsTurnTracker.get("status").getAsString();
 		int longestRoad = jsTurnTracker.get("longestRoad").getAsInt();
 		int largestArmy = jsTurnTracker.get("largestArmy").getAsInt();
+		return new TurnTracker(currentTurn, status, longestRoad, largestArmy);
 	}
 	
 	

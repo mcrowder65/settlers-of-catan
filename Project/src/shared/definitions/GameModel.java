@@ -68,6 +68,8 @@ public class GameModel {
 	 * the local player who has this instance running
 	 */
 	private Player localPlayer;
+	
+	
 	public ResourceList getBank() {
 		return bank;
 	}

@@ -236,6 +236,152 @@ public class Facade {
 	
 	//*************************************************************************
 	//************************canDo's******************************************
+	/**
+	 * This method determines if the Player can discard cards
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canDiscardCards(int playerIndex){
+		return true;
+	}
+	
+	/**
+	 * This method determines if the Dice can be rolled
+	 * @return True if the dice can be rolled
+	 */
+	public boolean canRollNumber(int playerIndex){
+		return true;
+	}
+	
+	/**
+	 * This method determines if the user can lay a road at the location
+	 * @param location - Where the user wants to lay the road
+	 * @return True if the road can be placed in the location
+	 */
+	public boolean canBuildRoad(EdgeLocation location) throws IllegalArgumentException {
+		return false;
+	}
+	
+	/**
+	 * This method determines if the user can lay a settlement at the location
+	 * @param location - Where the user wants to lay the settlement
+	 * @return True if the settlement can be placed in the location
+	 */
+	public boolean canBuildSettlement(EdgeLocation location) throws IllegalArgumentException {
+		return false;
+	}
+	
+	/**
+	 * This method determines if the user can lay a city at the location
+	 * @param location - Where the user wants to lay the city
+	 * @return True if the city can be placed in the location
+	 */
+	public boolean canBuildCity(EdgeLocation location) throws IllegalArgumentException {
+		return false;
+	}
+	
+	/**
+	 * This method determines if the user can offer a trade
+	 * @param offer
+	 * @return True if the user can offer the trade
+	 */
+	public boolean canOfferTrade(TradeOffer offer) throws IllegalArgumentException {
+		return false;
+	}
+	
+	
+	/**
+	 * This method determines if the user can offer a Maritime trade
+	 * @param offer
+	 * @return True if the user can offer the trade
+	 */
+	public boolean canMaritimeTrade(TradeOffer offer) throws IllegalArgumentException {
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can finish the turn
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canFinishTurn(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can buy a Development card
+	 * @return True if the player can buy a Development card
+	 */
+	public boolean canBuyDevCard(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can use the Year of Plenty Dev Card
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canUseYearOfPlenty(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can use the Road Builder Dev card
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canUseRoadBuilder(int playerIndex){
+		return false;
+	}
+	/**
+	 * This method determines if the player can use the Soldier Dev card
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canUseSoldier(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can use the Monopoly Dev Card
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canUseMonopoly(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the player can use the Monument Dev card
+	 * @param playerIndex
+	 * @return True if the player can
+	 */
+	public boolean canUseMonument(int playerIndex){
+		return false;
+	}
+	
+	/**
+	 * This method determines if the user can move the Robber
+	 * @return True if the user can move the Robber
+	 */
+	public boolean canPlaceRobber(){
+		return false;
+	}
+	
+	
+	//^^^^^^^^^^^^^^^^^^^^  TA'S   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	//*******************************************************
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * This method determines if it's the user's turn
@@ -282,41 +428,23 @@ public class Facade {
 		
 	}
 	
-	/**
-	 * This method determines if the user can lay a road at the location
-	 * @param location - Where the user wants to lay the road
-	 * @return True if the road can be placed in the location
-	 */
-	public boolean canLayRoad(EdgeLocation location) throws IllegalArgumentException {
-		return false;
-	}
 	
-	/**
-	 * This method determines if the user can lay a settlement at the location
-	 * @param location - Where the user wants to lay the settlement
-	 * @return True if the settlement can be placed in the location
-	 */
-	public boolean canLaySettlement(EdgeLocation location) throws IllegalArgumentException {
-		return false;
-	}
 	
-	/**
-	 * This method determines if the user can lay a city at the location
-	 * @param location - Where the user wants to lay the city
-	 * @return True if the city can be placed in the location
-	 */
-	public boolean canLayCity(EdgeLocation location) throws IllegalArgumentException {
-		return false;
-	}
+
 	
-	/**
-	 * This method determines if the user can offer a trade
-	 * @param offer
-	 * @return True if the user can offer the trade
-	 */
-	public boolean canOfferTrade(TradeOffer offer) throws IllegalArgumentException {
-		return false;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * This method determines if the user can retract from the offer
@@ -393,13 +521,7 @@ public class Facade {
 		return false;
 	}
 	
-	/**
-	 * This method determines if the user can move the Robber
-	 * @return True if the user can move the Robber
-	 */
-	public boolean canMoveRobber(){
-		return false;
-	}
+	
 	
 	/**
 	 * This method determines if the user can rob a player
@@ -426,13 +548,7 @@ public class Facade {
 		return false;
 	}
 	
-	/**
-	 * This method determines if the user can buy a Development card
-	 * @return True if the user can buy a Development card
-	 */
-	public boolean canBuyDevCard(){
-		return false;
-	}
+	
 	
 	/**
 	 * Asks how many cards the player has to discard

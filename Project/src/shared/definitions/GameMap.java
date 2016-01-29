@@ -156,7 +156,7 @@ public class GameMap {
 			EdgeDirection roadDirection = roadLocation.getDir();
 			
 			if(owner ==roadOwner && direction == roadDirection && roadY == yCoord && xCoord == roadX){
-				return false;
+				return true;
 			}
 			
 		}

@@ -3,7 +3,7 @@ package shared.communication.request;
 public class AcceptTradeCommand extends MoveCommand {
 
 	private boolean willAccept;
-	protected AcceptTradeCommand(int playerIndex, boolean willAccept) throws IllegalArgumentException {
+	public AcceptTradeCommand(int playerIndex, boolean willAccept) throws IllegalArgumentException {
 		super(playerIndex);
 		this.willAccept = willAccept;
 	}

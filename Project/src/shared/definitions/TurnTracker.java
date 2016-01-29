@@ -117,6 +117,13 @@ public class TurnTracker {
 	 * advances turn to next player
 	 */
 	public void advanceTurn(){
+		//Advances the Turn to the next player, if the current player's turn is the
+		//last one in the cycle, it gets reset to the 1st player
+			this.currentTurn++;
+			
+		if(this.currentTurn == 4){
+			this.currentTurn = 0;
+		}
 		
 	}
 	

@@ -3,7 +3,7 @@ package shared.communication.request;
 public class SendChatCommand extends MoveCommand {
 
 	private String content;
-	protected SendChatCommand(int playerIndex, String content) throws IllegalArgumentException {
+	public SendChatCommand(int playerIndex, String content) throws IllegalArgumentException {
 		super(playerIndex);
 		this.content = content;
 	}

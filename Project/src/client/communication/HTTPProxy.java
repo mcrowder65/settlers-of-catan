@@ -1,5 +1,12 @@
 package client.communication;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
@@ -49,29 +56,55 @@ public class HTTPProxy implements IProxy{
 	 * or playerIndex is invalid.
 	 */
 	public HTTPProxy(int playerIndex, String host, int port) throws IllegalArgumentException {
+		if (playerIndex < 0 || playerIndex > 3) throw new IllegalArgumentException("playerIndex must be between 0 and 3.");
+		if (port <= 0 || port > 65535) throw new IllegalArgumentException("port must be non-negative and less than 65535");
+		if (host == null || host.equals("")) throw new IllegalArgumentException("Host must be non-null and non-empty.");
 		
 	}
 	/**
 	 * Sends a GET request.
-	 * @param url
-	 * The URL to send the request on, including the query string
+	 * @param urlPath
+	 * The URL path to send the request on, including the query string
 	 * @return
 	 * Returns the server's response.
 	 */
-	public String doGet(String url) {
-		return null;
+	private Object doGet(String urlPath) throws IOException {
 		
+		XStream xstream = new XStream(new DomDriver());
+		URL url = new URL("http", hostName, portNumber,  urlPath);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			Object result = xstream.fromXML(conn.getInputStream());
+			return result;
+		}
+		return null;
 	}
 	/**
 	 * Sends a POST request.
-	 * @param url
+	 * @param urlPath
 	 * The URL to send the request on
 	 * @param requestBody
 	 * The data to send to the server.
 	 * @return
 	 * Returns the server's response.
 	 */
-	public String doPost(String url, String requestBody) {
+	private Object doPost(String urlPath, Object requestBody) throws IOException {
+		XStream xstream = new XStream(new DomDriver());
+		URL url = new URL("http", hostName, portNumber, urlPath);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+		
+		conn.connect();
+		xstream.toXML(requestBody, conn.getOutputStream());
+		
+		if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			Object result = xstream.fromXML(conn.getInputStream());
+			return result;
+		}
 		return null;
 	}
 	/**
@@ -90,6 +123,13 @@ public class HTTPProxy implements IProxy{
 	 */
 	private void setGameCookie(String cookie) throws IllegalArgumentException {
 	}
+	
+	
+	public String getServerURL() {
+		
+		return "http://" + hostName + ":" + portNumber + "/";
+	}
+	
 	@Override
 	public String login(String username, String password) throws IllegalArgumentException {
 		// TODO Auto-generated method stub

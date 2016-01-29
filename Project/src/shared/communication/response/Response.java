@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.communication.response;
 
 import client.utils.Translator;
 import sun.net.www.protocol.http.HttpURLConnection;

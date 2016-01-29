@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.communication.request;
 
 import shared.definitions.ResourceList;
 

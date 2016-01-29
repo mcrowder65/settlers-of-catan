@@ -1,4 +1,5 @@
-package shared.communication;
+package shared.communication.request;
+
 
 public class LoginRequest extends Request {
 	

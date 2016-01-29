@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.communication.request;
 
 import client.utils.Translator;
 

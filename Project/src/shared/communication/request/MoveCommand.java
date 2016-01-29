@@ -1,4 +1,5 @@
-package shared.communication;
+package shared.communication.request;
+
 
 public abstract class MoveCommand extends Request {
 

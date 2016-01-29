@@ -1,8 +1,8 @@
-package shared.communication;
+package shared.communication.response;
 
 import client.utils.Translator;
 
-public class RegisterResponse extends Response {
+public class LoginResponse extends Response {
 	public String getName() {
 		return name;
 	}
@@ -15,11 +15,11 @@ public class RegisterResponse extends Response {
 	private String name;
 	private String password;
 	private int playerID;
-	public RegisterResponse(int responseCode, String json) {
+	public LoginResponse(int responseCode, String json) {
 		super(responseCode, json);
 		if (success) 
 		{
-			RegisterResponse response = Translator.jsonToObject(json);
+			LoginResponse response = Translator.jsonToObject(json);
 			this.name = response.name;
 		}
 		

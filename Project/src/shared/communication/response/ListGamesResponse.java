@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.communication.response;
 
 import java.util.List;
 

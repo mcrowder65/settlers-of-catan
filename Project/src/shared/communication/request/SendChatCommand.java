@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.communication.request;
 
 public class SendChatCommand extends MoveCommand {
 

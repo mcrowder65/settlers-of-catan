@@ -1,0 +1,11 @@
+Use tabs for all indentation
+Bracket on the same line
+camel case
+no space between if, for, while and ()
+try to comment
+for interfaces, put I before interface name
+else next line after closing bracket
+try to have 50 lines max in one function
+temp for temporary variables
+i,j,k for for loops
+capitalize key words in SQL

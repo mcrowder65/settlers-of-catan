@@ -147,19 +147,21 @@ public class GameMap {
 		int xCoord = hexLocation.getX();
 		int yCoord = hexLocation.getY();
 		
-		for(int i=0; i<roads.length; i++){
-			EdgeValue road = roads[i];
-			EdgeLocation roadLocation = road.getLocation();
-			int roadOwner = road.getOwner();
-			HexLocation roadHexLoc = roadLocation.getHexLoc();
-			int roadX = roadHexLoc.getX();
-			int roadY = roadHexLoc.getY();
-			EdgeDirection roadDirection = roadLocation.getDir();
-			
-			if(owner ==roadOwner && direction == roadDirection && roadY == yCoord && xCoord == roadX){
-				return true;
+		if(allRoads.size() > 0){
+			for(int i=0; i<roads.length; i++){
+				EdgeValue road = roads[i];
+				EdgeLocation roadLocation = road.getLocation();
+				int roadOwner = road.getOwner();
+				HexLocation roadHexLoc = roadLocation.getHexLoc();
+				int roadX = roadHexLoc.getX();
+				int roadY = roadHexLoc.getY();
+				EdgeDirection roadDirection = roadLocation.getDir();
+				
+				if(owner ==roadOwner && direction == roadDirection && roadY == yCoord && xCoord == roadX){
+					return true;
+				}
+				
 			}
-			
 		}
 		return false;
 	}
@@ -494,27 +496,31 @@ public class GameMap {
 
 
 		//Check Settlements array
-		for(VertexObject temp : settlements){
-			int xTemp = temp.getLocation().getHexLoc().getX();
-			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
-
-			if((x == xTemp) && (y == yTemp)){
-				if(direction == directionTemp){
-					return true;
+		if(allSettlements.size()>0){
+			for(VertexObject temp : settlements){
+				int xTemp = temp.getLocation().getHexLoc().getX();
+				int yTemp = temp.getLocation().getHexLoc().getY();
+				VertexDirection directionTemp = temp.getLocation().getDir();
+	
+				if((x == xTemp) && (y == yTemp)){
+					if(direction == directionTemp){
+						return true;
+					}
 				}
 			}
 		}
 
 		//Check Cities array
-		for(VertexObject temp : cities){
-			int xTemp = temp.getLocation().getHexLoc().getX();
-			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
-
-			if((x == xTemp) && (y == yTemp)){
-				if(direction == directionTemp){
-					return true;
+		if(allCities.size() >0){
+			for(VertexObject temp : cities){
+				int xTemp = temp.getLocation().getHexLoc().getX();
+				int yTemp = temp.getLocation().getHexLoc().getY();
+				VertexDirection directionTemp = temp.getLocation().getDir();
+	
+				if((x == xTemp) && (y == yTemp)){
+					if(direction == directionTemp){
+						return true;
+					}
 				}
 			}
 		}

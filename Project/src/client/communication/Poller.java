@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import client.data.GameManager;
+import shared.communication.response.GetModelResponse;
 /**
  * The Poller class periodically checks the proxy
  * for a more recent model,
@@ -48,25 +49,17 @@ public class Poller extends Observable {
 		@Override
 		public void run() {
 		
-			int remoteVersion = checkVersion();
-			if (localVersion < remoteVersion) {
-				localVersion = remoteVersion;
-				notifyObservers(remoteVersion);
+			GetModelResponse response = proxy.getModel(localVersion);
+			if (response.isSuccess() && response.isUpdated())
+				localVersion = response.getModel().getVersion();
+				notifyObservers(response.getModel());
 				
 			}
 			
 		}
-	}
 	
-	/**
-	 * Gets the current server's version as defined
-	 * by the proxy.
-	 * @return Returns the current server's version.
-	 */
-	private int checkVersion() {
-		proxy.checkVersion();
-		return 0;
-	}
+	
+	
 	
 	
 	/**

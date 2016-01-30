@@ -3,10 +3,13 @@ package client.communication;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import shared.communication.request.*;
+import shared.communication.response.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
@@ -60,6 +63,10 @@ public class HTTPProxy implements IProxy{
 		if (port <= 0 || port > 65535) throw new IllegalArgumentException("port must be non-negative and less than 65535");
 		if (host == null || host.equals("")) throw new IllegalArgumentException("Host must be non-null and non-empty.");
 		
+		this.playerIndex = playerIndex;
+		this.portNumber = port;
+		this.hostName = host;
+		
 	}
 	/**
 	 * Sends a GET request.
@@ -68,18 +75,18 @@ public class HTTPProxy implements IProxy{
 	 * @return
 	 * Returns the server's response.
 	 */
-	private Object doGet(String urlPath) throws IOException {
-		
+	private HTTPJsonResponse doGet(String urlPath) throws IOException {
+		HTTPJsonResponse response = new HTTPJsonResponse();
 		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http", hostName, portNumber,  urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
-		if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-			Object result = xstream.fromXML(conn.getInputStream());
-			return result;
-		}
-		return null;
+		
+		response.setResponseCode(conn.getResponseCode());
+		Object result = xstream.fromXML(conn.getInputStream());
+		response.setResponseBody(result.toString());
+		return response;
 	}
 	/**
 	 * Sends a POST request.
@@ -90,7 +97,8 @@ public class HTTPProxy implements IProxy{
 	 * @return
 	 * Returns the server's response.
 	 */
-	private Object doPost(String urlPath, Object requestBody) throws IOException {
+	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
+		HTTPJsonResponse response = new HTTPJsonResponse();
 		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http", hostName, portNumber, urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -101,11 +109,11 @@ public class HTTPProxy implements IProxy{
 		conn.connect();
 		xstream.toXML(requestBody, conn.getOutputStream());
 		
-		if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-			Object result = xstream.fromXML(conn.getInputStream());
-			return result;
-		}
-		return null;
+		
+		response.setResponseCode(conn.getResponseCode());
+		Object result = xstream.fromXML(conn.getInputStream());
+		response.setResponseBody(result.toString());
+		return response;
 	}
 	/**
 	 * 
@@ -130,162 +138,182 @@ public class HTTPProxy implements IProxy{
 		return "http://" + hostName + ":" + portNumber + "/";
 	}
 	
+	private Response sendCommand(MoveCommand command)  {
+		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
+		try {
+			httpResponse =  doPost("moves/" +command.getMoveType(), command.toString());
+		} 
+		catch (IOException e) 
+		{
+			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
+			httpResponse.setResponseBody(e.getMessage());
+		}
+		return new Response(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+	}
+	
+
 	@Override
-	public String login(String username, String password) throws IllegalArgumentException {
+	public Response sendChat(String content) {
+		SendChatCommand command = new SendChatCommand(playerIndex, content);
+		return sendCommand(command);
+	}
+	@Override
+	public LoginResponse login(String username, String password) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String register(String username, String password) throws IllegalArgumentException {
+	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String listGames() {
+	public ListGamesResponse listGames() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String joinGame(int gameId, CatanColor playerColor) throws IllegalArgumentException {
+	public CreateGameResponse createGame(String name) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String createGame(String name) throws IllegalArgumentException {
+	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String loadGame(String name) throws IllegalArgumentException {
+	public Response loadGame(String name) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String saveGame(String fileName) throws IllegalArgumentException {
+	public Response saveGame(String fileName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String reset() {
+	public GetModelResponse reset() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String getModel() {
+	public GetModelResponse getModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String listAI() {
+	public GetModelResponse getModel(int version) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String addAI(String aiType) throws IllegalArgumentException {
+	public ListAIResponse listAI() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String checkVersion() {
+	public Response addAI(String aiType) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String getCommands() {
+	public GetCommandsResponse getCommands() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String sendChat(String content) {
+	public GetModelResponse executeCommands(List<String> commands) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String rollNumber(int number) throws IllegalArgumentException {
+	public Response rollNumber(int number) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public Response robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String finishTurn() {
+	public Response finishTurn() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String buyDevCard() {
+	public Response buyDevCard() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
+	public Response Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
+	public Response Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public Response Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String Monopoly(ResourceType resource) {
+	public Response Monopoly(ResourceType resource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String Monument() {
+	public Response Monument() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
+	public Response buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
+	public Response buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
+	public Response buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String offerTrade(TradeOffer offer) throws IllegalArgumentException {
+	public Response offerTrade(TradeOffer offer) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
+	public Response maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String acceptTrade(boolean willAccept) {
+	public Response acceptTrade(boolean willAccept) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String discardCards(ResourceList discardedCards) throws IllegalArgumentException {
+	public Response discardCards(ResourceList discardedCards) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String changeLogLevel(String loggingLevel) throws IllegalArgumentException {
+	public Response changeLogLevel(String loggingLevel) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	
 }

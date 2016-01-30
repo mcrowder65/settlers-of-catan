@@ -1,0 +1,16 @@
+package shared.communication.response;
+
+import client.data.GameInfo;
+import client.utils.Translator;
+
+public class CreateGameResponse extends Response {
+
+	GameInfo game;
+	public CreateGameResponse(int responseCode, String json) throws IllegalArgumentException {
+		super(responseCode, json);
+		if (success) {
+			this.game = Translator.jsonToObject(json);
+		}
+	}
+
+}

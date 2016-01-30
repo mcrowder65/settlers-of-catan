@@ -63,10 +63,10 @@ public class GameManager implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Integer version = (Integer)arg;
-		if (model.getVersion() < version) {
-			updateModel();
-		}
+		GameModel model = (GameModel)arg;
+		
+		//TODO: Update local model (SYNCHRONIZED)
+		
 		
 	}
 	

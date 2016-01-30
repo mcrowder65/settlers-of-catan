@@ -484,6 +484,67 @@ public class GameMapTest {
 		boolean canBuild = map.canBuildSettlement(settlement);
 		assertTrue(canBuild == false);
 		
+		EdgeLocation local = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road1 = new EdgeValue(0,local);
+		map.buildRoad(road1);
+		
+		EdgeLocation local2 = new EdgeLocation(homeHexLoc, EdgeDirection.NorthEast);
+		EdgeValue road2 = new EdgeValue(0,local2);
+		map.buildRoad(road2);
+		assertTrue(map.getRoads().length == 4);
+	
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		
+		canBuild = false;
+		VertexLocation location2 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement2 = new VertexObject(0,location2);
+		canBuild = map.canBuildSettlement(settlement2);
+		assertTrue(canBuild == true);
+		map.laySettlement(settlement2);
+		assertTrue(map.getSettlements().length == 6);
+		
+		
+		VertexLocation location3 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement3 = new VertexObject(0,location3);
+		canBuild = map.canBuildSettlement(settlement3);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		VertexLocation location4 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement4 = new VertexObject(1,location4);
+		canBuild = map.canBuildSettlement(settlement4);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		VertexLocation location5 = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		VertexObject settlement5 = new VertexObject(0,location5);
+		canBuild = map.canBuildSettlement(settlement5);
+		assertTrue(canBuild == false);
+		
+		EdgeLocation local3 = new EdgeLocation(hex3Loc, EdgeDirection.SouthEast);
+		EdgeValue road3 = new EdgeValue(0,local3);
+		boolean canBuildRd = map.canLayRoad(road3);
+		assertTrue(canBuildRd == true);
+		map.buildRoad(road3);
+		assertTrue(map.getRoads().length == 6);
+		
+		canBuild = true;
+		canBuild = map.canBuildSettlement(settlement5);
+		assertTrue(canBuild == false);
+		
+		
+		VertexLocation location6 = new VertexLocation(hex7Loc, VertexDirection.SouthWest);
+		VertexObject settlement6 = new VertexObject(0,location6);
+		canBuild = map.canBuildSettlement(settlement6);
+		assertTrue(canBuild == true);
+		
+		map.laySettlement(settlement6);
+		assertTrue(map.getSettlements().length == 9);
+		
+		
+		
+		
 	}
 	
 	

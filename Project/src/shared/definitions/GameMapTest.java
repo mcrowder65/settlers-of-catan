@@ -484,6 +484,17 @@ public class GameMapTest {
 		boolean canBuild = map.canBuildSettlement(settlement);
 		assertTrue(canBuild == false);
 		
+		EdgeLocation local = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road1 = new EdgeValue(0,local);
+		map.buildRoad(road1);
+		
+		EdgeLocation local2 = new EdgeLocation(homeHexLoc, EdgeDirection.NorthEast);
+		EdgeValue road2 = new EdgeValue(0,local);
+		map.buildRoad(road2);
+		assertTrue(map.getRoads().length == 4);
+	
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
 	}
 	
 	

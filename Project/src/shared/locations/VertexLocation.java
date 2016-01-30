@@ -7,12 +7,12 @@ public class VertexLocation
 {
 	
 	private HexLocation hexLoc;
-	private VertexDirection dir;
+	private VertexDirection direction;
 	
-	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
+	public VertexLocation(HexLocation hexLoc, VertexDirection direction)
 	{
 		setHexLoc(hexLoc);
-		setDir(dir);
+		setDirection(direction);
 	}
 	
 	public HexLocation getHexLoc()
@@ -29,20 +29,20 @@ public class VertexLocation
 		this.hexLoc = hexLoc;
 	}
 	
-	public VertexDirection getDir()
+	public VertexDirection getDirection()
 	{
-		return dir;
+		return direction;
 	}
 	
-	private void setDir(VertexDirection direction)
+	private void setDirection(VertexDirection direction)
 	{
-		this.dir = direction;
+		this.direction = direction;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
+		return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + direction + "]";
 	}
 	
 	@Override
@@ -50,7 +50,7 @@ public class VertexLocation
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dir == null) ? 0 : dir.hashCode());
+		result = prime * result + ((direction == null) ? 0 : direction.hashCode());
 		result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
 		return result;
 	}
@@ -65,7 +65,7 @@ public class VertexLocation
 		if(getClass() != obj.getClass())
 			return false;
 		VertexLocation other = (VertexLocation)obj;
-		if(dir != other.dir)
+		if(direction != other.direction)
 			return false;
 		if(hexLoc == null)
 		{
@@ -90,9 +90,12 @@ public class VertexLocation
 		
 		// Return location that has direction NW or NE
 		
-		switch (dir)
+		switch (direction)
 		{
 			case NorthWest:
+				return new VertexLocation(
+						  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
+						  VertexDirection.NorthWest);
 			case NorthEast:
 				return this;
 			case West:

@@ -34,6 +34,8 @@ public class Translator {
 	 * Returns the json string of the given object
 	 */
 	public static String objectToJson(Object object) throws IllegalArgumentException  {
-		return new Gson().toJson(object);
+		GameModel gameModel = (GameModel)object;
+		
+		return new Gson().toJson(gameModel);
 	}
 }

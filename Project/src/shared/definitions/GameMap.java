@@ -488,14 +488,14 @@ public class GameMap {
 	public boolean hasMunicipality(VertexLocation municipalityLocation) throws IllegalArgumentException {
 		int x = municipalityLocation.getHexLoc().getX();
 		int y = municipalityLocation.getHexLoc().getY();
-		VertexDirection direction = municipalityLocation.getDir();
+		VertexDirection direction = municipalityLocation.getDirection();
 
 
 		//Check Settlements array
 		for(VertexObject temp : settlements){
 			int xTemp = temp.getLocation().getHexLoc().getX();
 			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
+			VertexDirection directionTemp = temp.getLocation().getDirection();
 
 			if((x == xTemp) && (y == yTemp)){
 				if(direction == directionTemp){
@@ -508,7 +508,7 @@ public class GameMap {
 		for(VertexObject temp : cities){
 			int xTemp = temp.getLocation().getHexLoc().getX();
 			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
+			VertexDirection directionTemp = temp.getLocation().getDirection();
 
 			if((x == xTemp) && (y == yTemp)){
 				if(direction == directionTemp){
@@ -529,12 +529,12 @@ public class GameMap {
 	public Boolean hasCity(VertexObject city) throws IllegalArgumentException {
 		int owner = city.getOwner();
 		HexLocation coordinates = city.getLocation().getHexLoc();
-		VertexDirection direction = city.getLocation().getDir();
+		VertexDirection direction = city.getLocation().getDirection();
 
 		for(VertexObject temp: cities){
 			int xTemp = temp.getLocation().getHexLoc().getX();
 			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
+			VertexDirection directionTemp = temp.getLocation().getDirection();
 			int ownerTemp = temp.getOwner();
 
 			if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
@@ -560,12 +560,12 @@ public class GameMap {
 	public boolean hasSettlement(VertexObject settlement) throws IllegalArgumentException {
 		int owner = settlement.getOwner();
 		HexLocation coordinates = settlement.getLocation().getHexLoc();
-		VertexDirection direction = settlement.getLocation().getDir();
+		VertexDirection direction = settlement.getLocation().getDirection();
 
 		for(VertexObject temp: settlements){
 			int xTemp = temp.getLocation().getHexLoc().getX();
 			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
+			VertexDirection directionTemp = temp.getLocation().getDirection();
 			int ownerTemp = temp.getOwner();
 
 			if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
@@ -692,7 +692,7 @@ public class GameMap {
 	public boolean laySettlement(VertexObject location){
 		int x = location.getLocation().getHexLoc().getX(); 
 		int y = location.getLocation().getHexLoc().getY();
-		VertexDirection direction = location.getLocation().getDir();
+		VertexDirection direction = location.getLocation().getDirection();
 		int owner = location.getOwner();
 
 		//Save the road based on the "home" Hex
@@ -799,14 +799,14 @@ public class GameMap {
 	public void deleteSettlement(VertexLocation location){
 		int x = location.getHexLoc().getX();
 		int y = location.getHexLoc().getY();
-		VertexDirection direction = location.getDir();
+		VertexDirection direction = location.getDirection();
 		
 		
 
 		for(int i = 0; i < allSettlements.size(); i++){
 			int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
 			int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+			VertexDirection directionTemp = allSettlements.get(i).getLocation().getDirection();
 
 			if( (x == xTemp) && (y == yTemp)){
 				if(direction == directionTemp){
@@ -823,7 +823,7 @@ public class GameMap {
 
 		int x = location.getLocation().getHexLoc().getX(); 
 		int y = location.getLocation().getHexLoc().getY();
-		VertexDirection direction = location.getLocation().getDir();
+		VertexDirection direction = location.getLocation().getDirection();
 		int owner = location.getOwner();
 
 		//Save the road based on the "home" Hex
@@ -1260,7 +1260,7 @@ public class GameMap {
 		int owner = settlement.getOwner();
 		VertexLocation location = settlement.getLocation();
 		HexLocation hexLoc = location.getHexLoc();
-		VertexDirection vertexDirection = location.getDir();
+		VertexDirection vertexDirection = location.getDirection();
 		
 		Boolean hasProperty = this.hasMunicipality(location);
 		if(hasProperty == true){

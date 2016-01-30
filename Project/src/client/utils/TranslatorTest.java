@@ -33,29 +33,6 @@ public class TranslatorTest {
 	}
 	@Test public void testObject2Json(){
 
-		ResourceList rS = new ResourceList(5, 2, 3, 4, 5);
-		//5 brick, 2 ore, 3 sheep, 4 wheat, 5 wood
-		TradeOffer temp = new TradeOffer(1, 2, rS);
-		//String json = new Translator().objectToJson(temp);
-		//System.out.println("json: " + json);
-	}
-	@Test
-	public void testJson2Object() throws FileNotFoundException{
-//		String json = 	"{"
-//				+ "\"sender\": \"1\","
-//				+ "\"receiver\": \"2\","
-//				+ "\"offer\": {"
-//				+ "\"brick\": \"5\","
-//				+ "\"ore\": \"1\","
-//				+ "\"sheep\": \"3\","
-//				+ "\"wheat\": \"4\","
-//				+ "\"wood\": \"5\"}}";
-//		json = "{"
-//			+ "\"currentTurn\": \"3\","
-//			+ "\"status\": \"Hello world!\","
-//			+ "\"longestRoad\": \"4\","
-//			+ "\"largestArmy\": \"2\"}";
-//	 
 		BufferedReader br;
 
 		String line = new String();
@@ -72,7 +49,29 @@ public class TranslatorTest {
 		}
 		//System.out.println(append.toString());
 		Object temp = new Translator().jsonToObject(append.toString());
-		//System.out.println(temp.toString());
+		String json = new Translator().objectToJson(temp);
+		System.out.println(json);
+	}
+	@Test
+	public void testJson2Object() throws FileNotFoundException{
+
+//	 
+		BufferedReader br;
+
+		String line = new String();
+		StringBuilder append = new StringBuilder();
+		try{
+			br = new BufferedReader(new FileReader("json.txt"));
+			while((line = br.readLine()) != null){
+				append.append(line);
+			}
+			br.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Object temp = new Translator().jsonToObject(append.toString());
 
 	}
 

@@ -15,10 +15,62 @@ public class MirrorGameModel {
 		
 	}
 	public MirrorGameModel(GameModel gameModel){
-		this.bank = gameModel.getBank();
-		this.chat = gameModel.getChat();
-		this.log = gameModel.getLog();
-		this.map = gameModel.getMap();
+		bank = gameModel.getBank();
+		chat = gameModel.getChat();
+		log = gameModel.getLog();
+		map = new MirrorGameMap();
+		map.setHexes(gameModel.getMap().getHexes());
+		map.setPorts(gameModel.getMap().getPorts());
+		makeRoads(gameModel.getMap().getRoads());
+		map.setCities(makeVertexObjectArray(gameModel.getMap().getCities()));
+		map.setSettlements(makeVertexObjectArray(gameModel.getMap().getSettlements()));
+		map.setRadius(gameModel.getMap().getRadius());
+		map.setRobber(gameModel.getMap().getRobber());
+		players = gameModel.getPlayers();
+		tradeOffer = gameModel.getTradeOffer();
+		turnTracker = gameModel.getTurnTracker();
+		version = gameModel.getVersion();
+		winner = gameModel.getWinner();
+	}
+	public void makeRoads(EdgeValue[] oldRoads){
+		MirrorEdgeValue[] thisRoads = new MirrorEdgeValue[oldRoads.length];
+		
+		for(int i = 0; i < thisRoads.length; i++){
+			thisRoads[i] = new MirrorEdgeValue();
+			thisRoads[i].setOwner(oldRoads[i].getOwner());
+			int x = oldRoads[i].getLocation().getHexLoc().getX();
+			int y = oldRoads[i].getLocation().getHexLoc().getY();
+			EdgeDirection direction = oldRoads[i].getLocation().getDir();
+			MirrorEdgeLocation edgeLoc = new MirrorEdgeLocation(x, y, direction);
+			thisRoads[i].setLocation(edgeLoc);
+		}
+		this.map.setRoads(thisRoads);
+	}
+	public MirrorVertexObject[] makeVertexObjectArray(VertexObject[] old){
+		MirrorVertexObject[] newArray = new MirrorVertexObject[old.length];
+		for(int i = 0; i < newArray.length; i++){
+			newArray[i] = new MirrorVertexObject();
+			newArray[i].setOwner(old[i].getOwner());
+			int x = old[i].getLocation().getHexLoc().getX();
+			int y = old[i].getLocation().getHexLoc().getY();
+			VertexDirection direction = old[i].getLocation().getDir();
+			MirrorVertexLocation vertexLoc = new MirrorVertexLocation(x, y, direction);
+			newArray[i].setLocation(vertexLoc);
+		}
+		return newArray;
+	}
+	public void makeSettlements(VertexObject[] oldSettlements){
+		MirrorVertexObject[] newSettlements = new MirrorVertexObject[oldSettlements.length];
+		for(int i = 0; i < newSettlements.length; i++){
+			newSettlements[i] = new MirrorVertexObject();
+			newSettlements[i].setOwner(oldSettlements[i].getOwner());
+			int x = oldSettlements[i].getLocation().getHexLoc().getX();
+			int y = oldSettlements[i].getLocation().getHexLoc().getY();
+			VertexDirection direction = oldSettlements[i].getLocation().getDir();
+			MirrorVertexLocation vertexLoc = new MirrorVertexLocation(x, y, direction);
+			newSettlements[i].setLocation(vertexLoc);
+		}
+		this.map.setSettlements(newSettlements);
 	}
 	/**
 	 * a list of resources to give to players
@@ -35,7 +87,7 @@ public class MirrorGameModel {
 	 * All the log messages
 	 */
 	private MessageList log;
-	private GameMap map;
+	private MirrorGameMap map;
 	private Player[] players;
 	
 	/**
@@ -93,10 +145,10 @@ public class MirrorGameModel {
 	public void setLog(MessageList log) throws IllegalArgumentException  {
 		this.log = log;
 	}
-	public GameMap getMap() {
+	public MirrorGameMap getMap() {
 		return map;
 	}
-	public void setMap(GameMap map) throws IllegalArgumentException {
+	public void setMap(MirrorGameMap map) throws IllegalArgumentException {
 		this.map = map;
 	}
 	public Player[] getPlayers() {

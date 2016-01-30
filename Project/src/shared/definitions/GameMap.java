@@ -147,19 +147,21 @@ public class GameMap {
 		int xCoord = hexLocation.getX();
 		int yCoord = hexLocation.getY();
 		
-		for(int i=0; i<roads.length; i++){
-			EdgeValue road = roads[i];
-			EdgeLocation roadLocation = road.getLocation();
-			int roadOwner = road.getOwner();
-			HexLocation roadHexLoc = roadLocation.getHexLoc();
-			int roadX = roadHexLoc.getX();
-			int roadY = roadHexLoc.getY();
-			EdgeDirection roadDirection = roadLocation.getDir();
-			
-			if(owner ==roadOwner && direction == roadDirection && roadY == yCoord && xCoord == roadX){
-				return true;
+		if(allRoads.size() > 0){
+			for(int i=0; i<roads.length; i++){
+				EdgeValue road = roads[i];
+				EdgeLocation roadLocation = road.getLocation();
+				int roadOwner = road.getOwner();
+				HexLocation roadHexLoc = roadLocation.getHexLoc();
+				int roadX = roadHexLoc.getX();
+				int roadY = roadHexLoc.getY();
+				EdgeDirection roadDirection = roadLocation.getDir();
+				
+				if(owner ==roadOwner && direction == roadDirection && roadY == yCoord && xCoord == roadX){
+					return true;
+				}
+				
 			}
-			
 		}
 		return false;
 	}
@@ -423,20 +425,22 @@ public class GameMap {
 		EdgeDirection direction = location.getDir();
 	
 		//Loop through the array of allRoads to see if there is already a road in the location
-		for(int i=0; i<roads.length; i++){
-			//Extracting info from the roads in the roads array
-			EdgeLocation roadLocation = roads[i].getLocation();
-			HexLocation roadHex = roadLocation.getHexLoc();
-			
-			int xRoadCoord = roadHex.getX();
-			int yRoadCoord = roadHex.getY();
-			EdgeDirection roadDirection = roadLocation.getDir();
-			
-			//Checking to see if there is already a road in that location
-			if(xRoadCoord == xCoord && yCoord == yRoadCoord && direction == roadDirection){
-				return true;
+		if(allRoads.size() > 0){
+			for(int i=0; i<roads.length; i++){
+				//Extracting info from the roads in the roads array
+				EdgeLocation roadLocation = roads[i].getLocation();
+				HexLocation roadHex = roadLocation.getHexLoc();
+				
+				int xRoadCoord = roadHex.getX();
+				int yRoadCoord = roadHex.getY();
+				EdgeDirection roadDirection = roadLocation.getDir();
+				
+				//Checking to see if there is already a road in that location
+				if(xRoadCoord == xCoord && yCoord == yRoadCoord && direction == roadDirection){
+					return true;
+				}
+		
 			}
-	
 		}
 		
 		return false; //No road found - location is available 
@@ -492,27 +496,31 @@ public class GameMap {
 
 
 		//Check Settlements array
-		for(VertexObject temp : settlements){
-			int xTemp = temp.getLocation().getHexLoc().getX();
-			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
-
-			if((x == xTemp) && (y == yTemp)){
-				if(direction == directionTemp){
-					return true;
+		if(allSettlements.size()>0){
+			for(VertexObject temp : settlements){
+				int xTemp = temp.getLocation().getHexLoc().getX();
+				int yTemp = temp.getLocation().getHexLoc().getY();
+				VertexDirection directionTemp = temp.getLocation().getDir();
+	
+				if((x == xTemp) && (y == yTemp)){
+					if(direction == directionTemp){
+						return true;
+					}
 				}
 			}
 		}
 
 		//Check Cities array
-		for(VertexObject temp : cities){
-			int xTemp = temp.getLocation().getHexLoc().getX();
-			int yTemp = temp.getLocation().getHexLoc().getY();
-			VertexDirection directionTemp = temp.getLocation().getDir();
-
-			if((x == xTemp) && (y == yTemp)){
-				if(direction == directionTemp){
-					return true;
+		if(allCities.size() >0){
+			for(VertexObject temp : cities){
+				int xTemp = temp.getLocation().getHexLoc().getX();
+				int yTemp = temp.getLocation().getHexLoc().getY();
+				VertexDirection directionTemp = temp.getLocation().getDir();
+	
+				if((x == xTemp) && (y == yTemp)){
+					if(direction == directionTemp){
+						return true;
+					}
 				}
 			}
 		}

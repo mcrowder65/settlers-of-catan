@@ -949,7 +949,7 @@ public class MapComponent extends JComponent
 		
 		Point2D hexPoint = getHexPoint(normVertLoc.getHexLoc());
 		
-		Point2D vertPoint = VERTEX_POINTS.get(normVertLoc.getDir());
+		Point2D vertPoint = VERTEX_POINTS.get(normVertLoc.getDirection());
 		
 		return add(hexPoint, vertPoint);
 	}

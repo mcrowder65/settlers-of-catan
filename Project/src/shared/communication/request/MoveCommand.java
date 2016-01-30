@@ -12,6 +12,9 @@ public abstract class MoveCommand extends Request {
 	}
 	
 	public abstract String getMoveType();
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
 	
 	
 }

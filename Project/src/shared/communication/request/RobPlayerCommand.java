@@ -19,6 +19,14 @@ public class RobPlayerCommand extends MoveCommand {
 		
 	}
 
+	public HexLocation getLocation() {
+		return location;
+	}
+
+	public int getVictimIndex() {
+		return victimIndex;
+	}
+
 	@Override
 	public String getMoveType() {
 		return "robPlayer";

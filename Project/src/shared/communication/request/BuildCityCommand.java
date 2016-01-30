@@ -12,10 +12,11 @@ public class BuildCityCommand extends MoveCommand {
 		this.free = free;
 		this.vertexLocation = vertexLocation;
 	}
+
 	public boolean isFree() {
 		return free;
 	}
-	public VertexLocation getRoadLocation() {
+	public VertexLocation getLocation() {
 		return vertexLocation;
 	}
 	private boolean free;

@@ -6,18 +6,18 @@ public class BuildSettlementCommand extends MoveCommand {
 
 	
 	boolean free;
-	VertexLocation location;
+	VertexLocation vertexLocation;
 	
 	
-	public BuildSettlementCommand(int playerIndex, boolean free, VertexLocation location)
+	public BuildSettlementCommand(int playerIndex, boolean free, VertexLocation vertexLocation)
 			throws IllegalArgumentException {
 		super(playerIndex);
 		
-		if(location == null) throw new IllegalArgumentException("Location can't be NULL");
+		if(vertexLocation == null) throw new IllegalArgumentException("Location can't be NULL");
 		
 		
 		this.free = free;
-		this.location = location;
+		this.vertexLocation = vertexLocation;
 		
 		
 	}
@@ -27,4 +27,10 @@ public class BuildSettlementCommand extends MoveCommand {
 		return "buildSettlement";
 	}
 
+	public boolean isFree() {
+		return free;
+	}
+	public VertexLocation getLocation() {
+		return vertexLocation;
+	}
 }

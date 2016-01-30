@@ -10,6 +10,7 @@ public class MonopolyCommand extends MoveCommand {
 		super(playerIndex);
 
 		if(resource == null) throw new IllegalArgumentException("Resource can't be NULL");
+		if(resource == ResourceType.NONE) throw new IllegalArgumentException("Resource can't be None");
 		this.resource = resource;
 	}
 
@@ -17,5 +18,7 @@ public class MonopolyCommand extends MoveCommand {
 	public String getMoveType() {
 		return "Monopoly";
 	}
-
+	public ResourceType getResource() {
+		return resource;
+	}
 }

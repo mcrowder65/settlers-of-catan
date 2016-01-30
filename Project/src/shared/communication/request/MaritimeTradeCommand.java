@@ -15,6 +15,8 @@ public class MaritimeTradeCommand extends MoveCommand {
 		if(ratio < 2 || ratio > 4) throw new IllegalArgumentException("Ratio can't be a number other than 2,3, or 4");
 		if(input == null) throw new IllegalArgumentException("Input Resource can't be NULL");
 		if(output == null) throw new IllegalArgumentException("Output Resurce can't be NULL");
+		if(input == ResourceType.NONE) throw new IllegalArgumentException("Input Resource can't be None");
+		if(output == ResourceType.NONE) throw new IllegalArgumentException("Output Resurce can't be None");
 		
 		this.ratio = ratio;
 		this.input = input;
@@ -26,5 +28,10 @@ public class MaritimeTradeCommand extends MoveCommand {
 	public String getMoveType() {
 		return "maritimeTrade";
 	}
-
+	public ResourceType getInput() {
+		return input;
+	}
+	public ResourceType getOutput() {
+		return output;
+	}
 }

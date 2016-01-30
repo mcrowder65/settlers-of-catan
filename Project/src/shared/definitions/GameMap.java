@@ -423,20 +423,22 @@ public class GameMap {
 		EdgeDirection direction = location.getDir();
 	
 		//Loop through the array of allRoads to see if there is already a road in the location
-		for(int i=0; i<roads.length; i++){
-			//Extracting info from the roads in the roads array
-			EdgeLocation roadLocation = roads[i].getLocation();
-			HexLocation roadHex = roadLocation.getHexLoc();
-			
-			int xRoadCoord = roadHex.getX();
-			int yRoadCoord = roadHex.getY();
-			EdgeDirection roadDirection = roadLocation.getDir();
-			
-			//Checking to see if there is already a road in that location
-			if(xRoadCoord == xCoord && yCoord == yRoadCoord && direction == roadDirection){
-				return true;
+		if(allRoads.size() > 0){
+			for(int i=0; i<roads.length; i++){
+				//Extracting info from the roads in the roads array
+				EdgeLocation roadLocation = roads[i].getLocation();
+				HexLocation roadHex = roadLocation.getHexLoc();
+				
+				int xRoadCoord = roadHex.getX();
+				int yRoadCoord = roadHex.getY();
+				EdgeDirection roadDirection = roadLocation.getDir();
+				
+				//Checking to see if there is already a road in that location
+				if(xRoadCoord == xCoord && yCoord == yRoadCoord && direction == roadDirection){
+					return true;
+				}
+		
 			}
-	
 		}
 		
 		return false; //No road found - location is available 

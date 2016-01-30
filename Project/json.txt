@@ -59,7 +59,7 @@
  "y": "2"
  },
  "direction": "north west",
- "ratio": "1/4"
+ "ratio": "4"
  },
  {
  "resource": "cheese",
@@ -68,7 +68,7 @@
  "y": "2"
  },
  "direction": "northeast",
- "ratio": "2/9"
+ "ratio": "2"
  }
  ],
  "roads": [

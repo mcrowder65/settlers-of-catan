@@ -36,7 +36,7 @@ public class TranslatorTest {
 		ResourceList rS = new ResourceList(5, 2, 3, 4, 5);
 		//5 brick, 2 ore, 3 sheep, 4 wheat, 5 wood
 		TradeOffer temp = new TradeOffer(1, 2, rS);
-		String json = new Translator().objectToJson(temp);
+		//String json = new Translator().objectToJson(temp);
 		//System.out.println("json: " + json);
 	}
 	@Test

@@ -3,7 +3,6 @@ package client.utils;
 import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -12,7 +11,9 @@ import shared.locations.*;
 
 public class JsonTranslator {
 	public JsonTranslator(){}
-	
+	public MirrorGameModel makeMirrorObject(GameModel gameModel){
+		return new MirrorGameModel(gameModel);
+	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
 		JsonObject jsonObj = (JsonObject) parser.parse(json);
@@ -51,12 +52,14 @@ public class JsonTranslator {
 	public MessageList makeMessageList(JsonObject jsMessageList){
 		MessageList messageList = new MessageList();
 		JsonArray messages = jsMessageList.get("lines").getAsJsonArray();
+		MessageLine[] lines = new MessageLine[messages.size()];
 		for(int i = 0; i < messages.size(); i++){
 			JsonObject temp = (JsonObject)messages.get(i);
 			String message = temp.get("message").getAsString();
 			String source = temp.get("source").getAsString();
-			messageList.addMessage(new MessageLine(message, source));
+			lines[i] = new MessageLine(message, source);
 		}
+		messageList.setLines(lines);
 		return messageList;
 	}
 	
@@ -72,16 +75,21 @@ public class JsonTranslator {
 		int rY = jsRobber.get("y").getAsInt();
 		HexLocation robber = new HexLocation(rX, rY);
 		map.setRobber(robber);
-		
+
 		Hex[] hexes = makeHexes(jsMap.get("hexes").getAsJsonArray());
+		map.setHexes(hexes);
+		
 		Port[] ports = makePorts(jsMap.get("ports").getAsJsonArray());
+		map.setPorts(ports);
+		
 		EdgeValue[] roads = makeRoads(jsMap.get("roads").getAsJsonArray());
+		map.setRoads(roads);
+		
 		VertexObject[] settlements = makeSettlements(jsMap.get("settlements").getAsJsonArray());
+		map.setSettlements(settlements);
+		
 		VertexObject[] cities = makeCities(jsMap.get("cities").getAsJsonArray());
-		
-		
-		
-		
+		map.setCities(cities);
 		
 		return map;
 	}
@@ -98,7 +106,7 @@ public class JsonTranslator {
 			Hex hex = new Hex(new HexLocation(x,y), getResourceType(resource), number);
 			hexes.add(hex);
 		}
-		return (Hex[]) hexes.toArray(); 
+		return hexes.toArray(new Hex[hexes.size()]);
 	}
 	public ResourceType getResourceType(String resource){
 		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
@@ -137,7 +145,7 @@ public class JsonTranslator {
 			Port port = new Port(resourceType, hex, edgeDirection, ratio);
 			ports.add(port);
 		}
-		return (Port[]) ports.toArray();
+		return ports.toArray(new Port[ports.size()]);
 	}
 	public EdgeDirection getEdgeDirection(String direction){
 		//NorthWest, North, NorthEast, SouthEast, South, SouthWest;
@@ -191,7 +199,7 @@ public class JsonTranslator {
 			int owner = temp.get("owner").getAsInt();
 			roads.add(new EdgeValue(owner, edgeLocation));
 		}
-		return (EdgeValue[]) roads.toArray();
+		return roads.toArray(new EdgeValue[roads.size()]);
 	}
 	public VertexObject[] makeSettlements(JsonArray jsSettlements){
 		ArrayList<VertexObject> settlements = new ArrayList<VertexObject>();
@@ -208,7 +216,7 @@ public class JsonTranslator {
 			int owner = temp.get("owner").getAsInt();
 			settlements.add(new VertexObject(owner, vertexLocation));
 		}
-		return (VertexObject[])settlements.toArray();
+		return settlements.toArray(new VertexObject[settlements.size()]);
 	}
 	public VertexObject[] makeCities(JsonArray jsCities){
 		ArrayList<VertexObject> cities = new ArrayList<VertexObject>();
@@ -227,9 +235,9 @@ public class JsonTranslator {
 			
 			int owner = temp.get("owner").getAsInt();
 			VertexObject vertexObject = new VertexObject(owner, vertexLocation);
-			System.out.println("owner: " + owner);
+			cities.add(vertexObject);
 		}
-		return (VertexObject[])cities.toArray();
+		return cities.toArray(new VertexObject[cities.size()]);
 	}
 	public Player[] makePlayers(JsonArray jsPlayers){
 		ArrayList<Player> players = new ArrayList<Player>();
@@ -259,8 +267,7 @@ public class JsonTranslator {
 					victoryPoints);
 			players.add(playerObj);
 		}
-
-		return (Player[])players.toArray();
+		return players.toArray(new Player[players.size()]);
 	}
 	public CatanColor getCatanColor(String color){
 		//RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
@@ -316,7 +323,6 @@ public class JsonTranslator {
 		int largestArmy = jsTurnTracker.get("largestArmy").getAsInt();
 		return new TurnTracker(currentTurn, status, longestRoad, largestArmy);
 	}
-	
 	
 	
 	

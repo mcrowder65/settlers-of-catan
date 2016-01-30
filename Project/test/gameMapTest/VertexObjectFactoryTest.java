@@ -29,7 +29,7 @@ public class VertexObjectFactoryTest {
 		assertEquals(2,testObject.getOwner());
 		assertEquals(0, testObject.getLocation().getHexLoc().getX());
 		assertEquals(-2, testObject.getLocation().getHexLoc().getY());
-		assertEquals(VertexDirection.NorthEast, testObject.getLocation().getDir());
+		assertEquals(VertexDirection.NorthEast, testObject.getLocation().getDirection());
 		
 		
 		//test2
@@ -37,14 +37,14 @@ public class VertexObjectFactoryTest {
 		assertEquals(1,testObject.getOwner());
 		assertEquals(2, testObject.getLocation().getHexLoc().getX());
 		assertEquals(0, testObject.getLocation().getHexLoc().getY());
-		assertEquals(VertexDirection.West, testObject.getLocation().getDir());
+		assertEquals(VertexDirection.West, testObject.getLocation().getDirection());
 		
 		//test3
 		testObject = map.vertexObjectFactory(3, 0, 1, VertexDirection.East);
 		assertEquals(3,testObject.getOwner());
 		assertEquals(0, testObject.getLocation().getHexLoc().getX());
 		assertEquals(1, testObject.getLocation().getHexLoc().getY());
-		assertEquals(VertexDirection.East, testObject.getLocation().getDir());
+		assertEquals(VertexDirection.East, testObject.getLocation().getDirection());
 		
 		
 			

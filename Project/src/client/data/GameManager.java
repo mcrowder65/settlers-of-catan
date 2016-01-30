@@ -1,6 +1,9 @@
 package client.data;
 
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.communication.IProxy;
 import client.communication.Poller;
 import shared.definitions.GameModel;
@@ -9,7 +12,7 @@ import shared.definitions.GameModel;
  * Serves as an wrapper for the GameModel class
  * and integrates it with the Server API.
  */
-public class GameManager {
+public class GameManager implements Observer {
 
 	/**
 	 * The model of the current game.
@@ -34,7 +37,8 @@ public class GameManager {
 	public GameManager(IProxy proxy, int pollingInterval) 
 	{
 		setProxy(proxy);
-		poller = new Poller(this, pollingInterval);
+		poller = new Poller(proxy, pollingInterval);
+		poller.addObserver(this);
 		
 	}
 	
@@ -55,6 +59,15 @@ public class GameManager {
 	public boolean updateModel()  {
 		proxy.getModel();
 		return false;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		Integer version = (Integer)arg;
+		if (model.getVersion() < version) {
+			updateModel();
+		}
+		
 	}
 	
 }

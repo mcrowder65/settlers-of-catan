@@ -1,5 +1,6 @@
 package client.communication;
 
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,14 +10,14 @@ import client.data.GameManager;
  * for a more recent model,
  * updating the given model if it is behind.
  */
-public class Poller {
+public class Poller extends Observable {
 
 
 	/**
-	 * The Game Manager that is used for updating
-	 * the model and calling the proxy's checkServerVersion method. 
+	 * The Game Manager that is used for
+	 * calling the checkServerVersion method. 
 	 */
-	private GameManager game;
+	private IProxy proxy;
 	/**
 	 * The internal timer for the poller.
 	 */
@@ -31,6 +32,11 @@ public class Poller {
 	private int interval;
 	
 	/**
+	 * The latest version as received by the proxy.
+	 */
+	private int localVersion;
+	
+	/**
 	 * A wrapper for the TimerTask class
 	 */
 	class PollingTask extends TimerTask {
@@ -42,10 +48,10 @@ public class Poller {
 		@Override
 		public void run() {
 		
-			int localVersion = game.getModel().getVersion();
 			int remoteVersion = checkVersion();
 			if (localVersion < remoteVersion) {
-				game.updateModel();
+				localVersion = remoteVersion;
+				notifyObservers(remoteVersion);
 				
 			}
 			
@@ -58,7 +64,7 @@ public class Poller {
 	 * @return Returns the current server's version.
 	 */
 	private int checkVersion() {
-		game.getProxy().checkVersion();
+		proxy.checkVersion();
 		return 0;
 	}
 	
@@ -75,14 +81,26 @@ public class Poller {
 	 * Throws this exception if GameManager is null,
 	 * or interval is invalid (i.e. <= 0)
 	 */
-	public Poller(GameManager game, int interval) throws IllegalArgumentException {
-		setGame(game);
+	public Poller(IProxy proxy, int interval) throws IllegalArgumentException {
+		setProxy(proxy);
 		setInterval(interval);
 		isPolling = false;
 		
 	}
 	
 	
+	public IProxy getProxy() {
+		return proxy;
+	}
+
+
+	public void setProxy(IProxy proxy) throws IllegalArgumentException {
+		if (proxy == null)
+			throw new IllegalArgumentException("Proxy cannot be null.");
+		this.proxy = proxy;
+	}
+
+
 	public int getInterval() { return interval;}
 	/**
 	 * Sets the new timer interval.
@@ -107,22 +125,8 @@ public class Poller {
 			
 	
 	}
-	public GameManager getGame() {
-		return game;
-	}
 	
-	/**
-	 * Sets the game manager.
-	 * @param game
-	 * @throws IllegalArgumentException
-	 * Throws this error if GameManager is null.
-	 */
-	public void setGame(GameManager game) throws IllegalArgumentException {
-			if (game == null) throw new IllegalArgumentException("Game cannot be null.");
-			if (game.getProxy() == null) throw new IllegalArgumentException("Game's proxy cannot be null.");
-			this.game = game;
-	
-	}
+
 	/**
 	 * Begins the poller.
 	 */

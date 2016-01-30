@@ -17,8 +17,6 @@ public class OfferTradeCommand extends MoveCommand {
 
 	protected OfferTradeCommand(int playerIndex, int receiver, ResourceList offer) throws IllegalArgumentException {
 		super(playerIndex);
-		if (playerIndex < 0 || playerIndex > 3) 
-			throw new IllegalArgumentException("playerIndex must be between 0 -3");
 		if (receiver < 0 || receiver > 3) 
 			throw new IllegalArgumentException("receiver must be between 0 -3");
 		if (offer == null)

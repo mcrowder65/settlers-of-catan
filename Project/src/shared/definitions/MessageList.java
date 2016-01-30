@@ -20,6 +20,10 @@ public class MessageList {
 		this.lines = lines;
 	}
 
+	public MessageList() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * retrieves the array of messages
 	 * @return lines

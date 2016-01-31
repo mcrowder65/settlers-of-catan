@@ -178,9 +178,9 @@ public class HTTPProxy implements IProxy{
 		return null;
 	}
 	@Override
-	public CreateGameResponse createGame(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {
+		Response response = sendCommand("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
+		return new CreateGameResponse(response.getResponseCode(), response.getJson());
 	}
 	@Override
 	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {

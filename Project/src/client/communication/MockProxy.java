@@ -69,11 +69,6 @@ public class MockProxy implements IProxy {
 		return null;
 	}
 	@Override
-	public CreateGameResponse createGame(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
@@ -211,6 +206,16 @@ public class MockProxy implements IProxy {
 	}
 	@Override
 	public Response changeLogLevel(String loggingLevel) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -46,7 +46,7 @@ public interface IProxy {
 	 * Returns the server's response, with the game's properties
 	 * if successful
 	 */
-	public CreateGameResponse createGame(String name)throws IllegalArgumentException ;
+	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts)throws IllegalArgumentException ;
 	/**
 	 * Joins a current game.
 	 * @param gameId

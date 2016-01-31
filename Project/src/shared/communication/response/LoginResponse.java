@@ -19,7 +19,7 @@ public class LoginResponse extends Response {
 		super(responseCode, json);
 		if (success) 
 		{
-			LoginResponse response = Translator.jsonToObject(json);
+			LoginResponse response = Translator.jsonToLoginResponse(json);
 			this.name = response.name;
 		}
 		

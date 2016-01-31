@@ -1,13 +1,17 @@
 package client.communication;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import com.sun.net.httpserver.HttpExchange;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import client.utils.Translator;
 import shared.communication.request.*;
 import shared.communication.response.*;
 import shared.definitions.CatanColor;
@@ -99,22 +103,45 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
-		XStream xstream = new XStream(new DomDriver());
-		URL url = new URL("http", hostName, portNumber, urlPath);
+		//XStream xstream = new XStream(new DomDriver());
+		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
+		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
-		conn.setDoInput(true);
 		conn.setDoOutput(true);
 		
 		conn.connect();
-		xstream.toXML(requestBody, conn.getOutputStream());
+		String json = Translator.objectToJson(requestBody);
 		
-		
+		conn.getOutputStream().write(json.getBytes());
+		conn.getOutputStream().close();
+		System.out.println("response code: " + conn.getResponseCode());
 		response.setResponseCode(conn.getResponseCode());
-		Object result = xstream.fromXML(conn.getInputStream());
-		response.setResponseBody(result.toString());
+		response.setResponseBody(json);
 		return response;
 	}
+//	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
+//		HTTPJsonResponse response = new HTTPJsonResponse();
+//		URL url = new URL("http://" + hostName + ":" + Integer.toString(portNumber) + urlPath);
+//		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//		connection.setRequestMethod("POST");
+//		connection.setDoOutput(true);
+//		connection.connect();
+//		String serialized = Translator.objectToJson(requestBody);
+//		connection.getOutputStream().write(serialized.getBytes());
+//		connection.getOutputStream().close();
+//		if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//			InputStream result = connection.getInputStream();
+//			return serializer.deserialize(result);
+//		} else {
+//			throw new Exception(String.format("doPost failed: %s (http code %d)",
+//					path, connection.getResponseCode()));
+//		}
+//		response.setResponseCode(connection.getResponseCode());
+//		InputStream result = connection.getInputStream();
+//		//response.setResponseBody();
+//		return response;
+//	}
 	/**
 	 * 
 	 * @param cookie
@@ -157,15 +184,38 @@ public class HTTPProxy implements IProxy{
 		SendChatCommand command = new SendChatCommand(playerIndex, content);
 		return sendCommand(command);
 	}
+	private LoginResponse sendCommand(LoginRequest command)  {
+		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
+		try {
+			httpResponse =  doPost("/user/login", command);
+		} 
+		catch (IOException e) 
+		{
+			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
+			httpResponse.setResponseBody(e.getMessage());
+		}
+		return new LoginResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+	}
 	@Override
 	public LoginResponse login(String username, String password) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return sendCommand(new LoginRequest(username, password));
+	}
+	
+	private RegisterResponse sendCommand(RegisterRequest command)  {
+		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
+		try {
+			httpResponse =  doPost("/user/register", command);
+		} 
+		catch (IOException e) 
+		{
+			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
+			httpResponse.setResponseBody(e.getMessage());
+		}
+		return new RegisterResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
 	}
 	@Override
 	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return sendCommand(new RegisterRequest(username, password));
 	}
 	@Override
 	public ListGamesResponse listGames() {

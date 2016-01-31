@@ -1,11 +1,8 @@
 package client.utils;
 
-import java.io.BufferedReader;
-
 import com.google.gson.Gson;
 
-
-import shared.definitions.*;
+import shared.communication.response.LoginResponse;
 
 /**
  * Provides static methods for converting to and from 
@@ -26,6 +23,9 @@ public class Translator {
 	public static <T> T jsonToObject(String json) throws IllegalArgumentException  {
 		return (T) jsonTranslator.makeObject(json);
 	}
+	public static LoginResponse jsonToLoginResponse(String json) throws IllegalArgumentException {
+		return jsonTranslator.makeLoginResponse(json);
+	}
 	/**
 	 * Converts the object to its JSON representation.
 	 * @param object
@@ -34,7 +34,7 @@ public class Translator {
 	 * Returns the json string of the given object
 	 */
 	public static String objectToJson(Object object) throws IllegalArgumentException  {
-		//return new Gson().toJson(object);
-		return new Gson().toJson(jsonTranslator.makeMirrorObject((GameModel)object));
+		return new Gson().toJson(object);
+		//return new Gson().toJson(jsonTranslator.makeMirrorObject((GameModel)object));
 	}
 }

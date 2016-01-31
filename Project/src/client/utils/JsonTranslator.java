@@ -2,10 +2,12 @@ package client.utils;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import shared.communication.response.LoginResponse;
 import shared.definitions.*;
 import shared.locations.*;
 
@@ -13,6 +15,9 @@ public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
 		return new MirrorGameModel(gameModel);
+	}
+	public LoginResponse makeLoginResponse(String json){
+		return new Gson().fromJson(json, LoginResponse.class);
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();

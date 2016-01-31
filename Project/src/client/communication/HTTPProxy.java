@@ -83,15 +83,24 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doGet(String urlPath) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
-		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http", hostName, portNumber,  urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
-		
+		String result = null;
+		if (conn.getResponseCode() < 400) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			result = in.readLine();
+			in.close();
+		} else {
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+			result = in.readLine();
+			in.close();
+		}
+		response.setResponseBody(result);
 		response.setResponseCode(conn.getResponseCode());
-		Object result = xstream.fromXML(conn.getInputStream());
-		response.setResponseBody(result.toString());
+		
+		
 		return response;
 	}
 	/**

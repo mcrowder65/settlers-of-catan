@@ -167,6 +167,12 @@ public class GameMapTest {
 		location1 = new HexLocation(0,5);
 		isLand1 = map.isLand(location1);
 		assertTrue(isLand1 == false);
+		
+		location1 = new HexLocation(1,-3);
+		isLand1 = map.isLand(location1);
+		assertTrue(isLand1 == false);
+		
+		
 	}
 	
 	@Test
@@ -542,10 +548,114 @@ public class GameMapTest {
 		map.laySettlement(settlement6);
 		assertTrue(map.getSettlements().length == 9);
 		
-		
-		
-		
+
 	}
 	
+	@Test
+	public void canBuildCityTest(){
+		GameMap map = new GameMap();
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthWest);
+		VertexObject settlement = new VertexObject(0,location);
+		
+		boolean canBuild = map.canBuildSettlement(settlement);
+		assertTrue(canBuild == false);
+		
+		EdgeLocation local = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road1 = new EdgeValue(0,local);
+		map.buildRoad(road1);
+		
+		EdgeLocation local2 = new EdgeLocation(homeHexLoc, EdgeDirection.NorthEast);
+		EdgeValue road2 = new EdgeValue(0,local2);
+		map.buildRoad(road2);
+		assertTrue(map.getRoads().length == 4);
+	
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		
+		canBuild = false;
+		VertexLocation location2 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement2 = new VertexObject(0,location2);
+		canBuild = map.canBuildSettlement(settlement2);
+		assertTrue(canBuild == true);
+		map.laySettlement(settlement2);
+		assertTrue(map.getSettlements().length == 6);
+		
+		
+		VertexLocation location3 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement3 = new VertexObject(0,location3);
+		canBuild = map.canBuildSettlement(settlement3);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		VertexLocation location4 = new VertexLocation(homeHexLoc, VertexDirection.East);
+		VertexObject settlement4 = new VertexObject(1,location4);
+		canBuild = map.canBuildSettlement(settlement4);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		VertexLocation location5 = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		VertexObject settlement5 = new VertexObject(0,location5);
+		canBuild = map.canBuildSettlement(settlement5);
+		assertTrue(canBuild == false);
+		
+		EdgeLocation local3 = new EdgeLocation(hex3Loc, EdgeDirection.SouthEast);
+		EdgeValue road3 = new EdgeValue(0,local3);
+		boolean canBuildRd = map.canLayRoad(road3);
+		assertTrue(canBuildRd == true);
+		map.buildRoad(road3);
+		assertTrue(map.getRoads().length == 6);
+		
+		canBuild = true;
+		canBuild = map.canBuildSettlement(settlement5);
+		assertTrue(canBuild == false);
+		
+		
+		VertexLocation location6 = new VertexLocation(hex7Loc, VertexDirection.SouthWest);
+		VertexObject settlement6 = new VertexObject(0,location6);
+		canBuild = map.canBuildSettlement(settlement6);
+		assertTrue(canBuild == true);
+		
+		map.laySettlement(settlement6);
+		assertTrue(map.getSettlements().length == 9);
+		
+		boolean canBuildCty = map.canBuildCity(settlement6);
+		assertTrue(canBuildCty == true);
+		
+		map.layCity(settlement6);
+		canBuildCty = map.canBuildCity(settlement6);
+		assertTrue(canBuildCty == false);
+		
+		VertexLocation location7 = new VertexLocation(hex9Loc, VertexDirection.NorthEast);
+		VertexObject settlement7 = new VertexObject(0,location7);
+		
+		canBuildCty = map.canBuildCity(settlement7);
+		assertTrue(canBuildCty == false);
+		
+	}
 	
 }

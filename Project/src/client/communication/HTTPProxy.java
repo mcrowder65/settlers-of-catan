@@ -105,7 +105,6 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
-		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -119,8 +118,7 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
 		System.out.println("response code: " + conn.getResponseCode());
-		
-
+	
 		
 		String result = null;
 		if (conn.getResponseCode() < 400) {
@@ -136,28 +134,6 @@ public class HTTPProxy implements IProxy{
 		response.setResponseBody(result);
 		return response;
 	}
-//	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
-//		HTTPJsonResponse response = new HTTPJsonResponse();
-//		URL url = new URL("http://" + hostName + ":" + Integer.toString(portNumber) + urlPath);
-//		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-//		connection.setRequestMethod("POST");
-//		connection.setDoOutput(true);
-//		connection.connect();
-//		String serialized = Translator.objectToJson(requestBody);
-//		connection.getOutputStream().write(serialized.getBytes());
-//		connection.getOutputStream().close();
-//		if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//			InputStream result = connection.getInputStream();
-//			return serializer.deserialize(result);
-//		} else {
-//			throw new Exception(String.format("doPost failed: %s (http code %d)",
-//					path, connection.getResponseCode()));
-//		}
-//		response.setResponseCode(connection.getResponseCode());
-//		InputStream result = connection.getInputStream();
-//		//response.setResponseBody();
-//		return response;
-//	}
 	/**
 	 * 
 	 * @param cookie

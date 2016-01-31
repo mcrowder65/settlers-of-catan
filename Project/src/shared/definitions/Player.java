@@ -371,6 +371,10 @@ public class Player {
 		if(brick >0 && wood>0){
 			return true;
 		}
+		int roadBuildingCard = oldDevCards.getRoadBuilding();
+		if(roadBuildingCard > 0){
+			return true;
+		}
 		
 		return false;
 	}
@@ -396,6 +400,53 @@ public class Player {
 		}
 		return false;
 	}
+	
+	public boolean canBuyDevCard(){
+		int ore = resources.getOre();
+		int sheep = resources.getSheep();
+		int grain = resources.getWheat();
+		if(ore>0 && sheep>0 && grain >0){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean canPlayRoadBuilding(){
+		int roadBuildingCard = oldDevCards.getRoadBuilding();
+		if(roadBuildingCard > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canPlayYearOfPlentyCard(){
+		int yopCard = oldDevCards.getYearOfPlenty();
+		if(yopCard > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canPlayMonopolyCard(){
+		int monopolyCard = oldDevCards.getMonopoly();
+		if(monopolyCard > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canPlaySoldierCard(){
+		int soldierCard = oldDevCards.getSoldier();
+		if(soldierCard > 0){
+			return true;
+		}
+		return false;
+	}
+	
+
+	
+	
 	
 	
 }

@@ -27,7 +27,7 @@ public class Response {
 		{
 			success = false;
 			try {
-			//TODO: Set error message here
+				errorMessage = json;
 			} catch (Exception e) {
 				throw new IllegalArgumentException("Server returned a 400 but the response body was not a valid error message.");
 			}

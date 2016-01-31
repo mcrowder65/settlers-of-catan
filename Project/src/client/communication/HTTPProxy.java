@@ -1,7 +1,9 @@
 package client.communication;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -103,11 +105,12 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
-		//XStream xstream = new XStream(new DomDriver());
+		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
+		conn.setDoInput(true);
 		conn.setDoOutput(true);
 		
 		conn.connect();
@@ -116,8 +119,21 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
 		System.out.println("response code: " + conn.getResponseCode());
+		
+
+		
+		String result = null;
+		if (conn.getResponseCode() < 400) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			result = in.readLine();
+			in.close();
+		} else {
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+			result = in.readLine();
+			in.close();
+		}
 		response.setResponseCode(conn.getResponseCode());
-		response.setResponseBody(json);
+		response.setResponseBody(result);
 		return response;
 	}
 //	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
@@ -168,7 +184,7 @@ public class HTTPProxy implements IProxy{
 	private Response sendCommand(MoveCommand command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
-			httpResponse =  doPost("moves/" +command.getMoveType(), command.toString());
+			httpResponse =  doPost("/moves/" +command.getMoveType(), command.toString());
 		} 
 		catch (IOException e) 
 		{

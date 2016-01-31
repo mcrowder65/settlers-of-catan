@@ -444,6 +444,63 @@ public class Player {
 		return false;
 	}
 	
+	public boolean canPlayMonumentCard(){
+		int monumentCard = oldDevCards.getMonument();
+		monumentCard = monumentCard + newDevCards.getMonument();
+		if(monumentCard > 0){
+			int totalPoints = victoryPoints + monumentCard;
+			if(totalPoints >= 10){
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
+	public boolean canPlayDevCard(){
+		if(this.playedDevCard == true){
+			return false;
+		}
+		int devCards = oldDevCards.getMonument() + oldDevCards.getSoldier() + oldDevCards.getMonopoly() + oldDevCards.getRoadBuilding() + oldDevCards.getYearOfPlenty();
+		if(devCards > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canAcceptTrade(ResourceList offer){
+		int brickWanted = offer.getBrick();
+		int sheepWanted = offer.getSheep();
+		int woodWanted = offer.getWood();
+		int oreWanted = offer.getOre();
+		int wheatWanted = offer.getWheat();
+		int brick = resources.getBrick();
+		int sheep = resources.getSheep();
+		int wood = resources.getWood();
+		int ore = resources.getOre();
+		int wheat = resources.getWheat();
+		
+		if(brick >= brickWanted && sheep >= sheepWanted && wood>=woodWanted && ore>=oreWanted && wheat>=wheatWanted){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canOfferTrade(){
+		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();
+		if(total > 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canDiscardCards(){
+		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();
+		if(total > 0){
+			return true;
+		}
+		return false;
+	}
 
 	
 	

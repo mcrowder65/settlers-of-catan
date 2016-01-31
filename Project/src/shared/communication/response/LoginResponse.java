@@ -19,9 +19,12 @@ public class LoginResponse extends Response {
 		super(responseCode, json);
 		if (success) 
 		{
-			LoginResponse response = Translator.jsonToLoginResponse(json);
+			LoginResponse response = (LoginResponse) Translator.makeGenericObject(json, new LoginResponse());
 			this.name = response.name;
 		}
 		
+	}
+	public LoginResponse() {
+		// TODO Auto-generated constructor stub
 	}
 }

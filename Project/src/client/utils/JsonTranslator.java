@@ -16,8 +16,8 @@ public class JsonTranslator {
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
 		return new MirrorGameModel(gameModel);
 	}
-	public LoginResponse makeLoginResponse(String json){
-		return new Gson().fromJson(json, LoginResponse.class);
+	public Object makeGenericObject(String json, Object object){
+		return new Gson().fromJson(json, object.getClass());
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();

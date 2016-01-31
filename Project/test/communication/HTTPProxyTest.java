@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import client.communication.HTTPProxy;
-import shared.communication.response.LoginResponse;
+import client.communication.*;
+import shared.communication.response.RegisterResponse;
 
 public class HTTPProxyTest {
 
@@ -28,20 +28,20 @@ public class HTTPProxyTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testLogin(){
-		HTTPProxy httpProxy = new HTTPProxy(2, 
-				"localhost", 8081);
-		LoginResponse response = httpProxy.login("matt", "crowder");
-		System.out.println("login test");
-	}
 //	@Test
-//	public void testRegister(){
+//	public void testLogin(){
 //		HTTPProxy httpProxy = new HTTPProxy(2, 
 //				"localhost", 8081);
-//		
-//		RegisterResponse response = httpProxy.register("matt", "crowder");
-//		System.out.println("register test");
+//		LoginResponse response = httpProxy.login("matt", "crowder");
+//		System.out.println("login test");
 //	}
+	@Test
+	public void testRegister(){
+		HTTPProxy httpProxy = new HTTPProxy(2, 
+				"localhost", 8081);
+		
+		RegisterResponse response = httpProxy.register("matt", "crowder");
+		System.out.println("register test");
+	}
 	
 }

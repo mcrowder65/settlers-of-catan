@@ -23,8 +23,8 @@ public class Translator {
 	public static <T> T jsonToObject(String json) throws IllegalArgumentException  {
 		return (T) jsonTranslator.makeObject(json);
 	}
-	public static LoginResponse jsonToLoginResponse(String json) throws IllegalArgumentException {
-		return jsonTranslator.makeLoginResponse(json);
+	public static Object makeGenericObject(String json, Object object) throws IllegalArgumentException {
+		return jsonTranslator.makeGenericObject(json,  object);
 	}
 	/**
 	 * Converts the object to its JSON representation.

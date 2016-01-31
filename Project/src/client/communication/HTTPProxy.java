@@ -1,9 +1,7 @@
 package client.communication;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -83,24 +81,15 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doGet(String urlPath) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
+		XStream xstream = new XStream(new DomDriver());
 		URL url = new URL("http", hostName, portNumber,  urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
-		String result = null;
-		if (conn.getResponseCode() < 400) {
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-			result = in.readLine();
-			in.close();
-		} else {
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-			result = in.readLine();
-			in.close();
-		}
-		response.setResponseBody(result);
+		
 		response.setResponseCode(conn.getResponseCode());
-		
-		
+		Object result = xstream.fromXML(conn.getInputStream());
+		response.setResponseBody(result.toString());
 		return response;
 	}
 	/**
@@ -114,11 +103,11 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
+		
 		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
-		conn.setDoInput(true);
 		conn.setDoOutput(true);
 		
 		conn.connect();
@@ -126,23 +115,11 @@ public class HTTPProxy implements IProxy{
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
-		System.out.println("response code: " + conn.getResponseCode());
-	
-		
-		String result = null;
-		if (conn.getResponseCode() < 400) {
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-			result = in.readLine();
-			in.close();
-		} else {
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-			result = in.readLine();
-			in.close();
-		}
 		response.setResponseCode(conn.getResponseCode());
-		response.setResponseBody(result);
+		response.setResponseBody(json);
 		return response;
 	}
+
 	/**
 	 * 
 	 * @param cookie
@@ -164,12 +141,11 @@ public class HTTPProxy implements IProxy{
 	public String getServerURL() {
 		
 		return "http://" + hostName + ":" + portNumber + "/";
-	}
-	
-	private Response sendCommand(MoveCommand command)  {
+	}	
+	private Response sendCommand(String method, Object command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
-			httpResponse =  doPost("/moves/" +command.getMoveType(), command.toString());
+			httpResponse =  doPost(method, command);
 		} 
 		catch (IOException e) 
 		{
@@ -178,45 +154,23 @@ public class HTTPProxy implements IProxy{
 		}
 		return new Response(httpResponse.getResponseCode(), httpResponse.getResponseBody());
 	}
-	
-
 	@Override
 	public Response sendChat(String content) {
-		SendChatCommand command = new SendChatCommand(playerIndex, content);
-		return sendCommand(command);
-	}
-	private LoginResponse sendCommand(LoginRequest command)  {
-		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
-		try {
-			httpResponse =  doPost("/user/login", command);
-		} 
-		catch (IOException e) 
-		{
-			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
-			httpResponse.setResponseBody(e.getMessage());
-		}
-		return new LoginResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+		//SendChatCommand command = new SendChatCommand(playerIndex, content);
+		//return sendCommand(command);
+		return null;
 	}
 	@Override
 	public LoginResponse login(String username, String password) throws IllegalArgumentException {
-		return sendCommand(new LoginRequest(username, password));
+		Response response = sendCommand("/user/login", new LoginRequest(username, password));
+		return new LoginResponse(response.getResponseCode(), response.getJson());
+
 	}
 	
-	private RegisterResponse sendCommand(RegisterRequest command)  {
-		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
-		try {
-			httpResponse =  doPost("/user/register", command);
-		} 
-		catch (IOException e) 
-		{
-			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
-			httpResponse.setResponseBody(e.getMessage());
-		}
-		return new RegisterResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
-	}
 	@Override
 	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
-		return sendCommand(new RegisterRequest(username, password));
+		Response response = sendCommand("/user/register", new RegisterRequest(username, password));
+		return new RegisterResponse(response.getResponseCode(), response.getJson());
 	}
 	@Override
 	public ListGamesResponse listGames() {

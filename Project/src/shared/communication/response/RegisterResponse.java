@@ -19,9 +19,12 @@ public class RegisterResponse extends Response {
 		super(responseCode, json);
 		if (success) 
 		{
-			RegisterResponse response = Translator.jsonToObject(json);
+			RegisterResponse response = (RegisterResponse) Translator.makeGenericObject(json, new RegisterResponse());
 			this.name = response.name;
 		}
 		
+	}
+	public RegisterResponse() {
+		// TODO Auto-generated constructor stub
 	}
 }

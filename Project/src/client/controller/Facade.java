@@ -368,6 +368,22 @@ public class Facade {
 		return false;
 	}
 	
+	/**
+	 * This method determines if the user can send a chat
+	 * @return True if the message can be sent
+	 */
+	public boolean canSendChat(){
+		return true;
+	}
+	
+	/**
+	 * This method determines if the user can accept a trade
+	 * @return
+	 */
+	public boolean canAcceptTrade(){
+		return true;
+	}
+	
 	
 	//^^^^^^^^^^^^^^^^^^^^  TA'S   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	//*******************************************************

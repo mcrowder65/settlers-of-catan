@@ -22,14 +22,29 @@ public class JsonTranslator {
 		return new Gson().fromJson(json, object.getClass());
 	}
 	public List<GameInfo> makeListOfGames(String json){
-//		private int id;
-//		private String title;
-//		private List<PlayerInfo> players;
-		
 		JsonParser parser = new JsonParser();
-		
-		
-		return null;
+		JsonArray gameArray = (JsonArray) parser.parse(json);
+		List<GameInfo> games = new ArrayList<GameInfo>();
+		for(int i = 0; i < gameArray.size(); i++){
+			GameInfo gameInfo = new GameInfo();
+			JsonObject temp = gameArray.get(i).getAsJsonObject();
+			String title = temp.get("title").getAsString();
+			int id = temp.get("id").getAsInt();
+			List<Player> playerArray = new ArrayList<Player>();
+			JsonArray jsPlayerArray = temp.get("players").getAsJsonArray();
+			for(int x = 0; x < jsPlayerArray.size(); x++){
+				JsonObject jsPlayer = jsPlayerArray.get(i).getAsJsonObject();
+				
+				CatanColor color = getCatanColor(jsPlayer.get("color").getAsString());
+				String name = jsPlayer.get("name").getAsString();
+				int playerID = jsPlayer.get("id").getAsInt();
+				gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
+			}
+			gameInfo.setTitle(title);
+			gameInfo.setId(id);
+			games.add(gameInfo);
+		}
+		return games;
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();

@@ -82,6 +82,11 @@ public class Player {
 		
 	
 	}
+	public Player(CatanColor color, String name, int playerID){
+		this.color = color;
+		this.name = new String(name);
+		this.playerID = playerID;
+	}
 	public Player(){
 		
 	}

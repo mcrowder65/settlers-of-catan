@@ -29,7 +29,11 @@ public class PlayerInfo
 		setName("");
 		setColor(CatanColor.WHITE);
 	}
-	
+	public PlayerInfo(int id, String name, CatanColor color){
+		this.id = id;
+		this.name = new String(name);
+		this.color = color;
+	}
 	public int getId()
 	{
 		return id;

@@ -5,14 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import client.main.Catan;
 import client.utils.Translator;
 import shared.communication.request.*;
 import shared.communication.response.*;
@@ -87,6 +91,7 @@ public class HTTPProxy implements IProxy{
 		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		
 		conn.setRequestMethod("GET");
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
@@ -107,6 +112,10 @@ public class HTTPProxy implements IProxy{
 		response.setResponseBody(result);
 		return response;
 	}
+	@SuppressWarnings("static-access")
+	public String decodeCookie(String encodedCookie) throws UnsupportedEncodingException{
+		return new URLDecoder().decode(encodedCookie, "UTF-8");
+	}
 	/**
 	 * Sends a POST request.
 	 * @param urlPath
@@ -116,6 +125,7 @@ public class HTTPProxy implements IProxy{
 	 * @return
 	 * Returns the server's response.
 	 */
+	@SuppressWarnings("static-access")
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
 		
@@ -123,6 +133,10 @@ public class HTTPProxy implements IProxy{
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
+		if(urlPath.indexOf("/games/join") != -1){
+
+			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
+		}
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
 		conn.connect();
@@ -130,6 +144,15 @@ public class HTTPProxy implements IProxy{
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
+		if(conn.getHeaderField("Set-cookie") != null){
+			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
+
+			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
+			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
+			setUserCookie(encodedCookie);
+			System.out.println(this.userCookie);
+		}
+		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
 			 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -153,6 +176,7 @@ public class HTTPProxy implements IProxy{
 	 * Throws this exception if the cookie is invalid.
 	 */
 	private void setUserCookie(String cookie) throws IllegalArgumentException {
+		this.userCookie = cookie;
 	}
 	/**
 	 * 
@@ -161,7 +185,7 @@ public class HTTPProxy implements IProxy{
 	 * Throws this exception if the cookie is invalid.
 	 */
 	private void setGameCookie(String cookie) throws IllegalArgumentException {
-	
+		this.gameCookie = cookie;
 	}
 	
 	

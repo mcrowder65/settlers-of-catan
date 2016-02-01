@@ -11,9 +11,10 @@ import client.communication.*;
 import client.utils.Translator;
 import shared.communication.response.*;
 public class HTTPProxyTest {
-	HTTPProxy httpProxy;
+	static HTTPProxy httpProxy;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		httpProxy = new HTTPProxy(2, "localhost", 8081);
 	}
 
 	@AfterClass
@@ -22,7 +23,7 @@ public class HTTPProxyTest {
 
 	@Before
 	public void setUp() throws Exception {
-	httpProxy = new HTTPProxy(2, "localhost", 8081);
+	
 	}
 
 	@After
@@ -33,7 +34,7 @@ public class HTTPProxyTest {
 		CreateGameResponse response = httpProxy.createGame("matt", false, false, false);
 		System.out.println("creategame: " + response.getResponseCode());
 	}
-	//@Test
+	@Test
 	public void testLogin(){
 		LoginResponse response = httpProxy.login("matt", "crowder");
 		System.out.println("login test");
@@ -52,7 +53,7 @@ public class HTTPProxyTest {
 	
 	@Test
 	public void testJoinGame(){
-		JoinGameResponse response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("RED"));
+		JoinGameResponse response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("puce"));
 		System.out.println("test join game");
 	}
 }

@@ -21,7 +21,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public LoginResponse login(String username, String password)throws IllegalArgumentException ;
+	public Response login(String username, String password)throws IllegalArgumentException ;
 	/**
 	 * Registers a new player.
 	 * @param username
@@ -29,7 +29,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public RegisterResponse register(String username, String password)throws IllegalArgumentException ;
+	public Response register(String username, String password)throws IllegalArgumentException ;
 	/**
 	 * Lists the current games
 	 * @return

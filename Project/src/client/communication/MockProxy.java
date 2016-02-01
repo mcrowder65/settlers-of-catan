@@ -8,8 +8,6 @@ import shared.communication.response.GetModelResponse;
 import shared.communication.response.JoinGameResponse;
 import shared.communication.response.ListAIResponse;
 import shared.communication.response.ListGamesResponse;
-import shared.communication.response.LoginResponse;
-import shared.communication.response.RegisterResponse;
 import shared.communication.response.Response;
 import shared.definitions.CatanColor;
 import shared.definitions.LogLevel;
@@ -55,12 +53,12 @@ public class MockProxy implements IProxy {
 		
 	}
 	@Override
-	public LoginResponse login(String username, String password) throws IllegalArgumentException {
+	public Response login(String username, String password) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
+	public Response register(String username, String password) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -458,7 +458,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseRoadBuilder(int playerIndex){
-		boolean isTurn = false;
+		boolean isTurn = true;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){

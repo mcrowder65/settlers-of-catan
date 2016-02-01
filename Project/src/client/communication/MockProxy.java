@@ -25,37 +25,15 @@ import shared.locations.VertexLocation;
  */
 public class MockProxy implements IProxy {
 
-	/**
-	 * A list of hardcoded server responses to return.
-	 */
-	private String[] responses;
-	
-	/**
-	 * Loads the hardcoded server responses from the file.
-	 * @param filename
-	 * The name of the file.
-	 */
-	private void loadResponses(String filename) {
-		
-	
-	}
-	
-	
-	
 	
 	/**
 	 * Constructs a new MockProxy instance.
-	 * @param filename
-	 * The name of the file to load hardcoded server responses from.
 	 */
-	public MockProxy(String filename) {
-		
-		
+	public MockProxy() {
 	}
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response();
 	}
 	@Override
 	public Response register(String username, String password) throws IllegalArgumentException {

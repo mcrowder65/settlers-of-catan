@@ -82,6 +82,9 @@ public class Player {
 		
 	
 	}
+	public Player(){
+		
+	}
 	
 	/**
 	 * Player Constructor
@@ -379,6 +382,128 @@ public class Player {
 		return false;
 	}
 	
+	public void addRoad(){
+		roads++;
+	}
+	public void addSettlement(){
+		settlements++;
+	}
+	public void addCity(){
+		cities++;
+	}
+
+	public void removeSettlement(){
+		settlements = settlements -1;
+	}
+	
+	public boolean hasMoreThanSeven(){
+		int brick = resources.getBrick();
+		int wood = resources.getWood();
+		int sheep = resources.getSheep();
+		int grain = resources.getWheat();
+		int ore = resources.getOre();
+		
+		int total = brick + wood + sheep + grain + ore;
+		if(total > 7){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void removeOldDevCard(DevCardList devCard){
+		int soldier = oldDevCards.getSoldier();
+		int monument = oldDevCards.getMonument();
+		int monopoly = oldDevCards.getMonopoly();
+		int roadBuilding = oldDevCards.getRoadBuilding();
+		int yearOfPlenty = oldDevCards.getYearOfPlenty();
+		
+		int newSoldier = devCard.getSoldier();
+		int newMonument = devCard.getMonument();
+		int newMonopoly = devCard.getMonopoly();
+		int newRoadBuilding = devCard.getRoadBuilding();
+		int newYearOfPlenty = devCard.getYearOfPlenty();
+		
+		if(newSoldier > 0){
+			soldier = soldier -1;
+			oldDevCards.setSoldier(soldier);
+		
+		}
+		if(newMonument > 0){
+			monument = monument -1;
+			oldDevCards.setMonument(monument);
+		}
+		if(newMonopoly > 0){
+			monopoly = monopoly -1;
+			oldDevCards.setMonument(monopoly);
+		}
+		if(newRoadBuilding > 0){
+			roadBuilding = roadBuilding -1;
+			oldDevCards.setMonument(roadBuilding);
+		}
+		if(newYearOfPlenty > 0){
+			yearOfPlenty = yearOfPlenty -1;
+			oldDevCards.setMonument(yearOfPlenty);
+		}
+		
+	}
+	
+	public void chargeBasicRoad(){
+		int brick = resources.getBrick();
+		int wood = resources.getWood();
+		
+		brick = brick -1;
+		wood = wood -1;
+		resources.setWood(wood);
+		resources.setBrick(brick);
+		
+	}
+	
+	public void chargeBasicSettlement(){
+		int brick = resources.getBrick();
+		int wood = resources.getWood();
+		int sheep = resources.getSheep();
+		int grain = resources.getWheat();
+		
+		brick = brick -1;
+		wood = wood -1;
+		sheep = sheep -1;
+		grain = grain -1;
+		
+		resources.setBrick(brick);
+		resources.setWood(wood);
+		resources.setSheep(sheep);
+		resources.setWheat(grain);
+			
+	}
+	
+	public void chargeBasicCity(){
+		int ore = resources.getOre();
+		int wheat = resources.getWheat();
+		
+		ore = ore -3;
+		wheat = wheat -2;
+		
+		resources.setOre(ore);
+		resources.setWheat(wheat);
+	}
+	
+	public void chargeBasicDevCard(){
+		int ore = resources.getOre();
+		int sheep = resources.getSheep();
+		int wheat = resources.getWheat();
+		
+		ore = ore - 1;
+		sheep = sheep -1;
+		wheat = wheat -1;
+		
+		resources.setOre(ore);
+		resources.setSheep(sheep);
+		resources.setWheat(wheat);
+		
+	}
+	
+	
 	public boolean canBuildSettlement(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
@@ -410,6 +535,33 @@ public class Player {
 		}
 		
 		return false;
+	}
+	
+	public void addDevCard(DevCardList devCard){
+		int soldier = newDevCards.getSoldier();
+		int monument = oldDevCards.getMonument();
+		int monopoly = newDevCards.getMonopoly();
+		int roadBuilding = newDevCards.getRoadBuilding();
+		int yearOfPlenty = newDevCards.getYearOfPlenty();
+		
+		int newSoldier = devCard.getSoldier();
+		int newMonument = devCard.getMonument();
+		int newMonopoly = devCard.getMonopoly();
+		int newRoadBuilding = devCard.getRoadBuilding();
+		int newYearOfPlenty = devCard.getYearOfPlenty();
+		
+		soldier = soldier + newSoldier;
+		monument = monument + newMonument;
+		monopoly = monopoly + newMonopoly;
+		roadBuilding = roadBuilding + newRoadBuilding;
+		yearOfPlenty = yearOfPlenty + newYearOfPlenty;
+		
+		newDevCards.setSoldier(soldier);
+		oldDevCards.setMonument(monument);
+		newDevCards.setMonopoly(monopoly);
+		newDevCards.setRoadBuilding(roadBuilding);
+		newDevCards.setYearOfPlenty(yearOfPlenty);
+			
 	}
 	
 	public boolean canPlayRoadBuilding(){
@@ -468,6 +620,46 @@ public class Player {
 		return false;
 	}
 	
+	public void playSoldierCard(){
+		int soldierCard = oldDevCards.getSoldier();
+		oldDevCards.setSoldier(soldierCard-1);
+	}
+	public void playMonopolyCard(){
+		int monopolyCard = oldDevCards.getMonopoly();
+		oldDevCards.setMonopoly(monopolyCard-1);
+	}
+	public void playYearOfPlentyCard(){
+		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
+		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
+	}
+	
+	
+	public void updateOldDevCard(){
+		int soldier = oldDevCards.getSoldier();
+		int monument = oldDevCards.getMonument();
+		int monopoly = oldDevCards.getMonopoly();
+		int roadBuilding = oldDevCards.getRoadBuilding();
+		int yearOfPlenty = oldDevCards.getYearOfPlenty();
+		int soldierTotal = soldier + newDevCards.getSoldier();
+		int monumentTotal = soldier + newDevCards.getMonument();
+		int monopolyTotal = soldier + newDevCards.getMonopoly();
+		int roadBuildingTotal = soldier + newDevCards.getRoadBuilding();
+		int yopTotal = soldier + newDevCards.getYearOfPlenty();
+		
+		oldDevCards.setSoldier(soldierTotal);
+		oldDevCards.setMonument(monumentTotal);
+		oldDevCards.setMonopoly(monopolyTotal);
+		oldDevCards.setRoadBuilding(roadBuildingTotal);
+		oldDevCards.setYearOfPlenty(yopTotal);
+		
+		newDevCards.setSoldier(0);
+		newDevCards.setMonument(0);
+		newDevCards.setMonopoly(0);
+		newDevCards.setRoadBuilding(0);
+		newDevCards.setYearOfPlenty(0);
+		
+	}
+	
 	public boolean canAcceptTrade(ResourceList offer){
 		int brickWanted = offer.getBrick();
 		int sheepWanted = offer.getSheep();
@@ -495,13 +687,66 @@ public class Player {
 	}
 	
 	public boolean canDiscardCards(){
+
 		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();
 		if(total > 0){
 			return true;
 		}
 		return false;
 	}
-
+	
+	public void removeResourceCards(ResourceList resourceList){
+		int brick = resources.getBrick();
+		int sheep = resources.getSheep();
+		int ore = resources.getOre();
+		int wood = resources.getWood();
+		int wheat = resources.getWheat();
+		
+		int brickTemp = resourceList.getBrick();
+		int sheepTemp = resourceList.getSheep();
+		int oreTemp = resourceList.getOre();
+		int woodTemp = resourceList.getWood();
+		int wheatTemp = resourceList.getWheat();
+		
+		brick = brick - brickTemp;
+		sheep = sheep - sheepTemp;
+		ore = ore - oreTemp;
+		wood = wood - woodTemp;
+		wheat = wheat - wheatTemp;
+		
+		resources.setBrick(brick);
+		resources.setSheep(sheep);
+		resources.setOre(ore);
+		resources.setWood(wood);
+		resources.setWheat(wheat);
+		
+	}
+	
+	public void addResourceCards(ResourceList resourceList){
+		int brick = resources.getBrick();
+		int sheep = resources.getSheep();
+		int ore = resources.getOre();
+		int wood = resources.getWood();
+		int wheat = resources.getWheat();
+		
+		int brickTemp = resourceList.getBrick();
+		int sheepTemp = resourceList.getSheep();
+		int oreTemp = resourceList.getOre();
+		int woodTemp = resourceList.getWood();
+		int wheatTemp = resourceList.getWheat();
+		
+		brick = brick + brickTemp;
+		sheep = sheep + sheepTemp;
+		ore = ore + oreTemp;
+		wood = wood + woodTemp;
+		wheat = wheat + wheatTemp;
+		
+		resources.setBrick(brick);
+		resources.setSheep(sheep);
+		resources.setOre(ore);
+		resources.setWood(wood);
+		resources.setWheat(wheat);
+	}
 	
 	
 	

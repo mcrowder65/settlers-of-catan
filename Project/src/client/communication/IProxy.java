@@ -74,7 +74,7 @@ public interface IProxy {
  * @return
  * Returns the server's response.
  */
-	public Response saveGame(String fileName)throws IllegalArgumentException ;
+	public Response saveGame(int id, String fileName)throws IllegalArgumentException ;
 	/**
 	 * Resets the command history of the current game.
 	 * @return

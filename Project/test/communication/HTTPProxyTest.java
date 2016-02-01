@@ -34,11 +34,11 @@ public class HTTPProxyTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-//	@Test
-//	public void atestRegister(){
-//		RegisterResponse response = httpProxy.register("matt", "crowder");
-//		System.out.println("register test");
-//	}
+	//@Test
+	public void atestRegister(){
+		RegisterResponse response = httpProxy.register("matt", "crowder");
+		System.out.println("register test");
+	}
 	@Test
 	public void btestLogin(){
 		LoginResponse response = httpProxy.login("matt", "crowder");
@@ -59,6 +59,11 @@ public class HTTPProxyTest {
 	public void etestListGames(){
 		ListGamesResponse response = httpProxy.listGames();
 		System.out.println("list games response");
+	}
+	@Test
+	public void ftestSaveGame(){
+		Response response = httpProxy.saveGame(4, "hello");
+		System.out.println("save game test");
 	}
 	
 	

@@ -135,7 +135,6 @@ public class HTTPProxy implements IProxy{
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
 		if(urlPath.indexOf("/games/join") != -1){
-
 			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
 		}
 		conn.setDoOutput(true);
@@ -147,11 +146,9 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().close();
 		if(conn.getHeaderField("Set-cookie") != null){
 			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
-
 			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
 			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
 			setUserCookie(encodedCookie);
-			System.out.println(this.userCookie);
 		}
 		
 		String result = null;
@@ -246,8 +243,9 @@ public class HTTPProxy implements IProxy{
 		return null;
 	}
 	@Override
-	public Response saveGame(String fileName) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public Response saveGame(int id, String filename) throws IllegalArgumentException {
+		//Response response = sendCommand(new )
+		Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
 		return null;
 	}
 	@Override

@@ -80,7 +80,7 @@ public class MockProxy implements IProxy {
 		return null;
 	}
 	@Override
-	public Response saveGame(String fileName) throws IllegalArgumentException {
+	public Response saveGame(int id, String fileName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

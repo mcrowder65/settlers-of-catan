@@ -126,7 +126,6 @@ public class HTTPProxy implements IProxy{
 	 * @return
 	 * Returns the server's response.
 	 */
-	@SuppressWarnings("static-access")
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
 		
@@ -134,8 +133,11 @@ public class HTTPProxy implements IProxy{
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
-		if(urlPath.indexOf("/games/join") != -1){
+		if(this.userCookie != null) {
 			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
+		}
+		if(this.gameCookie != null) {
+			conn.setRequestProperty("Cookie", "catan.game=" + this.gameCookie);
 		}
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
@@ -191,10 +193,10 @@ public class HTTPProxy implements IProxy{
 		
 		return "http://" + hostName + ":" + portNumber + "/";
 	}	
-	private Response sendCommand(String method, Object command)  {
+	private Response sendCommand(MoveCommand command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
-			httpResponse = (command == null) ? doGet(method) : doPost(method, command);
+			httpResponse = doPost("/moves/" + command.getMoveType(), command);
 		} 
 		catch (IOException e) 
 		{
@@ -203,50 +205,59 @@ public class HTTPProxy implements IProxy{
 		}
 		return new Response(httpResponse.getResponseCode(), httpResponse.getResponseBody());
 	}
+	private HTTPJsonResponse sendRequest(String path, Request request) {
+		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
+		try {
+			httpResponse = request == null ? doGet(path) : doPost(path, request);
+		} 
+		catch (IOException e) 
+		{
+			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
+			httpResponse.setResponseBody(e.getMessage());
+		}
+		return httpResponse;
+	}
 	@Override
 	public Response sendChat(String content) {
-		//SendChatCommand command = new SendChatCommand(playerIndex, content);
-		//return sendCommand(command);
-		return null;
+		SendChatCommand command = new SendChatCommand(playerIndex, content);
+		 return sendCommand(command);
+		
 	}
 	@Override
-	public LoginResponse login(String username, String password) throws IllegalArgumentException {
-		Response response = sendCommand("/user/login", new LoginRequest(username, password));
-		return new LoginResponse(response.getResponseCode(), response.getJson());
-
+	public Response login(String username, String password) throws IllegalArgumentException {
+		HTTPJsonResponse response = sendRequest("/user/login", new LoginRequest(username, password));
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
-	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
-		Response response = sendCommand("/user/register", new RegisterRequest(username, password));
-		return new RegisterResponse(response.getResponseCode(), response.getJson());
+	public Response register(String username, String password) throws IllegalArgumentException {
+		HTTPJsonResponse response = sendRequest("/user/register", new RegisterRequest(username, password));
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public ListGamesResponse listGames() {
-		Response response = sendCommand("/games/list", null);
-		return new ListGamesResponse(response.getResponseCode(), response.getJson());
+		HTTPJsonResponse response = sendRequest("/games/list", null);
+		return new ListGamesResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {
-		Response response = sendCommand("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
-		return new CreateGameResponse(response.getResponseCode(), response.getJson());
+		HTTPJsonResponse response = sendRequest("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
+		return new CreateGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
-		Response response = sendCommand("/games/join", new JoinGameRequest(id, color));
-		int responseCode = response.getResponseCode();
-		String json = response.getJson();
-		return new JoinGameResponse(responseCode, json);
+		HTTPJsonResponse response = sendRequest("/games/join", new JoinGameRequest(id, color));
+		return new JoinGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {
-		Response response = sendCommand("/games/load", new LoadGameRequest(name));
-		return response;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
 		//Response response = sendCommand(new )
 		Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
-		return response;
+		return null;
 	}
 	@Override
 	public GetModelResponse reset() {

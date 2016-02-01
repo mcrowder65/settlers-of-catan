@@ -23,7 +23,7 @@ public class Poller extends Observable {
 	 * The internal timer for the poller.
 	 */
 	private Timer timer;
-	private boolean isPolling;
+	private boolean polling;
 	
 	private PollingTask pollingTask;
 	/**
@@ -77,7 +77,7 @@ public class Poller extends Observable {
 	public Poller(IProxy proxy, int interval) throws IllegalArgumentException {
 		setProxy(proxy);
 		setInterval(interval);
-		isPolling = false;
+		polling = false;
 		
 	}
 	
@@ -105,7 +105,7 @@ public class Poller extends Observable {
 	public void setInterval(int interval) throws IllegalArgumentException {
 			if (interval <= 0) throw new IllegalArgumentException("Interval cannot be less than or equal to 0");
 			
-			if (isPolling) 
+			if (polling) 
 			{
 				stopPolling();
 				this.interval = interval;
@@ -124,8 +124,8 @@ public class Poller extends Observable {
 	 * Begins the poller.
 	 */
 	public void startPolling() {
-		if (isPolling) return;
-		isPolling = true;
+		if (polling) return;
+		polling = true;
 		timer = new Timer();
 		pollingTask = new PollingTask();
 		timer.schedule(pollingTask, interval * 1000);
@@ -135,10 +135,12 @@ public class Poller extends Observable {
 	 * Stops the poller.
 	 */
 	public void stopPolling() {
-		if (!isPolling) return;
-		isPolling = false;
+		if (!polling) return;
+		polling = false;
 		timer.cancel();
 	}
+	
+	public boolean isPolling() { return polling;}
 	
 	
 }

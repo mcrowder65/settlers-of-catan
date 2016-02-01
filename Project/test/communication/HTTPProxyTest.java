@@ -36,12 +36,12 @@ public class HTTPProxyTest {
 	}
 	//@Test
 	public void atestRegister(){
-		RegisterResponse response = httpProxy.register("matt", "crowder");
+		Response response = httpProxy.register("matt", "crowder");
 		System.out.println("register test");
 	}
 	@Test
 	public void btestLogin(){
-		LoginResponse response = httpProxy.login("matt", "crowder");
+		Response response = httpProxy.login("Eric", "S");
 		System.out.println("login test");
 	}
 	@Test

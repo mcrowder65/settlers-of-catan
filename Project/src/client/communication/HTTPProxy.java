@@ -256,7 +256,7 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
 		//Response response = sendCommand(new )
-		Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
+		//Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
 		return null;
 	}
 	@Override

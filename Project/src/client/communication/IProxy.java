@@ -287,6 +287,6 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response changeLogLevel(String loggingLevel)throws IllegalArgumentException ;
+	public Response changeLogLevel(LogLevel loggingLevel)throws IllegalArgumentException ;
 	
 }

@@ -12,6 +12,7 @@ import shared.communication.response.LoginResponse;
 import shared.communication.response.RegisterResponse;
 import shared.communication.response.Response;
 import shared.definitions.CatanColor;
+import shared.definitions.LogLevel;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
@@ -205,7 +206,7 @@ public class MockProxy implements IProxy {
 		return null;
 	}
 	@Override
-	public Response changeLogLevel(String loggingLevel) throws IllegalArgumentException {
+	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

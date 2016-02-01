@@ -33,12 +33,13 @@ public class JsonTranslator {
 			List<Player> playerArray = new ArrayList<Player>();
 			JsonArray jsPlayerArray = temp.get("players").getAsJsonArray();
 			for(int x = 0; x < jsPlayerArray.size(); x++){
-				JsonObject jsPlayer = jsPlayerArray.get(i).getAsJsonObject();
+				JsonObject jsPlayer = jsPlayerArray.get(x).getAsJsonObject();
 				
-				CatanColor color = getCatanColor(jsPlayer.get("color").getAsString());
-				String name = jsPlayer.get("name").getAsString();
-				int playerID = jsPlayer.get("id").getAsInt();
-				gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
+				CatanColor color = (jsPlayer.has("color")) ? getCatanColor(jsPlayer.get("color").getAsString()) : null;
+				String name = (jsPlayer.has("name")) ? jsPlayer.get("name").getAsString() : null;
+				int playerID = (jsPlayer.has("playerID")) ? jsPlayer.get("id").getAsInt() : -1;
+				if(color != null)
+					gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
 			}
 			gameInfo.setTitle(title);
 			gameInfo.setId(id);

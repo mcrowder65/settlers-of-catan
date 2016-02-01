@@ -10,7 +10,6 @@ public class CreateGameResponse extends Response {
 		super(responseCode, json);
 		if (success) {
 			this.game = (GameInfo) Translator.makeGenericObject(json, new GameInfo());
-			System.out.println("hello");
 		}
 	}
 

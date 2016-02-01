@@ -125,7 +125,6 @@ public class HTTPProxy implements IProxy{
 	 * @return
 	 * Returns the server's response.
 	 */
-	@SuppressWarnings("static-access")
 	private HTTPJsonResponse doPost(String urlPath, Object requestBody) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
 		
@@ -149,8 +148,14 @@ public class HTTPProxy implements IProxy{
 
 			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
 			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
-			setUserCookie(encodedCookie);
-			System.out.println(this.userCookie);
+			if(this.userCookie == null){
+				setUserCookie(encodedCookie);
+			}
+			
+			if(urlPath.indexOf("/games/join") != -1){
+
+				setGameCookie(encodedCookie);
+			}
 		}
 		
 		String result = null;
@@ -166,6 +171,7 @@ public class HTTPProxy implements IProxy{
 		 }
 		response.setResponseCode(conn.getResponseCode());
 		response.setResponseBody(result);
+		System.out.println(result);
 		return response;
 	}
 

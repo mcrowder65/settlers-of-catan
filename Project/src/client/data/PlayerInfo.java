@@ -31,7 +31,7 @@ public class PlayerInfo
 	}
 	public PlayerInfo(int id, String name, CatanColor color){
 		this.id = id;
-		this.name = new String(name);
+		this.name = name;
 		this.color = color;
 	}
 	public int getId()

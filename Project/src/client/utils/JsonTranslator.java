@@ -1,6 +1,7 @@
 package client.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -10,7 +11,8 @@ import com.google.gson.JsonParser;
 import shared.communication.response.LoginResponse;
 import shared.definitions.*;
 import shared.locations.*;
-
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
@@ -18,6 +20,16 @@ public class JsonTranslator {
 	}
 	public Object makeGenericObject(String json, Object object){
 		return new Gson().fromJson(json, object.getClass());
+	}
+	public List<GameInfo> makeListOfGames(String json){
+//		private int id;
+//		private String title;
+//		private List<PlayerInfo> players;
+		
+		JsonParser parser = new JsonParser();
+		
+		
+		return null;
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();

@@ -1,7 +1,9 @@
 package client.communication;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -81,15 +83,28 @@ public class HTTPProxy implements IProxy{
 	 */
 	private HTTPJsonResponse doGet(String urlPath) throws IOException {
 		HTTPJsonResponse response = new HTTPJsonResponse();
-		XStream xstream = new XStream(new DomDriver());
-		URL url = new URL("http", hostName, portNumber,  urlPath);
+		
+		URL url = new URL("http://" + hostName + ":" + portNumber + urlPath);
+		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
 		conn.connect();
 		
+		String result = null;
+		 if (conn.getResponseCode() < 400) {
+			 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			 result = in.readLine();
+		 	 in.close();
+		 } 
+		 else {
+		 	BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+		 	result = in.readLine();
+		 	in.close();
+		 }
 		response.setResponseCode(conn.getResponseCode());
-		Object result = xstream.fromXML(conn.getInputStream());
-		response.setResponseBody(result.toString());
+		response.setResponseBody(result);
 		return response;
 	}
 	/**
@@ -109,14 +124,25 @@ public class HTTPProxy implements IProxy{
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
-		
+		conn.setDoInput(true);
 		conn.connect();
 		String json = Translator.objectToJson(requestBody);
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
+		String result = null;
+		 if (conn.getResponseCode() < 400) {
+			 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			 result = in.readLine();
+		 	 in.close();
+		 } 
+		 else {
+		 	BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+		 	result = in.readLine();
+		 	in.close();
+		 }
 		response.setResponseCode(conn.getResponseCode());
-		response.setResponseBody(json);
+		response.setResponseBody(result);
 		return response;
 	}
 
@@ -135,6 +161,7 @@ public class HTTPProxy implements IProxy{
 	 * Throws this exception if the cookie is invalid.
 	 */
 	private void setGameCookie(String cookie) throws IllegalArgumentException {
+	
 	}
 	
 	
@@ -145,7 +172,7 @@ public class HTTPProxy implements IProxy{
 	private Response sendCommand(String method, Object command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
-			httpResponse =  doPost(method, command);
+			httpResponse = (command == null) ? doGet(method) : doPost(method, command);
 		} 
 		catch (IOException e) 
 		{
@@ -166,7 +193,6 @@ public class HTTPProxy implements IProxy{
 		return new LoginResponse(response.getResponseCode(), response.getJson());
 
 	}
-	
 	@Override
 	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
 		Response response = sendCommand("/user/register", new RegisterRequest(username, password));
@@ -174,8 +200,8 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public ListGamesResponse listGames() {
-		// TODO Auto-generated method stub
-		return null;
+		Response response = sendCommand("/games/list", null);
+		return new ListGamesResponse(response.getResponseCode(), response.getJson());
 	}
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {

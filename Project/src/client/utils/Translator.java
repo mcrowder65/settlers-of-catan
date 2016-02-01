@@ -1,7 +1,10 @@
 package client.utils;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 
+import client.data.GameInfo;
 import shared.communication.response.LoginResponse;
 
 /**
@@ -25,6 +28,10 @@ public class Translator {
 	}
 	public static Object makeGenericObject(String json, Object object) throws IllegalArgumentException {
 		return jsonTranslator.makeGenericObject(json,  object);
+	}
+	
+	public static List<GameInfo> makeListOfGames(String json){
+		return jsonTranslator.makeListOfGames(json);
 	}
 	/**
 	 * Converts the object to its JSON representation.

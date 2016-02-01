@@ -9,7 +9,8 @@ public class CreateGameResponse extends Response {
 	public CreateGameResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);
 		if (success) {
-			this.game = Translator.jsonToObject(json);
+			this.game = (GameInfo) Translator.makeGenericObject(json, new GameInfo());
+			System.out.println("hello");
 		}
 	}
 

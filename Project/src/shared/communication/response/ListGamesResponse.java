@@ -3,6 +3,7 @@ package shared.communication.response;
 import java.util.List;
 
 import client.data.GameInfo;
+import client.utils.Translator;
 
 public class ListGamesResponse extends Response {
 
@@ -11,8 +12,8 @@ public class ListGamesResponse extends Response {
 		super(responseCode, json);
 		if (success) 
 		{
-			//TODO: Parse GameInfo
-		
+			List<GameInfo> games = (List<GameInfo>) Translator.makeListOfGames(json);
+			this.games = games;
 		}
 	}
 

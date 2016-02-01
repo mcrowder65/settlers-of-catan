@@ -239,14 +239,14 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Response response = sendCommand("/games/load", new LoadGameRequest(name));
+		return response;
 	}
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
 		//Response response = sendCommand(new )
 		Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
-		return null;
+		return response;
 	}
 	@Override
 	public GetModelResponse reset() {

@@ -65,6 +65,11 @@ public class HTTPProxyTest {
 		Response response = httpProxy.saveGame(4, "hello");
 		System.out.println("save game test");
 	}
+	@Test
+	public void gtestLoadGame(){
+		Response response = httpProxy.loadGame("hello");
+		System.out.println("load game test");
+	}
 	
 	
 }

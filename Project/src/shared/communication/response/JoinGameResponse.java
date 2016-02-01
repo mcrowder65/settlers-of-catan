@@ -6,7 +6,7 @@ public class JoinGameResponse extends Response {
 	public JoinGameResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);
 		if (success) {
-			//TODO: Parse cookie to gameID
+			System.out.println("hello");
 		}
 	}
 

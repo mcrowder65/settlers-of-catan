@@ -43,7 +43,7 @@ public class LogComponent extends JComponent
 		if(entries == null || entries.size() == 0)
 		{
 			this.entries = new ArrayList<LogEntry>();
-			this.entries.add(new LogEntry(CatanColor.WHITE, "No messages"));
+			this.entries.add(new LogEntry(CatanColor.white, "No messages"));
 		}
 		else
 		{

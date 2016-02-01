@@ -305,23 +305,23 @@ public class JsonTranslator {
 		//RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 		switch(color){
 			default:
-				return CatanColor.RED;
-			case "ORANGE":
-				return CatanColor.ORANGE;
-			case "YELLOW":
-				return CatanColor.YELLOW;
-			case "BLUE":
-				return CatanColor.BLUE;
-			case "GREEN":
-				return CatanColor.GREEN;
-			case "PURPLE":
-				return CatanColor.PURPLE;
-			case "PUCE":
-				return CatanColor.PUCE;
-			case "WHITE":
-				return CatanColor.WHITE;
-			case "BROWN":
-				return CatanColor.BROWN;
+				return CatanColor.red;
+			case "orange":
+				return CatanColor.orange;
+			case "yellow":
+				return CatanColor.yellow;
+			case "blue":
+				return CatanColor.blue;
+			case "green":
+				return CatanColor.green;
+			case "purple":
+				return CatanColor.purple;
+			case "puce":
+				return CatanColor.puce;
+			case "white":
+				return CatanColor.white;
+			case "brown":
+				return CatanColor.brown;
 		}	
 	}
 	public ResourceList getResourceList(JsonObject jsObject){

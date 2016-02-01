@@ -8,11 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import client.communication.*;
-import shared.communication.response.CreateGameResponse;
-import shared.communication.response.ListGamesResponse;
-import shared.communication.response.LoginResponse;
-import shared.communication.response.RegisterResponse;
-
+import client.utils.Translator;
+import shared.communication.response.*;
 public class HTTPProxyTest {
 	HTTPProxy httpProxy;
 	@BeforeClass
@@ -47,9 +44,15 @@ public class HTTPProxyTest {
 		RegisterResponse response = httpProxy.register("matt", "crowder");
 		System.out.println("register test");
 	}
-	@Test
+//	@Test
 	public void testListGames(){
 		ListGamesResponse response = httpProxy.listGames();
 		System.out.println("list games response");
+	}
+	
+	@Test
+	public void testJoinGame(){
+		JoinGameResponse response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("RED"));
+		System.out.println("test join game");
 	}
 }

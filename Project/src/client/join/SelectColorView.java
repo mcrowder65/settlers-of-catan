@@ -48,63 +48,63 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		
 		btnRed = new JButton("Red");
 		btnRed.addActionListener(actionListener);
-		btnRed.setBackground(CatanColor.RED.getJavaColor());
+		btnRed.setBackground(CatanColor.red.getJavaColor());
 		btnRed.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnRed.setContentAreaFilled(false);
 		btnRed.setOpaque(true);
 
 		btnOrange = new JButton("Orange");
 		btnOrange.addActionListener(actionListener);
-		btnOrange.setBackground(CatanColor.ORANGE.getJavaColor());
+		btnOrange.setBackground(CatanColor.orange.getJavaColor());
 		btnOrange.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnOrange.setContentAreaFilled(false);
 		btnOrange.setOpaque(true);
 
 		btnYellow = new JButton("Yellow");
 		btnYellow.addActionListener(actionListener);
-		btnYellow.setBackground(CatanColor.YELLOW.getJavaColor());
+		btnYellow.setBackground(CatanColor.yellow.getJavaColor());
 		btnYellow.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnYellow.setContentAreaFilled(false);
 		btnYellow.setOpaque(true);
 
 		btnBlue = new JButton("Blue");
 		btnBlue.addActionListener(actionListener);
-		btnBlue.setBackground(CatanColor.BLUE.getJavaColor());
+		btnBlue.setBackground(CatanColor.blue.getJavaColor());
 		btnBlue.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnBlue.setContentAreaFilled(false);
 		btnBlue.setOpaque(true);
 
 		btnGreen = new JButton("Green");
 		btnGreen.addActionListener(actionListener);
-		btnGreen.setBackground(CatanColor.GREEN.getJavaColor());
+		btnGreen.setBackground(CatanColor.green.getJavaColor());
 		btnGreen.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnGreen.setContentAreaFilled(false);
 		btnGreen.setOpaque(true);
 
 		btnPurple = new JButton("Purple");
 		btnPurple.addActionListener(actionListener);
-		btnPurple.setBackground(CatanColor.PURPLE.getJavaColor());
+		btnPurple.setBackground(CatanColor.purple.getJavaColor());
 		btnPurple.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnPurple.setContentAreaFilled(false);
 		btnPurple.setOpaque(true);
 
 		btnPuce = new JButton("Puce");
 		btnPuce.addActionListener(actionListener);
-		btnPuce.setBackground(CatanColor.PUCE.getJavaColor());
+		btnPuce.setBackground(CatanColor.puce.getJavaColor());
 		btnPuce.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnPuce.setContentAreaFilled(false);
 		btnPuce.setOpaque(true);
 
 		btnWhite = new JButton("White");
 		btnWhite.addActionListener(actionListener);
-		btnWhite.setBackground(CatanColor.WHITE.getJavaColor());
+		btnWhite.setBackground(CatanColor.white.getJavaColor());
 		btnWhite.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnWhite.setContentAreaFilled(false);
 		btnWhite.setOpaque(true);
 
 		btnBrown = new JButton("Brown");
 		btnBrown.addActionListener(actionListener);
-		btnBrown.setBackground(CatanColor.BROWN.getJavaColor());
+		btnBrown.setBackground(CatanColor.brown.getJavaColor());
 		btnBrown.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
 		btnBrown.setContentAreaFilled(false);
 		btnBrown.setOpaque(true);
@@ -266,47 +266,47 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 			break;
 		case 1:
 			btnOrange.setEnabled(true);
-			btnOrange.setBackground(CatanColor.ORANGE.getJavaColor());
+			btnOrange.setBackground(CatanColor.orange.getJavaColor());
 			btnOrange.setForeground(Color.black);
 			break;
 		case 2:
 			btnRed.setEnabled(true);
-			btnRed.setBackground(CatanColor.RED.getJavaColor());
+			btnRed.setBackground(CatanColor.red.getJavaColor());
 			btnRed.setForeground(Color.black);
 			break;
 		case 3:
 			btnYellow.setEnabled(true);
-			btnYellow.setBackground(CatanColor.YELLOW.getJavaColor());
+			btnYellow.setBackground(CatanColor.yellow.getJavaColor());
 			btnYellow.setForeground(Color.black);
 			break;
 		case 4:
 			btnGreen.setEnabled(true);
-			btnGreen.setBackground(CatanColor.GREEN.getJavaColor());
+			btnGreen.setBackground(CatanColor.green.getJavaColor());
 			btnGreen.setForeground(Color.black);
 			break;
 		case 5:
 			btnPurple.setEnabled(true);
-			btnPurple.setBackground(CatanColor.PURPLE.getJavaColor());
+			btnPurple.setBackground(CatanColor.purple.getJavaColor());
 			btnPurple.setForeground(Color.black);
 			break;
 		case 6:
 			btnBlue.setEnabled(true);
-			btnBlue.setBackground(CatanColor.BLUE.getJavaColor());
+			btnBlue.setBackground(CatanColor.blue.getJavaColor());
 			btnBlue.setForeground(Color.black);
 			break;
 		case 7:
 			btnWhite.setEnabled(true);
-			btnWhite.setBackground(CatanColor.WHITE.getJavaColor());
+			btnWhite.setBackground(CatanColor.white.getJavaColor());
 			btnWhite.setForeground(Color.black);
 			break;
 		case 8:
 			btnBrown.setEnabled(true);
-			btnBrown.setBackground(CatanColor.BROWN.getJavaColor());
+			btnBrown.setBackground(CatanColor.brown.getJavaColor());
 			btnBrown.setForeground(Color.black);
 			break;
 		case 9:
 			btnPuce.setEnabled(true);
-			btnPuce.setBackground(CatanColor.PUCE.getJavaColor());
+			btnPuce.setBackground(CatanColor.puce.getJavaColor());
 			btnPuce.setForeground(Color.black);
 			break;
 		}
@@ -333,23 +333,23 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	private JButton getButtonForColor(CatanColor color) {
 		
 		switch (color) {
-		case BLUE:
+		case blue:
 			return btnBlue;
-		case BROWN:
+		case brown:
 			return btnBrown;
-		case GREEN:
+		case green:
 			return btnGreen;
-		case ORANGE:
+		case orange:
 			return btnOrange;
-		case PUCE:
+		case puce:
 			return btnPuce;
-		case PURPLE:
+		case purple:
 			return btnPurple;
-		case RED:
+		case red:
 			return btnRed;
-		case WHITE:
+		case white:
 			return btnWhite;
-		case YELLOW:
+		case yellow:
 			return btnYellow;
 		default:
 			assert false;
@@ -363,23 +363,23 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		case 0:
 			return null;
 		case 1:
-			return CatanColor.ORANGE;
+			return CatanColor.orange;
 		case 2:
-			return CatanColor.RED;
+			return CatanColor.red;
 		case 3:
-			return CatanColor.YELLOW;
+			return CatanColor.yellow;
 		case 4:
-			return CatanColor.GREEN;
+			return CatanColor.green;
 		case 5:
-			return CatanColor.PURPLE;
+			return CatanColor.purple;
 		case 6:
-			return CatanColor.BLUE;
+			return CatanColor.blue;
 		case 7:
-			return CatanColor.WHITE;
+			return CatanColor.white;
 		case 8:
-			return CatanColor.BROWN;
+			return CatanColor.brown;
 		case 9:
-			return CatanColor.PUCE;
+			return CatanColor.puce;
 		default:
 			assert false;
 			return null;

@@ -44,4 +44,10 @@ public class Translator {
 		return new Gson().toJson(object);
 		//return new Gson().toJson(jsonTranslator.makeMirrorObject((GameModel)object));
 	}
+	public static JsonTranslator getJsonTranslator() {
+		return jsonTranslator;
+	}
+	public static void setJsonTranslator(JsonTranslator jsonTranslator) {
+		Translator.jsonTranslator = jsonTranslator;
+	}
 }

@@ -210,8 +210,10 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Response response = sendCommand("/games/join", new JoinGameRequest(id, color));
+		int responseCode = response.getResponseCode();
+		String json = response.getJson();
+		return new JoinGameResponse(responseCode, json);
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {

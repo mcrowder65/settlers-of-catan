@@ -51,13 +51,13 @@ public class MapController extends Controller implements IMapController {
 				HexLocation hexLoc = new HexLocation(x, y);
 				getView().addHex(hexLoc, hexType);
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
+						CatanColor.red);
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
+						CatanColor.blue);
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+						CatanColor.orange);
+				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
+				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
 			}
 			
 			if (x != 0) {
@@ -68,13 +68,13 @@ public class MapController extends Controller implements IMapController {
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
 					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
+							CatanColor.red);
 					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
+							CatanColor.blue);
 					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+							CatanColor.orange);
+					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
+					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
 				}
 			}
 		}
@@ -125,17 +125,17 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		getView().placeRoad(edgeLoc, CatanColor.orange);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		getView().placeSettlement(vertLoc, CatanColor.orange);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
 		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		getView().placeCity(vertLoc, CatanColor.orange);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -147,7 +147,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		getView().startDrop(pieceType, CatanColor.orange, true);
 	}
 	
 	public void cancelMove() {

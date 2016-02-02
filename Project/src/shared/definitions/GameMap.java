@@ -46,7 +46,8 @@ public class GameMap {
 	private List<EdgeValue>allRoads = new ArrayList<EdgeValue>();
 	private List<VertexObject>allSettlements = new ArrayList<VertexObject>();
 	private List<VertexObject>allCities = new ArrayList<VertexObject>();
-	List<VertexObject>allSettlementsTemp = new ArrayList<VertexObject>();
+	private List<Port>allPorts = new ArrayList<Port>();
+	
 	
 	/**
 	 * Constructor for map object
@@ -73,6 +74,7 @@ public class GameMap {
 		this.allRoads = Arrays.asList(roads);
 		this.allSettlements = Arrays.asList(settlements);
 		this.allCities = Arrays.asList(cities);
+		this.allPorts = Arrays.asList(ports);
 	}
 	
 	public GameMap(){
@@ -531,14 +533,115 @@ public class GameMap {
 		//If there's no municipality at that vertex
 		return false;
 	}
-	/**
-	 * Determines if the player has a city built in a location
-	 * city contains the location at which the city is to be built and the player index of the player that wants to build it
-	 * @param city
-	 * @return true or false
-	 */
-	public Boolean hasCity(VertexObject city) throws IllegalArgumentException {
-		return true;
+	
+	
+	public Boolean hasMunicipalityPort(int owner, VertexObject municipality){
+		int ownerTemp = municipality.getOwner();
+		VertexLocation locationTemp = municipality.getLocation();
+		VertexDirection directionTemp = locationTemp.getDir();
+		int xCoord = locationTemp.getHexLoc().getX();
+		int yCoord = locationTemp.getHexLoc().getY();
+		if(xCoord == 0 && yCoord == 2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.SouthWest || directionTemp == VertexDirection.SouthEast){
+				return true;
+			}
+		}
+		if(xCoord == -1 && yCoord == 2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.SouthWest || directionTemp == VertexDirection.West){
+				return true;
+			}
+		}
+		if(xCoord == -2 && yCoord == 2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.SouthWest || directionTemp == VertexDirection.SouthEast){
+				return true;
+			}
+		}
+		if(xCoord == -2 && yCoord == 2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.West || directionTemp == VertexDirection.NorthWest){
+				return true;
+			}
+		}
+		if(xCoord == -2 && yCoord == 1 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.SouthWest || directionTemp == VertexDirection.West){
+				return true;
+			}
+		}
+		if(xCoord == -2 && yCoord == 0 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.West || directionTemp == VertexDirection.NorthWest){
+				return true;
+			}
+		}
+		if(xCoord == -1 && yCoord == -1 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.NorthWest || directionTemp == VertexDirection.NorthEast){
+				return true;
+			}
+		}
+		if(xCoord == 0 && yCoord == -2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.NorthWest || directionTemp == VertexDirection.West){
+				return true;
+			}
+			if(directionTemp == VertexDirection.NorthEast || directionTemp == VertexDirection.East){
+				return true;
+			}
+			
+		}
+		if(xCoord == 1 && yCoord == -2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.NorthWest || directionTemp == VertexDirection.NorthEast){
+				return true;
+			}
+		}
+		if(xCoord == 2 && yCoord == -2 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.NorthEast || directionTemp == VertexDirection.East){
+				return true;
+			}
+		}
+		if(xCoord == 2 && yCoord == -1 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.East || directionTemp == VertexDirection.SouthEast){
+				return true;
+			}
+		}
+		if(xCoord == 2 && yCoord == 0 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.East || directionTemp == VertexDirection.NorthEast){
+				return true;
+			}
+			if(directionTemp == VertexDirection.SouthEast || directionTemp == VertexDirection.SouthWest){
+				return true;
+			}
+		}
+		if(xCoord == 1 && yCoord == 1 && ownerTemp == owner){
+			if(directionTemp == VertexDirection.East || directionTemp == VertexDirection.SouthEast){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Boolean hasPort(int owner){
+		
+		if(allSettlements.size() > 0){
+			if(allPorts.size() > 0){
+				for(int i=0; i<allSettlements.size(); i++){
+					VertexObject settlement = allSettlements.get(i);
+					if(this.hasMunicipalityPort(owner,settlement) == true){
+						return true;
+					}
+				}
+				
+			}
+		}
+		if(allCities.size() >0){
+			if(allPorts.size() > 0){
+				for(int j=0; j<allCities.size(); j++){
+					VertexObject city = allCities.get(j);
+					if(this.hasMunicipalityPort(owner,city) == true){
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 /**
@@ -585,6 +688,7 @@ public class GameMap {
 	 */
 	public void setPorts(Port[] ports) throws IllegalArgumentException  {
 		this.ports = ports;
+		this.allPorts = Arrays.asList(this.ports);
 	}
 	/**
 	 * sets all the roads on the map
@@ -592,6 +696,7 @@ public class GameMap {
 	 */
 	public void setRoads(EdgeValue[] roads) throws IllegalArgumentException  {
 		this.roads = roads;
+		this.allRoads = Arrays.asList(this.roads);
 	}
 	/**
 	 * sets all the settlements on the map
@@ -599,6 +704,7 @@ public class GameMap {
 	 */
 	public void setSettlements(VertexObject[] settlements) throws IllegalArgumentException  {
 		this.settlements = settlements;
+		this.allSettlements = Arrays.asList(this.settlements);
 	}
 	/**
 	 * sets all the cities on the map
@@ -606,6 +712,7 @@ public class GameMap {
 	 */
 	public void setCities(VertexObject[] cities) throws IllegalArgumentException  {
 		this.cities = cities;
+		this.allCities = Arrays.asList(this.cities);
 	}
 	/**
 	 * sets the radius of the map

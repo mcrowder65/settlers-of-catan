@@ -71,19 +71,6 @@ public class Player {
 	private int victoryPoints;
 	
 	/**
-	 * number of armyPoints the player has (Soldier Card)
-	 */
-	private int armyPoints;
-	
-	/**
-	 * Whether or not this player has used a DevCard this turn (preventing it from using another one
-	 * in the same turn)
-	 * True = The player has used a Dev Card this turn
-	 * False = The player hasn't used a Dev Card this turn
-	 */
-	private boolean usedDevCardThisTurn;
-	
-	/**
 	 * Player Constructor
 	 * @param name
 	 * @param color
@@ -94,11 +81,6 @@ public class Player {
 	public Player(String name, CatanColor color, int playerID, int playerIndex) throws IllegalArgumentException {
 		
 	
-	}
-	public Player(CatanColor color, String name, int playerID){
-		this.color = color;
-		this.name = new String(name);
-		this.playerID = playerID;
 	}
 	public Player(){
 		
@@ -386,12 +368,18 @@ public class Player {
 		this.victoryPoints = victoryPoints;
 	}
 	
-	public void setUsedDevCardThisTurn(boolean value){
-		this.usedDevCardThisTurn = value;
-	}
-	
-	public boolean getUsedDevCardThisTurn(){
-		return this.usedDevCardThisTurn;
+	public boolean canBuildRoad(){
+		int brick = resources.getBrick();
+		int wood = resources.getWood();
+		if(brick >0 && wood>0){
+			return true;
+		}
+		int roadBuildingCard = oldDevCards.getRoadBuilding();
+		if(roadBuildingCard > 0){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void addRoad(){
@@ -516,21 +504,7 @@ public class Player {
 	}
 	
 	
-	public boolean canBuyRoad(){
-		int brick = resources.getBrick();
-		int wood = resources.getWood();
-		if(brick >0 && wood>0){
-			return true;
-		}
-		int roadBuildingCard = oldDevCards.getRoadBuilding();
-		if(roadBuildingCard > 0){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public boolean canBuySettlement(){
+	public boolean canBuildSettlement(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
@@ -542,11 +516,11 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canBuyCity(){
+	public boolean canBuildCity(){
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>3 && grain>2){
+		if(ore>0 && grain>0){
 			return true;
 		}
 		return false;
@@ -591,33 +565,41 @@ public class Player {
 	}
 	
 	public boolean canPlayRoadBuilding(){
-		int roadBuildingCard = oldDevCards.getRoadBuilding();
-		if(roadBuildingCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int roadBuildingCard = oldDevCards.getRoadBuilding();
+			if(roadBuildingCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlayYearOfPlentyCard(){
-		int yopCard = oldDevCards.getYearOfPlenty();
-		if(yopCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int yopCard = oldDevCards.getYearOfPlenty();
+			if(yopCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlayMonopolyCard(){
-		int monopolyCard = oldDevCards.getMonopoly();
-		if(monopolyCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int monopolyCard = oldDevCards.getMonopoly();
+			if(monopolyCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlaySoldierCard(){
-		int soldierCard = oldDevCards.getSoldier();
-		if(soldierCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int soldierCard = oldDevCards.getSoldier();
+			if(soldierCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -649,18 +631,14 @@ public class Player {
 	public void playSoldierCard(){
 		int soldierCard = oldDevCards.getSoldier();
 		oldDevCards.setSoldier(soldierCard-1);
-		armyPoints++;
-		this.setUsedDevCardThisTurn(true);
 	}
 	public void playMonopolyCard(){
 		int monopolyCard = oldDevCards.getMonopoly();
 		oldDevCards.setMonopoly(monopolyCard-1);
-		this.setUsedDevCardThisTurn(true);
 	}
 	public void playYearOfPlentyCard(){
 		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
 		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
-		this.setUsedDevCardThisTurn(true);
 	}
 	
 	

@@ -12,19 +12,19 @@ public class PlayerTests {
 		
 		ResourceList resources = new ResourceList(10,10,10,10,10);
 		player.setResources(resources);
-		boolean canLayRoad = player.canBuyRoad();
+		boolean canLayRoad = player.canBuildRoad();
 		assertTrue(canLayRoad == true);
 		
 		resources = new ResourceList(0,0,0,0,0);
 		DevCardList devCardList = new DevCardList(0,0,0,0,0);
 		player.setOldDevCards(devCardList);
 		player.setResources(resources);
-		canLayRoad = player.canBuyRoad();
+		canLayRoad = player.canBuildRoad();
 		assertTrue(canLayRoad == false);
 		
 		devCardList = new DevCardList(0,0,1,0,0);
 		player.setOldDevCards(devCardList);
-		canLayRoad = player.canBuyRoad();
+		canLayRoad = player.canBuildRoad();
 		assertTrue(canLayRoad == true);
 		
 	}

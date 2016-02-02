@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import client.data.GameInfo;
-import shared.communication.response.LoginResponse;
 
 /**
  * Provides static methods for converting to and from 

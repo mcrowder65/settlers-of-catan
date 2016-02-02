@@ -6,10 +6,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import client.communication.MockProxy;
+
 public class MockProxyTests {
 
+	MockProxy mock;
 	@Before
 	public void setUp() throws Exception {
+		mock = new MockProxy();
 	}
 
 	@After
@@ -17,8 +21,8 @@ public class MockProxyTests {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testLogin() {
+		
 	}
 
 }

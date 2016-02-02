@@ -1,14 +1,9 @@
 package client.communication;
 
+import java.io.*;
 import java.util.List;
 
-import shared.communication.response.CreateGameResponse;
-import shared.communication.response.GetCommandsResponse;
-import shared.communication.response.GetModelResponse;
-import shared.communication.response.JoinGameResponse;
-import shared.communication.response.ListAIResponse;
-import shared.communication.response.ListGamesResponse;
-import shared.communication.response.Response;
+import shared.communication.response.*;
 import shared.definitions.CatanColor;
 import shared.definitions.LogLevel;
 import shared.definitions.ResourceList;
@@ -31,6 +26,45 @@ public class MockProxy implements IProxy {
 	 */
 	public MockProxy() {
 	}
+	
+	private String readResponse(String relativePath) {
+		InputStream in = 
+			    getClass().getResourceAsStream("/client/communication/mockresponse/" + relativePath + ".txt");
+				Reader fr;
+				try {
+					fr = new InputStreamReader(in, "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					return e.toString();
+				}
+				BufferedReader br = new BufferedReader(fr);
+				
+		try {
+			
+	
+			StringBuilder strBld = new StringBuilder();
+			String line;
+			line = br.readLine();
+			
+			while (line != null) {
+				strBld.append(line);
+			}
+			return strBld.toString();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return e.toString();
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return e.toString();
+			}
+		}
+	
+	}
+	
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {
 		return new Response(200, "Success");
@@ -41,12 +75,11 @@ public class MockProxy implements IProxy {
 	}
 	@Override
 	public ListGamesResponse listGames() {
-		return new ListGamesResponse(200, "TODO");
+		return new ListGamesResponse(200,readResponse("sample_game_info.txt"));
 	}
 	@Override
-	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Response joinGame(int id, CatanColor color) throws IllegalArgumentException {
+		return new Response(200, "Success");
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {

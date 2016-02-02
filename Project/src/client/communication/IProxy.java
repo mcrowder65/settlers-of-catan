@@ -56,7 +56,7 @@ public interface IProxy {
 	 * @return
 	 *  Returns the server's response.
 	 */
-	public JoinGameResponse joinGame(int id, CatanColor color)throws IllegalArgumentException ;
+	public Response joinGame(int id, CatanColor color)throws IllegalArgumentException ;
 
 	/**
 	 * Loads a game on the server. Used for testing purposes.

@@ -244,9 +244,9 @@ public class HTTPProxy implements IProxy{
 		return new CreateGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
-	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
+	public Response joinGame(int id, CatanColor color) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/games/join", new JoinGameRequest(id, color));
-		return new JoinGameResponse(response.getResponseCode(), response.getResponseBody());
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {

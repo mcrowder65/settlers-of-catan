@@ -2,6 +2,7 @@ package client.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -49,7 +50,7 @@ public class JsonTranslator {
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
 		JsonObject jsonObj = (JsonObject) parser.parse(json);
-		
+	
 		GameModel gameModel = new GameModel();
 		
 		ResourceList bank = getResourceList((JsonObject)jsonObj.get("bank"));
@@ -61,7 +62,7 @@ public class JsonTranslator {
 		MessageList log = makeMessageList((JsonObject)jsonObj.get("log"));
 		gameModel.setLog(log);
 		
-		GameMap map = makeMap((JsonObject)jsonObj.get("map"));
+		GameMap map = makeMap(jsonObj.getAsJsonObject("map"));
 		gameModel.setMap(map);
 		
 		Player[] players =  makePlayers(jsonObj.get("players").getAsJsonArray());

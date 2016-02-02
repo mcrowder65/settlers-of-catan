@@ -1,0 +1,10 @@
+{
+  "title": "myNewGame",
+  "id": 3,
+  "players": [
+    {},
+    {},
+    {},
+    {}
+  ]
+}

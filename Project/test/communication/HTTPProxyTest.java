@@ -47,11 +47,11 @@ public class HTTPProxyTest {
 	@Test
 	public void ctestCreateGame(){
 		CreateGameResponse response = httpProxy.createGame("matt", false, false, false);
-		System.out.println("creategame: " + response.getResponseCode());
+		//System.out.println("creategame: " + response.getResponseCode());
 	}
 	@Test
 	public void dtestJoinGame(){
-		JoinGameResponse response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("puce"));
+		Response response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("puce"));
 		System.out.println("test join game");
 	}
 

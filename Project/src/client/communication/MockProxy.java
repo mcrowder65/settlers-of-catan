@@ -29,7 +29,7 @@ public class MockProxy implements IProxy {
 	
 	private String readResponse(String relativePath) {
 		InputStream in = 
-			    getClass().getResourceAsStream("/client/communication/mockresponse/" + relativePath + ".txt");
+			    getClass().getResourceAsStream(relativePath);
 				Reader fr;
 				try {
 					fr = new InputStreamReader(in, "utf-8");
@@ -47,7 +47,8 @@ public class MockProxy implements IProxy {
 			line = br.readLine();
 			
 			while (line != null) {
-				strBld.append(line);
+				strBld.append(line + System.lineSeparator());
+				line = br.readLine();
 			}
 			return strBld.toString();
 			
@@ -119,94 +120,76 @@ public class MockProxy implements IProxy {
 	}
 	@Override
 	public GetModelResponse sendChat(String content) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse finishTurn() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse buyDevCard() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse Monopoly(ResourceType resource) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse Monument() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse acceptTrade(boolean willAccept) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response(200, "Success");
 	}
 
 
@@ -215,8 +198,7 @@ public class MockProxy implements IProxy {
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new CreateGameResponse(200, readResponse("sample_new_game.txt"));
 	}
 
 

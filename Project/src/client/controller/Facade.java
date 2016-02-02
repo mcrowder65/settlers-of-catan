@@ -285,7 +285,8 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canDiscardCards(int playerIndex){
-		return true;
+		boolean canDiscard = game.getModel().getLocalPlayer().hasMoreThanSeven();
+		return canDiscard;
 	}
 
 	/**
@@ -409,7 +410,21 @@ public class Facade {
 	 * @return True if the user can offer the trade
 	 */
 	public boolean canOfferTrade(TradeOffer offer) throws IllegalArgumentException {
-		return false;
+		boolean isTurn = false;
+		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			isTurn = true;
+		}
+		if(isTurn == false){
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(status != "Playing"){
+			return false;
+		}
+		boolean enoughResources = game.getModel().getLocalPlayer().canOfferTrade();
+		
+		return enoughResources;
 	}
 
 

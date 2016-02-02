@@ -193,7 +193,7 @@ public class HTTPProxy implements IProxy{
 		
 		return "http://" + hostName + ":" + portNumber + "/";
 	}	
-	private Response sendCommand(MoveCommand command)  {
+	private GetModelResponse sendCommand(MoveCommand command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
 			httpResponse = doPost("/moves/" + command.getMoveType(), command);
@@ -203,7 +203,7 @@ public class HTTPProxy implements IProxy{
 			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
 			httpResponse.setResponseBody(e.getMessage());
 		}
-		return new Response(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+		return new GetModelResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
 	}
 	private HTTPJsonResponse sendRequest(String path, Request request) {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
@@ -218,7 +218,7 @@ public class HTTPProxy implements IProxy{
 		return httpResponse;
 	}
 	@Override
-	public Response sendChat(String content) {
+	public GetModelResponse sendChat(String content) {
 		SendChatCommand command = new SendChatCommand(playerIndex, content);
 		 return sendCommand(command);
 		
@@ -295,83 +295,83 @@ public class HTTPProxy implements IProxy{
 		return null;
 	}
 	@Override
-	public Response rollNumber(int number) throws IllegalArgumentException {
+	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response finishTurn() {
+	public GetModelResponse finishTurn() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response buyDevCard() {
+	public GetModelResponse buyDevCard() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
+	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
+	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response Monopoly(ResourceType resource) {
+	public GetModelResponse Monopoly(ResourceType resource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response Monument() {
+	public GetModelResponse Monument() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
+	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response offerTrade(TradeOffer offer) throws IllegalArgumentException {
+	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
+	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response acceptTrade(boolean willAccept) {
+	public GetModelResponse acceptTrade(boolean willAccept) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Response discardCards(ResourceList discardedCards) throws IllegalArgumentException {
+	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

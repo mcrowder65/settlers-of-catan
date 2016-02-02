@@ -346,6 +346,18 @@ public class CommandTests {
 		} catch (Exception e) {}
 	}
 	
+	@Test
+	public void finishTurnTest() {
+		FinishTurnCommand goodCommand1 = new FinishTurnCommand(goodIndex1);
+		
+	}
+	
+	@Test
+	public void buyDevCardTest() {
+		BuyDevCardCommand goodCommand1 = new BuyDevCardCommand(goodIndex1);
+		
+	}
+	
 	
 	@Before
 	public void setUp() {

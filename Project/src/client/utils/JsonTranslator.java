@@ -65,11 +65,17 @@ public class JsonTranslator {
 		GameMap map = makeMap(jsonObj.getAsJsonObject("map"));
 		gameModel.setMap(map);
 		
-		Player[] players =  makePlayers(jsonObj.get("players").getAsJsonArray());
+		Player[] players =  makePlayers(jsonObj.getAsJsonArray("players"));
 		gameModel.setPlayers(players);
 		
-		TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
-		gameModel.setTradeOffer(tradeOffer);
+		if (jsonObj.has("tradeOffer")) {
+			TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
+			gameModel.setTradeOffer(tradeOffer);
+		}
+		else
+		{
+			gameModel.setTradeOffer(null);
+		}
 		
 		TurnTracker turnTracker = makeTurnTracker((JsonObject)jsonObj.get("turnTracker"));
 		gameModel.setTurnTracker(turnTracker);
@@ -109,19 +115,19 @@ public class JsonTranslator {
 		HexLocation robber = new HexLocation(rX, rY);
 		map.setRobber(robber);
 
-		Hex[] hexes = makeHexes(jsMap.get("hexes").getAsJsonArray());
+		Hex[] hexes = makeHexes(jsMap.getAsJsonArray("hexes"));
 		map.setHexes(hexes);
 		
-		Port[] ports = makePorts(jsMap.get("ports").getAsJsonArray());
+		Port[] ports = makePorts(jsMap.getAsJsonArray("ports"));
 		map.setPorts(ports);
 		
-		EdgeValue[] roads = makeRoads(jsMap.get("roads").getAsJsonArray());
+		EdgeValue[] roads = makeRoads(jsMap.getAsJsonArray("roads"));
 		map.setRoads(roads);
 		
-		VertexObject[] settlements = makeSettlements(jsMap.get("settlements").getAsJsonArray());
+		VertexObject[] settlements = makeSettlements(jsMap.getAsJsonArray("settlements"));
 		map.setSettlements(settlements);
 		
-		VertexObject[] cities = makeCities(jsMap.get("cities").getAsJsonArray());
+		VertexObject[] cities = makeCities(jsMap.getAsJsonArray("cities"));
 		map.setCities(cities);
 		
 		return map;
@@ -134,8 +140,12 @@ public class JsonTranslator {
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
 			
-			String resource = temp.get("resource").getAsString();
-			int number = temp.get("number").getAsInt();
+			String resource = "None";
+			int number = 0;
+			if (temp.has("resource")) {
+			  resource = temp.get("resource").toString();
+			  number = temp.get("number").getAsInt();
+			}
 			Hex hex = new Hex(new HexLocation(x,y), getResourceType(resource), number);
 			hexes.add(hex);
 		}
@@ -171,7 +181,10 @@ public class JsonTranslator {
 			String direction = temp.get("direction").getAsString();
 			EdgeDirection edgeDirection = getEdgeDirection(direction);
 			
-			String resource = temp.get("resource").getAsString();
+			String resource = "None";
+			if (temp.has("resource")) {
+			    resource = temp.get("resource").getAsString();
+			}
 			ResourceType resourceType = getResourceType(resource);
 			int ratio = temp.get("ratio").getAsInt();
 			 
@@ -275,6 +288,10 @@ public class JsonTranslator {
 	public Player[] makePlayers(JsonArray jsPlayers){
 		ArrayList<Player> players = new ArrayList<Player>();
 		for(int i = 0; i < jsPlayers.size(); i++){
+			if (jsPlayers.get(i).isJsonNull()) {
+				players.add(null);
+				continue;
+			}
 			JsonObject player = (JsonObject)jsPlayers.get(i);
 			int cities = player.get("cities").getAsInt();
 			String color = player.get("color").getAsString();

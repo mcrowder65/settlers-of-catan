@@ -33,17 +33,15 @@ public class MockProxy implements IProxy {
 	}
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {
-		return new Response();
+		return new Response(200, "Success");
 	}
 	@Override
 	public Response register(String username, String password) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response(200, "Success");
 	}
 	@Override
 	public ListGamesResponse listGames() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ListGamesResponse(200, "TODO");
 	}
 	@Override
 	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {

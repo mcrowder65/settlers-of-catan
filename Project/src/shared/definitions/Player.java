@@ -668,7 +668,8 @@ public class Player {
 		
 	}
 	
-	public boolean canAcceptTrade(ResourceList offer){
+	public boolean canAcceptTrade(TradeOffer tradeOffer){
+		ResourceList offer = tradeOffer.getOffer();
 		int brickWanted = offer.getBrick();
 		int sheepWanted = offer.getSheep();
 		int woodWanted = offer.getWood();

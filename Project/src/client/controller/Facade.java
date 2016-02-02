@@ -434,7 +434,23 @@ public class Facade {
 	 * @return True if the user can offer the trade
 	 */
 	public boolean canMaritimeTrade(TradeOffer offer) throws IllegalArgumentException {
-		return false;
+		boolean isTurn = false;
+		int playerIndex = game.getModel().getLocalPlayer().getPlayerIndex();
+		if(playerIndex == game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			isTurn = true;
+		}
+		if(isTurn == false){
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(status != "Playing"){
+			return false;
+		}
+		boolean hasPort = game.getModel().getMap().hasPort(playerIndex);
+		
+		//Still need to check and see if the bank has enough resources
+		return hasPort;
 	}
 
 	/**
@@ -652,13 +668,14 @@ public class Facade {
 
 		return true;
 	}
-
 	/**
-	 * This method determines if the user can accept a trade
-	 * @return
+	 * This method determines if the user can accept an offer
+	 * @param offer
+	 * @return True if the user can accept the offer
 	 */
-	public boolean canAcceptTrade(){
-		return true;
+	public boolean canAcceptTrade(TradeOffer offer) throws IllegalArgumentException {
+		boolean canAccept = game.getModel().getLocalPlayer().canAcceptTrade(offer);
+		return canAccept;
 	}
 
 
@@ -760,14 +777,6 @@ public class Facade {
 		return false;
 	}
 
-	/**
-	 * This method determines if the user can accept an offer
-	 * @param offer
-	 * @return True if the user can accept the offer
-	 */
-	public boolean canAcceptTrade(TradeOffer offer) throws IllegalArgumentException {
-		return false;
-	}
 
 	/**
 	 * This method determines if the user can play a Development Card

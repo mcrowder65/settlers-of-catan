@@ -178,4 +178,30 @@ public class FacadeCanDoTest {
 		
 	}
 	
+	@Test
+	public void canRollNumberCorrect(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,2,3,2,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Rolling");
+		
+		boolean canRoll = facade.canRollNumber();
+		assertTrue(canRoll == true);
+		
+
+		
+	}
+	
+	
 }

@@ -93,4 +93,89 @@ public class FacadeCanDoTest {
 		assertTrue(canDiscard == true);
 	}
 
+	@Test
+	public void canRollNumberWrongTurn(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,2,3,2,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(1);
+		gameModel.setTurnTracker(turnTracker);
+		
+		boolean canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setCurrentTurn(2);
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setCurrentTurn(3);
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+	}
+	
+	@Test
+	public void canRollNumberWrongStatus(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,2,3,2,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		
+		boolean canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("Robbing");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("Discarding");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("FirstRound");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("SecondRound");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("rolling");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+		canRoll = true;
+		turnTracker.setStatus("Rollin");
+		canRoll = facade.canRollNumber();
+		assertTrue(canRoll == false);
+		
+	}
+	
 }

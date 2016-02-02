@@ -41,6 +41,10 @@ public class TurnTracker {
 		this.longestRoad = longestRoad;
 		this.largestArmy = largestArmy;
 	}
+	
+	public TurnTracker(){
+		
+	}
 
 	/**
 	 * retrieves whos turn it is

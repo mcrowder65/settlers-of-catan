@@ -100,7 +100,7 @@ public class MockProxy implements IProxy {
 	}
 	@Override
 	public GetModelResponse getModel(int version) {
-		return new GetModelResponse(200, "true");
+		return new GetModelResponse(200, readResponse("sample_model.txt"));
 	}
 	@Override
 	public ListAIResponse listAI() {

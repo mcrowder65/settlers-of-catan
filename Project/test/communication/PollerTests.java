@@ -61,14 +61,14 @@ public class PollerTests {
 	
 	@Test
 	public void updateModelTest() {
-		final int INTERVAL = 5;
+		final int INTERVAL = 2;
 		gameManager = new GameManager(mockProxy, INTERVAL);
 		
 		assertTrue(gameManager.getModel() == null);
 		
 		gameManager.getPoller().startPolling();
 		try {
-			Thread.sleep((INTERVAL + 1) * 1000);
+			Thread.sleep((INTERVAL *2) * 1000);
 			assertTrue(gameManager.getModel() != null);
 			
 		} catch (InterruptedException e) {

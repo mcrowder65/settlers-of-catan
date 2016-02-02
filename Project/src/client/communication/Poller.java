@@ -52,6 +52,7 @@ public class Poller extends Observable {
 			GetModelResponse response = proxy.getModel(localVersion);
 			if (response.isSuccess() && response.isUpdated())
 				localVersion = response.getModel().getVersion();
+			    setChanged();
 				notifyObservers(response.getModel());
 				
 			}

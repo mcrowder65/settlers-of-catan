@@ -65,7 +65,7 @@ public class GameManager implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
-		
+		this.model = model;
 		//TODO: Update local model (SYNCHRONIZED)
 		
 		

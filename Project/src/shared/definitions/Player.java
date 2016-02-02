@@ -71,6 +71,19 @@ public class Player {
 	private int victoryPoints;
 	
 	/**
+	 * number of armyPoints the player has (Soldier Card)
+	 */
+	private int armyPoints;
+	
+	/**
+	 * Whether or not this player has used a DevCard this turn (preventing it from using another one
+	 * in the same turn)
+	 * True = The player has used a Dev Card this turn
+	 * False = The player hasn't used a Dev Card this turn
+	 */
+	private boolean usedDevCardThisTurn;
+	
+	/**
 	 * Player Constructor
 	 * @param name
 	 * @param color
@@ -373,6 +386,14 @@ public class Player {
 		this.victoryPoints = victoryPoints;
 	}
 	
+	public void setUsedDevCardThisTurn(boolean value){
+		this.usedDevCardThisTurn = value;
+	}
+	
+	public boolean getUsedDevCardThisTurn(){
+		return this.usedDevCardThisTurn;
+	}
+	
 	public boolean canBuildRoad(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
@@ -628,14 +649,18 @@ public class Player {
 	public void playSoldierCard(){
 		int soldierCard = oldDevCards.getSoldier();
 		oldDevCards.setSoldier(soldierCard-1);
+		armyPoints++;
+		this.setUsedDevCardThisTurn(true);
 	}
 	public void playMonopolyCard(){
 		int monopolyCard = oldDevCards.getMonopoly();
 		oldDevCards.setMonopoly(monopolyCard-1);
+		this.setUsedDevCardThisTurn(true);
 	}
 	public void playYearOfPlentyCard(){
 		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
 		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
+		this.setUsedDevCardThisTurn(true);
 	}
 	
 	

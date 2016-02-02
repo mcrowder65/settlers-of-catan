@@ -394,20 +394,6 @@ public class Player {
 		return this.usedDevCardThisTurn;
 	}
 	
-	public boolean canBuildRoad(){
-		int brick = resources.getBrick();
-		int wood = resources.getWood();
-		if(brick >0 && wood>0){
-			return true;
-		}
-		int roadBuildingCard = oldDevCards.getRoadBuilding();
-		if(roadBuildingCard > 0){
-			return true;
-		}
-		
-		return false;
-	}
-	
 	public void addRoad(){
 		roads++;
 	}
@@ -530,7 +516,21 @@ public class Player {
 	}
 	
 	
-	public boolean canBuildSettlement(){
+	public boolean canBuyRoad(){
+		int brick = resources.getBrick();
+		int wood = resources.getWood();
+		if(brick >0 && wood>0){
+			return true;
+		}
+		int roadBuildingCard = oldDevCards.getRoadBuilding();
+		if(roadBuildingCard > 0){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean canBuySettlement(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
@@ -542,11 +542,11 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canBuildCity(){
+	public boolean canBuyCity(){
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>0 && grain>0){
+		if(ore>3 && grain>2){
 			return true;
 		}
 		return false;

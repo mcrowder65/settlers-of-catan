@@ -175,7 +175,7 @@ public class Facade {
 	 */
 	public boolean finishTurn(){
 		game.getModel().getTurnTracker().advanceTurn();
-		game.getModel().getLocalPlayer().setUsedDevCardThisTurn(false);	
+		game.getModel().getLocalPlayer().setPlayedDevCard(false);	
 
 		return true;
 	}
@@ -327,7 +327,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuyRoad();
+		boolean enoughResources = game.getModel().getLocalPlayer().canBuildRoad();
 		if(enoughResources == false){
 			return false;
 		}
@@ -358,7 +358,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuySettlement();
+		boolean enoughResources = game.getModel().getLocalPlayer().canBuildSettlement();
 		if(enoughResources == false){
 			return false;
 		}
@@ -390,7 +390,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuySettlement();
+		boolean enoughResources = game.getModel().getLocalPlayer().canBuildSettlement();
 		if(enoughResources == false){
 			return false;
 		}
@@ -702,7 +702,7 @@ public class Facade {
 	 * @return True if the user can buy a road
 	 */
 	public boolean canBuyRoad(){
-		if(game.getModel().getLocalPlayer().canBuyRoad()){
+		if(game.getModel().getLocalPlayer().canBuildRoad()){
 			return true;
 		}
 		return false;
@@ -715,7 +715,7 @@ public class Facade {
 	 * @return True if the user can buy a settlement
 	 */
 	public boolean canBuySettlement(){
-		if(game.getModel().getLocalPlayer().canBuySettlement()){
+		if(game.getModel().getLocalPlayer().canBuildSettlement()){
 			return true;
 		}
 	
@@ -728,7 +728,7 @@ public class Facade {
 	 * @return True if the user can buy a city
 	 */
 	public boolean canBuyCity(){
-		if(game.getModel().getLocalPlayer().canBuyCity()){
+		if(game.getModel().getLocalPlayer().canBuildCity()){
 			return true;
 		}
 		

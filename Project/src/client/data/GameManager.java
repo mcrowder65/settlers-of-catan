@@ -54,12 +54,9 @@ public class GameManager implements Observer {
 	/**
 	 * Gets the latest version of the GameModel and updates
 	 * the local copy of the GameModel.
-	 * @return
-	 * Returns true if update was successful.
 	 */
-	public boolean updateModel()  {
-		proxy.getModel();
-		return false;
+	public void updateModel(GameModel model)  {
+		this.model = model;
 	}
 
 	@Override

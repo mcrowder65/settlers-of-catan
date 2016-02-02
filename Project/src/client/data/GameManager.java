@@ -42,6 +42,10 @@ public class GameManager implements Observer {
 		
 	}
 	
+	public GameManager(){
+		
+	}
+	
 	public GameModel getModel() { return model;}
 	public IProxy getProxy() { return proxy;}
 	public Poller getPoller() { return poller;}
@@ -58,6 +62,7 @@ public class GameManager implements Observer {
 	public void updateModel(GameModel model)  {
 		this.model = model;
 	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {

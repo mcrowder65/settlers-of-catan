@@ -16,6 +16,12 @@ public class Facade {
 	{
 		game = new GameManager(proxy,pass);
 	}
+	
+	
+	public Facade (GameManager gameMan){
+		this.game = gameMan;
+	}
+	
 
 
 
@@ -284,7 +290,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canDiscardCards(int playerIndex){
+	public boolean canDiscardCards(){
 		boolean canDiscard = game.getModel().getLocalPlayer().hasMoreThanSeven();
 		return canDiscard;
 	}

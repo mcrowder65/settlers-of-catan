@@ -53,7 +53,7 @@ public class FacadeTests {
 	@Test
 	public void btestLogin() {
 		boolean login = facade.login("matt", "crowder");
-		if(login == true) fail();
+		if(login == false) fail();
 		login = facade.login("quinn", "snell");
 		if(login == true) fail();
 	}

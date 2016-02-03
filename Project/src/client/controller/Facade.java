@@ -1,6 +1,9 @@
 package client.controller;
 
 import shared.locations.*;
+
+import java.util.Random;
+
 import client.communication.IProxy;
 import client.data.GameInfo;
 import client.data.GameManager;
@@ -39,7 +42,7 @@ public class Facade {
 	 */
 	public boolean login(String username, String password){
 		Response response = proxy.login(username, password);
-		return response.isSuccess() == true ? true : false;
+		return response.isSuccess();
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class Facade {
 	 */
 	public boolean register(String username, String password){
 		Response response = proxy.register(username, password);
-		return response.isSuccess() == true ? true : false;
+		return response.isSuccess();
 	}
 
 	/**
@@ -68,8 +71,7 @@ public class Facade {
 	 */
 	public boolean joinGame(int gameId, CatanColor color){
 		Response response = proxy.joinGame(gameId, color);
-		return response.isSuccess() == true ? true : false;
-
+		return response.isSuccess();
 	}
 
 	/**
@@ -77,9 +79,9 @@ public class Facade {
 	 * @param name - Name of the game
 	 * @return True if a game was created successfully.
 	 */
-	public boolean createGame(String name){
-		return false;
-
+	public boolean createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
+		Response response = proxy.createGame(name, randomTiles, randomNumbers, randomPorts);
+		return response.isSuccess();
 	}
 
 	/**
@@ -88,17 +90,6 @@ public class Facade {
 	public void quit(){
 
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 	/**
@@ -115,11 +106,13 @@ public class Facade {
 	 * This method allows the user to roll the dice
 	 * @return The values rolled by the dice
 	 */
-	public String rollNumber(){
-		//GameModel somewhere, roll number
-		//Returns the 2 digits as a string so it can 
-		//be accessed as an array. ex: "12", String[0]: 1, String[1]:2
-		return null;
+	public int rollNumber(){
+		int result = roll() + roll();
+		Response response = proxy.rollNumber(roll() + roll());
+		return response.isSuccess() == true ? result : -1;
+	}
+	public int roll(){
+	    return new Random().nextInt((6 - 1) + 1) + 1;
 	}
 	/**
 	 * This method allows the user to lay a road on the map

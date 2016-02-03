@@ -9,6 +9,7 @@ import client.data.GameManager;
 
 public class FacadeCanDoTest {
 
+	
 	@Test
 	public void canDiscardCardsFalse() {
 		

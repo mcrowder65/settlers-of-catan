@@ -16,9 +16,14 @@ public class GameModel {
 	}
 	
 	/**
-	 * a list of resources to give to players
+	 * a list of all resources cards to give to players
 	 */
 	private ResourceList bank;
+	
+	/**
+	 * a list of all dev cards to give to players.
+	 */
+	private DevCardList deck;
 	
 	/**
 	 * The chat object of type MessageList holds the messages sent back and forth

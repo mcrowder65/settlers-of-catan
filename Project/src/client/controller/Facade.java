@@ -4,6 +4,8 @@ import shared.locations.*;
 import client.communication.IProxy;
 import client.data.GameInfo;
 import client.data.GameManager;
+import shared.communication.*;
+import shared.communication.response.*;
 import shared.definitions.*;
 
 public class Facade {
@@ -12,11 +14,16 @@ public class Facade {
 	private IProxy proxy;
 	private int pass;
 
-	public Facade ()
+	public Facade()
 	{
-		game = new GameManager(proxy,pass);
+		game = new GameManager(proxy, pass);
 	}
-	
+	public Facade(IProxy proxy, int pollingInterval)
+	{
+		game = new GameManager(proxy, pollingInterval);
+		this.proxy = proxy;
+		this.pass = pollingInterval;
+	}
 	
 	public Facade (GameManager gameMan){
 		this.game = gameMan;
@@ -31,8 +38,8 @@ public class Facade {
 	 * @return True if the user successfully logged in.
 	 */
 	public boolean login(String username, String password){
-		return false;
-
+		Response response = proxy.login(username, password);
+		return response.isSuccess() == true ? true : false;
 	}
 
 	/**
@@ -41,8 +48,8 @@ public class Facade {
 	 * @return True if the user successfully registered.
 	 */
 	public boolean register(String username, String password){
-		return false;
-
+		Response response = proxy.register(username, password);
+		return response.isSuccess() == true ? true : false;
 	}
 
 	/**
@@ -50,8 +57,8 @@ public class Facade {
 	 * @return An array of GameInfo with all the information for the existing games.
 	 */
 	public GameInfo[] listGames(){
-		return null;
-
+		ListGamesResponse response = proxy.listGames();
+		return response.getGames();
 	}
 
 	/**
@@ -59,8 +66,9 @@ public class Facade {
 	 * @param gameId- Id of the game.
 	 * @return True if the user joined successfully a game.
 	 */
-	public boolean joinGame(int gameId){
-		return false;
+	public boolean joinGame(int gameId, CatanColor color){
+		Response response = proxy.joinGame(gameId, color);
+		return response.isSuccess() == true ? true : false;
 
 	}
 
@@ -238,7 +246,7 @@ public class Facade {
 	public boolean playMonopolyCard(ResourceType resource){
 		game.getModel().getLocalPlayer().playMonopolyCard();
 		//How to add resources to player
-		//How to subtract them from bank
+				//How to subtract them from bank
 		return false;
 	}
 
@@ -270,7 +278,7 @@ public class Facade {
 	public boolean sendChat(String message){
 		//Who does this?
 		
-		return true;
+		return false;
 
 	}
 

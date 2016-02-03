@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import client.controller.Facade;
 import client.data.GameManager;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 public class FacadeCanDoTest {
 
@@ -204,5 +207,35 @@ public class FacadeCanDoTest {
 		
 	}
 	
-	
+	public void canBuildRoadNotTurn(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,2,3,2,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(1);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Rolling");
+		
+		HexLocation hexLoc = new HexLocation(0,0);
+		EdgeLocation location = new EdgeLocation(hexLoc, EdgeDirection.North);
+		
+		boolean canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		turnTracker.setCurrentTurn(2);
+		
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == false);
+		
+		
+	}
 }

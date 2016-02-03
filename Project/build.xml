@@ -7,10 +7,27 @@
 	
 	<!-- Directory containing Java libraries -->
 	<property name="lib" location="lib"/>
+	
+	<property name="build" location="bin"/>
+	
+	
+	<!-- CLASS PATHS -->
+		<!-- *********** -->
+		<path id="lib-classpath">
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		
+		<path id="all-classpath">
+			<path refid="lib-classpath"/>
+			<pathelement location="${build}"/>
+		</path>
+	
 
 	<target name="compile" description="compile the source code">
-		<javac srcdir="${src}" classpathref="lib-classpath" debug="true" includeantruntime="true" />
-		<javac srcdir="${test}" classpathref="lib-classpath" debug="true" includeantruntime="true" />
+		<javac srcdir="${src}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="false" />
+		<javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="false" />
 	</target>
 
 	<target name="test" description="run client test cases">

@@ -65,5 +65,10 @@ public class HTTPProxyTest {
 		Response response = httpProxy.addAI("LARGEST_ARMY");
 		System.out.println("testing add ai");
 	}
+	@Test
+	public void gtestListAI(){
+		ListAIResponse response = httpProxy.listAI();
+		System.out.println("testing list ai");
+	}
 	
 }

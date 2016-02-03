@@ -293,14 +293,14 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public ListAIResponse listAI() {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/listAI", null);
+		return new ListAIResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response addAI(String aiType) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/game/addAI", new AddAIRequest(getAIType(aiType)));
 		
-		return null;
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public GetCommandsResponse getCommands() {

@@ -235,7 +235,7 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public GetModelResponse sendChat(String content) {
 		SendChatCommand command = new SendChatCommand(playerIndex, content);
-		 return sendCommand(command);	
+		return sendCommand(command);	
 	}
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {
@@ -311,10 +311,12 @@ public class HTTPProxy implements IProxy{
 		// TODO Auto-generated method stub
 		return null;
 	}
+//	SendChatCommand command = new SendChatCommand(playerIndex, content);
+//	return sendCommand(command);
 	@Override
 	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		RollNumberCommand response = new RollNumberCommand(playerIndex, number);
+		return sendCommand(response);
 	}
 	@Override
 	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {

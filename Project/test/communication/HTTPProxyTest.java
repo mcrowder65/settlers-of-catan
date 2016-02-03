@@ -75,5 +75,10 @@ public class HTTPProxyTest {
 		GetModelResponse response = httpProxy.sendChat("hello!");
 		System.out.println("testing send chat");
 	}
+	@Test
+	public void itestRollNumber(){
+		GetModelResponse response = httpProxy.rollNumber(8);
+		System.out.println("rolling number");
+	}
 	
 }

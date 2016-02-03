@@ -8,6 +8,7 @@ public class SendChatCommand extends MoveCommand {
 		super(playerIndex);
 		this.content = content;
 		this.type = "sendChat";
+		//TODO ask eric if it's okay to have a type in sendchatcommand
 	}
 
 	@Override

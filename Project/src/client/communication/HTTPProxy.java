@@ -235,8 +235,7 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public GetModelResponse sendChat(String content) {
 		SendChatCommand command = new SendChatCommand(playerIndex, content);
-		 return sendCommand(command);
-		
+		 return sendCommand(command);	
 	}
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {

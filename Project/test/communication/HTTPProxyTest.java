@@ -70,5 +70,10 @@ public class HTTPProxyTest {
 		ListAIResponse response = httpProxy.listAI();
 		System.out.println("testing list ai");
 	}
+	@Test
+	public void htestSendChat(){
+		GetModelResponse response = httpProxy.sendChat("hello!");
+		System.out.println("testing send chat");
+	}
 	
 }

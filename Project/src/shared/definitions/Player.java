@@ -640,6 +640,10 @@ public class Player {
 		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
 		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
 	}
+	public void playRoadBuilderCard(){
+		int roadBuilder = oldDevCards.getRoadBuilding();
+		oldDevCards.setYearOfPlenty(roadBuilder--);
+	}
 	
 	
 	public void updateOldDevCard(){

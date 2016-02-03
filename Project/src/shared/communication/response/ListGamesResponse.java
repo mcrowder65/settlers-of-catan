@@ -16,5 +16,8 @@ public class ListGamesResponse extends Response {
 			this.games = games;
 		}
 	}
+	public GameInfo[] getGames() {
+		return  games.toArray(new GameInfo[games.size()]);
+	}
 
 }

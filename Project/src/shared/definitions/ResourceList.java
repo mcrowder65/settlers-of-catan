@@ -122,7 +122,17 @@ public class ResourceList {
 	public int getWood() {
 		return wood;
 	}
-	
-	
+	/**
+	 * Used to add resource cards to the Bank
+	 * @param resourceType = Type
+	 * @param quantity = How many cards should be added 
+	 */
+	public void addResource(String resourceType, int quantity){
+		if(resourceType == "brick") brick += quantity;
+		else if(resourceType == "ore") ore += quantity;
+		else if(resourceType == "sheep") sheep += quantity;
+		else if(resourceType == "wheat") wheat += quantity;
+		else wood++;
+	}
 	
 }

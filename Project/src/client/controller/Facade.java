@@ -238,7 +238,7 @@ public class Facade {
 	public boolean playMonopolyCard(ResourceType resource){
 		game.getModel().getLocalPlayer().playMonopolyCard();
 		//How to add resources to player
-				//How to subtract them from bank
+		//How to subtract them from bank
 		return false;
 	}
 
@@ -270,7 +270,7 @@ public class Facade {
 	public boolean sendChat(String message){
 		//Who does this?
 		
-		return false;
+		return true;
 
 	}
 

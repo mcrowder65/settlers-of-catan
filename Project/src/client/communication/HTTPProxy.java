@@ -270,8 +270,6 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
 		// TODO some other phase?
-		//Response response = sendCommand(new )
-		//Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
 		return null;
 	}
 	@Override
@@ -282,13 +280,13 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public GetModelResponse getModel() {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/model", new GetModelRequest());
+		return new GetModelResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public GetModelResponse getModel(int version) {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/model?version=" + version, new GetModelRequest(version));
+		return new GetModelResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public ListAIResponse listAI() {
@@ -303,101 +301,101 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public GetCommandsResponse getCommands() {
-		// TODO Auto-generated method stub
+		// TODO Another phase
 		return null;
 	}
 	@Override
 	public GetModelResponse executeCommands(List<String> commands) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Another phase
 		return null;
 	}
 //	SendChatCommand command = new SendChatCommand(playerIndex, content);
 //	return sendCommand(command);
 	@Override
 	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
-		RollNumberCommand response = new RollNumberCommand(playerIndex, number);
-		return sendCommand(response);
+		RollNumberCommand command = new RollNumberCommand(playerIndex, number);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		RobPlayerCommand command = new RobPlayerCommand(playerIndex, location, victimIndex);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse finishTurn() {
-		// TODO Auto-generated method stub
-		return null;
+		FinishTurnCommand command = new FinishTurnCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse buyDevCard() {
-		// TODO Auto-generated method stub
-		return null;
+		BuyDevCardCommand command = new BuyDevCardCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		YearOfPlentyCommand command = new YearOfPlentyCommand(playerIndex, resource1, resource2);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		RoadBuildingCommand command = new RoadBuildingCommand(playerIndex, spot1, spot2);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		SoldierCommand command = new SoldierCommand(playerIndex, location, victimIndex);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse Monopoly(ResourceType resource) {
-		// TODO Auto-generated method stub
-		return null;
+		MonopolyCommand command = new MonopolyCommand(playerIndex, resource);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse Monument() {
-		// TODO Auto-generated method stub
-		return null;
+		MonumentCommand command = new MonumentCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		BuildRoadCommand command = new BuildRoadCommand(playerIndex, free, roadLocation);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		BuildSettlementCommand command = new BuildSettlementCommand(playerIndex, free, vertexLocation);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		BuildCityCommand command = new BuildCityCommand(playerIndex, vertexLocation);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		OfferTradeCommand command = new OfferTradeCommand(playerIndex, offer.getReciever(), offer.getOffer());
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, inputResource, outputResource);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse acceptTrade(boolean willAccept) {
-		// TODO Auto-generated method stub
-		return null;
+		AcceptTradeCommand command = new AcceptTradeCommand(playerIndex, willAccept);
+		return sendCommand(command);
 	}
 	@Override
 	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		DiscardCardsCommand command = new DiscardCardsCommand(playerIndex, discardedCards);
+		return sendCommand(command);
 	}
 	@Override
 	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response =  sendRequest("/util/changeLogLevel", new ChangeLogLevelRequest(loggingLevel));
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 
 	public AIType getAIType(String type){

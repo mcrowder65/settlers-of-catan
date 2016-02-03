@@ -12,6 +12,7 @@ import shared.locations.HexLocation;
 
 public class FacadeCanDoTest {
 
+	
 	@Test
 	public void canDiscardCardsFalse() {
 		

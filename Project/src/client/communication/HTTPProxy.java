@@ -99,6 +99,8 @@ public class HTTPProxy implements IProxy{
 		conn.setDoInput(true);
 		conn.connect();
 		
+		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
+		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
 			 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -127,20 +129,12 @@ public class HTTPProxy implements IProxy{
 					"; catan.game=" + this.gameCookie);
 		}
 	}
-	public void evaluateCookies(HttpURLConnection conn, String urlPath){
-		if(conn.getHeaderField("Set-cookie") != null && this.userCookie == null){
-			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
-			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
-			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
-			setUserCookie(encodedCookie);
-		}
-		if(urlPath.equals("/games/join")){
-			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
-			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
-			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
-			setGameCookie(encodedCookie);
-		}
+	public String parseCookie(String cookie) {
+		StringBuilder smallerCookie = new StringBuilder(cookie.substring(11, cookie.length()));
+		String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
+		return encodedCookie;
 	}
+	
 	/**
 	 * Sends a POST request.
 	 * @param urlPath
@@ -166,7 +160,9 @@ public class HTTPProxy implements IProxy{
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
-		evaluateCookies(conn, urlPath); //evaluates whether to set "this"'s cookies.
+		
+		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
+		
 		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
@@ -188,18 +184,16 @@ public class HTTPProxy implements IProxy{
 	 * 
 	 * @param cookie
 	 * @throws IllegalArgumentException
-	 * Throws this exception if the cookie is invalid.
 	 */
-	private void setUserCookie(String cookie) throws IllegalArgumentException {
+	private void setUserCookie(String cookie) {
 		this.userCookie = cookie;
 	}
 	/**
 	 * 
 	 * @param cookie
 	 * @throws IllegalArgumentException
-	 * Throws this exception if the cookie is invalid.
 	 */
-	private void setGameCookie(String cookie) throws IllegalArgumentException {
+	private void setGameCookie(String cookie)  {
 		this.gameCookie = cookie;
 	}
 	
@@ -240,11 +234,17 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public Response login(String username, String password) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/user/login", new LoginRequest(username, password));
+		if (response.getResponseCookie() != null)
+			setUserCookie(parseCookie(response.getResponseCookie()));
+		
 		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response register(String username, String password) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/user/register", new RegisterRequest(username, password));
+		if (response.getResponseCookie() != null)
+			setUserCookie(parseCookie(response.getResponseCookie()));
+		
 		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
@@ -260,6 +260,9 @@ public class HTTPProxy implements IProxy{
 	@Override
 	public Response joinGame(int id, CatanColor color) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/games/join", new JoinGameRequest(id, color));
+		if (response.getResponseCookie() != null)
+			setGameCookie(parseCookie(response.getResponseCookie()));
+		
 		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override

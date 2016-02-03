@@ -60,16 +60,13 @@ public class CommandTests {
 	@Test
 	public void buildCityTest() {
 		VertexLocation goodLocation = new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthEast);
-		BuildCityCommand goodCommand1 = new BuildCityCommand(goodIndex1, true, goodLocation);
-		BuildCityCommand goodCommand2 = new BuildCityCommand(goodIndex1, false, goodLocation);
-		
-		assertTrue(goodCommand1.isFree() == true);
-		assertTrue(goodCommand2.isFree() == false);
+		BuildCityCommand goodCommand1 = new BuildCityCommand(goodIndex1, goodLocation);
+
 		assertTrue(goodCommand1.getLocation() == goodLocation);
 
 		try
 		{
-			BuildCityCommand badCommand1 = new BuildCityCommand(goodIndex1, true, null);
+			BuildCityCommand badCommand1 = new BuildCityCommand(goodIndex1, null);
 			fail("Should have thrown an exception.");
 		} catch (Exception e) {}
 	}

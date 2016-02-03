@@ -1,0 +1,29 @@
+<project name="Project" default="compile" basedir=".">
+	<!-- Directory containing application source code -->
+	<property name="src" location="src"/>
+	
+	<!-- Directory containing testing source code -->
+	<property name="test" location="test"/>
+	
+	<!-- Directory containing Java libraries -->
+	<property name="lib" location="lib"/>
+
+	<target name="compile" description="compile the source code">
+		<javac srcdir="${src}" classpathref="lib-classpath" debug="true" includeantruntime="true" />
+		<javac srcdir="${test}" classpathref="lib-classpath" debug="true" includeantruntime="true" />
+	</target>
+
+	<target name="test" description="run client test cases">
+		<java classname="generic.ClientTests" fork="yes">
+					<classpath>
+						<path refid="all-classpath"/>
+					</classpath>
+					<assertions>
+						<enable/>
+					</assertions>
+				</java>
+	</target>
+
+	
+</project>
+

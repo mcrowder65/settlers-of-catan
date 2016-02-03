@@ -5,21 +5,18 @@ import shared.locations.VertexLocation;
 
 public class BuildCityCommand extends MoveCommand {
 	
-	public BuildCityCommand(int playerIndex, boolean free, VertexLocation vertexLocation) throws IllegalArgumentException {
+	public BuildCityCommand(int playerIndex, VertexLocation vertexLocation) throws IllegalArgumentException {
 		super(playerIndex);
 		if (vertexLocation == null)
 			throw new IllegalArgumentException("vertexLocation cannot be null.");
-		this.free = free;
+
 		this.vertexLocation = vertexLocation;
 	}
 
-	public boolean isFree() {
-		return free;
-	}
+
 	public VertexLocation getLocation() {
 		return vertexLocation;
 	}
-	private boolean free;
 	private VertexLocation vertexLocation;
 	@Override
 	public String getMoveType() {

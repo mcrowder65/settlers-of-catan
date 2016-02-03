@@ -28,7 +28,6 @@ public class MirrorVertexObject {
 	}
 
 	public MirrorVertexObject() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

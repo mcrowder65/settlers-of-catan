@@ -20,6 +20,7 @@ import client.main.Catan;
 import client.utils.Translator;
 import shared.communication.request.*;
 import shared.communication.response.*;
+import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.LogLevel;
 import shared.definitions.ResourceList;
@@ -117,6 +118,29 @@ public class HTTPProxy implements IProxy{
 	public String decodeCookie(String encodedCookie) throws UnsupportedEncodingException{
 		return new URLDecoder().decode(encodedCookie, "UTF-8");
 	}
+	public void setCookies(HttpURLConnection conn){
+		if(this.userCookie != null) {
+			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
+		}
+		if(this.gameCookie != null && this.userCookie != null){
+			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie + 
+					"; catan.game=" + this.gameCookie);
+		}
+	}
+	public void evaluateCookies(HttpURLConnection conn, String urlPath){
+		if(conn.getHeaderField("Set-cookie") != null && this.userCookie == null){
+			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
+			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
+			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
+			setUserCookie(encodedCookie);
+		}
+		if(urlPath.equals("/games/join")){
+			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
+			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
+			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
+			setGameCookie(encodedCookie);
+		}
+	}
 	/**
 	 * Sends a POST request.
 	 * @param urlPath
@@ -133,12 +157,8 @@ public class HTTPProxy implements IProxy{
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
-		if(this.userCookie != null) {
-			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
-		}
-		if(this.gameCookie != null) {
-			conn.setRequestProperty("Cookie", "catan.game=" + this.gameCookie);
-		}
+		setCookies(conn); //sets user and/or game cookies on HTTP headers as needed.
+		
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
 		conn.connect();
@@ -146,12 +166,7 @@ public class HTTPProxy implements IProxy{
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
-		if(conn.getHeaderField("Set-cookie") != null){
-			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
-			StringBuilder smallerCookie = new StringBuilder(bigCookie.substring(11, bigCookie.length()));
-			String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
-			setUserCookie(encodedCookie);
-		}
+		evaluateCookies(conn, urlPath); //evaluates whether to set "this"'s cookies.
 		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
@@ -250,17 +265,19 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO some other phase?
 		return null;
 	}
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
+		// TODO some other phase?
 		//Response response = sendCommand(new )
 		//Response response = sendCommand("/games/save", new SaveGameRequest(id, filename));
 		return null;
 	}
 	@Override
 	public GetModelResponse reset() {
+		// TODO some other phase?
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -281,7 +298,8 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public Response addAI(String aiType) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		HTTPJsonResponse response = sendRequest("/game/addAI", new AddAIRequest(getAIType(aiType)));
+		
 		return null;
 	}
 	@Override
@@ -381,6 +399,13 @@ public class HTTPProxy implements IProxy{
 		return null;
 	}
 
-
+	public AIType getAIType(String type){
+		switch(type){
+		case "LARGEST_ARMY":
+			return AIType.LARGEST_ARMY;
+		default:
+			return null;
+		}
+	}
 	
 }

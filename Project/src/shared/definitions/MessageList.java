@@ -21,7 +21,6 @@ public class MessageList {
 	}
 
 	public MessageList() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

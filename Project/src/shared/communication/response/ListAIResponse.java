@@ -12,6 +12,15 @@ public class ListAIResponse extends Response {
 		if (success) 
 		{
 			//TODO: parse AITypes
+			aiTypes.add(getAIType(json));
+		}
+	}
+	public AIType getAIType(String type){
+		switch(type){
+		case "LARGEST_ARMY":
+			return AIType.LARGEST_ARMY;
+		default:
+			return null;
 		}
 	}
 

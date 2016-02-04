@@ -2345,6 +2345,48 @@ public class FacadeCanDoTest {
 		player.setResources(resources);
 		canOffer = facade.canOfferTrade();
 		assertTrue(canOffer == true);
-		
 	}
+	
+	@Test
+	public void canMaritimeTradeTest(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerIndex(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		turnTracker.setStatus("Playing");
+		gameModel.setTurnTracker(turnTracker);
+		
+		TradeOffer tradeOffer = new TradeOffer();
+		ResourceList offer = new ResourceList(3,0,0,0,0);
+		tradeOffer.setOffer(offer);
+		
+		//no resources
+		turnTracker.setCurrentTurn(0);
+		boolean canOffer = facade.canOfferTrade();
+		assertTrue(canOffer == false);
+		
+		//1 resource
+		resources = new ResourceList(1,0,0,0,0);
+		player.setResources(resources);
+		canOffer = facade.canOfferTrade();
+		assertTrue(canOffer == true);
+		
+		canOffer = true;
+		//tons of resources
+		resources = new ResourceList(10,10,10,10,10);
+		player.setResources(resources);
+		canOffer = facade.canOfferTrade();
+		assertTrue(canOffer == true);
+	}
+	
+	
 }

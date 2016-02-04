@@ -15,19 +15,19 @@ public class Facade {
 
 	private GameManager game;
 	private IProxy proxy;
-	private int pass;
 
-	public Facade()
-	{
-		game = new GameManager(proxy, pass);
-	}
+
 	public Facade(IProxy proxy, int pollingInterval)
 	{
-		game = new GameManager(proxy, pollingInterval);
 		this.proxy = proxy;
-		this.pass = pollingInterval;
+		game = new GameManager(proxy, pollingInterval);
+	
 	}
 
+	/**
+	 * This constructor is used for testing only!
+	 * @param gameMan
+	 */
 	public Facade (GameManager gameMan){
 		this.game = gameMan;
 	}
@@ -98,8 +98,8 @@ public class Facade {
 	 * @return True if the cards were discarded successfully
 	 */
 	public boolean discardCards(ResourceList list){
-		return false;
-
+		GetModelResponse response = proxy.discardCards(list);
+		return response.isSuccess();
 	}	
 
 	/**
@@ -108,7 +108,7 @@ public class Facade {
 	 */
 	public int rollNumber(){
 		int result = roll() + roll();
-		Response response = proxy.rollNumber(roll() + roll());
+		GetModelResponse response = proxy.rollNumber(roll() + roll());
 		return response.isSuccess() == true ? result : -1;
 	}
 	public int roll(){
@@ -119,12 +119,9 @@ public class Facade {
 	 * @param location - The location where the user wants to place the road
 	 * @return True if the road was placed
 	 */
-	public boolean buildRoad(EdgeLocation location){
-		int playerInTurn = game.getModel().getLocalPlayer().getPlayerIndex();
-		EdgeValue road = new EdgeValue(playerInTurn, location);
-		game.getModel().getMap().buildRoad(road);
-
-		return true;
+	public boolean buildRoad(EdgeLocation location, boolean free){
+		GetModelResponse response = proxy.buildRoad(location, free);
+		return response.isSuccess();
 
 	}
 
@@ -133,12 +130,9 @@ public class Facade {
 	 * @param location - The location where the user wants to place the settlement
 	 * @return True if the settlement was placed
 	 */
-	public boolean buildSettlement(VertexLocation location){
-		int playerInTurn = game.getModel().getLocalPlayer().getPlayerIndex();
-		VertexObject settlement = new VertexObject(playerInTurn, location);
-		game.getModel().getMap().buildSettlement(settlement);
-
-		return true;
+	public boolean buildSettlement(VertexLocation location, boolean free){
+		GetModelResponse response = proxy.buildSettlement(location, free);
+		return response.isSuccess();
 
 	}
 
@@ -148,11 +142,8 @@ public class Facade {
 	 * @return True if the city was placed
 	 */
 	public boolean buildCity(VertexLocation location){
-		int playerInTurn = game.getModel().getLocalPlayer().getPlayerIndex();
-		VertexObject city = new VertexObject(playerInTurn, location);
-		game.getModel().getMap().buildCity(city);
-
-		return true;
+		GetModelResponse response = proxy.buildCity(location);
+		return response.isSuccess();
 
 	}
 
@@ -162,8 +153,8 @@ public class Facade {
 	 * @return True if the offer was offered successfully
 	 */
 	public boolean offerTrade(TradeOffer offer){
-		return false;
-
+		GetModelResponse response = proxy.offerTrade(offer);
+		return response.isSuccess();
 	}
 
 	/**
@@ -171,9 +162,9 @@ public class Facade {
 	 * @param offer - The offer
 	 * @return True if the offer was offered successfully
 	 */
-	public boolean offerMaritimeTrade(TradeOffer offer){
-		return false;
-
+	public boolean offerMaritimeTrade(int ratio, ResourceType input, ResourceType output){
+		GetModelResponse response = proxy.maritimeTrade(ratio, input, output);
+		return response.isSuccess();
 	}
 
 	/**
@@ -181,10 +172,8 @@ public class Facade {
 	 * @return
 	 */
 	public boolean finishTurn(){
-		game.getModel().getTurnTracker().advanceTurn();
-		game.getModel().getLocalPlayer().setPlayedDevCard(false);	
-
-		return true;
+		GetModelResponse response = proxy.finishTurn();
+		return response.isSuccess();
 	}
 
 	/**
@@ -192,8 +181,8 @@ public class Facade {
 	 * @return True if the card was bought successfully
 	 */
 	public boolean buyDevCard(){
-		return false;
-
+		GetModelResponse response = proxy.buyDevCard();
+		return response.isSuccess();
 	}
 
 	/**
@@ -202,20 +191,15 @@ public class Facade {
 	 * @param resource2 - The resource that the user picked to get
 	 * @return True if the card was played
 	 */
-	public boolean playYearOfPlentyCard(ResourceType resource1, ResourceType resource2){
-		game.getModel().getLocalPlayer().playYearOfPlentyCard();
-		//How to add resources to player
-		//How to subtract them from bank
-
-		return true;
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2){
+		GetModelResponse response = proxy.Year_Of_Plenty(resource1, resource2);
+		return response.isSuccess();
 
 	}
 
-	public boolean playRoadBuilder(EdgeLocation road1, EdgeLocation road2){
-		//There's not a roadbuilder in player
-		//How to add resources to player
-		//How to subtract them from bank
-		return true;
+	public boolean playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2){
+		GetModelResponse response = proxy.Road_Building(spot1, spot2);
+		return response.isSuccess();
 	}
 
 	/**
@@ -224,11 +208,9 @@ public class Facade {
 	 * @param location - The location where the robber will be placed
 	 * @return True if the Soldier Card was played successfully
 	 */
-	public boolean playSoldierCard(){
-		game.getModel().getLocalPlayer().playSoldierCard();
-		//The robber should be place through the placeRobber method
-
-		return true;
+	public boolean playSoldier(int victimIndex, HexLocation location){
+		GetModelResponse response = proxy.Soldier(victimIndex, location);
+		return response.isSuccess();
 	}
 
 	/**
@@ -236,30 +218,25 @@ public class Facade {
 	 * @param resource - The resource that the user picked to get
 	 * @return True if the card was played
 	 */
-	public boolean playMonopolyCard(ResourceType resource){
-		game.getModel().getLocalPlayer().playMonopolyCard();
-		//How to add resources to player
-		//How to subtract them from bank
-		return false;
+	public boolean playMonopoly(ResourceType resource){
+		GetModelResponse response = proxy.Monopoly(resource);
+		return response.isSuccess();
 	}
 
 	public boolean playMonument(){
-		int playerInTurn = game.getModel().getLocalPlayer().getPlayerIndex();
-		game.getModel().setWinner(playerInTurn);
-
-		return true;
+		GetModelResponse response = proxy.Monument();
+		return response.isSuccess();
 	}
 
 	/**
 	 * This method allows the user to move the Robber to a different Hex
+	 * @param victimIndex - the index of the victim
 	 * @param location - The Hex location where the user wants to move the Robber
 	 * @return True if the Robber was moved
 	 */
-	public boolean placeRobber(HexLocation location, int victimIndex){
-		game.getModel().getMap().setRobber(location);
-		//Who takes care of making sure every player discards cards?
-
-		return true;
+	public boolean placeRobber(int victimIndex, HexLocation location){
+		GetModelResponse response = proxy.robPlayer(victimIndex, location);
+		return response.isSuccess();
 
 	}
 
@@ -269,19 +246,20 @@ public class Facade {
 	 * @return True if the message was sent
 	 */
 	public boolean sendChat(String message){
-		//Who does this?
-
-		return false;
+		GetModelResponse response = proxy.sendChat(message);
+		return response.isSuccess();
 
 	}
 
 	/**
 	 * This method allows the user to accept an offer from other players
-	 * @param offer
+	 * @param willAccept
+	 * True if you will accept a trade offer, false if you reject
 	 * @return True if the offer was accepted successfully
 	 */
-	public boolean acceptTrade(TradeOffer offer){
-		return false;
+	public boolean acceptTrade(boolean willAccept){
+		GetModelResponse response = proxy.acceptTrade(willAccept);
+		return response.isSuccess();
 
 	}
 	//*************************************************************************

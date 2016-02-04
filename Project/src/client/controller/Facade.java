@@ -416,7 +416,7 @@ public class Facade {
 	 * @param offer
 	 * @return True if the user can offer the trade
 	 */
-	public boolean canOfferTrade(TradeOffer offer) throws IllegalArgumentException {
+	public boolean canOfferTrade() throws IllegalArgumentException {
 		boolean isTurn = false;
 		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
 		{

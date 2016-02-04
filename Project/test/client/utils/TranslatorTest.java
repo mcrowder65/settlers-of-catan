@@ -29,7 +29,8 @@ public class TranslatorTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	@Test public void testObject2Json(){
+//	@Test 
+	public void testObject2Json(){
 
 		BufferedReader br;
 
@@ -51,9 +52,7 @@ public class TranslatorTest {
 		System.out.println(json);
 	}
 	@Test
-	public void testJson2Object() throws FileNotFoundException{
-
-//	 
+	public void testJson2Object() throws FileNotFoundException{	 
 		BufferedReader br;
 
 		String line = new String();
@@ -70,6 +69,7 @@ public class TranslatorTest {
 		}
 		
 		Object temp = new Translator().jsonToObject(append.toString());
+		System.out.println("hello");
 
 	}
 

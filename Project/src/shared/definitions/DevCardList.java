@@ -47,6 +47,9 @@ public class DevCardList {
 		this.yearOfPlenty = yearOfPlenty;
 	}
 
+	public DevCardList() {
+	}
+
 	/**
 	 * retrieves number of monopoly cards
 	 * @return monopoly

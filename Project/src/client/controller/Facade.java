@@ -398,7 +398,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuildSettlement();
+		boolean enoughResources = game.getModel().getLocalPlayer().canBuildCity();
 		if(enoughResources == false){
 			return false;
 		}

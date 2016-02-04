@@ -520,7 +520,7 @@ public class Player {
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>0 && grain>0){
+		if(ore>2 && grain>1){
 			return true;
 		}
 		return false;

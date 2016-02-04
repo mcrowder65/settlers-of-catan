@@ -1217,5 +1217,98 @@ public class FacadeCanDoTest {
 
 	
 	}
+
+	@Test
+	public void canFinishTurnWrongTurn(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		//testing with player 1
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(1);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		
+		boolean canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		canFinish = true;
+		//testing with player 2
+		turnTracker.setCurrentTurn(2);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		canFinish = true;
+		//testing with player 3
+		turnTracker.setCurrentTurn(3);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		//testing with correct turn
+		turnTracker.setCurrentTurn(0);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+	}
 	
+	@Test
+	public void canFinishTurnWrongStatus(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		//testing with status as rolling
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Rolling");
+		
+		boolean canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		//testing with robbing
+		turnTracker.setStatus("Robbing");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with playing
+		turnTracker.setStatus("Playing");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with discarding
+		turnTracker.setStatus("Discarding");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with FirstRound
+		turnTracker.setStatus("FirstRound");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with SecondRound
+		turnTracker.setStatus("SecondRound");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+
+	}
 }

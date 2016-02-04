@@ -93,9 +93,11 @@ public class JsonTranslator {
 	}
 	public DevCardList makeDeck(JsonObject jsDeck){
 		DevCardList deck = new DevCardList();
-		
-		
-		
+		deck.setYearOfPlenty(jsDeck.get("yearOfPlenty").getAsInt());
+		deck.setMonopoly(jsDeck.get("monopoly").getAsInt());
+		deck.setSoldier(jsDeck.get("soldier").getAsInt());
+		deck.setRoadBuilding(jsDeck.get("roadBuilding").getAsInt());
+		deck.setMonument(jsDeck.get("monument").getAsInt());
 		return deck;
 	}
 	public MessageList makeMessageList(JsonObject jsMessageList){

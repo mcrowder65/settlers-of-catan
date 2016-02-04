@@ -47,8 +47,8 @@ public class TranslatorTest {
 			e.printStackTrace();
 		}
 		//System.out.println(append.toString());
-		Object temp = new Translator().jsonToObject(append.toString());
-		String json = new Translator().objectToJson(temp);
+		Object temp = Translator.jsonToObject(append.toString());
+		String json = Translator.objectToJson(temp);
 		System.out.println(json);
 	}
 	@Test
@@ -58,7 +58,7 @@ public class TranslatorTest {
 		String line = new String();
 		StringBuilder append = new StringBuilder();
 		try{
-			br = new BufferedReader(new FileReader("json.txt"));
+			br = new BufferedReader(new FileReader("gameModel.txt"));
 			while((line = br.readLine()) != null){
 				append.append(line);
 			}
@@ -68,152 +68,9 @@ public class TranslatorTest {
 			e.printStackTrace();
 		}
 		
-		Object temp = new Translator().jsonToObject(append.toString());
+		Object temp = Translator.jsonToObject(append.toString());
 		System.out.println("hello");
 
 	}
 
 }
-
-
-
-//String json = 
-//+ "{"
-//+ "\"bank\": {
-//	 +"\"brick\": \"integer\","
-//	 +"\"ore\": \"integer\","
-//	 +"\"sheep\": \"integer\","
-//	 +"\"wheat\": \"integer\","
-//	 +"\"wood\": \"integer\""
-//	 +"},"
-//	 +"\"chat\": {"
-//	 +"\"lines\": ["
-//	 +"{"
-//	 +"\"message\": \"string\","
-//	 +"\"source\": \"string\""
-//	 + "}"
-//	 + "]"
-//	 +"},"
-//	 +"\"log\": {"
-//	 +"\"lines\": ["
-//	 + "{";
-//		+ "\"message\": \"string\",
-//	 "source": "string"
-//	 }
-//	 ]
-//	 },
-//	 "map": {
-//	 "hexes": [
-//	 {
-//	 "location": {
-//	 "x": "integer",
-//	 "y": "integer"
-//	 },
-//	 "resource": "string",
-//	 "number": "integer"
-//	 }
-//	 ],
-//	 "ports": [
-//	 {
-//	 "resource": "string",
-//	 "location": {
-//	 "x": "integer",
-//	 "y": "integer"
-//	 },
-//	 "direction": "string",
-//	 "ratio": "integer"
-//	 }
-//	 ],
-//	 "roads": [
-//	 {
-//	 "owner": "index",
-//	 "location": {
-//	 "x": "integer",
-//	 "y": "integer",
-//	 "direction": "string"
-//	 }
-//	 }
-//	 ],
-//	 "settlements": [
-//	 {
-//	 "owner": "index",
-//	 "location": {
-//	 "x": "integer",
-//	 "y": "integer",
-//	 "direction": "string"
-//	 }
-//	 }
-//	 ],
-//	 "cities": [
-//	 {
-//	 "owner": "index",
-//	 "location": {
-//	 "x": "integer",
-//	 "y": "integer",
-//	 "direction": "string"
-//	 }
-//	 }
-//	 ],
-//	 "radius": "integer",
-//	 "robber": {
-//	 "x": "integer",
-//	 "y": "integer"
-//	 }
-//	 },
-//	 "players": [
-//	 {
-//	 "cities": "number",
-//	 "color": "string",
-//	 "discarded": "boolean",
-//	 "monuments": "number",
-//	 "name": "string",
-//	 "newDevCards": {
-//	 "monopoly": "number",
-//	 "monument": "number",
-//	 "roadBuilding": "number",
-//	 "soldier": "number",
-//	 "yearOfPlenty": "number"
-//	 },
-//	 "oldDevCards": {
-//	 "monopoly": "number",
-//	 "monument": "number",
-//	 "roadBuilding": "number",
-//	 "soldier": "number",
-//	 "yearOfPlenty": "number"
-//	 },
-//	 "playerIndex": "index",
-//	 "playedDevCard": "boolean",
-//	 "playerID": "integer",
-//	 "resources": {
-//	 "brick": "integer",
-//	 "ore": "integer",
-//	 "sheep": "integer",
-//	 "wheat": "integer",
-//	 "wood": "integer"
-//	 },
-//	 "roads": "number",
-//	 "settlements": "integer",
-//	 "soldiers": "integer",
-//	 "victoryPoints": "integer"
-//	 }
-//	 ],
-//	 "tradeOffer": {
-//	 "sender": "integer",
-//	 "receiver": "integer",
-//	 "offer": {
-//	 "brick": "integer",
-//	 "ore": "integer",
-//	 "sheep": "integer",
-//	 "wheat": "integer",
-//	 "wood": "integer"
-//	 }
-//	 },
-//	 "turnTracker": {
-//	 "currentTurn": "index",
-//	 "status": "string",
-//	 "longestRoad": "index",
-//	 "largestArmy": "index"
-//	 },
-//	 "version": "index",
-//	 "winner": "index"
-//	}

@@ -1823,4 +1823,120 @@ public class FacadeCanDoTest {
 		assertTrue(canBuild == true);
 	
 	}
+	
+	@Test
+	public void canBuildCityOnCity(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(5,5,5,5,5);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.NorthWest);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 4);
+		
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		VertexObject settlement = new VertexObject(0,location);
+
+		//two Road Location 1
+		boolean canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		location = new VertexLocation(homeHexLoc, VertexDirection.SouthWest);
+		settlement = new VertexObject(0,location);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		//checking to make sure you can lay once settlements are actually laid down
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == true);
+		map.layCity(settlement);
+		assertTrue(map.getCities().length == 3);
+		
+		//Check laying a city on another city
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		//laying another settlement and city
+		location = new VertexLocation(homeHexLoc, VertexDirection.SouthEast);
+		settlement = new VertexObject(0,location);
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == true);
+		
+		map.layCity(settlement);
+		assertTrue(map.getCities().length == 6);
+		
+		//city on city check 2
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		
+	}
 }

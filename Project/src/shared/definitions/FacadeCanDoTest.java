@@ -10,6 +10,9 @@ import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.EdgeValue;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.locations.VertexObject;
 
 public class FacadeCanDoTest {
 
@@ -305,6 +308,7 @@ public class FacadeCanDoTest {
 		HexLocation hex9Loc = new HexLocation(-1,1);
 		HexLocation hex10Loc = new HexLocation(-1,-1);
 		HexLocation hex11Loc = new HexLocation(-1,0);
+		
 		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
 		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
 		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
@@ -317,6 +321,7 @@ public class FacadeCanDoTest {
 		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
 		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
 		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		
 		
 		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11};
 		map.setHexes(allHexes);
@@ -381,6 +386,7 @@ public class FacadeCanDoTest {
 		HexLocation hex9Loc = new HexLocation(-1,1);
 		HexLocation hex10Loc = new HexLocation(-1,-1);
 		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
 		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
 		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
 		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
@@ -393,8 +399,9 @@ public class FacadeCanDoTest {
 		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
 		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
 		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
 		
-		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11};
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hexWater};
 		map.setHexes(allHexes);
 		
 		EdgeLocation location = new EdgeLocation(homeHexLoc, EdgeDirection.North);
@@ -444,8 +451,864 @@ public class FacadeCanDoTest {
 	    canBuild = facade.canBuildRoad(location);
 	    assertTrue(canBuild == false);
 	    
-	    
+	    //building a road on water
+	    location = new EdgeLocation(waterLocation, EdgeDirection.SouthEast);
+		road = new EdgeValue(1,location);
+	    canBuild = facade.canBuildRoad(location);
+	    assertTrue(canBuild == false);
 	    
 	}
 	
+	@Test
+	public void canBuildRoadNearWater(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,2,3,2,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		EdgeLocation location = new EdgeLocation(hex14Loc, EdgeDirection.NorthEast);
+		EdgeValue road = new EdgeValue(0,location);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 1);
+		
+		//Can lay road
+		location = new EdgeLocation(hex14Loc, EdgeDirection.SouthEast);
+		road = new EdgeValue(0,location);
+		boolean canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == true);
+	}
+	
+	@Test
+	public void canBuildResourceIssue(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		EdgeLocation location = new EdgeLocation(hex14Loc, EdgeDirection.NorthEast);
+		EdgeValue road = new EdgeValue(0,location);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 1);
+		
+		//0 of any resource
+		location = new EdgeLocation(hex14Loc, EdgeDirection.SouthEast);
+		road = new EdgeValue(0,location);
+		boolean canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == false);
+		
+		//1 brick 0 of everything else
+		resources = new ResourceList(1,0,0,0,0);
+		player.setResources(resources);
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == false);
+		
+		//0 brick 1 of everything else
+		resources = new ResourceList(0,1,1,1,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == false);
+		
+		//1 brick 1 of everything else
+		resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == true);
+		
+		//1 brick 1 wood 0 of everything else
+		resources = new ResourceList(1,0,0,0,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == true);
+		
+		//10 of everything
+		resources = new ResourceList(10,10,10,10,10);
+		player.setResources(resources);
+		canBuild = facade.canBuildRoad(location);
+		assertTrue(canBuild == true);
+		
+	}
+
+	@Test
+	public void canBuildSettlementWrongTurn(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(2,2,2,2,2);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(1);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.NorthWest);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 4);
+		
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		boolean canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		
+		//trying with player 2
+		turnTracker.setCurrentTurn(2);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//trying with player 3
+		turnTracker.setCurrentTurn(2);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//trying with correct player
+		turnTracker.setCurrentTurn(0);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+	
+	}
+	
+	@Test
+	public void canBuildSettlementResources(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.NorthWest);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 4);
+		
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		boolean canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Everything except wood
+		resources = new ResourceList(1,1,1,1,0);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Everything except brick
+		resources = new ResourceList(0,1,1,1,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Everything except sheep
+		resources = new ResourceList(1,1,0,1,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Everything except wheat
+		resources = new ResourceList(1,1,1,0,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//exact amount needed
+		resources = new ResourceList(1,0,1,1,1);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+		//trying with more than enough
+		resources = new ResourceList(10,10,10,10,10);
+		player.setResources(resources);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+	
+	}
+	
+	@Test
+	public void canBuildSettlementStatus(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Rolling");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.NorthWest);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 4);
+		
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		boolean canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//random status
+		turnTracker.setStatus("random");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//Robbing status
+		turnTracker.setStatus("Robbing");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//Discarding status
+		turnTracker.setStatus("Discarding");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//FirstRound status
+		turnTracker.setStatus("FirstRound");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//SecondRound status
+		turnTracker.setStatus("SecondRound");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//Playing status
+		turnTracker.setStatus("Playing");
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+	
+	}
+	
+	@Test
+	public void canBuildSettlementPositioning(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.NorthWest);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 4);
+		
+		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		boolean canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+		VertexObject settlement = new VertexObject(0,location);
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		
+		//try to lay on top of settlement
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//try to lay just one vertex away from other settlement
+		location = new VertexLocation(homeHexLoc, VertexDirection.NorthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//try to lay one vertex way but on a diff hex
+		location = new VertexLocation(hex3Loc, VertexDirection.SouthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//try to lay no roads around
+		location = new VertexLocation(hex3Loc, VertexDirection.NorthEast);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//try to lay in water
+		location = new VertexLocation(waterLocation, VertexDirection.NorthEast);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		Player player2 = new Player();
+		player2.setPlayerIndex(2);
+		player2.setOldDevCards(devCards);
+		player2.setResources(resources);
+		gameModel.setLocalPlayer(player2);
+		turnTracker.setCurrentTurn(2);
+		
+		canBuild = true;
+		//Opponent tries to lay a settlement on top of yours
+		location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay a connecting to two of your roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay in the middle of your two roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.NorthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay where no roads connect
+		location = new VertexLocation(hex6Loc, VertexDirection.SouthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tires to lay in water
+		location = new VertexLocation(waterLocation, VertexDirection.SouthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//building opponent roads
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.SouthWest);
+		road = new EdgeValue(2,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 6);
+		
+		
+		canBuild = true;
+		//Opponent tries to lay a connecting to two of your roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//build opponent roads
+		roadLocation = new EdgeLocation(hex1Loc, EdgeDirection.NorthWest);
+		road = new EdgeValue(2,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 8);
+		
+		//build opponent settlement
+		location = new VertexLocation(hex1Loc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+	
+	}
+	
+	@Test
+	public void canBuildSettlementByWater(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		DevCardList devCards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(devCards);
+		
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
+		
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		//build road 1
+		EdgeLocation roadLocation = new EdgeLocation(hex12Loc, EdgeDirection.North);
+		EdgeValue road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 1);
+		
+		//build road 2
+		roadLocation = new EdgeLocation(hex12Loc, EdgeDirection.NorthEast);
+		road = new EdgeValue(0,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 2);
+		
+		//testing next to water
+		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthWest);
+		boolean canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+		//building settlement
+		VertexObject settlement = new VertexObject(0,location);
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 2);
+		
+		//testing on the other side of the two roads - still next to the water
+		location = new VertexLocation(hex12Loc, VertexDirection.East);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
+		
+		//building settlement
+		settlement = new VertexObject(0,location);
+		map.laySettlement(settlement);
+		assertTrue(map.getSettlements().length == 3);
+		
+
+	
+	}
+
+	@Test
+	public void canFinishTurnWrongTurn(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		//testing with player 1
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(1);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Playing");
+		
+		boolean canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		canFinish = true;
+		//testing with player 2
+		turnTracker.setCurrentTurn(2);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		canFinish = true;
+		//testing with player 3
+		turnTracker.setCurrentTurn(3);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		//testing with correct turn
+		turnTracker.setCurrentTurn(0);
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+	}
+	
+	@Test
+	public void canFinishTurnWrongStatus(){
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		
+		//testing with status as rolling
+		TurnTracker turnTracker = new TurnTracker();
+		turnTracker.setCurrentTurn(0);
+		gameModel.setTurnTracker(turnTracker);
+		turnTracker.setStatus("Rolling");
+		
+		boolean canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == false);
+		
+		//testing with robbing
+		turnTracker.setStatus("Robbing");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with playing
+		turnTracker.setStatus("Playing");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with discarding
+		turnTracker.setStatus("Discarding");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with FirstRound
+		turnTracker.setStatus("FirstRound");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+		
+		canFinish = false;
+		//testing with SecondRound
+		turnTracker.setStatus("SecondRound");
+		canFinish = facade.canFinishTurn();
+		assertTrue(canFinish == true);
+
+	}
 }

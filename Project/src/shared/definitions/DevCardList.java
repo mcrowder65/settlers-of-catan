@@ -127,4 +127,18 @@ public class DevCardList {
 		this.yearOfPlenty = yearOfPlenty;
 	}
 	
+	/**
+	 * Determines if the DevCard List is empty
+	 * @return True if the DevCard List is empty
+	 */
+	public boolean isEmpty() {
+		if(monopoly > 0) return false;
+		else if(monument > 0) return false;
+		else if(roadBuilding > 0) return false;
+		else if(soldier > 0) return false;
+		else if(yearOfPlenty > 0) return false;
+		
+		return true;
+	}
+	
 }

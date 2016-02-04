@@ -27,11 +27,11 @@ public class Facade {
 		this.proxy = proxy;
 		this.pass = pollingInterval;
 	}
-	
+
 	public Facade (GameManager gameMan){
 		this.game = gameMan;
 	}
-	
+
 
 
 
@@ -112,7 +112,7 @@ public class Facade {
 		return response.isSuccess() == true ? result : -1;
 	}
 	public int roll(){
-	    return new Random().nextInt((6 - 1) + 1) + 1;
+		return new Random().nextInt((6 - 1) + 1) + 1;
 	}
 	/**
 	 * This method allows the user to lay a road on the map
@@ -227,7 +227,7 @@ public class Facade {
 	public boolean playSoldierCard(){
 		game.getModel().getLocalPlayer().playSoldierCard();
 		//The robber should be place through the placeRobber method
-		
+
 		return true;
 	}
 
@@ -239,14 +239,14 @@ public class Facade {
 	public boolean playMonopolyCard(ResourceType resource){
 		game.getModel().getLocalPlayer().playMonopolyCard();
 		//How to add resources to player
-				//How to subtract them from bank
+		//How to subtract them from bank
 		return false;
 	}
 
 	public boolean playMonument(){
 		int playerInTurn = game.getModel().getLocalPlayer().getPlayerIndex();
 		game.getModel().setWinner(playerInTurn);
-		
+
 		return true;
 	}
 
@@ -258,7 +258,7 @@ public class Facade {
 	public boolean placeRobber(HexLocation location, int victimIndex){
 		game.getModel().getMap().setRobber(location);
 		//Who takes care of making sure every player discards cards?
-		
+
 		return true;
 
 	}
@@ -270,7 +270,7 @@ public class Facade {
 	 */
 	public boolean sendChat(String message){
 		//Who does this?
-		
+
 		return false;
 
 	}
@@ -430,7 +430,7 @@ public class Facade {
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer().canOfferTrade();
-		
+
 		return enoughResources;
 	}
 
@@ -455,8 +455,19 @@ public class Facade {
 			return false;
 		}
 		boolean hasPort = game.getModel().getMap().hasPort(playerIndex);
-		
-		//Still need to check and see if the bank has enough resources
+
+		//bank is not empty
+		if(game.getModel().getBank().isEmpty()){
+			//Bank was empty
+			return false;
+		}
+
+		//player has at least 2 of the same
+		if(!game.getModel().getLocalPlayer().enoughResourceCardsToTrade()){
+			//Not enough resources to offer a maritime trade. 
+			return false; 
+		}
+
 		return hasPort;
 	}
 
@@ -500,6 +511,11 @@ public class Facade {
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer().canBuyDevCard();
 		if(enoughResources == false){
+			return false;
+		}
+
+		if(game.getModel().getDeck().isEmpty()){
+			//Deck is empty, no Dev Cards available for purchase. 
 			return false;
 		}
 
@@ -695,7 +711,10 @@ public class Facade {
 	 */
 	public boolean buyRoad(){
 		game.getModel().getLocalPlayer().chargeBasicRoad();
-		
+
+		int numberRoads = game.getModel().getLocalPlayer().getRoads();
+		game.getModel().getLocalPlayer().setRoads(numberRoads--);
+
 		return true;
 
 	}
@@ -706,7 +725,10 @@ public class Facade {
 	 */
 	public boolean buySettlement(){
 		game.getModel().getLocalPlayer().chargeBasicSettlement();
-		
+
+		int numberSettlements = game.getModel().getLocalPlayer().getSettlements();
+		game.getModel().getLocalPlayer().setSettlements(numberSettlements--);
+
 		return true;
 
 	}
@@ -717,7 +739,10 @@ public class Facade {
 	 */
 	public boolean buyCity(){
 		game.getModel().getLocalPlayer().chargeBasicCity();
-		
+
+		int numberCities = game.getModel().getLocalPlayer().getCities();
+		game.getModel().getLocalPlayer().setCities(numberCities--);
+
 		return true;
 
 	}
@@ -735,7 +760,7 @@ public class Facade {
 
 	}
 
-	
+
 	/**
 	 * This method determines if the user can buy a road
 	 * @return True if the user can buy a road
@@ -747,7 +772,7 @@ public class Facade {
 		return false;
 
 	}
-	
+
 
 	/**
 	 * This method determines if the user can buy a settlement
@@ -757,7 +782,7 @@ public class Facade {
 		if(game.getModel().getLocalPlayer().canBuildSettlement()){
 			return true;
 		}
-	
+
 		return false;
 
 	}
@@ -770,7 +795,7 @@ public class Facade {
 		if(game.getModel().getLocalPlayer().canBuildCity()){
 			return true;
 		}
-		
+
 		return false;
 
 	}
@@ -794,7 +819,7 @@ public class Facade {
 		if(game.getModel().getLocalPlayer().canPlayDevCard()){
 			return true;
 		}
-		
+
 		return false;
 	}
 

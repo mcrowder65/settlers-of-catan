@@ -135,4 +135,55 @@ public class ResourceList {
 		else wood++;
 	}
 	
+	/**
+	 * Determines if the Bank is out of resources
+	 * @return True if the bank is empty
+	 */
+	public boolean isEmpty(){
+		if(brick > 0) return false;
+		else if(ore > 0) return false;
+		else if(sheep> 0) return false;
+		else if(wheat > 0) return false;
+		else if(wood > 0) return false;
+		
+		return true;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

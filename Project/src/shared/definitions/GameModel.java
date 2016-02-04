@@ -81,6 +81,12 @@ public class GameModel {
 	public void setBank(ResourceList bank) throws IllegalArgumentException  {
 		this.bank = bank;
 	}
+	public DevCardList getDeck() {
+		return deck;
+	}
+	public void setDeck(DevCardList deck) {
+		this.deck = deck;
+	}
 	public MessageList getChat() {
 		return chat;
 	}

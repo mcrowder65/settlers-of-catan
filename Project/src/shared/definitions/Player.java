@@ -761,6 +761,20 @@ public class Player {
 		resources.setWheat(wheat);
 	}
 	
+	/**
+	 * Determines if the Player has enough resources for a date
+	 * @return True if there are enough resources
+	 */
+	public boolean enoughResourceCardsToTrade(){
+		if(resources.getBrick() >= 2) return true;
+		else if(resources.getOre() >= 2) return true;
+		else if(resources.getSheep() >= 2) return true;
+		else if(resources.getWheat() >= 2) return true;
+		else if(resources.getWood() >= 2) return true;
+		
+		return false;
+	}
+	
 	
 	
 	

@@ -1060,10 +1060,66 @@ public class FacadeCanDoTest {
 		canBuild = facade.canBuildSettlement(location);
 		assertTrue(canBuild == false);
 		
+		Player player2 = new Player();
+		player2.setPlayerIndex(2);
+		player2.setOldDevCards(devCards);
+		player2.setResources(resources);
+		gameModel.setLocalPlayer(player2);
+		turnTracker.setCurrentTurn(2);
 		
-	
+		canBuild = true;
+		//Opponent tries to lay a settlement on top of yours
+		location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay a connecting to two of your roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay in the middle of your two roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.NorthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tries to lay where no roads connect
+		location = new VertexLocation(hex6Loc, VertexDirection.SouthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//Opponent tires to lay in water
+		location = new VertexLocation(waterLocation, VertexDirection.SouthWest);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//building opponent roads
+		roadLocation = new EdgeLocation(homeHexLoc, EdgeDirection.SouthWest);
+		road = new EdgeValue(2,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 6);
 		
 		
+		canBuild = true;
+		//Opponent tries to lay a connecting to two of your roads
+		location = new VertexLocation(homeHexLoc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == false);
+		
+		//build opponent roads
+		roadLocation = new EdgeLocation(hex1Loc, EdgeDirection.NorthWest);
+		road = new EdgeValue(2,roadLocation);
+		map.buildRoad(road);
+		assertTrue(map.getRoads().length == 8);
+		
+		//build opponent settlement
+		location = new VertexLocation(hex1Loc, VertexDirection.West);
+		canBuild = facade.canBuildSettlement(location);
+		assertTrue(canBuild == true);
 		
 		
 	

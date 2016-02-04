@@ -1495,6 +1495,39 @@ public class FacadeCanDoTest {
 		canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == false);
 		
+		canBuild = true;
+		//two of each resource
+		resources = new ResourceList(2,2,2,2,2);
+		player.setResources(resources);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//one off ore
+		resources = new ResourceList(5,2,5,5,5);
+		player.setResources(resources);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		canBuild = true;
+		//one off grain
+		resources = new ResourceList(5,5,5,1,5);
+		player.setResources(resources);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == false);
+		
+		
+		//exactly what is needed
+		resources = new ResourceList(0,3,0,2,0);
+		player.setResources(resources);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == true);
+		
+		//More than enough
+		resources = new ResourceList(5,5,5,5,5);
+		player.setResources(resources);
+		canBuild = facade.canBuildCity(location);
+		assertTrue(canBuild == true);
 
 	}
 	

@@ -408,7 +408,7 @@ public class Facade {
 		if(canLayOnMap == false){
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**

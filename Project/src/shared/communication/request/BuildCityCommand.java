@@ -1,6 +1,7 @@
 package shared.communication.request;
 
 import shared.locations.EdgeLocation;
+import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 
 public class BuildCityCommand extends MoveCommand {
@@ -10,17 +11,14 @@ public class BuildCityCommand extends MoveCommand {
 		if (vertexLocation == null)
 			throw new IllegalArgumentException("vertexLocation cannot be null.");
 
-		this.vertexLocation = vertexLocation;
+		this.vertexLocation = new MirrorVertexLocation(vertexLocation);
+		this.type = "buildCity";
 	}
 
 
-	public VertexLocation getLocation() {
+	public MirrorVertexLocation getLocation() {
 		return vertexLocation;
 	}
-	private VertexLocation vertexLocation;
-	@Override
-	public String getMoveType() {
-		return "buildCity";
-	}
+	private MirrorVertexLocation vertexLocation;
 
 }

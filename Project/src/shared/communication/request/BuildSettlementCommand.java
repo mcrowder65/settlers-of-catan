@@ -1,12 +1,13 @@
 package shared.communication.request;
 
+import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 
 public class BuildSettlementCommand extends MoveCommand {
 
 	
 	boolean free;
-	VertexLocation vertexLocation;
+	MirrorVertexLocation vertexLocation;
 	
 	
 	public BuildSettlementCommand(int playerIndex, boolean free, VertexLocation vertexLocation)
@@ -17,20 +18,16 @@ public class BuildSettlementCommand extends MoveCommand {
 		
 		
 		this.free = free;
-		this.vertexLocation = vertexLocation;
+		this.vertexLocation = new MirrorVertexLocation(vertexLocation);
 		
-		
+		this.type = "buildSettlement";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "buildSettlement";
-	}
 
 	public boolean isFree() {
 		return free;
 	}
-	public VertexLocation getLocation() {
+	public MirrorVertexLocation getLocation() {
 		return vertexLocation;
 	}
 }

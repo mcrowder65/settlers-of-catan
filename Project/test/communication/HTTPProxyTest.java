@@ -51,7 +51,7 @@ public class HTTPProxyTest {
 	}
 	@Test
 	public void dtestJoinGame(){
-		Response response = httpProxy.joinGame(3, Translator.getJsonTranslator().getCatanColor("puce"));
+		Response response = httpProxy.joinGame(3, Translator.getCatanColor("puce"));
 		System.out.println("test join game");
 	}
 

@@ -51,11 +51,11 @@ public class JsonTranslator {
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
-		StringReader strReader = new StringReader(json);
-		JsonReader reader = new JsonReader(strReader);
-		reader.setLenient(true);
-		
-		JsonObject jsonObj = (JsonObject) parser.parse(reader);
+//		StringReader strReader = new StringReader(json);
+//		JsonReader reader = new JsonReader(strReader);
+//		reader.setLenient(true);
+		JsonObject jsonObj = (JsonObject) parser.parse(json);
+		//JsonObject jsonObj = (JsonObject) parser.parse(reader);
 	
 		GameModel gameModel = new GameModel();
 		

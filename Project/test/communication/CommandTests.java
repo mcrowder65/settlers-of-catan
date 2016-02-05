@@ -194,9 +194,6 @@ public class CommandTests {
 		EdgeLocation goodLocation2 = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South);
 		RoadBuildingCommand goodCommand1 = new RoadBuildingCommand(goodIndex1, goodLocation1, goodLocation2);
 		
-		
-		assertTrue(goodCommand1.getSpot1() == goodLocation1);
-		assertTrue(goodCommand1.getSpot2() == goodLocation2);
 
 		try
 		{

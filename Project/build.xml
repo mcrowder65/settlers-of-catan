@@ -30,6 +30,10 @@
 		<javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="false" />
 	</target>
 
+	<target name="clean" description="delete build files">
+		<delete dir="${build}" />
+	</target>
+	
 	<target name="test" description="run client test cases">
 		<java classname="generic.ClientTests" fork="yes">
 					<classpath>

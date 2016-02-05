@@ -46,7 +46,14 @@ public class DevCardList {
 		this.soldier = soldier;
 		this.yearOfPlenty = yearOfPlenty;
 	}
-
+	public boolean isEqual(DevCardList other){
+		if(other.monopoly != this.monopoly) return false;
+		if(other.monument != this.monument) return false;
+		if(other.roadBuilding != this.roadBuilding) return false;
+		if(other.soldier != this.soldier) return false;
+		if(other.yearOfPlenty != this.yearOfPlenty) return false;
+		return true;
+	}
 	public DevCardList() {
 	}
 

@@ -76,7 +76,10 @@ public class GameMap {
 		this.allCities = Arrays.asList(cities);
 		this.allPorts = Arrays.asList(ports);
 	}
-	
+	public boolean isEqual(GameMap other){
+		
+		return true;
+	}
 	public GameMap(){
 		
 	}

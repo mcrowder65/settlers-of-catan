@@ -17,10 +17,25 @@ import shared.definitions.*;
 import shared.locations.*;
 
 public class TranslatorTest {
-	
+	static GameModel gameModel;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		BufferedReader br;
+
+		String line = new String();
+		StringBuilder append = new StringBuilder();
+		try{
+			br = new BufferedReader(new FileReader("gameModel.txt"));
+			while((line = br.readLine()) != null){
+				append.append(line);
+			}
+			br.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+		gameModel = Translator.jsonToObject(append.toString());
 	}
 
 	@AfterClass
@@ -57,24 +72,36 @@ public class TranslatorTest {
 		System.out.println(json);
 	}
 	@Test
-	public void testJsonToGameModel() throws FileNotFoundException{	 
-		BufferedReader br;
-
-		String line = new String();
-		StringBuilder append = new StringBuilder();
-		try{
-			br = new BufferedReader(new FileReader("gameModel.txt"));
-			while((line = br.readLine()) != null){
-				append.append(line);
-			}
-			br.close();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
+	public void testHexes(){
+		Hex[] hexes = new Hex[19];
+		makeHexes(hexes);
+		for(int i = 0; i < hexes.length; i++){
+			if(hexes[i].equals(gameModel.getMap().getHexes()[i]) == false) fail();
 		}
-		
-		GameModel gameModel = Translator.jsonToObject(append.toString());
-		
+	}
+	@Test
+	public void testDeck(){
+		DevCardList deck = new DevCardList(2, 2, 2, 14, 2); //monopoly, monument, roadBuilding, soldier, yearOfPlenty
+		if(deck.equals(gameModel.getDeck()) == true) fail();
+		deck = new DevCardList(2, 5, 2, 14, 2);
+		if(deck.equals(gameModel.getDeck()) == false) fail();
+	}
+	@Test
+	public void testRobber(){
+		HexLocation robber = new HexLocation(0,-2);
+		if(robber.equals(gameModel.getMap().getRobber()) == false) fail();
+	}
+	@Test
+	public void testPorts(){
+		Port[] ports = new Port[9];
+		setPorts(ports);
+		for(int i = 0; i < ports.length; i++){
+			if(ports[i].equals(gameModel.getMap().getPorts()[i]) == false) 
+				fail();
+		}
+	}
+	@Test
+	public void testJsonToGameModel() throws FileNotFoundException{	 
 		DevCardList deck = new DevCardList(2, 2, 2, 14, 2); //monopoly, monument, roadBuilding, soldier, yearOfPlenty
 		if(deck.equals(gameModel.getDeck()) == true) fail();
 		deck = new DevCardList(2, 5, 2, 14, 2);
@@ -82,13 +109,15 @@ public class TranslatorTest {
 		
 		ResourceList bank = new ResourceList(24, 24, 24, 24, 24);
 		if(gameModel.getBank().equals(bank) == false) fail();
-		
-		
-		
+		mapTest(gameModel);
+		TurnTracker turnTracker = new TurnTracker(0, "FirstRound", -1, -1);
+		if(turnTracker.equals(gameModel.getTurnTracker()) == false) fail();
+		if(gameModel.getWinner() != -1) fail();
+		if(gameModel.getVersion() != 0) fail();
 	}
 	public void makeHexes(Hex[] hexes){
 		//HexLocation location, ResourceType resource, int number
-		hexes[0] = new Hex(new HexLocation(0, -2), Translator.getResourceType("asdf"), -1);
+		hexes[0] = new Hex(new HexLocation(0, -2), Translator.getResourceType("asdf"), 0);
 		hexes[1] = new Hex(new HexLocation(1, -2), Translator.getResourceType("brick"), 4);
 		hexes[2] = new Hex(new HexLocation(2, -2), Translator.getResourceType("wood"), 11);
 		
@@ -126,7 +155,43 @@ public class TranslatorTest {
 		
 		
 	}
-	public void testMap(GameModel gameModel){
+	@Test
+	public void testPlayers(){
+		Player[] players = new Player[4];
+		setPlayers(players);
+		for(int i = 0; i < players.length; i++){
+			if(players[i] == null && i > 0)
+				continue;
+			if(players[i].equals(gameModel.getPlayers()[i]) == false)
+				fail();
+		}
+	}
+	@Test
+	public void testGetRoads(){
+		if(gameModel.getMap().getRoads().length != 0) fail();
+	}
+	@Test
+	public void testGetCities(){
+		if(gameModel.getMap().getCities().length != 0) fail();
+	}
+	@Test
+	public void testSettlements(){
+		if(gameModel.getMap().getSettlements().length != 0) fail();
+	}
+	@Test
+	public void testRadius(){
+		if(gameModel.getMap().getRadius() != 3) fail();
+	}
+	@Test
+	public void testLog(){
+		if(gameModel.getLog().size() != 0) fail();
+	}
+	@Test
+	public void testChat(){
+		if(gameModel.getChat().size() != 0) fail();
+	}
+
+	public void mapTest(GameModel gameModel){
 		Port[] ports = new Port[9];
 		setPorts(ports);
 		for(int i = 0; i < ports.length; i++){
@@ -152,6 +217,7 @@ public class TranslatorTest {
 		if(gameModel.getChat().size() != 0) fail();
 		
 		Hex[] hexes = new Hex[19];
+		makeHexes(hexes);
 		for(int i = 0; i < hexes.length; i++){
 			if(hexes[i].equals(gameModel.getMap().getHexes()[i]) == false) fail();
 		}
@@ -170,13 +236,7 @@ public class TranslatorTest {
 		players[0].setOldDevCards(new DevCardList(0, 0, 0, 0, 0));
 		players[0].setNewDevCards(new DevCardList(0, 0, 0, 0, 0));
 	}
-
 	public void setPorts(Port[] ports){
-		//new Port(ResourceType, HexLocation, EdgeDirection, int ratio)
-		//ResourceType -> Translator.getResourceType("TYPE");
-		//new HexLocation(int x, int y)
-		//EdgeDirection -> Translator.getEdgeDirection("TYPE");
-		//ports[0] = new Port()
 		ports[0] = new Port(Translator.getResourceType("ORE"), new HexLocation(1, -3), Translator.getEdgeDirection("S"), 2);
 		ports[1] = new Port(Translator.getResourceType("falskjdf"), new HexLocation(3,-3), Translator.getEdgeDirection("SW"), 3);
 		ports[2] = new Port(Translator.getResourceType("lkj"), new HexLocation(2,1), Translator.getEdgeDirection("NW"), 3);

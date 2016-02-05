@@ -155,7 +155,7 @@ public class JsonTranslator {
 			String resource = "None";
 			int number = 0;
 			if (temp.has("resource")) {
-			  resource = temp.get("resource").toString();
+			  resource = temp.get("resource").toString().replace("\"", "");
 			  number = temp.get("number").getAsInt();
 			}
 			Hex hex = new Hex(new HexLocation(x,y), Translator.getResourceType(resource), number);

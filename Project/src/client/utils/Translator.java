@@ -54,29 +54,30 @@ public class Translator {
 	}
 	public static ResourceType getResourceType(String resource){
 		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
-		switch (resource){
+		int switchType = 5; //SHEEP, sheep
+		if(resource.equals("sheep") || resource.equals("SHEEP"))
+			switchType = 0;
+		if(resource.equals("wood") || resource.equals("WOOD"))
+			switchType = 1;
+		else if(resource.equals("brick") || resource.equals("BRICK"))
+			switchType = 2;
+		else if (resource.equals("wheat") || resource.equals("WHEAT"))
+			switchType = 3;
+		else if(resource.equals("ore") || resource.equals("ORE"))
+			switchType = 4;
+		switch (switchType){
+			case 0:
+				return ResourceType.SHEEP;
+			case 1:
+				return ResourceType.WOOD;
+			case 2:
+				return ResourceType.BRICK;
+			case 3:
+				return ResourceType.WHEAT;
+			case 4:
+				return ResourceType.ORE;
 			default:
 				return ResourceType.NONE;
-			case "wood":
-				return ResourceType.WOOD;
-			case "brick":
-				return ResourceType.BRICK;
-			case "sheep":
-				return ResourceType.SHEEP;
-			case "wheat":
-				return ResourceType.WHEAT;
-			case "ore":
-				return ResourceType.ORE;	
-			case "WOOD":
-				return ResourceType.WOOD;
-			case "BRICK":
-				return ResourceType.BRICK;
-			case "SHEEP":
-				return ResourceType.SHEEP;
-			case "WHEAT":
-				return ResourceType.WHEAT;
-			case "ORE":
-				return ResourceType.ORE;
 		}
 	}
 	public static EdgeDirection getEdgeDirection(String direction){

@@ -12,5 +12,8 @@ public class CreateGameResponse extends Response {
 			this.game = (GameInfo) Translator.makeGenericObject(json, new GameInfo());
 		}
 	}
+	public GameInfo getGame() {
+		return game;
+	}
 
 }

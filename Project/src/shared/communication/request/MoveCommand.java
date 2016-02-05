@@ -4,6 +4,7 @@ package shared.communication.request;
 public abstract class MoveCommand extends Request {
 
 	private int playerIndex;
+	protected String type;
 	protected MoveCommand(int playerIndex) throws IllegalArgumentException {
 		
 		if (playerIndex < 0 || playerIndex > 3)
@@ -11,7 +12,9 @@ public abstract class MoveCommand extends Request {
 		this.playerIndex = playerIndex;
 	}
 	
-	public abstract String getMoveType();
+	public String getMoveType() {
+		return type;
+	}
 	public int getPlayerIndex() {
 		return playerIndex;
 	}

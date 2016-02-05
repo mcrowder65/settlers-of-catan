@@ -16,7 +16,7 @@ public class RobPlayerCommand extends MoveCommand {
 		
 		this.location = location;
 		this.victimIndex = victimIndex;
-		
+		this.type = "robPlayer";
 	}
 
 	public HexLocation getLocation() {
@@ -27,9 +27,5 @@ public class RobPlayerCommand extends MoveCommand {
 		return victimIndex;
 	}
 
-	@Override
-	public String getMoveType() {
-		return "robPlayer";
-	}
-
+	
 }

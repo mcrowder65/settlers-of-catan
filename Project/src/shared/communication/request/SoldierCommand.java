@@ -15,7 +15,7 @@ public class SoldierCommand extends MoveCommand {
 
 		this.location = location;
 		this.victimIndex = victimIndex;
-		
+		this.type = "Soldier";
 	}
 
 	public HexLocation getLocation() {
@@ -26,9 +26,5 @@ public class SoldierCommand extends MoveCommand {
 		return victimIndex;
 	}
 
-	@Override
-	public String getMoveType() {
-		return "Soldier";
-	}
 
 }

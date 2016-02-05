@@ -3,7 +3,6 @@ package shared.communication.request;
 public class RollNumberCommand extends MoveCommand {
 
 	private int number;
-	private String type;
 	public RollNumberCommand(int playerIndex, int number) throws IllegalArgumentException {
 		super(playerIndex);
 		if (number < 2 || number > 12) 
@@ -16,9 +15,5 @@ public class RollNumberCommand extends MoveCommand {
 		return number;
 	}
 
-	@Override
-	public String getMoveType() {
-		return "rollNumber";
-	}
-
+	
 }

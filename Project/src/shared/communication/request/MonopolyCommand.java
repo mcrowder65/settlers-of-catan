@@ -12,12 +12,9 @@ public class MonopolyCommand extends MoveCommand {
 		if(resource == null) throw new IllegalArgumentException("Resource can't be NULL");
 		if(resource == ResourceType.NONE) throw new IllegalArgumentException("Resource can't be None");
 		this.resource = resource;
+		this.type = "Monopoly";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "Monopoly";
-	}
 	public ResourceType getResource() {
 		return resource;
 	}

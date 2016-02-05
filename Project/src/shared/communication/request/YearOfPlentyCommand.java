@@ -19,6 +19,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 		
 		this.resource1 = resource1;
 		this.resource2 = resource2;
+		this.type = "Year_of_Plenty";
 	}
 
 	public ResourceType getResource1() {
@@ -29,9 +30,6 @@ public class YearOfPlentyCommand extends MoveCommand {
 		return resource2;
 	}
 
-	@Override
-	public String getMoveType() {
-		return "Year_of_Plenty";
-	}
+	
 
 }

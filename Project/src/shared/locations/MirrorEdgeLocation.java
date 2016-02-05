@@ -11,6 +11,14 @@ public class MirrorEdgeLocation {
 		setY(y);
 		setDirection(direction);
 	}
+	public MirrorEdgeLocation(EdgeLocation direction)
+	{
+		
+		setX(direction.getHexLoc().getX());
+		setY(direction.getHexLoc().getY());
+		setDirection(direction.getDir());
+	}
+	
 	
 	public int getX() {
 		return x;

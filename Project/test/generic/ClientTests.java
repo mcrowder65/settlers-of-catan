@@ -5,7 +5,7 @@ public class ClientTests {
 	
 	public static void main(String[] args) {
 		String[] testClasses = new String[] {
-				"communication.TranslatorTest",
+				"client.utils.TranslatorTest",
 				"communication.CommandTests",
 				"communication.HTTPProxyTest",
 				"communication.MockProxyTests",

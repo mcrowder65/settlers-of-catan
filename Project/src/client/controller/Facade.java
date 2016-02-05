@@ -77,11 +77,11 @@ public class Facade {
 	/**
 	 * This method allows the user to create a new game.
 	 * @param name - Name of the game
-	 * @return True if a game was created successfully.
+	 * @return the Game Id.
 	 */
-	public boolean createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
-		Response response = proxy.createGame(name, randomTiles, randomNumbers, randomPorts);
-		return response.isSuccess();
+	public int createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
+		CreateGameResponse response = proxy.createGame(name, randomTiles, randomNumbers, randomPorts);
+		return response.isSuccess() ? response.getGame().getId() : -1;
 	}
 
 	/**
@@ -108,12 +108,19 @@ public class Facade {
 	 */
 	public int rollNumber(){
 		int result = roll() + roll();
-		GetModelResponse response = proxy.rollNumber(roll() + roll());
+		GetModelResponse response = proxy.rollNumber(result);
 		return response.isSuccess() == true ? result : -1;
 	}
 	public int roll(){
 		return new Random().nextInt((6 - 1) + 1) + 1;
 	}
+	
+	public boolean addAI(String aiType) {
+		Response response = proxy.addAI(aiType);
+		return response.isSuccess();
+	}
+	
+	
 	/**
 	 * This method allows the user to lay a road on the map
 	 * @param location - The location where the user wants to place the road

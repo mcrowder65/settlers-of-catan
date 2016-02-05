@@ -24,12 +24,8 @@ public class RoadBuildingCommand extends MoveCommand {
 		
 		this.spot1 = spot1;
 		this.spot2 = spot2;
-		
+		this.type = "Road_Building";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "Road_Building";
-	}
 
 }

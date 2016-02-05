@@ -21,13 +21,10 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.ratio = ratio;
 		this.input = input;
 		this.output = output;
-		
+		this.type = "maritimeTrade";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "maritimeTrade";
-	}
+
 	public ResourceType getInput() {
 		return input;
 	}

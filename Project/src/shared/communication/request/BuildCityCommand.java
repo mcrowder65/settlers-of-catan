@@ -11,6 +11,7 @@ public class BuildCityCommand extends MoveCommand {
 			throw new IllegalArgumentException("vertexLocation cannot be null.");
 
 		this.vertexLocation = vertexLocation;
+		this.type = "buildCity";
 	}
 
 
@@ -18,9 +19,5 @@ public class BuildCityCommand extends MoveCommand {
 		return vertexLocation;
 	}
 	private VertexLocation vertexLocation;
-	@Override
-	public String getMoveType() {
-		return "buildCity";
-	}
 
 }

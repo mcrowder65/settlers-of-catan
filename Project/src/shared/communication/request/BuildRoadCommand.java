@@ -10,6 +10,7 @@ public class BuildRoadCommand extends MoveCommand {
 			throw new IllegalArgumentException("roadLocation cannot be null.");
 		this.free = free;
 		this.roadLocation = roadLocation;
+		this.type = "buildRoad";
 	}
 	public boolean isFree() {
 		return free;
@@ -19,9 +20,6 @@ public class BuildRoadCommand extends MoveCommand {
 	}
 	private boolean free;
 	private EdgeLocation roadLocation;
-	@Override
-	public String getMoveType() {
-		return "buildRoad";
-	}
+	
 
 }

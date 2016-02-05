@@ -19,13 +19,9 @@ public class BuildSettlementCommand extends MoveCommand {
 		this.free = free;
 		this.vertexLocation = vertexLocation;
 		
-		
+		this.type = "buildSettlement";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "buildSettlement";
-	}
 
 	public boolean isFree() {
 		return free;

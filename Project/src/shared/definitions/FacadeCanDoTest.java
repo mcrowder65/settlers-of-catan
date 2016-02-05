@@ -2348,12 +2348,12 @@ public class FacadeCanDoTest {
 	}
 	
 	@Test
-	public void canMaritimeTradeTest(){
+	public void canMaritimeTradeWrongTurn(){
 		GameManager game = new GameManager();
 		Facade facade = new Facade(game);
 		GameModel gameModel = new GameModel();
 		Player player = new Player();
-		ResourceList resources = new ResourceList(0,0,0,0,0);
+		ResourceList resources = new ResourceList(2,2,2,2,2);
 		game.updateModel(gameModel);
 		
 		player.setPlayerIndex(0);
@@ -2361,31 +2361,85 @@ public class FacadeCanDoTest {
 		gameModel.setLocalPlayer(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
-		turnTracker.setCurrentTurn(0);
+		turnTracker.setCurrentTurn(1);
 		turnTracker.setStatus("Playing");
 		gameModel.setTurnTracker(turnTracker);
+		ResourceList bank = new ResourceList(1,1,1,1,1);
+		gameModel.setBank(bank);
 		
-		TradeOffer tradeOffer = new TradeOffer();
-		ResourceList offer = new ResourceList(3,0,0,0,0);
-		tradeOffer.setOffer(offer);
+		GameMap map = new GameMap();
+		gameModel.setMap(map);
 		
-		//no resources
+		HexLocation homeHexLoc = new HexLocation(0,0);
+		HexLocation hex1Loc = new HexLocation(0,1);
+		HexLocation hex2Loc = new HexLocation(0,2);
+		HexLocation hex3Loc = new HexLocation(0,-1);
+		HexLocation hex4Loc = new HexLocation(0,-2);
+		HexLocation hex5Loc = new HexLocation(1,1);
+		HexLocation hex6Loc = new HexLocation(1,-1);
+		HexLocation hex7Loc = new HexLocation(1,-2);
+		HexLocation hex8Loc = new HexLocation(-1,2);
+		HexLocation hex9Loc = new HexLocation(-1,1);
+		HexLocation hex10Loc = new HexLocation(-1,-1);
+		HexLocation hex11Loc = new HexLocation(-1,0);
+		HexLocation hex12Loc = new HexLocation(2,-2);
+		HexLocation hex13Loc = new HexLocation(2,-1);
+		HexLocation hex14Loc = new HexLocation(2,0);
+		HexLocation waterLocation = new HexLocation(-3,1);
+		Hex homeHex = new Hex(homeHexLoc, ResourceType.WOOD,1);
+		Hex hex1 = new Hex(hex1Loc, ResourceType.WOOD,1);
+		Hex hex2 = new Hex(hex2Loc, ResourceType.WOOD,1);
+		Hex hex3 = new Hex(hex3Loc, ResourceType.WOOD,1);
+		Hex hex4 = new Hex(hex4Loc, ResourceType.WOOD,1);
+		Hex hex5 = new Hex(hex5Loc, ResourceType.WOOD,1);
+		Hex hex6 = new Hex(hex6Loc, ResourceType.WOOD,1);
+		Hex hex7 = new Hex(hex7Loc, ResourceType.WOOD,1);
+		Hex hex8 = new Hex(hex8Loc, ResourceType.WOOD,1);
+		Hex hex9 = new Hex(hex9Loc, ResourceType.WOOD,1);
+		Hex hex10 = new Hex(hex10Loc, ResourceType.WOOD,1);
+		Hex hex11 = new Hex(hex11Loc, ResourceType.WOOD,1);
+		Hex hex12 = new Hex(hex12Loc, ResourceType.WOOD,1);
+		Hex hex13 = new Hex(hex13Loc, ResourceType.WOOD,1);
+		Hex hex14 = new Hex(hex14Loc, ResourceType.WOOD,1);
+		Hex hexWater = new Hex(waterLocation, ResourceType.WOOD,1);
+		
+		Hex[] allHexes = {homeHex,hex1,hex2,hex3,hex4,hex5,hex6,hex7,hex8,hex9,hex10,hex11,hex12,hex13,hex14,hexWater};
+		map.setHexes(allHexes);
+		
+		Port port = new Port(ResourceType.WOOD, hex12Loc, EdgeDirection.NorthEast,3);
+		
+		Port[] allPorts = {port};
+		map.setPorts(allPorts);
+		
+		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
+		VertexObject settlement = new VertexObject(0,location);
+		map.laySettlement(settlement);
+		
+		
+		boolean canTrade = facade.canMaritimeTrade();
+		assertTrue(canTrade == false);
+		canTrade = true;
+		
+		//player3
+		turnTracker.setCurrentTurn(2);
+		canTrade = facade.canMaritimeTrade();
+		assertTrue(canTrade == false);
+		canTrade = true;
+		
+		//player4
+		turnTracker.setCurrentTurn(3);
+		canTrade = facade.canMaritimeTrade();
+		assertTrue(canTrade == false);
+		canTrade = true;
+		
+		//player0
 		turnTracker.setCurrentTurn(0);
-		boolean canOffer = facade.canOfferTrade();
-		assertTrue(canOffer == false);
+		canTrade = facade.canMaritimeTrade();
+		assertTrue(canTrade == true);
+		canTrade = true;
 		
-		//1 resource
-		resources = new ResourceList(1,0,0,0,0);
-		player.setResources(resources);
-		canOffer = facade.canOfferTrade();
-		assertTrue(canOffer == true);
 		
-		canOffer = true;
-		//tons of resources
-		resources = new ResourceList(10,10,10,10,10);
-		player.setResources(resources);
-		canOffer = facade.canOfferTrade();
-		assertTrue(canOffer == true);
+		
 	}
 	
 	

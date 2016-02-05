@@ -32,6 +32,7 @@
 
 	<target name="clean" description="delete build files">
 		<delete dir="${build}" />
+		<mkdir dir="${build}"/>
 	</target>
 	
 	<target name="test" description="run client test cases">

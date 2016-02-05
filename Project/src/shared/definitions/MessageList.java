@@ -45,5 +45,8 @@ public class MessageList {
 	public void addMessage(MessageLine line) throws IllegalArgumentException {
 		
 	}
+	public int size(){
+		return lines.length;
+	}
 	
 }

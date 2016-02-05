@@ -688,7 +688,6 @@ public class Facade {
 	 * @return True if the message can be sent
 	 */
 	public boolean canSendChat(){
-
 		return true;
 	}
 	/**

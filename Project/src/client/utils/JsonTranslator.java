@@ -1,5 +1,6 @@
 package client.utils;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -8,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import shared.definitions.*;
 import shared.locations.*;
@@ -49,7 +51,11 @@ public class JsonTranslator {
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
-		JsonObject jsonObj = (JsonObject) parser.parse(json);
+		StringReader strReader = new StringReader(json);
+		JsonReader reader = new JsonReader(strReader);
+		reader.setLenient(true);
+		
+		JsonObject jsonObj = (JsonObject) parser.parse(reader);
 	
 		GameModel gameModel = new GameModel();
 		

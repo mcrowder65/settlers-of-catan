@@ -107,13 +107,13 @@ public class FacadeTests {
 		
 	}
 	@Test
-	public void iBuildRoad() {
-		boolean result = facade.buildRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.North), true);
+	public void iBuildSettlement() {
+		boolean result = facade.buildSettlement(new VertexLocation(new HexLocation(0,0), VertexDirection.East), true);
 		assertTrue(result);
 	}
 	@Test
-	public void jBuildSettlement() {
-		boolean result = facade.buildSettlement(new VertexLocation(new HexLocation(0,0), VertexDirection.East), true);
+	public void jBuildRoad() {
+		boolean result = facade.buildRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthWest), true);
 		assertTrue(result);
 	}
 	@Test

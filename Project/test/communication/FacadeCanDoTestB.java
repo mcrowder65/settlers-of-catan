@@ -78,6 +78,21 @@ public class FacadeCanDoTestB {
 		gameModel.setLocalPlayer(player);
 	}
 
+	@Test
+	public void testCanAcceptTradeInsufficientResources() {
+		TradeOffer offer = new TradeOffer(0,0,new ResourceList(0,0,0,0,0));
+		//Not enough resources - all of them
+		player.setResources(new ResourceList(1,1,1,1,1));
+		offer.setOffer(new ResourceList(3,5,2,5,4));
+		assertFalse(facade.canAcceptTrade(offer));
+
+		//Not enough resources - one of them
+		//Resources for player are still (1,1,1,1,1)
+		offer.setOffer(new ResourceList(0,0,0,0,2));
+		assertFalse(facade.canAcceptTrade(offer));
+		
+
+	}
 
 	@Test
 	public void testCanAcceptTrade() {
@@ -89,16 +104,6 @@ public class FacadeCanDoTestB {
 		//Empty offer - No resources
 		player.setResources(resources);
 		assertTrue(facade.canAcceptTrade(offer));
-
-		//Not enough resources - all of them
-		player.setResources(new ResourceList(1,1,1,1,1));
-		offer.setOffer(new ResourceList(3,5,2,5,4));
-		assertFalse(facade.canAcceptTrade(offer));
-
-		//Not enough resources - one of them
-		//Resources for player are still (1,1,1,1,1)
-		offer.setOffer(new ResourceList(0,0,0,0,2));
-		assertFalse(facade.canAcceptTrade(offer));
 
 
 		//Enough resources
@@ -112,6 +117,39 @@ public class FacadeCanDoTestB {
 		assertTrue(facade.canSendChat());
 	}
 
+	@Test
+	public void testCanPlaceRobberWrongTurn() {
+
+		//Test Map was created correctly
+		assertTrue(gameModel.getMap().isLand(new HexLocation(0,0)));
+		assertFalse(gameModel.getMap().isLand(new HexLocation(5,0)));
+		gameModel.getTurnTracker().setStatus("Robbing");
+		
+		//Player status == Robbing / Valid location
+		assertTrue(facade.canPlaceRobber(new HexLocation(0,0)));
+		assertTrue(facade.canPlaceRobber(new HexLocation(1,1)));
+		assertTrue(facade.canPlaceRobber(new HexLocation(1,-2)));
+		assertTrue(facade.canPlaceRobber(new HexLocation(-2,2)));
+		assertTrue(facade.canPlaceRobber(new HexLocation(-1,-1)));
+		
+		//change turn
+		turn.setCurrentTurn(1);
+		assertFalse(facade.canPlaceRobber(new HexLocation(0,0)));
+		assertFalse(facade.canPlaceRobber(new HexLocation(1,1)));
+		
+		//change turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canPlaceRobber(new HexLocation(0,0)));
+		assertFalse(facade.canPlaceRobber(new HexLocation(1,1)));
+		
+		//change turn
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canPlaceRobber(new HexLocation(0,0)));
+		assertFalse(facade.canPlaceRobber(new HexLocation(1,1)));
+
+	}		
+	
+	
 	@Test
 	public void testCanPlaceRobber() {
 
@@ -154,7 +192,39 @@ public class FacadeCanDoTestB {
 
 
 	}		
+	
+	@Test
+	public void testCanUseMonumentWrongTurn() {
 
+		//Player status != Playing / Can play
+		gameModel.getTurnTracker().setStatus("Robbing");
+		DevCardList oldDev = new DevCardList(0,1,0,0,0);
+		DevCardList newDev = new DevCardList(0,0,0,0,0);
+		gameModel.getLocalPlayer().setOldDevCards(oldDev);
+		gameModel.getLocalPlayer().setNewDevCards(newDev);
+		gameModel.getLocalPlayer().setVictoryPoints(9);
+
+		assertFalse(facade.canUseMonument());
+
+		//Player status == Playing / Can play 
+		gameModel.getTurnTracker().setStatus("Playing");
+		gameModel.getLocalPlayer().setVictoryPoints(9);
+		assertTrue(facade.canUseMonument());
+		
+		//wrongTurn player 2
+		turn.setCurrentTurn(1);
+		assertFalse(facade.canUseMonument());
+		
+		//wrongTurn player 3
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseMonument());
+		
+		//wrongTurn player 4
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canUseMonument());
+
+	}
+	
 	@Test
 	public void testCanUseMonument() {
 
@@ -198,6 +268,29 @@ public class FacadeCanDoTestB {
 	}
 	
 	@Test
+	public void testCanUseMonopolyWrongTurn() {
+		player.setPlayedDevCard(false);
+		//Player status != Playing / Can play
+		turn.setStatus("Playing");
+		DevCardList oldDev = new DevCardList(1,0,0,0,0);
+		player.setOldDevCards(oldDev);
+		assertTrue(facade.canUseMonopoly());
+		
+		//player 4 turn
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canUseMonopoly());
+		
+		//player 3 turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseMonopoly());
+		
+		//player 2 turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseMonopoly());
+		
+	}
+	
+	@Test
 	public void testCanUseMonopoly() {
 		player.setPlayedDevCard(false);
 		//Player status != Playing / Can play
@@ -222,6 +315,31 @@ public class FacadeCanDoTestB {
 		player.setOldDevCards(oldDev);
 		assertTrue(facade.canUseMonopoly());
 	}
+	
+	@Test
+	public void testCanUseSoldierWrongTurn() {
+		player.setPlayedDevCard(false);
+		//Player status != Playing / Can play
+		turn.setStatus("Playing");
+		DevCardList oldDev = new DevCardList(0,0,0,1,0);
+		player.setOldDevCards(oldDev);
+		assertTrue(facade.canUseSoldier());
+		
+		//player 4 turn
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canUseSoldier());
+		
+		//player 3 turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseSoldier());
+		
+		//player 2 turn
+		turn.setCurrentTurn(1);
+		assertFalse(facade.canUseSoldier());
+
+	}
+	
+	
 	
 	@Test
 	public void testCanUseSoldier() {
@@ -250,6 +368,29 @@ public class FacadeCanDoTestB {
 	}
 	
 	@Test
+	public void testCanUseRoadBuilderWrongTurn() {
+		player.setPlayedDevCard(false);
+		//Player status != Playing / Can play
+		turn.setStatus("Playing");
+		DevCardList oldDev = new DevCardList(0,0,1,0,0);
+		player.setOldDevCards(oldDev);
+		assertTrue(facade.canUseRoadBuilder());
+		
+		//player 4 turn
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canUseRoadBuilder());
+		
+		//player 3 turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseRoadBuilder());
+		
+		//player 2 turn
+		turn.setCurrentTurn(1);
+		assertFalse(facade.canUseRoadBuilder());
+	
+	}
+	
+	@Test
 	public void testCanUseRoadBuilder() {
 		player.setPlayedDevCard(false);
 		//Player status != Playing / Can play
@@ -273,6 +414,29 @@ public class FacadeCanDoTestB {
 		oldDev = new DevCardList(0,0,1,0,0);
 		player.setOldDevCards(oldDev);
 		assertTrue(facade.canUseRoadBuilder());
+	}
+	
+	@Test
+	public void testCanUseYearOfPlentyWrongTurn() {
+		player.setPlayedDevCard(false);
+		//Player status != Playing / Can play
+		turn.setStatus("Playing");
+		DevCardList oldDev = new DevCardList(0,0,0,0,1);
+		player.setOldDevCards(oldDev);
+		assertTrue(facade.canUseYearOfPlenty());
+		
+		//player 4 turn
+		turn.setCurrentTurn(3);
+		assertFalse(facade.canUseYearOfPlenty());
+		
+		//player 3 turn
+		turn.setCurrentTurn(2);
+		assertFalse(facade.canUseYearOfPlenty());
+		
+		//player 2 turn
+		turn.setCurrentTurn(1);
+		assertFalse(facade.canUseYearOfPlenty());
+	
 	}
 	
 	@Test

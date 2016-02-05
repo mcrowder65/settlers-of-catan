@@ -1587,7 +1587,7 @@ public class FacadeCanDoTestA {
 	}
 	
 	@Test
-	public void testCanBuyDevCard() {
+	public void testCanBuyDevCardInsufficientResources() {
 		GameManager game = new GameManager();
 		Facade facade = new Facade(game);
 		GameModel gameModel = new GameModel();
@@ -1627,24 +1627,120 @@ public class FacadeCanDoTestA {
 		assertFalse(result);
 		resources.setSheep(1);
 		
+	}
+	
+	@Test
+	public void testCanBuyDevCardInsufficientDeck() {
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		gameModel.setTurnTracker(new TurnTracker());
+		gameModel.getTurnTracker().setStatus("Playing");
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,1,1,1,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		gameModel.setDeck(new DevCardList(0,0,0,0,1));
+		
+		boolean result;
+		
+		//Good
+		result = facade.canBuyDevCard();
+		assertTrue(result);
+		
 		//Insufficient deck
 		gameModel.setDeck(new DevCardList(0,0,0,0,0));
 		result = facade.canBuyDevCard();
 		assertFalse(result);
+	
+		
+		
+		
+	}
+	
+	@Test
+	public void testCanBuyDevCardWrongStatus() {
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		gameModel.setTurnTracker(new TurnTracker());
+		gameModel.getTurnTracker().setStatus("Playing");
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,1,1,1,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
 		gameModel.setDeck(new DevCardList(0,0,0,0,1));
 		
+		boolean result;
+		
+		//Good
+		result = facade.canBuyDevCard();
+		assertTrue(result);
 		
 		//Wrong status
 		gameModel.getTurnTracker().setStatus("Roll");
 		result = facade.canBuyDevCard();
 		assertFalse(result);
+		
+		gameModel.getTurnTracker().setStatus("Discarding");
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+		
+		gameModel.getTurnTracker().setStatus("Robbing");
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+
+		gameModel.getTurnTracker().setStatus("FirstRound");
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+		
+		gameModel.getTurnTracker().setStatus("SecondRound");
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+		
+	}
+	
+	@Test
+	public void testCanBuyDevCardWrongTurn() {
+		GameManager game = new GameManager();
+		Facade facade = new Facade(game);
+		GameModel gameModel = new GameModel();
+		gameModel.setTurnTracker(new TurnTracker());
 		gameModel.getTurnTracker().setStatus("Playing");
+		Player player = new Player();
+		ResourceList resources = new ResourceList(0,1,1,1,0);
+		game.updateModel(gameModel);
+		
+		player.setPlayerID(0);
+		player.setResources(resources);
+		gameModel.setLocalPlayer(player);
+		gameModel.setDeck(new DevCardList(0,0,0,0,1));
+		
+		boolean result;
+		
+		//Good
+		result = facade.canBuyDevCard();
+		assertTrue(result);
 		
 		//Not your turn
 		gameModel.getTurnTracker().setCurrentTurn(3);
 		result = facade.canBuyDevCard();
 		assertFalse(result);
-		gameModel.getTurnTracker().setCurrentTurn(0);
+		
+		gameModel.getTurnTracker().setCurrentTurn(2);
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+		
+		gameModel.getTurnTracker().setCurrentTurn(1);
+		result = facade.canBuyDevCard();
+		assertFalse(result);
+	
 		
 		
 	}

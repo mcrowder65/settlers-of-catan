@@ -33,8 +33,6 @@ public class Facade {
 	}
 
 
-
-
 	/**
 	 * Allows a user to log into the server.
 	 * @param username, password
@@ -559,7 +557,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseRoadBuilder(){
-		boolean isTurn = true;
+		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
@@ -705,214 +703,12 @@ public class Facade {
 	}
 
 
-	//^^^^^^^^^^^^^^^^^^^^  TA'S   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	//*******************************************************
-
-	/**
-	 * This method allows a user to buy a road
-	 * @return True if a road can be bought
-	 */
-	public boolean buyRoad(){
-		game.getModel().getLocalPlayer().chargeBasicRoad();
-
-		int numberRoads = game.getModel().getLocalPlayer().getRoads();
-		game.getModel().getLocalPlayer().setRoads(numberRoads--);
-
-		return true;
-
-	}
-
-	/**
-	 * This method allows a user to buy a settlement
-	 * @return True if a settlement can be bought
-	 */
-	public boolean buySettlement(){
-		game.getModel().getLocalPlayer().chargeBasicSettlement();
-
-		int numberSettlements = game.getModel().getLocalPlayer().getSettlements();
-		game.getModel().getLocalPlayer().setSettlements(numberSettlements--);
-
-		return true;
-
-	}
-
-	/**
-	 * This method allows a user to buy a city
-	 * @return True if a city can be bought
-	 */
-	public boolean buyCity(){
-		game.getModel().getLocalPlayer().chargeBasicCity();
-
-		int numberCities = game.getModel().getLocalPlayer().getCities();
-		game.getModel().getLocalPlayer().setCities(numberCities--);
-
-		return true;
-
-	}
-
-	/**
-	 * This method determines if it's the user's turn
-	 * @return True if it's the user's turn
-	 */
-	public boolean isTurn(){
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
-		{
-			return true;
-		}
-		return false;
-
-	}
-
-
-	/**
-	 * This method determines if the user can buy a road
-	 * @return True if the user can buy a road
-	 */
-	public boolean canBuyRoad(){
-		if(game.getModel().getLocalPlayer().canBuildRoad()){
-			return true;
-		}
-		return false;
-
-	}
-
-
-	/**
-	 * This method determines if the user can buy a settlement
-	 * @return True if the user can buy a settlement
-	 */
-	public boolean canBuySettlement(){
-		if(game.getModel().getLocalPlayer().canBuildSettlement()){
-			return true;
-		}
-
-		return false;
-
-	}
-
-	/**
-	 * This method determines if the user can buy a city
-	 * @return True if the user can buy a city
-	 */
-	public boolean canBuyCity(){
-		if(game.getModel().getLocalPlayer().canBuildCity()){
-			return true;
-		}
-
-		return false;
-
-	}
-
-
-	/**
-	 * This method determines if the user can retract from the offer
-	 * @return True if the user can
-	 */
-	public boolean canUndoTrade(){
-		return false;
-	}
-
-
-	/**
-	 * This method determines if the user can play a Development Card
-	 * @param type - The type of card
-	 * @return True if the user can play a Development card
-	 */
-	public boolean canPlayDevCard(DevCardType type){
-		if(game.getModel().getLocalPlayer().canPlayDevCard()){
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can sign in
-	 * @return True if the user can sign in
-	 */
-	public boolean canSignIn(){
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can register
-	 * @return True if the user can register
-	 */
-	public boolean canRegister(){
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can join a game
-	 * @return True if the user can join a game
-	 */
-	public boolean canJoinGame(){
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can rejoin a game
-	 * @return True if the user can rejoin a game
-	 */
-	public boolean canRejoinGame(){
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can pick a color
-	 * @param color
-	 * @return True if the user can pick that color
-	 */
-	public boolean canPickColor(CatanColor color){
-		return false;
-	}
-
-	/**
-	 * This method determines if an AI player can be added
-	 * @return True if the user can add an AI player
-	 */
-	public boolean canAddComputerPlayer(){
-		return false;
-	}
-
-
-
-	/**
-	 * This method determines if the user can rob a player
-	 * @param victimIndex
-	 * @return True if the player selected can be robbed
-	 */
-	public boolean canRob(int victimIndex)throws IllegalArgumentException {
-		return false;
-	}
-
-	/**
-	 * This method determines if the user can be robbed
-	 * @return True if the user can be robbed
-	 */
-	public boolean canBeRobbed(){
-		return false;
-	}
 
 
 
 
 
-	/**
-	 * Asks how many cards the player has to discard
-	 * @return
-	 * Returns the number of cards the player must discard (0 if not in discard state)
-	 */
-	public int mustDiscard(){
-		return 0;
-	}
 
-	/**
-	 * Asks if the player must play the Robber
-	 * @return True if the robber is played
-	 */
-	public boolean mustPlayRobber(){
-		return false;
-	}
+
 
 }

@@ -2,13 +2,13 @@ package client.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import shared.communication.response.LoginResponse;
 import shared.definitions.*;
 import shared.locations.*;
 import client.data.GameInfo;
@@ -34,12 +34,23 @@ public class JsonTranslator {
 			JsonArray jsPlayerArray = temp.get("players").getAsJsonArray();
 			for(int x = 0; x < jsPlayerArray.size(); x++){
 				JsonObject jsPlayer = jsPlayerArray.get(x).getAsJsonObject();
+<<<<<<< HEAD
 
 				CatanColor color = (jsPlayer.has("color") == true) ? getCatanColor(jsPlayer.get("color").getAsString()) : null;
 				String name = (jsPlayer.has("name") == true) ? jsPlayer.get("name").getAsString() : null;
 				int playerID = (jsPlayer.has("id") == true) ? jsPlayer.get("id").getAsInt() : 0;
+=======
+>>>>>>> branch 'master' of https://github.com/mcrowder65/cs340.git
 				
+<<<<<<< HEAD
 				gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
+=======
+				CatanColor color = (jsPlayer.has("color")) ? Translator.getCatanColor(jsPlayer.get("color").getAsString()) : null;
+				String name = (jsPlayer.has("name")) ? jsPlayer.get("name").getAsString() : null;
+				int playerID = (jsPlayer.has("playerID")) ? jsPlayer.get("id").getAsInt() : -1;
+				if(color != null)
+					gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
+>>>>>>> branch 'master' of https://github.com/mcrowder65/cs340.git
 			}
 			gameInfo.setTitle(title);
 			gameInfo.setId(id);
@@ -50,8 +61,11 @@ public class JsonTranslator {
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
 		JsonObject jsonObj = (JsonObject) parser.parse(json);
-		
+	
 		GameModel gameModel = new GameModel();
+		
+		DevCardList deck = makeDeck((JsonObject)jsonObj.get("deck"));
+		gameModel.setDeck(deck);
 		
 		ResourceList bank = getResourceList((JsonObject)jsonObj.get("bank"));
 		gameModel.setBank(bank);
@@ -62,14 +76,20 @@ public class JsonTranslator {
 		MessageList log = makeMessageList((JsonObject)jsonObj.get("log"));
 		gameModel.setLog(log);
 		
-		GameMap map = makeMap((JsonObject)jsonObj.get("map"));
+		GameMap map = makeMap(jsonObj.getAsJsonObject("map"));
 		gameModel.setMap(map);
 		
-		Player[] players =  makePlayers(jsonObj.get("players").getAsJsonArray());
+		Player[] players =  makePlayers(jsonObj.getAsJsonArray("players"));
 		gameModel.setPlayers(players);
 		
-		TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
-		gameModel.setTradeOffer(tradeOffer);
+		if (jsonObj.has("tradeOffer")) {
+			TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
+			gameModel.setTradeOffer(tradeOffer);
+		}
+		else
+		{
+			gameModel.setTradeOffer(null);
+		}
 		
 		TurnTracker turnTracker = makeTurnTracker((JsonObject)jsonObj.get("turnTracker"));
 		gameModel.setTurnTracker(turnTracker);
@@ -81,6 +101,15 @@ public class JsonTranslator {
 		gameModel.setWinner(winner);
 		
 		return gameModel;
+	}
+	public DevCardList makeDeck(JsonObject jsDeck){
+		DevCardList deck = new DevCardList();
+		deck.setYearOfPlenty(jsDeck.get("yearOfPlenty").getAsInt());
+		deck.setMonopoly(jsDeck.get("monopoly").getAsInt());
+		deck.setSoldier(jsDeck.get("soldier").getAsInt());
+		deck.setRoadBuilding(jsDeck.get("roadBuilding").getAsInt());
+		deck.setMonument(jsDeck.get("monument").getAsInt());
+		return deck;
 	}
 	public MessageList makeMessageList(JsonObject jsMessageList){
 		MessageList messageList = new MessageList();
@@ -109,19 +138,19 @@ public class JsonTranslator {
 		HexLocation robber = new HexLocation(rX, rY);
 		map.setRobber(robber);
 
-		Hex[] hexes = makeHexes(jsMap.get("hexes").getAsJsonArray());
+		Hex[] hexes = makeHexes(jsMap.getAsJsonArray("hexes"));
 		map.setHexes(hexes);
 		
-		Port[] ports = makePorts(jsMap.get("ports").getAsJsonArray());
+		Port[] ports = makePorts(jsMap.getAsJsonArray("ports"));
 		map.setPorts(ports);
 		
-		EdgeValue[] roads = makeRoads(jsMap.get("roads").getAsJsonArray());
+		EdgeValue[] roads = makeRoads(jsMap.getAsJsonArray("roads"));
 		map.setRoads(roads);
 		
-		VertexObject[] settlements = makeSettlements(jsMap.get("settlements").getAsJsonArray());
+		VertexObject[] settlements = makeSettlements(jsMap.getAsJsonArray("settlements"));
 		map.setSettlements(settlements);
 		
-		VertexObject[] cities = makeCities(jsMap.get("cities").getAsJsonArray());
+		VertexObject[] cities = makeCities(jsMap.getAsJsonArray("cities"));
 		map.setCities(cities);
 		
 		return map;
@@ -134,30 +163,18 @@ public class JsonTranslator {
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
 			
-			String resource = temp.get("resource").getAsString();
-			int number = temp.get("number").getAsInt();
-			Hex hex = new Hex(new HexLocation(x,y), getResourceType(resource), number);
+			String resource = "None";
+			int number = 0;
+			if (temp.has("resource")) {
+			  resource = temp.get("resource").toString().replace("\"", "");
+			  number = temp.get("number").getAsInt();
+			}
+			Hex hex = new Hex(new HexLocation(x,y), Translator.getResourceType(resource), number);
 			hexes.add(hex);
 		}
 		return hexes.toArray(new Hex[hexes.size()]);
 	}
-	public ResourceType getResourceType(String resource){
-		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
-		switch (resource){
-			default:
-				return ResourceType.NONE;
-			case "WOOD":
-				return ResourceType.WOOD;
-			case "BRICK":
-				return ResourceType.BRICK;
-			case "SHEEP":
-				return ResourceType.SHEEP;
-			case "WHEAT":
-				return ResourceType.WHEAT;
-			case "ORE":
-				return ResourceType.ORE;	
-		}
-	}
+	
 	public Port[] makePorts(JsonArray jsPorts){
 		ArrayList<Port> ports = new ArrayList<Port>();
 		for(int i = 0; i < jsPorts.size(); i++){
@@ -169,10 +186,13 @@ public class JsonTranslator {
 			HexLocation hex = new HexLocation(x,y);
 			
 			String direction = temp.get("direction").getAsString();
-			EdgeDirection edgeDirection = getEdgeDirection(direction);
+			EdgeDirection edgeDirection = Translator.getEdgeDirection(direction);
 			
-			String resource = temp.get("resource").getAsString();
-			ResourceType resourceType = getResourceType(resource);
+			String resource = "None";
+			if (temp.has("resource")) {
+			    resource = temp.get("resource").getAsString();
+			}
+			ResourceType resourceType = Translator.getResourceType(resource);
 			int ratio = temp.get("ratio").getAsInt();
 			 
 			Port port = new Port(resourceType, hex, edgeDirection, ratio);
@@ -180,41 +200,8 @@ public class JsonTranslator {
 		}
 		return ports.toArray(new Port[ports.size()]);
 	}
-	public EdgeDirection getEdgeDirection(String direction){
-		//NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-		switch (direction){
-			default:
-				return EdgeDirection.NorthWest;
-			case "North":
-				return EdgeDirection.North;
-			case "NorthEast":
-				return EdgeDirection.NorthEast;
-			case "SouthEast":
-				return EdgeDirection.SouthEast;
-			case "South":
-				return EdgeDirection.South;
-			case "SouthWest":
-				return EdgeDirection.SouthWest;
-		}
-	}
-	public VertexDirection getVertexDirection(String direction){
-		//West, NorthWest, NorthEast, East, SouthEast, SouthWest;
-		switch (direction){
-			default:
-				return VertexDirection.West;
-			case "NorthWest":
-				return VertexDirection.NorthWest;
-			case "NorthEast":
-				return VertexDirection.NorthEast;
-			case "East":
-				return VertexDirection.East;
-			case "SouthEast":
-				return VertexDirection.SouthEast;
-			case "SouthWest":
-				return VertexDirection.SouthWest;	
-		}	
-		
-	}
+	
+	
 	public EdgeValue[] makeRoads(JsonArray jsRoads){
 		ArrayList<EdgeValue> roads = new ArrayList<EdgeValue>();
 		for(int i = 0; i < jsRoads.size(); i++){
@@ -225,7 +212,7 @@ public class JsonTranslator {
 			HexLocation hex = new HexLocation(x,y);
 			
 			String direction = location.get("direction").getAsString();
-			EdgeDirection edgeDirection = getEdgeDirection(direction);
+			EdgeDirection edgeDirection = Translator.getEdgeDirection(direction);
 			
 			EdgeLocation edgeLocation = new EdgeLocation(hex, edgeDirection);
 			
@@ -245,7 +232,7 @@ public class JsonTranslator {
 			String direction = location.get("direction").getAsString();
 			VertexLocation vertexLocation = 
 					new VertexLocation(new HexLocation(x,y), 
-					getVertexDirection(direction));
+							Translator.getVertexDirection(direction));
 			int owner = temp.get("owner").getAsInt();
 			settlements.add(new VertexObject(owner, vertexLocation));
 		}
@@ -264,7 +251,7 @@ public class JsonTranslator {
 			
 			String direction = location.get("direction").getAsString();
 			VertexLocation vertexLocation = new VertexLocation(
-					new HexLocation(x,y), getVertexDirection(direction));
+					new HexLocation(x,y), Translator.getVertexDirection(direction));
 			
 			int owner = temp.get("owner").getAsInt();
 			VertexObject vertexObject = new VertexObject(owner, vertexLocation);
@@ -275,6 +262,10 @@ public class JsonTranslator {
 	public Player[] makePlayers(JsonArray jsPlayers){
 		ArrayList<Player> players = new ArrayList<Player>();
 		for(int i = 0; i < jsPlayers.size(); i++){
+			if (jsPlayers.get(i).isJsonNull()) {
+				players.add(null);
+				continue;
+			}
 			JsonObject player = (JsonObject)jsPlayers.get(i);
 			int cities = player.get("cities").getAsInt();
 			String color = player.get("color").getAsString();
@@ -293,7 +284,7 @@ public class JsonTranslator {
 			DevCardList oldDevCards = getDevCards((JsonObject)player.get("oldDevCards"));
 			ResourceList resources = getResourceList((JsonObject)player.get("resources"));
 			
-			Player playerObj = new Player(cities,  getCatanColor(color), discarded, monuments,
+			Player playerObj = new Player(cities,  Translator.getCatanColor(color), discarded, monuments,
 					name, newDevCards, oldDevCards,
 					playerIndex, playedDevCard, playerID,
 				    resources, roads, settlements, soldiers,
@@ -302,29 +293,7 @@ public class JsonTranslator {
 		}
 		return players.toArray(new Player[players.size()]);
 	}
-	public CatanColor getCatanColor(String color){
-		//RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
-		switch(color){
-			default:
-				return CatanColor.red;
-			case "orange":
-				return CatanColor.orange;
-			case "yellow":
-				return CatanColor.yellow;
-			case "blue":
-				return CatanColor.blue;
-			case "green":
-				return CatanColor.green;
-			case "purple":
-				return CatanColor.purple;
-			case "puce":
-				return CatanColor.puce;
-			case "white":
-				return CatanColor.white;
-			case "brown":
-				return CatanColor.brown;
-		}	
-	}
+	
 	public ResourceList getResourceList(JsonObject jsObject){
 		int brick = jsObject.get("brick").getAsInt();
 		int ore = jsObject.get("ore").getAsInt();

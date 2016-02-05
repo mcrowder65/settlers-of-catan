@@ -46,6 +46,40 @@ public class DevCardList {
 		this.soldier = soldier;
 		this.yearOfPlenty = yearOfPlenty;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + monopoly;
+		result = prime * result + monument;
+		result = prime * result + roadBuilding;
+		result = prime * result + soldier;
+		result = prime * result + yearOfPlenty;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DevCardList other = (DevCardList) obj;
+		if (monopoly != other.monopoly)
+			return false;
+		if (monument != other.monument)
+			return false;
+		if (roadBuilding != other.roadBuilding)
+			return false;
+		if (soldier != other.soldier)
+			return false;
+		if (yearOfPlenty != other.yearOfPlenty)
+			return false;
+		return true;
+	}
+	public DevCardList() {
+	}
 
 	/**
 	 * retrieves number of monopoly cards
@@ -125,6 +159,20 @@ public class DevCardList {
 	 */
 	public void setYearOfPlenty(int yearOfPlenty) throws IllegalArgumentException  {
 		this.yearOfPlenty = yearOfPlenty;
+	}
+	
+	/**
+	 * Determines if the DevCard List is empty
+	 * @return True if the DevCard List is empty
+	 */
+	public boolean isEmpty() {
+		if(monopoly > 0) return false;
+		else if(monument > 0) return false;
+		else if(roadBuilding > 0) return false;
+		else if(soldier > 0) return false;
+		else if(yearOfPlenty > 0) return false;
+		
+		return true;
 	}
 	
 }

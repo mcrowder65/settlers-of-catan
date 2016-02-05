@@ -6,6 +6,8 @@ public class SendChatCommand extends MoveCommand {
 	public SendChatCommand(int playerIndex, String content) throws IllegalArgumentException {
 		super(playerIndex);
 		this.content = content;
+		this.type = "sendChat";
+		
 	}
 
 	@Override

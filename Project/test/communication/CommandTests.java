@@ -60,16 +60,13 @@ public class CommandTests {
 	@Test
 	public void buildCityTest() {
 		VertexLocation goodLocation = new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthEast);
-		BuildCityCommand goodCommand1 = new BuildCityCommand(goodIndex1, true, goodLocation);
-		BuildCityCommand goodCommand2 = new BuildCityCommand(goodIndex1, false, goodLocation);
-		
-		assertTrue(goodCommand1.isFree() == true);
-		assertTrue(goodCommand2.isFree() == false);
-		assertTrue(goodCommand1.getLocation() == goodLocation);
+		BuildCityCommand goodCommand1 = new BuildCityCommand(goodIndex1, goodLocation);
 
+		
+		
 		try
 		{
-			BuildCityCommand badCommand1 = new BuildCityCommand(goodIndex1, true, null);
+			BuildCityCommand badCommand1 = new BuildCityCommand(goodIndex1, null);
 			fail("Should have thrown an exception.");
 		} catch (Exception e) {}
 	}
@@ -197,9 +194,6 @@ public class CommandTests {
 		EdgeLocation goodLocation2 = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South);
 		RoadBuildingCommand goodCommand1 = new RoadBuildingCommand(goodIndex1, goodLocation1, goodLocation2);
 		
-		
-		assertTrue(goodCommand1.getSpot1() == goodLocation1);
-		assertTrue(goodCommand1.getSpot2() == goodLocation2);
 
 		try
 		{
@@ -215,9 +209,9 @@ public class CommandTests {
 	@Test
 	public void robPlayerTest() {
 		HexLocation goodLocation = new HexLocation(0, 0);
-		int goodReceiver1 = 0;
+		int goodReceiver1 = -1;
 		int goodReceiver2 = 3;
-		int badReceiver1 = -1;
+		int badReceiver1 = -2;
 		int badReceiver2 = 4;
 		ResourceList goodResources = new ResourceList(1,1,1,1,1);
 		RobPlayerCommand goodCommand1 = new RobPlayerCommand(goodIndex1, goodLocation, goodReceiver1);
@@ -284,9 +278,9 @@ public class CommandTests {
 	@Test
 	public void soldierTest() {
 		HexLocation goodLocation = new HexLocation(0, 0);
-		int goodReceiver1 = 0;
+		int goodReceiver1 = -1;
 		int goodReceiver2 = 3;
-		int badReceiver1 = -1;
+		int badReceiver1 = -2;
 		int badReceiver2 = 4;
 		ResourceList goodResources = new ResourceList(1,1,1,1,1);
 		SoldierCommand goodCommand1 = new SoldierCommand(goodIndex1, goodLocation, goodReceiver1);
@@ -344,6 +338,18 @@ public class CommandTests {
 			YearOfPlentyCommand badCommand4 = new YearOfPlentyCommand(goodIndex1, ResourceType.BRICK, null);
 			fail("Should have thrown an exception.");
 		} catch (Exception e) {}
+	}
+	
+	@Test
+	public void finishTurnTest() {
+		FinishTurnCommand goodCommand1 = new FinishTurnCommand(goodIndex1);
+		
+	}
+	
+	@Test
+	public void buyDevCardTest() {
+		BuyDevCardCommand goodCommand1 = new BuyDevCardCommand(goodIndex1);
+		
 	}
 	
 	

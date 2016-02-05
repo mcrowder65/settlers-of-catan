@@ -70,7 +70,6 @@ public class MirrorGameMap {
 	
 
 	public MirrorGameMap() {
-		// TODO Auto-generated constructor stub
 	}
 
 

@@ -8,14 +8,14 @@ public class SoldierCommand extends MoveCommand {
 	private int victimIndex;
 	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
-		if (victimIndex < 0 || victimIndex > 3) 
-			throw new IllegalArgumentException("victimIndex must be between 0 -3");
+		if (victimIndex < -1 || victimIndex > 3) 
+			throw new IllegalArgumentException("victimIndex must be between -1 -3");
 		if (location == null)
 			throw new IllegalArgumentException("location can't be null.");
 
 		this.location = location;
 		this.victimIndex = victimIndex;
-		
+		this.type = "Soldier";
 	}
 
 	public HexLocation getLocation() {
@@ -26,9 +26,5 @@ public class SoldierCommand extends MoveCommand {
 		return victimIndex;
 	}
 
-	@Override
-	public String getMoveType() {
-		return "Soldier";
-	}
 
 }

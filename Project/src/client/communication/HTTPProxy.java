@@ -20,7 +20,9 @@ import client.main.Catan;
 import client.utils.Translator;
 import shared.communication.request.*;
 import shared.communication.response.*;
+import shared.definitions.AIType;
 import shared.definitions.CatanColor;
+import shared.definitions.LogLevel;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
@@ -97,6 +99,8 @@ public class HTTPProxy implements IProxy{
 		conn.setDoInput(true);
 		conn.connect();
 		
+		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
+		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
 			 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -116,6 +120,21 @@ public class HTTPProxy implements IProxy{
 	public String decodeCookie(String encodedCookie) throws UnsupportedEncodingException{
 		return new URLDecoder().decode(encodedCookie, "UTF-8");
 	}
+	public void setCookies(HttpURLConnection conn){
+		if(this.userCookie != null) {
+			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
+		}
+		if(this.gameCookie != null && this.userCookie != null){
+			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie + 
+					"; catan.game=" + this.gameCookie);
+		}
+	}
+	public String parseCookie(String cookie) {
+		StringBuilder smallerCookie = new StringBuilder(cookie.substring(11, cookie.length()));
+		String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
+		return encodedCookie;
+	}
+	
 	/**
 	 * Sends a POST request.
 	 * @param urlPath
@@ -132,10 +151,8 @@ public class HTTPProxy implements IProxy{
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("POST");
-		if(urlPath.indexOf("/games/join") != -1){
-
-			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
-		}
+		setCookies(conn); //sets user and/or game cookies on HTTP headers as needed.
+		
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
 		conn.connect();
@@ -143,6 +160,7 @@ public class HTTPProxy implements IProxy{
 		
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
+<<<<<<< HEAD
 		if(conn.getHeaderField("Set-cookie") != null){
 			StringBuilder bigCookie = new StringBuilder(conn.getHeaderField("Set-cookie"));
 
@@ -157,6 +175,11 @@ public class HTTPProxy implements IProxy{
 				setGameCookie(encodedCookie);
 			}
 		}
+=======
+		
+		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
+		
+>>>>>>> branch 'master' of https://github.com/mcrowder65/cs340.git
 		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
@@ -179,18 +202,16 @@ public class HTTPProxy implements IProxy{
 	 * 
 	 * @param cookie
 	 * @throws IllegalArgumentException
-	 * Throws this exception if the cookie is invalid.
 	 */
-	private void setUserCookie(String cookie) throws IllegalArgumentException {
+	private void setUserCookie(String cookie) {
 		this.userCookie = cookie;
 	}
 	/**
 	 * 
 	 * @param cookie
 	 * @throws IllegalArgumentException
-	 * Throws this exception if the cookie is invalid.
 	 */
-	private void setGameCookie(String cookie) throws IllegalArgumentException {
+	private void setGameCookie(String cookie)  {
 		this.gameCookie = cookie;
 	}
 	
@@ -199,184 +220,212 @@ public class HTTPProxy implements IProxy{
 		
 		return "http://" + hostName + ":" + portNumber + "/";
 	}	
-	private Response sendCommand(String method, Object command)  {
+	private GetModelResponse sendCommand(MoveCommand command)  {
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
-			httpResponse = (command == null) ? doGet(method) : doPost(method, command);
+			httpResponse = doPost("/moves/" + command.getMoveType(), command);
 		} 
 		catch (IOException e) 
 		{
 			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
 			httpResponse.setResponseBody(e.getMessage());
 		}
-		return new Response(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+		return new GetModelResponse(httpResponse.getResponseCode(), httpResponse.getResponseBody());
+	}
+	private HTTPJsonResponse sendRequest(String path, Request request) {
+		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
+		try {
+			httpResponse = request == null ? doGet(path) : doPost(path, request);
+		} 
+		catch (IOException e) 
+		{
+			httpResponse.setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST);
+			httpResponse.setResponseBody(e.getMessage());
+		}
+		return httpResponse;
 	}
 	@Override
-	public Response sendChat(String content) {
-		//SendChatCommand command = new SendChatCommand(playerIndex, content);
-		//return sendCommand(command);
-		return null;
+	public GetModelResponse sendChat(String content) {
+		SendChatCommand command = new SendChatCommand(playerIndex, content);
+		return sendCommand(command);	
 	}
 	@Override
-	public LoginResponse login(String username, String password) throws IllegalArgumentException {
-		Response response = sendCommand("/user/login", new LoginRequest(username, password));
-		return new LoginResponse(response.getResponseCode(), response.getJson());
-
+	public Response login(String username, String password) throws IllegalArgumentException {
+		HTTPJsonResponse response = sendRequest("/user/login", new LoginRequest(username, password));
+		if (response.getResponseCookie() != null)
+			setUserCookie(parseCookie(response.getResponseCookie()));
+		
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
-	public RegisterResponse register(String username, String password) throws IllegalArgumentException {
-		Response response = sendCommand("/user/register", new RegisterRequest(username, password));
-		return new RegisterResponse(response.getResponseCode(), response.getJson());
+	public Response register(String username, String password) throws IllegalArgumentException {
+		HTTPJsonResponse response = sendRequest("/user/register", new RegisterRequest(username, password));
+		if (response.getResponseCookie() != null)
+			setUserCookie(parseCookie(response.getResponseCookie()));
+		
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public ListGamesResponse listGames() {
-		Response response = sendCommand("/games/list", null);
-		return new ListGamesResponse(response.getResponseCode(), response.getJson());
+		HTTPJsonResponse response = sendRequest("/games/list", null);
+		return new ListGamesResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {
-		Response response = sendCommand("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
-		return new CreateGameResponse(response.getResponseCode(), response.getJson());
+		HTTPJsonResponse response = sendRequest("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
+		return new CreateGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
-	public JoinGameResponse joinGame(int id, CatanColor color) throws IllegalArgumentException {
-		Response response = sendCommand("/games/join", new JoinGameRequest(id, color));
-		int responseCode = response.getResponseCode();
-		String json = response.getJson();
-		return new JoinGameResponse(responseCode, json);
+	public Response joinGame(int id, CatanColor color) throws IllegalArgumentException {
+		HTTPJsonResponse response = sendRequest("/games/join", new JoinGameRequest(id, color));
+		if (response.getResponseCookie() != null)
+			setGameCookie(parseCookie(response.getResponseCookie()));
+		
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO some other phase?
 		return null;
 	}
 	@Override
-	public Response saveGame(String fileName) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public Response saveGame(int id, String filename) throws IllegalArgumentException {
+		// TODO some other phase?
 		return null;
 	}
 	@Override
 	public GetModelResponse reset() {
+		// TODO some other phase?
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public GetModelResponse getModel() {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/model", new GetModelRequest());
+		return new GetModelResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public GetModelResponse getModel(int version) {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/model?version=" + version, new GetModelRequest(version));
+		return new GetModelResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public ListAIResponse listAI() {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/listAI", null);
+		return new ListAIResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response addAI(String aiType) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		HTTPJsonResponse response = sendRequest("/game/addAI", new AddAIRequest(getAIType(aiType)));
+		
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public GetCommandsResponse getCommands() {
-		// TODO Auto-generated method stub
+		// TODO Another phase
 		return null;
 	}
 	@Override
 	public GetModelResponse executeCommands(List<String> commands) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Another phase
 		return null;
 	}
+//	SendChatCommand command = new SendChatCommand(playerIndex, content);
+//	return sendCommand(command);
 	@Override
-	public Response rollNumber(int number) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
+		RollNumberCommand command = new RollNumberCommand(playerIndex, number);
+		return sendCommand(command);
 	}
 	@Override
-	public Response robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
+		RobPlayerCommand command = new RobPlayerCommand(playerIndex, location, victimIndex);
+		return sendCommand(command);
 	}
 	@Override
-	public Response finishTurn() {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse finishTurn() {
+		FinishTurnCommand command = new FinishTurnCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
-	public Response buyDevCard() {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse buyDevCard() {
+		BuyDevCardCommand command = new BuyDevCardCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
-	public Response Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
+		YearOfPlentyCommand command = new YearOfPlentyCommand(playerIndex, resource1, resource2);
+		return sendCommand(command);
 	}
 	@Override
-	public Response Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
+		RoadBuildingCommand command = new RoadBuildingCommand(playerIndex, spot1, spot2);
+		return sendCommand(command);
 	}
 	@Override
-	public Response Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
+		SoldierCommand command = new SoldierCommand(playerIndex, location, victimIndex);
+		return sendCommand(command);
 	}
 	@Override
-	public Response Monopoly(ResourceType resource) {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse Monopoly(ResourceType resource) {
+		MonopolyCommand command = new MonopolyCommand(playerIndex, resource);
+		return sendCommand(command);
 	}
 	@Override
-	public Response Monument() {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse Monument() {
+		MonumentCommand command = new MonumentCommand(playerIndex);
+		return sendCommand(command);
 	}
 	@Override
-	public Response buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
+		BuildRoadCommand command = new BuildRoadCommand(playerIndex, free, roadLocation);
+		return sendCommand(command);
 	}
 	@Override
-	public Response buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
+		BuildSettlementCommand command = new BuildSettlementCommand(playerIndex, free, vertexLocation);
+		return sendCommand(command);
 	}
 	@Override
-	public Response buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
+		BuildCityCommand command = new BuildCityCommand(playerIndex, vertexLocation);
+		return sendCommand(command);
 	}
 	@Override
-	public Response offerTrade(TradeOffer offer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
+		OfferTradeCommand command = new OfferTradeCommand(offer.getSender(), offer.getReciever(), offer.getOffer());
+		return sendCommand(command);
 	}
 	@Override
-	public Response maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
+	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, inputResource, outputResource);
+		return sendCommand(command);
 	}
 	@Override
-	public Response acceptTrade(boolean willAccept) {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse acceptTrade(boolean willAccept) {
+		AcceptTradeCommand command = new AcceptTradeCommand(playerIndex, willAccept);
+		return sendCommand(command);
 	}
 	@Override
-	public Response discardCards(ResourceList discardedCards) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
+		DiscardCardsCommand command = new DiscardCardsCommand(playerIndex, discardedCards);
+		return sendCommand(command);
 	}
 	@Override
-	public Response changeLogLevel(String loggingLevel) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
+		HTTPJsonResponse response =  sendRequest("/util/changeLogLevel", new ChangeLogLevelRequest(loggingLevel));
+		return new Response(response.getResponseCode(), response.getResponseBody());
 	}
 
-
+	public AIType getAIType(String type){
+		switch(type){
+		case "LARGEST_ARMY":
+			return AIType.LARGEST_ARMY;
+		default:
+			return null;
+		}
+	}
 	
 }

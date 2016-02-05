@@ -9,6 +9,40 @@ import shared.locations.*;
  */
 public class ResourceList {
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + brick;
+		result = prime * result + ore;
+		result = prime * result + sheep;
+		result = prime * result + wheat;
+		result = prime * result + wood;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResourceList other = (ResourceList) obj;
+		if (brick != other.brick)
+			return false;
+		if (ore != other.ore)
+			return false;
+		if (sheep != other.sheep)
+			return false;
+		if (wheat != other.wheat)
+			return false;
+		if (wood != other.wood)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Number of brick resources
 	 */
@@ -122,5 +156,68 @@ public class ResourceList {
 	public int getWood() {
 		return wood;
 	}
+	/**
+	 * Used to add resource cards to the Bank
+	 * @param resourceType = Type
+	 * @param quantity = How many cards should be added 
+	 */
+	public void addResource(String resourceType, int quantity){
+		if(resourceType == "brick") brick += quantity;
+		else if(resourceType == "ore") ore += quantity;
+		else if(resourceType == "sheep") sheep += quantity;
+		else if(resourceType == "wheat") wheat += quantity;
+		else wood++;
+	}
+	
+	/**
+	 * Determines if the Bank is out of resources
+	 * @return True if the bank is empty
+	 */
+	public boolean isEmpty(){
+		if(brick > 0) return false;
+		else if(ore > 0) return false;
+		else if(sheep> 0) return false;
+		else if(wheat > 0) return false;
+		else if(wood > 0) return false;
+		
+		return true;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

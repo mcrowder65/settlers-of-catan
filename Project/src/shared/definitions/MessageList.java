@@ -21,7 +21,6 @@ public class MessageList {
 	}
 
 	public MessageList() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,6 +44,9 @@ public class MessageList {
 	 */
 	public void addMessage(MessageLine line) throws IllegalArgumentException {
 		
+	}
+	public int size(){
+		return lines.length;
 	}
 	
 }

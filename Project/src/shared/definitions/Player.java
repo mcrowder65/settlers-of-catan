@@ -1,5 +1,6 @@
 package shared.definitions;
 
+import client.utils.Translator;
 import shared.locations.*;
 /**
  * class that holds all the attributes of a player
@@ -7,6 +8,88 @@ import shared.locations.*;
  *
  */
 public class Player {
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cities;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((discarded == null) ? 0 : discarded.hashCode());
+		result = prime * result + monuments;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((newDevCards == null) ? 0 : newDevCards.hashCode());
+		result = prime * result + ((oldDevCards == null) ? 0 : oldDevCards.hashCode());
+		result = prime * result + ((playedDevCard == null) ? 0 : playedDevCard.hashCode());
+		result = prime * result + playerID;
+		result = prime * result + playerIndex;
+		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
+		result = prime * result + roads;
+		result = prime * result + settlements;
+		result = prime * result + soldiers;
+		result = prime * result + victoryPoints;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		if (cities != other.cities)
+			return false;
+		if (color != other.color)
+			return false;
+		if (discarded == null) {
+			if (other.discarded != null)
+				return false;
+		} 
+		else if (!discarded.equals(other.discarded))
+			return false;
+		if (monuments != other.monuments)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (newDevCards == null) {
+			if (other.newDevCards != null)
+				return false;
+		} else if (!newDevCards.equals(other.newDevCards))
+			return false;
+		if (oldDevCards == null) {
+			if (other.oldDevCards != null)
+				return false;
+		} else if (!oldDevCards.equals(other.oldDevCards))
+			return false;
+		if (playedDevCard == null) {
+			if (other.playedDevCard != null)
+				return false;
+		} else if (!playedDevCard.equals(other.playedDevCard))
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (playerIndex != other.playerIndex)
+			return false;
+		if (resources == null) {
+			if (other.resources != null)
+				return false;
+		} else if (!resources.equals(other.resources))
+			return false;
+		if (roads != other.roads)
+			return false;
+		if (settlements != other.settlements)
+			return false;
+		if (soldiers != other.soldiers)
+			return false;
+		if (victoryPoints != other.victoryPoints)
+			return false;
+		return true;
+	}
 
 	/**
 	 * How many cities this player has left to play,
@@ -79,13 +162,11 @@ public class Player {
 	 * @throws IllegalArgumentException
 	 */
 	public Player(String name, CatanColor color, int playerID, int playerIndex) throws IllegalArgumentException {
-		
-	
-	}
-	public Player(CatanColor color, String name, int playerID){
+		this.name = name;
 		this.color = color;
-		this.name = new String(name);
 		this.playerID = playerID;
+		this.playerIndex = playerIndex;
+	
 	}
 	public Player(){
 		
@@ -525,7 +606,7 @@ public class Player {
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>0 && grain>0){
+		if(ore>2 && grain>1){
 			return true;
 		}
 		return false;
@@ -570,33 +651,41 @@ public class Player {
 	}
 	
 	public boolean canPlayRoadBuilding(){
-		int roadBuildingCard = oldDevCards.getRoadBuilding();
-		if(roadBuildingCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int roadBuildingCard = oldDevCards.getRoadBuilding();
+			if(roadBuildingCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlayYearOfPlentyCard(){
-		int yopCard = oldDevCards.getYearOfPlenty();
-		if(yopCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int yopCard = oldDevCards.getYearOfPlenty();
+			if(yopCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlayMonopolyCard(){
-		int monopolyCard = oldDevCards.getMonopoly();
-		if(monopolyCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int monopolyCard = oldDevCards.getMonopoly();
+			if(monopolyCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean canPlaySoldierCard(){
-		int soldierCard = oldDevCards.getSoldier();
-		if(soldierCard > 0){
-			return true;
+		if(this.playedDevCard == false){
+			int soldierCard = oldDevCards.getSoldier();
+			if(soldierCard > 0){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -637,6 +726,10 @@ public class Player {
 		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
 		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
 	}
+	public void playRoadBuilderCard(){
+		int roadBuilder = oldDevCards.getRoadBuilding();
+		oldDevCards.setYearOfPlenty(roadBuilder--);
+	}
 	
 	
 	public void updateOldDevCard(){
@@ -665,7 +758,8 @@ public class Player {
 		
 	}
 	
-	public boolean canAcceptTrade(ResourceList offer){
+	public boolean canAcceptTrade(TradeOffer tradeOffer){
+		ResourceList offer = tradeOffer.getOffer();
 		int brickWanted = offer.getBrick();
 		int sheepWanted = offer.getSheep();
 		int woodWanted = offer.getWood();
@@ -751,6 +845,20 @@ public class Player {
 		resources.setOre(ore);
 		resources.setWood(wood);
 		resources.setWheat(wheat);
+	}
+	
+	/**
+	 * Determines if the Player has enough resources for a date
+	 * @return True if there are enough resources
+	 */
+	public boolean enoughResourceCardsToTrade(){
+		if(resources.getBrick() >= 2) return true;
+		else if(resources.getOre() >= 2) return true;
+		else if(resources.getSheep() >= 2) return true;
+		else if(resources.getWheat() >= 2) return true;
+		else if(resources.getWood() >= 2) return true;
+		
+		return false;
 	}
 	
 	

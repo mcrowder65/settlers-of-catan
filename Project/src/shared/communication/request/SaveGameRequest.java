@@ -2,8 +2,16 @@ package shared.communication.request;
 
 public class SaveGameRequest extends Request {
 
-	int gameId;
-	public SaveGameRequest(int gameId) {
-		this.gameId = gameId;
+	int id;
+	String name;
+	public SaveGameRequest(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

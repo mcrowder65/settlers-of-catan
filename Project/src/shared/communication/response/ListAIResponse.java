@@ -1,5 +1,6 @@
 package shared.communication.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.AIType;
@@ -11,7 +12,24 @@ public class ListAIResponse extends Response {
 		super(responseCode, json);
 		if (success) 
 		{
-			//TODO: parse AITypes
+			aiTypes = new ArrayList<AIType>();
+			json = new String(json.replace("[", ""));
+			json = new String(json.replace("]", ""));
+			json = new String(json.replace(" ", ""));
+			
+			String[] ary = json.split(",");
+			for(int i = 0; i < ary.length; i++){
+				aiTypes.add(getAIType(ary[i]));
+				System.out.println("1");
+			}
+		}
+	}
+	public AIType getAIType(String type){
+		switch(type){
+		case "LARGEST_ARMY":
+			return AIType.LARGEST_ARMY;
+		default:
+			return null;
 		}
 	}
 

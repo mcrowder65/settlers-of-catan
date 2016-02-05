@@ -21,7 +21,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public LoginResponse login(String username, String password)throws IllegalArgumentException ;
+	public Response login(String username, String password)throws IllegalArgumentException ;
 	/**
 	 * Registers a new player.
 	 * @param username
@@ -29,7 +29,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public RegisterResponse register(String username, String password)throws IllegalArgumentException ;
+	public Response register(String username, String password)throws IllegalArgumentException ;
 	/**
 	 * Lists the current games
 	 * @return
@@ -56,7 +56,7 @@ public interface IProxy {
 	 * @return
 	 *  Returns the server's response.
 	 */
-	public JoinGameResponse joinGame(int id, CatanColor color)throws IllegalArgumentException ;
+	public Response joinGame(int id, CatanColor color)throws IllegalArgumentException ;
 
 	/**
 	 * Loads a game on the server. Used for testing purposes.
@@ -74,7 +74,7 @@ public interface IProxy {
  * @return
  * Returns the server's response.
  */
-	public Response saveGame(String fileName)throws IllegalArgumentException ;
+	public Response saveGame(int id, String fileName)throws IllegalArgumentException ;
 	/**
 	 * Resets the command history of the current game.
 	 * @return
@@ -139,7 +139,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response sendChat(String content);
+	public GetModelResponse sendChat(String content);
 	/**
 	 * Sends the player's result from rolling dice to the server.
 	 * @param number
@@ -147,7 +147,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response rollNumber(int number)throws IllegalArgumentException ;
+	public GetModelResponse rollNumber(int number)throws IllegalArgumentException ;
 	/**
 	 * Robs a player of a 
 	 * @param victimIndex
@@ -157,19 +157,19 @@ public interface IProxy {
 	 * @return 
 	 * Returns the server's response
 	 */
-	public Response robPlayer(int victimIndex, HexLocation location)throws IllegalArgumentException ;
+	public GetModelResponse robPlayer(int victimIndex, HexLocation location)throws IllegalArgumentException ;
 	/**
 	 * Finishes the player's turn.
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response finishTurn();
+	public GetModelResponse finishTurn();
 	/**
 	 * Purchases a new Development Card
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response buyDevCard();
+	public GetModelResponse buyDevCard();
 	/**
 	 * Plays the Year of Plenty card.
 	 * @param resource1
@@ -179,7 +179,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response Year_Of_Plenty(ResourceType resource1, ResourceType resource2)throws IllegalArgumentException ;
+	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2)throws IllegalArgumentException ;
 	/**
 	 * Plays the Road Building card.
 	 * @param spot1
@@ -189,7 +189,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response Road_Building(EdgeLocation spot1, EdgeLocation spot2)throws IllegalArgumentException ;
+	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2)throws IllegalArgumentException ;
 	/**
 	 * Plays the soldier card.
 	 * @param victimIndex
@@ -199,7 +199,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response Soldier(int victimIndex, HexLocation location)throws IllegalArgumentException ;
+	public GetModelResponse Soldier(int victimIndex, HexLocation location)throws IllegalArgumentException ;
 	/**
 	 * Plays the Monopoly card.
 	 * @param resource
@@ -207,13 +207,13 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response Monopoly(ResourceType resource);
+	public GetModelResponse Monopoly(ResourceType resource);
 	/**
 	 * Plays the Monument card.
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response Monument();
+	public GetModelResponse Monument();
 	/**
 	 * Builds a road.
 	 * @param roadLocation
@@ -223,7 +223,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response buildRoad(EdgeLocation roadLocation, boolean free)throws IllegalArgumentException ;
+	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free)throws IllegalArgumentException ;
 	/**
 	 * Builds a settlement.
 	 * @param vertexLocation
@@ -233,7 +233,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response buildSettlement(VertexLocation vertexLocation, boolean free)throws IllegalArgumentException ;
+	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free)throws IllegalArgumentException ;
 	/**
 	 * Builds a city.
 	 * @param vertexLocation
@@ -241,7 +241,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response buildCity(VertexLocation vertexLocation)throws IllegalArgumentException ;
+	public GetModelResponse buildCity(VertexLocation vertexLocation)throws IllegalArgumentException ;
 	/**
 	 * Offers a trade to a player
 	 * @param offer
@@ -249,7 +249,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response offerTrade(TradeOffer offer)throws IllegalArgumentException ;
+	public GetModelResponse offerTrade(TradeOffer offer)throws IllegalArgumentException ;
 	/**
 	 * Offers a trade to the bank.
 	 * @param ratio
@@ -262,7 +262,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)throws IllegalArgumentException ;
+	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)throws IllegalArgumentException ;
 	/**
 	 * Accepts or declines a trade offer.
 	 * @param willAccept
@@ -270,7 +270,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response acceptTrade(boolean willAccept);
+	public GetModelResponse acceptTrade(boolean willAccept);
 	/**
 	 * Discards a number or resources.
 	 * @param discardedCards
@@ -278,7 +278,7 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response
 	 */
-	public Response discardCards(ResourceList discardedCards)throws IllegalArgumentException ;
+	public GetModelResponse discardCards(ResourceList discardedCards)throws IllegalArgumentException ;
 	
 	/**
 	 * Sets the server's logging level.
@@ -287,6 +287,6 @@ public interface IProxy {
 	 * @return
 	 * Returns the server's response.
 	 */
-	public Response changeLogLevel(String loggingLevel)throws IllegalArgumentException ;
+	public Response changeLogLevel(LogLevel loggingLevel)throws IllegalArgumentException ;
 	
 }

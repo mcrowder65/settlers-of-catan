@@ -17,31 +17,13 @@ public class Response {
 	public void setErrorMessage(String message) {
 		errorMessage = message;
 	}
-	private int responseCode;
-	private String json;
 	
-	public int getResponseCode() {
-		return responseCode;
-	}
-
-	public void setResponseCode(int responseCode) {
-		this.responseCode = responseCode;
-	}
-
-	public String getJson() {
-		return json;
-	}
-
-	public void setJson(String json) {
-		this.json = json;
-	}
-
+	
 	public Response(int responseCode, String json) throws IllegalArgumentException {
 		if (responseCode == HttpURLConnection.HTTP_OK) 
 		{
 			success = true;
-			this.responseCode = responseCode;
-			this.json = json;
+		
 		}
 		else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST)
 		{

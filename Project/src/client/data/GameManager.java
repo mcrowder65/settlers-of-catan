@@ -34,7 +34,7 @@ public class GameManager implements Observer {
 	/**
 	 * Creates a new instance of the GameManager class.
 	 */
-	public GameManager(IProxy proxy, int pollingInterval) 
+	public GameManager(IProxy proxy, int pollingInterval) throws IllegalArgumentException
 	{
 		setProxy(proxy);
 		poller = new Poller(proxy, pollingInterval);
@@ -42,8 +42,13 @@ public class GameManager implements Observer {
 		
 	}
 	
+	public GameManager(){
+		
+	}
+	
 	public GameModel getModel() { return model;}
 	public IProxy getProxy() { return proxy;}
+	public Poller getPoller() { return poller;}
 	
 	public void setProxy(IProxy proxy) throws IllegalArgumentException {
 		if (proxy == null) throw new IllegalArgumentException("Proxy cannot be null.");
@@ -53,18 +58,16 @@ public class GameManager implements Observer {
 	/**
 	 * Gets the latest version of the GameModel and updates
 	 * the local copy of the GameModel.
-	 * @return
-	 * Returns true if update was successful.
 	 */
-	public boolean updateModel()  {
-		proxy.getModel();
-		return false;
+	public void updateModel(GameModel model)  {
+		this.model = model;
 	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
-		
+		this.model = model;
 		//TODO: Update local model (SYNCHRONIZED)
 		
 		

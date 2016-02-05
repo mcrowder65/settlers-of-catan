@@ -28,7 +28,6 @@ public class MirrorEdgeValue {
 	}
 
 	public MirrorEdgeValue() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

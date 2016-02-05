@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.GameMap;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 public class LayCityTest {
 
@@ -31,18 +33,18 @@ public class LayCityTest {
 	@Test
 	public void test() {
 		//Player laid settlement at spot on land - correct
-		assertTrue(map.hasCity(map.vertexObjectFactory(0, 0, 0, VertexDirection.East)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(0, 0), VertexDirection.East)));
 
-		assertTrue(map.hasCity(map.vertexObjectFactory(0, 1, 0, VertexDirection.NorthWest)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(1, 0), VertexDirection.NorthWest)));
 
-		assertTrue(map.hasCity(map.vertexObjectFactory(0, 1, -1, VertexDirection.SouthWest)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(1, -1), VertexDirection.SouthWest)));
 
 		//Player laid settlement at spot on vertex next to sea - correct
-		assertTrue(map.hasCity(map.vertexObjectFactory(1, 2, -2, VertexDirection.NorthWest)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(2, -2), VertexDirection.NorthWest)));
 
-		assertTrue(map.hasCity(map.vertexObjectFactory(1, 1, -2, VertexDirection.East)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(1, -2), VertexDirection.East)));
 
-		assertTrue(map.hasCity(map.vertexObjectFactory(3, -1, -1, VertexDirection.NorthWest)));
+		assertTrue(map.hasMunicipality(new VertexLocation( new HexLocation(-1, -1), VertexDirection.NorthWest)));
 
 		//Check that settlements were deleted correctly from the array
 		assertFalse(map.hasSettlement(map.vertexObjectFactory(0, 0, 0, VertexDirection.East)));

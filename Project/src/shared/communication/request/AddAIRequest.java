@@ -4,10 +4,10 @@ import shared.definitions.AIType;
 
 public class AddAIRequest extends Request {
 
-	AIType aiType;
-	public AddAIRequest(AIType aiType) throws IllegalArgumentException {
-		if (aiType == null)
+	AIType AIType;
+	public AddAIRequest(AIType AIType) throws IllegalArgumentException {
+		if (AIType == null)
 			throw new IllegalArgumentException("aitype cannot be null");
-		this.aiType = aiType;
+		this.AIType = AIType;
 	}
 }

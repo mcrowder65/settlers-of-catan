@@ -5,12 +5,8 @@ public class BuyDevCardCommand extends MoveCommand {
 	public BuyDevCardCommand(int playerIndex)
 			throws IllegalArgumentException {
 		super(playerIndex);
+		this.type = "buyDevCard";
+	}
+
 	
-	}
-
-	@Override
-	public String getMoveType() {
-		return "buyDevCard";
-	}
-
 }

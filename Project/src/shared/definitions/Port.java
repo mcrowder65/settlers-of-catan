@@ -40,6 +40,8 @@ public class Port {
 		this.direction = direction;
 		this.ratio = ratio;
 	}
+	
+	
 
 	/**
 	 * retrieves the resource for which the port has a special trade ratio

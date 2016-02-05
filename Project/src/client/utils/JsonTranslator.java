@@ -53,6 +53,9 @@ public class JsonTranslator {
 	
 		GameModel gameModel = new GameModel();
 		
+		DevCardList deck = makeDeck((JsonObject)jsonObj.get("deck"));
+		gameModel.setDeck(deck);
+		
 		ResourceList bank = getResourceList((JsonObject)jsonObj.get("bank"));
 		gameModel.setBank(bank);
 		
@@ -87,6 +90,15 @@ public class JsonTranslator {
 		gameModel.setWinner(winner);
 		
 		return gameModel;
+	}
+	public DevCardList makeDeck(JsonObject jsDeck){
+		DevCardList deck = new DevCardList();
+		deck.setYearOfPlenty(jsDeck.get("yearOfPlenty").getAsInt());
+		deck.setMonopoly(jsDeck.get("monopoly").getAsInt());
+		deck.setSoldier(jsDeck.get("soldier").getAsInt());
+		deck.setRoadBuilding(jsDeck.get("roadBuilding").getAsInt());
+		deck.setMonument(jsDeck.get("monument").getAsInt());
+		return deck;
 	}
 	public MessageList makeMessageList(JsonObject jsMessageList){
 		MessageList messageList = new MessageList();

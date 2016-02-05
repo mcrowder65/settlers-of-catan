@@ -1,6 +1,8 @@
 package shared.communication.request;
 
+import client.utils.Translator;
 import shared.locations.EdgeLocation;
+import shared.locations.MirrorEdgeLocation;
 
 public class BuildRoadCommand extends MoveCommand {
 
@@ -9,17 +11,18 @@ public class BuildRoadCommand extends MoveCommand {
 		if (roadLocation == null)
 			throw new IllegalArgumentException("roadLocation cannot be null.");
 		this.free = free;
-		this.roadLocation = roadLocation;
+		this.roadLocation = new MirrorEdgeLocation(roadLocation);
 		this.type = "buildRoad";
 	}
 	public boolean isFree() {
 		return free;
 	}
-	public EdgeLocation getRoadLocation() {
+	public MirrorEdgeLocation getRoadLocation() {
+		 
 		return roadLocation;
 	}
 	private boolean free;
-	private EdgeLocation roadLocation;
+	private MirrorEdgeLocation roadLocation;
 	
-
+	
 }

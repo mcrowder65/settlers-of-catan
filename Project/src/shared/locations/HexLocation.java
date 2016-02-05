@@ -1,5 +1,7 @@
 package shared.locations;
 
+import com.google.gson.Gson;
+
 /**
  * Represents the location of a hex on a hex map
  */
@@ -41,6 +43,7 @@ public class HexLocation
 		return "HexLocation [x=" + x + ", y=" + y + "]";
 	}
 	
+
 	@Override
 	public int hashCode()
 	{

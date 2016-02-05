@@ -39,6 +39,8 @@ public class Port {
 		this.direction = direction;
 		this.ratio = ratio;
 	}
+	
+	
 
 
 	@Override

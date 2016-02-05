@@ -500,7 +500,7 @@ public class Facade {
 	 * This method determines if the player can buy a Development card
 	 * @return True if the player can buy a Development card
 	 */
-	public boolean canBuyDevCard(int playerIndex){
+	public boolean canBuyDevCard(){
 		boolean isTurn = false;
 		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -531,7 +531,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseYearOfPlenty(int playerIndex){
+	public boolean canUseYearOfPlenty(){
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -558,7 +558,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseRoadBuilder(int playerIndex){
+	public boolean canUseRoadBuilder(){
 		boolean isTurn = true;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -584,7 +584,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseSoldier(int playerIndex){
+	public boolean canUseSoldier(){
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -612,7 +612,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseMonopoly(int playerIndex){
+	public boolean canUseMonopoly(){
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -639,7 +639,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseMonument(int playerIndex){
+	public boolean canUseMonument(){
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();

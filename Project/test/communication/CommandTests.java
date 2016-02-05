@@ -62,8 +62,8 @@ public class CommandTests {
 		VertexLocation goodLocation = new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthEast);
 		BuildCityCommand goodCommand1 = new BuildCityCommand(goodIndex1, goodLocation);
 
-		assertTrue(goodCommand1.getLocation() == goodLocation);
-
+		
+		
 		try
 		{
 			BuildCityCommand badCommand1 = new BuildCityCommand(goodIndex1, null);
@@ -212,9 +212,9 @@ public class CommandTests {
 	@Test
 	public void robPlayerTest() {
 		HexLocation goodLocation = new HexLocation(0, 0);
-		int goodReceiver1 = 0;
+		int goodReceiver1 = -1;
 		int goodReceiver2 = 3;
-		int badReceiver1 = -1;
+		int badReceiver1 = -2;
 		int badReceiver2 = 4;
 		ResourceList goodResources = new ResourceList(1,1,1,1,1);
 		RobPlayerCommand goodCommand1 = new RobPlayerCommand(goodIndex1, goodLocation, goodReceiver1);
@@ -281,9 +281,9 @@ public class CommandTests {
 	@Test
 	public void soldierTest() {
 		HexLocation goodLocation = new HexLocation(0, 0);
-		int goodReceiver1 = 0;
+		int goodReceiver1 = -1;
 		int goodReceiver2 = 3;
-		int badReceiver1 = -1;
+		int badReceiver1 = -2;
 		int badReceiver2 = 4;
 		ResourceList goodResources = new ResourceList(1,1,1,1,1);
 		SoldierCommand goodCommand1 = new SoldierCommand(goodIndex1, goodLocation, goodReceiver1);

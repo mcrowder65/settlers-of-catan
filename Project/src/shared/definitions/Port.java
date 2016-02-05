@@ -34,7 +34,6 @@ public class Port {
 	 */
 	public Port(ResourceType resource, HexLocation location, EdgeDirection direction,
 			int ratio) {
-		
 		this.resource = resource;
 		this.location = location;
 		this.direction = direction;
@@ -42,6 +41,35 @@ public class Port {
 	}
 	
 	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Port other = (Port) obj;
+		if (direction != other.direction)
+			return false;
+		if (location == null) {
+			if(other.location != null)
+				return false;
+		} 
+		else{
+			if(other.location.getX() != location.getX()) 
+				return false;
+			if(other.location.getY() != location.getY())
+				return false;
+		}
+		if (ratio != other.ratio)
+			return false;
+		if (resource != other.resource)
+			return false;
+		return true;
+	}
 
 	/**
 	 * retrieves the resource for which the port has a special trade ratio

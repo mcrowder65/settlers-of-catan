@@ -23,12 +23,7 @@ public class OfferTradeCommand extends MoveCommand {
 			throw new IllegalArgumentException("offer cannot be null.");
 		this.receiver = receiver;
 		this.offer = offer;
-		
-	}
-
-	@Override
-	public String getMoveType() {
-		return "offerTrade";
+		this.type = "offerTrade";
 	}
 
 }

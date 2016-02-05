@@ -8,6 +8,7 @@ public class DiscardCardsCommand extends MoveCommand {
 		if (discardedCards == null)
 			throw new IllegalArgumentException("discardedCards can't be null.");
 		this.discardedCards = discardedCards;
+		this.type = "discardCards";
 	}
 
 
@@ -19,9 +20,5 @@ public class DiscardCardsCommand extends MoveCommand {
 	}
 
 
-	@Override
-	public String getMoveType() {
-		return "discardCards";
-	}
 
 }

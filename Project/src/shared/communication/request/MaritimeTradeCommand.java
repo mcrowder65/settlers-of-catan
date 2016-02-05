@@ -1,12 +1,13 @@
 package shared.communication.request;
 
+import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
 public class MaritimeTradeCommand extends MoveCommand {
 
 	int ratio;
-	ResourceType input;
-	ResourceType output;
+	MirrorResourceType inputResource;
+	MirrorResourceType outputResource;
 	
 	public MaritimeTradeCommand(int playerIndex, int ratio, ResourceType input, ResourceType output)
 			throws IllegalArgumentException {
@@ -19,19 +20,16 @@ public class MaritimeTradeCommand extends MoveCommand {
 		if(output == ResourceType.NONE) throw new IllegalArgumentException("Output Resurce can't be None");
 		
 		this.ratio = ratio;
-		this.input = input;
-		this.output = output;
-		
+		this.inputResource = MirrorResourceType.getResource(input);
+		this.outputResource = MirrorResourceType.getResource(output);
+		this.type = "maritimeTrade";
 	}
 
-	@Override
-	public String getMoveType() {
-		return "maritimeTrade";
-	}
+
 	public ResourceType getInput() {
-		return input;
+		return MirrorResourceType.getOriginal(inputResource);
 	}
 	public ResourceType getOutput() {
-		return output;
+		return MirrorResourceType.getOriginal(outputResource);
 	}
 }

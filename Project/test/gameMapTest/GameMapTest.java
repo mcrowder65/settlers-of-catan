@@ -1,4 +1,4 @@
-package shared.definitions;
+package gameMapTest;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,9 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.locations.VertexObject;
+import shared.definitions.GameMap;
+import shared.definitions.Hex;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.EdgeValue;

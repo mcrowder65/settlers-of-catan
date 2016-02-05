@@ -6,12 +6,17 @@ public class ClientTests {
 	public static void main(String[] args) {
 		String[] testClasses = new String[] {
 				"client.utils.TranslatorTest",
+				
+				
 				"communication.CommandTests",
 				"communication.HTTPProxyTest",
 				"communication.MockProxyTests",
 				"communication.PollerTests",
 				"communication.FacadeTests",
-				"gameMapTest.deleteSettlementTest",
+				"communication.FacadeCanDoTestA",
+				"communication.FacadeCanDoTestB",
+				
+				"gameMapTest.GameMapTest",
 				"gameMapTest.HasMunicipalityTest",
 				"gameMapTest.HasSettlementTest",
 				"gameMapTest.LayCityTest",

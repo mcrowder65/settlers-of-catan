@@ -1,4 +1,4 @@
-package client.controller;
+package communication;
 
 
 
@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import client.controller.Facade;
 import client.data.GameManager;
 import shared.definitions.DevCardList;
 import shared.definitions.GameMap;
@@ -20,7 +21,7 @@ import shared.definitions.TradeOffer;
 import shared.definitions.TurnTracker;
 import shared.locations.HexLocation;
 
-public class FacadeTest {
+public class FacadeCanDoTestB {
 
 	GameManager game;
 	Facade facade;

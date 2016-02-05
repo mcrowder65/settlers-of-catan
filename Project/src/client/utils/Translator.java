@@ -45,7 +45,6 @@ public class Translator {
 	 */
 	public static String objectToJson(Object object) throws IllegalArgumentException  {
 		return new Gson().toJson(object);
-		//return new Gson().toJson(jsonTranslator.makeMirrorObject((GameModel)object));
 	}
 	public static JsonTranslator getJsonTranslator() {
 		return jsonTranslator;

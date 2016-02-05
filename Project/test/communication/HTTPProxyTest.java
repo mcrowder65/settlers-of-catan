@@ -1,6 +1,8 @@
 package communication;
 
 
+import static org.junit.Assert.fail;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,49 +38,42 @@ public class HTTPProxyTest {
 	}
 	@Test
 	public void atestRegister(){
-		Response response = httpProxy.register("matt", "crowder");
-		System.out.println("register test");
+		Response register = httpProxy.register("matt", "crowder");
+		Response login = httpProxy.login("matt", "crowder");
+		if(!register.isSuccess() && !login.isSuccess()) fail();
+		
 	}
 	@Test
 	public void btestLogin(){
 		Response response = httpProxy.login("matt", "crowder");
-		System.out.println("login test");
+		if(!response.isSuccess()) fail();
 	}
 	@Test
 	public void ctestCreateGame(){
 		CreateGameResponse response = httpProxy.createGame("matt", false, false, false);
-		System.out.println("creategame: " + response.getErrorMessage());
+		if(!response.isSuccess()) fail();
 	}
 	@Test
 	public void dtestJoinGame(){
 		Response response = httpProxy.joinGame(3, Translator.getCatanColor("puce"));
-		System.out.println("test join game");
+		if(!response.isSuccess()) fail();
 	}
 
 	@Test
 	public void etestListGames(){
 		ListGamesResponse response = httpProxy.listGames();
-		System.out.println("list games response");
+		if(!response.isSuccess()) fail();
 	}
 	@Test
 	public void ftestAddAI(){
 		Response response = httpProxy.addAI("LARGEST_ARMY");
-		System.out.println("testing add ai");
+		if(!response.isSuccess()) fail();
 	}
 	@Test
 	public void gtestListAI(){
 		ListAIResponse response = httpProxy.listAI();
-		System.out.println("testing list ai");
+		if(!response.isSuccess()) fail();
 	}
-	@Test
-	public void htestSendChat(){
-		GetModelResponse response = httpProxy.sendChat("hello!");
-		System.out.println("testing send chat");
-	}
-	@Test
-	public void itestRollNumber(){
-		GetModelResponse response = httpProxy.rollNumber(8);
-		System.out.println("rolling number");
-	}
+
 	
 }

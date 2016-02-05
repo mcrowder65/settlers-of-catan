@@ -10,8 +10,8 @@ public class RobPlayerCommand extends MoveCommand {
 	
 	public RobPlayerCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
-		if (victimIndex < 0 || victimIndex > 3) 
-			throw new IllegalArgumentException("victimIndex must be between 0 -3");
+		if (victimIndex < -1 || victimIndex > 3) 
+			throw new IllegalArgumentException("victimIndex must be between -1 -3");
 		if(location == null) throw new IllegalArgumentException("Location can't be NULL");
 		
 		this.location = location;

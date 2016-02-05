@@ -5,16 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import shared.definitions.GameMap;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
-import shared.locations.VertexObject;
+import shared.definitions.*;
+import shared.locations.*;
 
 public class deleteSettlementTest {
 
 	private GameMap map = new GameMap();
-	public VertexObject[] settlements = {
+	public shared.locations.VertexObject[] settlements = {
 			map.vertexObjectFactory(1, 0, -2, VertexDirection.NorthWest),
 			map.vertexObjectFactory(2, -2, 2, VertexDirection.NorthEast),
 			map.vertexObjectFactory(3, 2, -1, VertexDirection.SouthWest)

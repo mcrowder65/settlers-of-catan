@@ -165,8 +165,7 @@ public class Facade {
 	}
 
 	/**
-	 * This method allows the user to offer a trade to other players
-	 * @param offer - The offer
+	 * This method allows the user to perform a maritime trade
 	 * @return True if the offer was offered successfully
 	 */
 	public boolean offerMaritimeTrade(int ratio, ResourceType input, ResourceType output){

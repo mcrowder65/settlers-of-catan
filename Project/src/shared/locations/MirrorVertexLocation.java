@@ -8,7 +8,7 @@ public class MirrorVertexLocation
 	
 	private int x;
 	private int y;
-	private VertexDirection direction;
+	private MirrorVertexDirection direction;
 	
 	public MirrorVertexLocation(int x, int y, VertexDirection direction)
 	{
@@ -16,7 +16,11 @@ public class MirrorVertexLocation
 		setY(y);
 		setDirection(direction);
 	}
-	
+	public MirrorVertexLocation(VertexLocation location) {
+		setX(location.getHexLoc().getX());
+		setY(location.getHexLoc().getY());
+		setDirection(location.getDir());
+	}
 	
 	
 	public int getX() {
@@ -43,14 +47,14 @@ public class MirrorVertexLocation
 
 
 
-	public VertexDirection getDirection() {
+	public MirrorVertexDirection getDirection() {
 		return direction;
 	}
 
 
 
 	public void setDirection(VertexDirection direction) {
-		this.direction = direction;
+		this.direction = MirrorVertexDirection.getMirrorEdge(direction);
 	}
 
 }

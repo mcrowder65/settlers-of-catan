@@ -376,7 +376,7 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
-		OfferTradeCommand command = new OfferTradeCommand(playerIndex, offer.getReciever(), offer.getOffer());
+		OfferTradeCommand command = new OfferTradeCommand(offer.getSender(), offer.getReciever(), offer.getOffer());
 		return sendCommand(command);
 	}
 	@Override

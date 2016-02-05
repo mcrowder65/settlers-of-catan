@@ -123,7 +123,7 @@ public class FacadeTests {
 	}
 	@Test
 	public void lRobPlayer() {
-		boolean result = facade.placeRobber(0, new HexLocation(0,0));
+		boolean result = facade.placeRobber(-1, new HexLocation(0,0));
 		assertTrue(result);
 	
 	}
@@ -135,7 +135,7 @@ public class FacadeTests {
 	}
 	@Test
 	public void nOfferTrade() {
-		boolean result = facade.offerTrade(new TradeOffer(0,1, (new ResourceList(0,0,0,0,0))));
+		boolean result = facade.offerTrade(new TradeOffer(1,0, (new ResourceList(0,0,0,0,0))));
 		assertTrue(result);
 	}
 	@Test
@@ -145,12 +145,18 @@ public class FacadeTests {
 	}
 	@Test
 	public void pMaritimeTrade() {
-		boolean result = facade.offerMaritimeTrade(2, ResourceType.WOOD, ResourceType.WHEAT);
+		
+		facade.playYearOfPlenty(ResourceType.WOOD, ResourceType.WOOD);
+		facade.playYearOfPlenty(ResourceType.WOOD, ResourceType.WOOD);
+		
+		boolean result = facade.offerMaritimeTrade(4, ResourceType.WOOD, ResourceType.WHEAT);
 		assertTrue(result);
 	}
 	@Test
 	public void qSoldier() {
-		boolean result = facade.playSoldier(0, new HexLocation(0,0));
+		
+		
+		boolean result = facade.playSoldier(-1, new HexLocation(0,0));
 		assertTrue(result);
 	
 	}

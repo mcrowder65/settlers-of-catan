@@ -3,7 +3,7 @@ package shared.locations;
 public class MirrorEdgeLocation {
 	private int x;
 	private int y;
-	private EdgeDirection direction;
+	private MirrorEdgeDirection direction;
 	
 	public MirrorEdgeLocation(int x, int y, EdgeDirection direction)
 	{
@@ -36,11 +36,15 @@ public class MirrorEdgeLocation {
 		this.y = y;
 	}
 
-	public EdgeDirection getDirection() {
+	public MirrorEdgeDirection getDirection() {
 		return direction;
 	}
 
 	public void setDirection(EdgeDirection direction) {
-		this.direction = direction;
+		this.direction = MirrorEdgeDirection.getMirrorEdge(direction);
 	}
+    public EdgeLocation getOriginal() {
+    	EdgeLocation loc = new EdgeLocation(new HexLocation(x, y), MirrorEdgeDirection.getOriginal(direction));
+    	return loc;
+    }
 }

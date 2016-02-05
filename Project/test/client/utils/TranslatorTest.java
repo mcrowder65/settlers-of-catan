@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import shared.definitions.*;
 import shared.locations.*;
-
+import com.google.gson.stream.JsonReader;
 public class TranslatorTest {
 	static GameModel gameModel;
 	@BeforeClass
@@ -25,7 +25,7 @@ public class TranslatorTest {
 		String line = new String();
 		StringBuilder append = new StringBuilder();
 		try{
-			br = new BufferedReader(new FileReader("gameModel.txt"));
+			br = new BufferedReader(new FileReader("gamemodel.txt"));
 			while((line = br.readLine()) != null){
 				append.append(line);
 			}

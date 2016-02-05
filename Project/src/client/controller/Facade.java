@@ -316,16 +316,24 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(status != "Playing" && status != "FirstRound" && status != "SecondRound"){
 			return false;
 		}
+		
 		boolean enoughResources = game.getModel().getLocalPlayer().canBuildRoad();
 		if(enoughResources == false){
 			return false;
 		}
 		int owner = game.getModel().getLocalPlayer().getPlayerIndex();
 		EdgeValue value = new EdgeValue(owner,location);
-		boolean canLayOnMap = game.getModel().getMap().canLayRoad(value);
+		boolean canLayOnMap = false;
+		if(status == "FirstRound" || status == "SecondRound"){
+			canLayOnMap = game.getModel().getMap().hasRoadAllPlayers(location);
+		}
+		else{
+			canLayOnMap = game.getModel().getMap().canLayRoad(value);
+		}
+		
 		if(canLayOnMap == false){
 			return false;
 		}
@@ -347,7 +355,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(status != "Playing" && status != "FirstRound" && status != "SecondRound"){
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer().canBuildSettlement();
@@ -356,10 +364,22 @@ public class Facade {
 		}
 		int owner = game.getModel().getLocalPlayer().getPlayerIndex();
 		VertexObject vertex = new VertexObject(owner,location);
-		boolean canLayOnMap = game.getModel().getMap().canBuildSettlement(vertex);
-		if(canLayOnMap == false){
-			return false;
+		boolean canLayOnMap = false;
+		boolean canLay = false;
+		if(status == "FirstRound" || status == "SecondRound"){
+			canLayOnMap = game.getModel().getMap().hasMunicipality(location);
+			if(canLayOnMap == false){
+				return true;
+			}
 		}
+		else{
+			canLayOnMap = game.getModel().getMap().canBuildSettlement(vertex);
+			if(canLayOnMap == false){
+				return false;
+			}
+		}
+		
+	
 		return true;
 
 	}
@@ -672,7 +692,6 @@ public class Facade {
 	 * @return True if the message can be sent
 	 */
 	public boolean canSendChat(){
-
 		return true;
 	}
 	/**

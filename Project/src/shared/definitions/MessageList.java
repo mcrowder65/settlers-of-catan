@@ -27,7 +27,7 @@ public class MessageList {
 	 * retrieves the array of messages
 	 * @return lines
 	 */
-	public MessageLine[] getLines() {
+	public MessageLine[] getLines() throws IllegalArgumentException{
 		return lines;
 	}
 
@@ -38,14 +38,8 @@ public class MessageList {
 	public void setLines(MessageLine[] lines) throws IllegalArgumentException  {
 		this.lines = lines;
 	}
-	/**
-	 * Adds a MessageLine to the array
-	 * @param line
-	 */
-	public void addMessage(MessageLine line) throws IllegalArgumentException {
-		
-	}
-	public int size(){
+
+	public int size() throws IllegalArgumentException{
 		return lines.length;
 	}
 	

@@ -28,7 +28,7 @@ public class Facade {
 	 * This constructor is used for testing only!
 	 * @param gameMan
 	 */
-	public Facade (GameManager gameMan){
+	public Facade (GameManager gameMan) {
 		this.game = gameMan;
 	}
 
@@ -38,7 +38,7 @@ public class Facade {
 	 * @param username, password
 	 * @return True if the user successfully logged in.
 	 */
-	public boolean login(String username, String password){
+	public boolean login(String username, String password) throws IllegalArgumentException{
 		Response response = proxy.login(username, password);
 		return response.isSuccess();
 	}
@@ -48,7 +48,7 @@ public class Facade {
 	 * @param username, password
 	 * @return True if the user successfully registered.
 	 */
-	public boolean register(String username, String password){
+	public boolean register(String username, String password) throws IllegalArgumentException{
 		Response response = proxy.register(username, password);
 		return response.isSuccess();
 	}
@@ -57,7 +57,7 @@ public class Facade {
 	 * This method returns information(List) of all the existing games.
 	 * @return An array of GameInfo with all the information for the existing games.
 	 */
-	public GameInfo[] listGames(){
+	public GameInfo[] listGames() throws IllegalArgumentException{
 		ListGamesResponse response = proxy.listGames();
 		return response.getGames();
 	}
@@ -67,7 +67,7 @@ public class Facade {
 	 * @param gameId- Id of the game.
 	 * @return True if the user joined successfully a game.
 	 */
-	public boolean joinGame(int gameId, CatanColor color){
+	public boolean joinGame(int gameId, CatanColor color) throws IllegalArgumentException{
 		Response response = proxy.joinGame(gameId, color);
 		return response.isSuccess();
 	}
@@ -77,7 +77,7 @@ public class Facade {
 	 * @param name - Name of the game
 	 * @return the Game Id.
 	 */
-	public int createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
+	public int createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException{
 		CreateGameResponse response = proxy.createGame(name, randomTiles, randomNumbers, randomPorts);
 		return response.isSuccess() ? response.getGame().getId() : -1;
 	}
@@ -85,7 +85,7 @@ public class Facade {
 	/**
 	 * This method allows the user to quit the game.
 	 */
-	public void quit(){
+	public void quit() throws IllegalArgumentException{
 
 	}
 
@@ -95,7 +95,7 @@ public class Facade {
 	 * @param list - List of cards that the user will be discarding
 	 * @return True if the cards were discarded successfully
 	 */
-	public boolean discardCards(ResourceList list){
+	public boolean discardCards(ResourceList list) throws IllegalArgumentException{
 		GetModelResponse response = proxy.discardCards(list);
 		return response.isSuccess();
 	}	
@@ -104,16 +104,16 @@ public class Facade {
 	 * This method allows the user to roll the dice
 	 * @return The values rolled by the dice
 	 */
-	public int rollNumber(){
+	public int rollNumber() throws IllegalArgumentException{
 		int result = roll() + roll();
 		GetModelResponse response = proxy.rollNumber(result);
 		return response.isSuccess() == true ? result : -1;
 	}
-	public int roll(){
+	public int roll() throws IllegalArgumentException{
 		return new Random().nextInt((6 - 1) + 1) + 1;
 	}
 	
-	public boolean addAI(String aiType) {
+	public boolean addAI(String aiType) throws IllegalArgumentException {
 		Response response = proxy.addAI(aiType);
 		return response.isSuccess();
 	}
@@ -124,7 +124,7 @@ public class Facade {
 	 * @param location - The location where the user wants to place the road
 	 * @return True if the road was placed
 	 */
-	public boolean buildRoad(EdgeLocation location, boolean free){
+	public boolean buildRoad(EdgeLocation location, boolean free) throws IllegalArgumentException{
 		GetModelResponse response = proxy.buildRoad(location, free);
 		return response.isSuccess();
 
@@ -135,7 +135,7 @@ public class Facade {
 	 * @param location - The location where the user wants to place the settlement
 	 * @return True if the settlement was placed
 	 */
-	public boolean buildSettlement(VertexLocation location, boolean free){
+	public boolean buildSettlement(VertexLocation location, boolean free) throws IllegalArgumentException{
 		GetModelResponse response = proxy.buildSettlement(location, free);
 		return response.isSuccess();
 
@@ -146,7 +146,7 @@ public class Facade {
 	 * @param location - The location where the user wants to place the city
 	 * @return True if the city was placed
 	 */
-	public boolean buildCity(VertexLocation location){
+	public boolean buildCity(VertexLocation location) throws IllegalArgumentException{
 		GetModelResponse response = proxy.buildCity(location);
 		return response.isSuccess();
 
@@ -157,7 +157,7 @@ public class Facade {
 	 * @param offer - The offer
 	 * @return True if the offer was offered successfully
 	 */
-	public boolean offerTrade(TradeOffer offer){
+	public boolean offerTrade(TradeOffer offer) throws IllegalArgumentException{
 		GetModelResponse response = proxy.offerTrade(offer);
 		return response.isSuccess();
 	}
@@ -166,7 +166,7 @@ public class Facade {
 	 * This method allows the user to perform a maritime trade
 	 * @return True if the offer was offered successfully
 	 */
-	public boolean offerMaritimeTrade(int ratio, ResourceType input, ResourceType output){
+	public boolean offerMaritimeTrade(int ratio, ResourceType input, ResourceType output) throws IllegalArgumentException{
 		GetModelResponse response = proxy.maritimeTrade(ratio, input, output);
 		return response.isSuccess();
 	}
@@ -175,7 +175,7 @@ public class Facade {
 	 * This method terminates the Player's turn
 	 * @return
 	 */
-	public boolean finishTurn(){
+	public boolean finishTurn() throws IllegalArgumentException{
 		GetModelResponse response = proxy.finishTurn();
 		return response.isSuccess();
 	}
@@ -184,7 +184,7 @@ public class Facade {
 	 * This method allows the user to buy a Development Card
 	 * @return True if the card was bought successfully
 	 */
-	public boolean buyDevCard(){
+	public boolean buyDevCard() throws IllegalArgumentException{
 		GetModelResponse response = proxy.buyDevCard();
 		return response.isSuccess();
 	}
@@ -195,13 +195,13 @@ public class Facade {
 	 * @param resource2 - The resource that the user picked to get
 	 * @return True if the card was played
 	 */
-	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2){
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException{
 		GetModelResponse response = proxy.Year_Of_Plenty(resource1, resource2);
 		return response.isSuccess();
 
 	}
 
-	public boolean playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2){
+	public boolean playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException{
 		GetModelResponse response = proxy.Road_Building(spot1, spot2);
 		return response.isSuccess();
 	}
@@ -212,7 +212,7 @@ public class Facade {
 	 * @param location - The location where the robber will be placed
 	 * @return True if the Soldier Card was played successfully
 	 */
-	public boolean playSoldier(int victimIndex, HexLocation location){
+	public boolean playSoldier(int victimIndex, HexLocation location) throws IllegalArgumentException{
 		GetModelResponse response = proxy.Soldier(victimIndex, location);
 		return response.isSuccess();
 	}
@@ -222,12 +222,12 @@ public class Facade {
 	 * @param resource - The resource that the user picked to get
 	 * @return True if the card was played
 	 */
-	public boolean playMonopoly(ResourceType resource){
+	public boolean playMonopoly(ResourceType resource) throws IllegalArgumentException{
 		GetModelResponse response = proxy.Monopoly(resource);
 		return response.isSuccess();
 	}
 
-	public boolean playMonument(){
+	public boolean playMonument() throws IllegalArgumentException{
 		GetModelResponse response = proxy.Monument();
 		return response.isSuccess();
 	}
@@ -238,7 +238,7 @@ public class Facade {
 	 * @param location - The Hex location where the user wants to move the Robber
 	 * @return True if the Robber was moved
 	 */
-	public boolean placeRobber(int victimIndex, HexLocation location){
+	public boolean placeRobber(int victimIndex, HexLocation location) throws IllegalArgumentException{
 		GetModelResponse response = proxy.robPlayer(victimIndex, location);
 		return response.isSuccess();
 
@@ -249,7 +249,7 @@ public class Facade {
 	 * @param message - The message by the user
 	 * @return True if the message was sent
 	 */
-	public boolean sendChat(String message){
+	public boolean sendChat(String message) throws IllegalArgumentException{
 		GetModelResponse response = proxy.sendChat(message);
 		return response.isSuccess();
 
@@ -261,7 +261,7 @@ public class Facade {
 	 * True if you will accept a trade offer, false if you reject
 	 * @return True if the offer was accepted successfully
 	 */
-	public boolean acceptTrade(boolean willAccept){
+	public boolean acceptTrade(boolean willAccept) throws IllegalArgumentException{
 		GetModelResponse response = proxy.acceptTrade(willAccept);
 		return response.isSuccess();
 
@@ -273,7 +273,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canDiscardCards(){
+	public boolean canDiscardCards() throws IllegalArgumentException{
 		boolean canDiscard = game.getModel().getLocalPlayer().hasMoreThanSeven();
 		return canDiscard;
 	}
@@ -282,7 +282,7 @@ public class Facade {
 	 * This method determines if the Dice can be rolled
 	 * @return True if the dice can be rolled
 	 */
-	public boolean canRollNumber(){
+	public boolean canRollNumber() throws IllegalArgumentException{
 		boolean isTurn = false;
 		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -478,7 +478,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canFinishTurn(){
+	public boolean canFinishTurn() throws IllegalArgumentException{
 		boolean isTurn = false;
 		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -498,7 +498,7 @@ public class Facade {
 	 * This method determines if the player can buy a Development card
 	 * @return True if the player can buy a Development card
 	 */
-	public boolean canBuyDevCard(){
+	public boolean canBuyDevCard() throws IllegalArgumentException{
 		boolean isTurn = false;
 		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -529,7 +529,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseYearOfPlenty(){
+	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -556,7 +556,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseRoadBuilder(){
+	public boolean canUseRoadBuilder() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -582,7 +582,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseSoldier(){
+	public boolean canUseSoldier() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -610,7 +610,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseMonopoly(){
+	public boolean canUseMonopoly() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -637,7 +637,7 @@ public class Facade {
 	 * @param playerIndex
 	 * @return True if the player can
 	 */
-	public boolean canUseMonument(){
+	public boolean canUseMonument() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -663,7 +663,7 @@ public class Facade {
 	 * This method determines if the user can move the Robber
 	 * @return True if the user can move the Robber
 	 */
-	public boolean canPlaceRobber(HexLocation location){
+	public boolean canPlaceRobber(HexLocation location) throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer();
@@ -689,7 +689,7 @@ public class Facade {
 	 * This method determines if the user can send a chat
 	 * @return True if the message can be sent
 	 */
-	public boolean canSendChat(){
+	public boolean canSendChat() throws IllegalArgumentException{
 		return true;
 	}
 	/**

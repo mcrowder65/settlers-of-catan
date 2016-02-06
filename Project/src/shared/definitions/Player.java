@@ -10,7 +10,7 @@ import shared.locations.*;
 public class Player {
 
 	@Override
-	public int hashCode() {
+	public int hashCode() throws IllegalArgumentException{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + cities;
@@ -31,7 +31,7 @@ public class Player {
 		return result;
 	}
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) throws IllegalArgumentException {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -218,7 +218,7 @@ public class Player {
 	 * retrieves number of cities 
 	 * @return cities
 	 */
-	public int getCities() {
+	public int getCities() throws IllegalArgumentException{
 		return cities;
 	}
 
@@ -226,7 +226,7 @@ public class Player {
 	 * retrieves color of the player
 	 * @return color
 	 */
-	public CatanColor getColor() {
+	public CatanColor getColor() throws IllegalArgumentException{
 		return color;
 	}
 
@@ -234,7 +234,7 @@ public class Player {
 	 * retrieves discarded player attribute
 	 * @return discarded
 	 */
-	public Boolean getDiscarded() {
+	public Boolean getDiscarded() throws IllegalArgumentException{
 		return discarded;
 	}
 
@@ -242,7 +242,7 @@ public class Player {
 	 * retrieves number of monuments 
 	 * @return monuments
 	 */
-	public int getMonuments() {
+	public int getMonuments() throws IllegalArgumentException{
 		return monuments;
 	}
 
@@ -250,7 +250,7 @@ public class Player {
 	 * retrieves name of player
 	 * @return name
 	 */
-	public String getName() {
+	public String getName() throws IllegalArgumentException{
 		return name;
 	}
 
@@ -258,7 +258,7 @@ public class Player {
 	 * retrieves list of Dev cards that cannot be played until the player's next turn
 	 * @return newDevCards
 	 */
-	public DevCardList getNewDevCards() {
+	public DevCardList getNewDevCards() throws IllegalArgumentException{
 		return newDevCards;
 	}
 
@@ -266,7 +266,7 @@ public class Player {
 	 * retrieves list of dev cards that are currently playable
 	 * @return oldDevCards
 	 */
-	public DevCardList getOldDevCards() {
+	public DevCardList getOldDevCards() throws IllegalArgumentException{
 		return oldDevCards;
 	}
 
@@ -274,7 +274,7 @@ public class Player {
 	 * retrieves the playerIndex
 	 * @return playerIndex
 	 */
-	public int getPlayerIndex() {
+	public int getPlayerIndex() throws IllegalArgumentException{
 		return playerIndex;
 	}
 
@@ -282,7 +282,7 @@ public class Player {
 	 * retrieves wether or not the player used any dev cards
 	 * @return playerDevCard
 	 */
-	public Boolean getPlayedDevCard() {
+	public Boolean getPlayedDevCard() throws IllegalArgumentException{
 		return playedDevCard;
 	}
 
@@ -290,7 +290,7 @@ public class Player {
 	 * retrieves the id of the player
 	 * @return playerID
 	 */
-	public int getPlayerID() {
+	public int getPlayerID() throws IllegalArgumentException{
 		return playerID;
 	}
 
@@ -298,7 +298,7 @@ public class Player {
 	 * retrieves list of resources that the player has
 	 * @return resources
 	 */
-	public ResourceList getResources() {
+	public ResourceList getResources() throws IllegalArgumentException{
 		return resources;
 	}
 
@@ -306,7 +306,7 @@ public class Player {
 	 * retrieves number of roads the player has
 	 * @return roads
 	 */
-	public int getRoads() {
+	public int getRoads() throws IllegalArgumentException{
 		return roads;
 	}
 
@@ -314,7 +314,7 @@ public class Player {
 	 * retrieves number of settlements
 	 * @return settlements
 	 */
-	public int getSettlements() {
+	public int getSettlements() throws IllegalArgumentException{
 		return settlements;
 	}
 
@@ -322,7 +322,7 @@ public class Player {
 	 * retrieves number of soldiers
 	 * @return soldiers
 	 */
-	public int getSoldiers() {
+	public int getSoldiers() throws IllegalArgumentException{
 		return soldiers;
 	}
 
@@ -330,7 +330,7 @@ public class Player {
 	 * retrieves number of victory points the player has
 	 * @return victoryPoints
 	 */
-	public int getVictoryPoints() {
+	public int getVictoryPoints() throws IllegalArgumentException{
 		return victoryPoints;
 	}
 
@@ -346,7 +346,7 @@ public class Player {
 	 * sets the color of the player
 	 * @param color
 	 */
-	public void setColor(CatanColor color)   {
+	public void setColor(CatanColor color)  throws IllegalArgumentException {
 		this.color = color;
 	}
 
@@ -468,17 +468,17 @@ public class Player {
 		return false;
 	}
 	
-	public void addRoad(){
+	public void addRoad() throws IllegalArgumentException{
 		roads++;
 	}
-	public void addSettlement(){
+	public void addSettlement() throws IllegalArgumentException{
 		settlements++;
 	}
 	public void addCity(){
 		cities++;
 	}
 
-	public void removeSettlement(){
+	public void removeSettlement() throws IllegalArgumentException{
 		settlements = settlements -1;
 	}
 	
@@ -497,7 +497,7 @@ public class Player {
 		return false;
 	}
 	
-	public void removeOldDevCard(DevCardList devCard){
+	public void removeOldDevCard(DevCardList devCard) throws IllegalArgumentException{
 		int soldier = oldDevCards.getSoldier();
 		int monument = oldDevCards.getMonument();
 		int monopoly = oldDevCards.getMonopoly();
@@ -534,7 +534,7 @@ public class Player {
 		
 	}
 	
-	public void chargeBasicRoad(){
+	public void chargeBasicRoad() throws IllegalArgumentException{
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		
@@ -545,7 +545,7 @@ public class Player {
 		
 	}
 	
-	public void chargeBasicSettlement(){
+	public void chargeBasicSettlement() throws IllegalArgumentException{
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
@@ -563,7 +563,7 @@ public class Player {
 			
 	}
 	
-	public void chargeBasicCity(){
+	public void chargeBasicCity() throws IllegalArgumentException{
 		int ore = resources.getOre();
 		int wheat = resources.getWheat();
 		
@@ -590,7 +590,7 @@ public class Player {
 	}
 	
 	
-	public boolean canBuildSettlement(){
+	public boolean canBuildSettlement() throws IllegalArgumentException{
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
@@ -602,7 +602,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canBuildCity(){
+	public boolean canBuildCity() throws IllegalArgumentException{
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
@@ -612,7 +612,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canBuyDevCard(){
+	public boolean canBuyDevCard() throws IllegalArgumentException{
 		int ore = resources.getOre();
 		int sheep = resources.getSheep();
 		int grain = resources.getWheat();
@@ -623,7 +623,7 @@ public class Player {
 		return false;
 	}
 	
-	public void addDevCard(DevCardList devCard){
+	public void addDevCard(DevCardList devCard) throws IllegalArgumentException{
 		int soldier = newDevCards.getSoldier();
 		int monument = oldDevCards.getMonument();
 		int monopoly = newDevCards.getMonopoly();
@@ -650,7 +650,7 @@ public class Player {
 			
 	}
 	
-	public boolean canPlayRoadBuilding(){
+	public boolean canPlayRoadBuilding() throws IllegalArgumentException{
 		if(this.playedDevCard == false){
 			int roadBuildingCard = oldDevCards.getRoadBuilding();
 			if(roadBuildingCard > 0){
@@ -660,7 +660,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canPlayYearOfPlentyCard(){
+	public boolean canPlayYearOfPlentyCard() throws IllegalArgumentException{
 		if(this.playedDevCard == false){
 			int yopCard = oldDevCards.getYearOfPlenty();
 			if(yopCard > 0){
@@ -670,7 +670,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canPlayMonopolyCard(){
+	public boolean canPlayMonopolyCard() throws IllegalArgumentException{
 		if(this.playedDevCard == false){
 			int monopolyCard = oldDevCards.getMonopoly();
 			if(monopolyCard > 0){
@@ -680,7 +680,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canPlaySoldierCard(){
+	public boolean canPlaySoldierCard() throws IllegalArgumentException{
 		if(this.playedDevCard == false){
 			int soldierCard = oldDevCards.getSoldier();
 			if(soldierCard > 0){
@@ -690,7 +690,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canPlayMonumentCard(){
+	public boolean canPlayMonumentCard() throws IllegalArgumentException{
 		int monumentCard = oldDevCards.getMonument();
 		monumentCard = monumentCard + newDevCards.getMonument();
 		if(monumentCard > 0){
@@ -703,7 +703,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canPlayDevCard(){
+	public boolean canPlayDevCard() throws IllegalArgumentException{
 		if(this.playedDevCard == true){
 			return false;
 		}
@@ -714,7 +714,7 @@ public class Player {
 		return false;
 	}
 	
-	public void playSoldierCard(){
+	public void playSoldierCard() throws IllegalArgumentException{
 		int soldierCard = oldDevCards.getSoldier();
 		oldDevCards.setSoldier(soldierCard-1);
 	}
@@ -732,7 +732,7 @@ public class Player {
 	}
 	
 	
-	public void updateOldDevCard(){
+	public void updateOldDevCard() throws IllegalArgumentException{
 		int soldier = oldDevCards.getSoldier();
 		int monument = oldDevCards.getMonument();
 		int monopoly = oldDevCards.getMonopoly();
@@ -758,7 +758,7 @@ public class Player {
 		
 	}
 	
-	public boolean canAcceptTrade(TradeOffer tradeOffer){
+	public boolean canAcceptTrade(TradeOffer tradeOffer) throws IllegalArgumentException{
 		ResourceList offer = tradeOffer.getOffer();
 		int brickWanted = offer.getBrick();
 		int sheepWanted = offer.getSheep();
@@ -777,7 +777,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canOfferTrade(){
+	public boolean canOfferTrade() throws IllegalArgumentException{
 		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();
 		if(total > 0){
 			return true;
@@ -785,7 +785,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean canDiscardCards(){
+	public boolean canDiscardCards() throws IllegalArgumentException{
 
 		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();
 		if(total > 0){
@@ -794,7 +794,7 @@ public class Player {
 		return false;
 	}
 	
-	public void removeResourceCards(ResourceList resourceList){
+	public void removeResourceCards(ResourceList resourceList) throws IllegalArgumentException{
 		int brick = resources.getBrick();
 		int sheep = resources.getSheep();
 		int ore = resources.getOre();
@@ -821,7 +821,7 @@ public class Player {
 		
 	}
 	
-	public void addResourceCards(ResourceList resourceList){
+	public void addResourceCards(ResourceList resourceList) throws IllegalArgumentException{
 		int brick = resources.getBrick();
 		int sheep = resources.getSheep();
 		int ore = resources.getOre();
@@ -851,7 +851,7 @@ public class Player {
 	 * Determines if the Player has enough resources for a date
 	 * @return True if there are enough resources
 	 */
-	public boolean enoughResourceCardsToTrade(){
+	public boolean enoughResourceCardsToTrade() throws IllegalArgumentException{
 		if(resources.getBrick() >= 2) return true;
 		else if(resources.getOre() >= 2) return true;
 		else if(resources.getSheep() >= 2) return true;

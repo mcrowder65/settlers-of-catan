@@ -76,7 +76,7 @@ public class GameMap {
 		this.allCities = Arrays.asList(cities);
 		this.allPorts = Arrays.asList(ports);
 	}
-	public boolean isEqual(GameMap other){
+	public boolean isEqual(GameMap other) throws IllegalArgumentException{
 		
 		return true;
 	}
@@ -88,7 +88,7 @@ public class GameMap {
 	 * gets an array of all the Hexes
 	 * @return hexes
 	 */
-	public Hex[] getHexes() {
+	public Hex[] getHexes() throws IllegalArgumentException{
 		return hexes;
 	}
 
@@ -96,7 +96,7 @@ public class GameMap {
 	 * gets an array of all the ports on the map
 	 * @return ports
 	 */
-	public Port[] getPorts() {
+	public Port[] getPorts() throws IllegalArgumentException{
 		return ports;
 	}
 
@@ -104,7 +104,7 @@ public class GameMap {
 	 * gets an array of all the roads on the map
 	 * @return roads
 	 */
-	public EdgeValue[] getRoads() {
+	public EdgeValue[] getRoads() throws IllegalArgumentException{
 		return roads;
 	}
 
@@ -112,7 +112,7 @@ public class GameMap {
 	 * gets an array of all the settlements on the map
 	 * @return settlements 
 	 */
-	public VertexObject[] getSettlements() {
+	public VertexObject[] getSettlements() throws IllegalArgumentException{
 		return settlements;
 	}
 
@@ -120,7 +120,7 @@ public class GameMap {
 	 * gets an array of all the cities on the map
 	 * @return cities
 	 */
-	public VertexObject[] getCities() {
+	public VertexObject[] getCities() throws IllegalArgumentException{
 		return cities;
 	}
 
@@ -128,7 +128,7 @@ public class GameMap {
 	 * gets the radius of the map
 	 * @return radius
 	 */
-	public int getRadius() {
+	public int getRadius() throws IllegalArgumentException{
 		return radius;
 	}
 
@@ -136,7 +136,7 @@ public class GameMap {
 	 * gets the Hexlocation of the robber
 	 * @return robber
 	 */
-	public HexLocation getRobber() {
+	public HexLocation getRobber() throws IllegalArgumentException{
 		return robber;
 	}
 	/**
@@ -172,7 +172,7 @@ public class GameMap {
 		return false;
 	}
 	
-	public HexLocation getOppositeHex(HexLocation hex, EdgeDirection direction){
+	public HexLocation getOppositeHex(HexLocation hex, EdgeDirection direction) throws IllegalArgumentException{
 		int xCoord = hex.getX();
 		int yCoord = hex.getY();
 		
@@ -201,7 +201,7 @@ public class GameMap {
 		return oppositeHex;
 	}
 	
-	public Boolean canLayRoad(EdgeValue value){
+	public Boolean canLayRoad(EdgeValue value) throws IllegalArgumentException{
 		int owner = value.getOwner();
 		EdgeLocation location = value.getLocation();
 		HexLocation hex = location.getHexLoc();
@@ -461,7 +461,7 @@ public class GameMap {
 	 * @param hexLocation
 	 * @return
 	 */
-	public Boolean isLand(HexLocation hexLocation){
+	public Boolean isLand(HexLocation hexLocation) throws IllegalArgumentException{
 		int xCoord = hexLocation.getX();
 		int yCoord = hexLocation.getY();
 		
@@ -620,7 +620,7 @@ public class GameMap {
 		return false;
 	}
 	
-	public Boolean hasPort(int owner){
+	public Boolean hasPort(int owner) throws IllegalArgumentException{
 		
 		if(allSettlements.size() > 0){
 			if(allPorts.size() > 0){
@@ -775,7 +775,7 @@ public class GameMap {
 		cities = allCities.toArray(cities);
 	}
 
-	public VertexObject vertexObjectFactory(int owner, int x, int y, VertexDirection dir)
+	public VertexObject vertexObjectFactory(int owner, int x, int y, VertexDirection dir)throws IllegalArgumentException
 	{
 		HexLocation hexTemp = new HexLocation(x,y);
 		VertexLocation locationTemp = new VertexLocation(hexTemp, dir);
@@ -884,7 +884,7 @@ public class GameMap {
 	 * This method updates the Settlement array after an item has been removed
 	 * from the ArrayList AllSettlements (because a city was built instead)
 	 */
-	public void updateSettlementArray(){
+	public void updateSettlementArray() throws IllegalArgumentException{
 		settlements = allSettlements.toArray(settlements);
 	}
 
@@ -893,7 +893,7 @@ public class GameMap {
 	 * this function deletes the settlement from the array
 	 * @param location
 	 */
-	public void deleteSettlement(VertexLocation location){
+	public void deleteSettlement(VertexLocation location) throws IllegalArgumentException{
 		int x = location.getHexLoc().getX();
 		int y = location.getHexLoc().getY();
 		VertexDirection direction = location.getDir();
@@ -917,7 +917,7 @@ public class GameMap {
 
 	}
 	
-	public boolean layCity(VertexObject location){
+	public boolean layCity(VertexObject location) throws IllegalArgumentException{
 
 		int x = location.getLocation().getHexLoc().getX(); 
 		int y = location.getLocation().getHexLoc().getY();
@@ -1023,7 +1023,7 @@ public class GameMap {
 		return true;
 	}
 	
-	public boolean twoRoadChecker(HexLocation homeHex, VertexDirection vDirection, int owner){
+	public boolean twoRoadChecker(HexLocation homeHex, VertexDirection vDirection, int owner) throws IllegalArgumentException{
 		
 		if(vDirection == VertexDirection.NorthWest){
 			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.North);
@@ -1412,7 +1412,7 @@ public class GameMap {
 		return false;
 	}
 	
-	public boolean canBuildSettlement(VertexObject settlement){
+	public boolean canBuildSettlement(VertexObject settlement) throws IllegalArgumentException{
 		
 		int owner = settlement.getOwner();
 		VertexLocation location = settlement.getLocation();
@@ -1596,11 +1596,11 @@ public class GameMap {
 		return false;
 	}
 	
-	public boolean canBuildCity(VertexObject city){
+	public boolean canBuildCity(VertexObject city) throws IllegalArgumentException{
 		return hasSettlement(city);
 	}
 	
-	public boolean canLayRobber(HexLocation robberLocation){
+	public boolean canLayRobber(HexLocation robberLocation) throws IllegalArgumentException{
 		Boolean isHexLand = this.isLand(robberLocation);
 		if(isHexLand == false){
 			return false;

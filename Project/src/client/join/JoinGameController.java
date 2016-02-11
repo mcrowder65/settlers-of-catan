@@ -2,6 +2,8 @@ package client.join;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.communication.HTTPProxy;
+import client.controller.Facade;
 import client.data.*;
 import client.misc.*;
 
@@ -15,6 +17,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private Facade facade;
 	
 	/**
 	 * JoinGameController constructor
@@ -32,6 +35,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		
+		HTTPProxy proxy = new HTTPProxy(1, "localhost",8081);
+		facade = new Facade(proxy,2);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -89,7 +95,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		
+		PlayerInfo player = new PlayerInfo();
+		getJoinGameView().setGames(facade.listGames(),player);
 		getJoinGameView().showModal();
 	}
 

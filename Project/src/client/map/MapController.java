@@ -50,14 +50,16 @@ public class MapController extends Controller implements IMapController {
 				HexType hexType = HexType.values()[r];
 				HexLocation hexLoc = new HexLocation(x, y);
 				getView().addHex(hexLoc, hexType);
+				/*
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 						CatanColor.red);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
 						CatanColor.blue);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
 						CatanColor.orange);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
+				//getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
+				//getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
+				 */
 			}
 			
 			if (x != 0) {
@@ -67,7 +69,7 @@ public class MapController extends Controller implements IMapController {
 					HexType hexType = HexType.values()[r];
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+					/*getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 							CatanColor.red);
 					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
 							CatanColor.blue);
@@ -75,6 +77,7 @@ public class MapController extends Controller implements IMapController {
 							CatanColor.orange);
 					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
 					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
+					*/
 				}
 			}
 		}

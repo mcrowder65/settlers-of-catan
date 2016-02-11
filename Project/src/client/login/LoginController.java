@@ -1,6 +1,8 @@
 package client.login;
 
 import client.base.*;
+import client.communication.HTTPProxy;
+import client.controller.Facade;
 import client.misc.*;
 
 import java.net.*;
@@ -19,6 +21,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
+	private Facade facade;
 	
 	/**
 	 * LoginController constructor
@@ -31,6 +34,9 @@ public class LoginController extends Controller implements ILoginController {
 		super(view);
 		
 		this.messageView = messageView;
+		HTTPProxy proxy = new HTTPProxy(1, "localhost",8081);
+		facade = new Facade(proxy,2);
+		
 	}
 	
 	public ILoginView getLoginView() {
@@ -74,10 +80,26 @@ public class LoginController extends Controller implements ILoginController {
 		
 		// TODO: log in user
 		
+		//System.out.println("in signIn");
 
+		String userName = this.getLoginView().getLoginUsername();
+		String password = this.getLoginView().getLoginPassword();
+		boolean success = facade.login(userName,password);
+		
+		/*
+		if(success == true){
+			System.out.println("Worked");
+		}
+		else{
+			System.out.println("Failed");
+		}
+		*/
+		
 		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if(success == true){
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
 	}
 
 	@Override

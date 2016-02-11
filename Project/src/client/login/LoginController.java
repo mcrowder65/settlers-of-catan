@@ -106,10 +106,22 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
+		String username = this.getLoginView().getRegisterUsername();
+		String password = this.getLoginView().getRegisterPassword();
+		String passConfirmed = this.getLoginView().getRegisterPasswordRepeat();
+		boolean success = false;
+		if(password.equals(passConfirmed)){
+			success = facade.register(username,password);
+			success = facade.login(username,password);
 		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		}
+		
+		if(success == true){
+			// If register succeeded
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+	
 	}
 
 }

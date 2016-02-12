@@ -1,16 +1,23 @@
 package client.discard;
 
 import shared.definitions.*;
+
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 import client.misc.*;
 
 
 /**
  * Discard controller implementation
  */
-public class DiscardController extends Controller implements IDiscardController {
+public class DiscardController extends Controller implements IDiscardController, Observer {
 
 	private IWaitView waitView;
+	private GameState currState;
 	
 	/**
 	 * DiscardController constructor
@@ -23,6 +30,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		super(view);
 		
 		this.waitView = waitView;
+		this.currState = new IsNotTurnState();
 	}
 
 	public IDiscardView getDiscardView() {
@@ -47,6 +55,12 @@ public class DiscardController extends Controller implements IDiscardController 
 	public void discard() {
 		
 		getDiscardView().closeModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

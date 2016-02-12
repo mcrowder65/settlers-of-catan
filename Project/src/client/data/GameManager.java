@@ -12,7 +12,7 @@ import shared.definitions.GameModel;
  * Serves as an wrapper for the GameModel class
  * and integrates it with the Server API.
  */
-public class GameManager implements Observer {
+public class GameManager extends Observable implements Observer{
 
 	/**
 	 * The model of the current game.

@@ -6,14 +6,17 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
+	private GameState currState;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -22,6 +25,7 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		
 		initFromModel();
+		this.currState = new IsNotTurnState();
 	}
 	
 	public IMapView getView() {
@@ -166,6 +170,12 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 	

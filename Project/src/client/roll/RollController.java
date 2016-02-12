@@ -1,15 +1,21 @@
 package client.roll;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller implements IRollController,Observer {
 
 	private IRollResultView resultView;
-
+	private GameState currState;
+	
 	/**
 	 * RollController constructor
 	 * 
@@ -21,6 +27,7 @@ public class RollController extends Controller implements IRollController {
 		super(view);
 		
 		setResultView(resultView);
+		this.currState = new IsNotTurnState();
 	}
 	
 	public IRollResultView getResultView() {
@@ -38,6 +45,12 @@ public class RollController extends Controller implements IRollController {
 	public void rollDice() {
 
 		getResultView().showModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

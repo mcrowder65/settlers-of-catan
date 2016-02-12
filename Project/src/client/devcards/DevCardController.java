@@ -1,17 +1,24 @@
 package client.devcards;
 
 import shared.definitions.ResourceType;
+
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 
 
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
+public class DevCardController extends Controller implements IDevCardController, Observer {
 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private GameState currState;
 	
 	/**
 	 * DevCardController constructor
@@ -29,6 +36,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		this.currState = new IsNotTurnState();
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -93,6 +101,12 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 

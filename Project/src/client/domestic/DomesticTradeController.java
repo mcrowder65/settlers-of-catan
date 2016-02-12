@@ -1,18 +1,25 @@
 package client.domestic;
 
 import shared.definitions.*;
+
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 import client.misc.*;
 
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController {
+public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
+	private GameState currState;
 
 	/**
 	 * DomesticTradeController constructor
@@ -30,6 +37,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
+		this.currState = new IsNotTurnState();
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -114,6 +122,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 
 		getAcceptOverlay().closeModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

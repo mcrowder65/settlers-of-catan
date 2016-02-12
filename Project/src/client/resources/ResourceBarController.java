@@ -3,20 +3,24 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.gamestate.GameState;
+import client.gamestate.IsNotTurnState;
 
 
 /**
  * Implementation for the resource bar controller
  */
-public class ResourceBarController extends Controller implements IResourceBarController {
+public class ResourceBarController extends Controller implements IResourceBarController,Observer {
 
 	private Map<ResourceBarElement, IAction> elementActions;
+	private GameState currState;
 	
 	public ResourceBarController(IResourceBarView view) {
 
 		super(view);
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
+		this.currState = new IsNotTurnState();
 	}
 
 	@Override
@@ -67,6 +71,12 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

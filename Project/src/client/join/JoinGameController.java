@@ -28,7 +28,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * @param messageView Message view (used to display error messages that occur while the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
-								ISelectColorView selectColorView, IMessageView messageView) {
+								ISelectColorView selectColorView, IMessageView messageView,
+								Facade facade) {
 
 		super(view);
 
@@ -36,8 +37,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
 		
-		HTTPProxy proxy = new HTTPProxy(1, "localhost",8081);
-		facade = new Facade(proxy,2);
+		this.facade = facade;
 	}
 	
 	public IJoinGameView getJoinGameView() {

@@ -53,10 +53,7 @@ public class HTTPProxy implements IProxy{
 	 * the game ID.
 	 */
 	private String gameCookie;
-	/**
-	 * The index of the player.
-	 */
-	private int playerIndex;
+
 	
 	/**
 	 * Constructs a new instance of HTTPProxy.
@@ -70,12 +67,10 @@ public class HTTPProxy implements IProxy{
 	 * Throws this exception if the server cannot be reached,
 	 * or playerIndex is invalid.
 	 */
-	public HTTPProxy(int playerIndex, String host, int port) throws IllegalArgumentException {
-		if (playerIndex < 0 || playerIndex > 3) throw new IllegalArgumentException("playerIndex must be between 0 and 3.");
+	public HTTPProxy(String host, int port) throws IllegalArgumentException {
 		if (port <= 0 || port > 65535) throw new IllegalArgumentException("port must be non-negative and less than 65535");
 		if (host == null || host.equals("")) throw new IllegalArgumentException("Host must be non-null and non-empty.");
-		
-		this.playerIndex = playerIndex;
+
 		this.portNumber = port;
 		this.hostName = host;
 		

@@ -3,6 +3,8 @@ package client.main;
 import javax.swing.*;
 
 import client.catan.*;
+import client.communication.HTTPProxy;
+import client.controller.Facade;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
@@ -57,6 +59,10 @@ public class Catan extends JFrame
 			{
 				new Catan();
 				
+				HTTPProxy proxy = new HTTPProxy("localhost", 8081);
+				Facade facade = new Facade(proxy, 2);
+				
+				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView);
@@ -70,7 +76,8 @@ public class Catan extends JFrame
 																				 joinView,
 																				 newGameView,
 																				 selectColorView,
-																				 joinMessageView);
+																				 joinMessageView,
+																				 facade);
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()
@@ -87,7 +94,8 @@ public class Catan extends JFrame
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(
 																	  loginView,
-																	  loginMessageView);
+																	  loginMessageView,
+																	  facade);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()

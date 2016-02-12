@@ -29,13 +29,12 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
-	public LoginController(ILoginView view, IMessageView messageView) {
+	public LoginController(ILoginView view, IMessageView messageView, Facade facade) {
 
 		super(view);
 		
 		this.messageView = messageView;
-		HTTPProxy proxy = new HTTPProxy(1, "localhost",8081);
-		facade = new Facade(proxy,2);
+		this.facade = facade;
 		
 	}
 	

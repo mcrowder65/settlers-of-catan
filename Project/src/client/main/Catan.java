@@ -25,7 +25,6 @@ public class Catan extends JFrame
 	{
 		//second commit
 		client.base.OverlayView.setWindow(this);
-			//cahnge
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		

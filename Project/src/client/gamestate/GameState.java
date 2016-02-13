@@ -85,8 +85,8 @@ public abstract class GameState {
 		
 	}	
 	
-	public void rollNumber(Facade facade) throws IllegalArgumentException{
-
+	public int rollNumber(Facade facade) throws IllegalArgumentException{
+		return -1;
 	}
 	
 	public void offerTrade(TradeOffer offer, Facade facade) throws IllegalArgumentException{
@@ -143,4 +143,7 @@ public abstract class GameState {
 		return false;
 	}
 	
+	public boolean canRollNumber(Facade facade) throws IllegalArgumentException{
+		return false;
+	}
 }

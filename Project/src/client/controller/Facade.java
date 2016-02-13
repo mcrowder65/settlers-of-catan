@@ -15,9 +15,6 @@ public class Facade {
 
 	private GameManager game;
 	private IProxy proxy;
-	
-	
-
 
 	public Facade(IProxy proxy, int pollingInterval, GameManager game)
 	{

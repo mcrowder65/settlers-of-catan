@@ -3,6 +3,7 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 
@@ -15,12 +16,13 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private Map<ResourceBarElement, IAction> elementActions;
 	private GameState currState;
 
-	public ResourceBarController(IResourceBarView view) {
+	public ResourceBarController(IResourceBarView view, GameManager gameManager) {
 
 		super(view);
 
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		this.currState = new IsNotTurnState();
+		gameManager.addObserver(this);
 	}
 
 	@Override

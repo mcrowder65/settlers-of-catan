@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 
@@ -17,12 +18,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	private GameState currState;
 
-	public TurnTrackerController(ITurnTrackerView view) {
+	public TurnTrackerController(ITurnTrackerView view, GameManager gameManager) {
 
 		super(view);
 
 		initFromModel();
 		this.currState = new IsNotTurnState();
+		gameManager.addObserver(this);
 	}
 
 	private void setState(String state){

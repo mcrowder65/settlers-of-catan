@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.misc.*;
@@ -30,7 +31,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
+			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, GameManager gameManager) {
 
 		super(tradeView);
 
@@ -38,6 +39,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		this.currState = new IsNotTurnState();
+		gameManager.addObserver(this);
 	}
 
 	public IDomesticTradeView getTradeView() {

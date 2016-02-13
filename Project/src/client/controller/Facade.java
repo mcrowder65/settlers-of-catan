@@ -19,10 +19,11 @@ public class Facade {
 	
 
 
-	public Facade(IProxy proxy, int pollingInterval)
+	public Facade(IProxy proxy, int pollingInterval, GameManager game)
 	{
 		this.proxy = proxy;
-		game = new GameManager(proxy, pollingInterval);
+		//game = new GameManager(proxy, pollingInterval);
+		this.game = game;
 	
 	}
 

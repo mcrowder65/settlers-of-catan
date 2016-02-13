@@ -3,6 +3,7 @@ package client.catan;
 import java.awt.*;
 import javax.swing.*;
 
+import client.data.GameManager;
 import client.map.*;
 
 @SuppressWarnings("serial")
@@ -15,16 +16,16 @@ public class MidPanel extends JPanel
 	private MapController mapController;
 	private GameStatePanel gameStatePanel;
 	
-	public MidPanel()
+	public MidPanel(GameManager gameManager)
 	{
 		
 		this.setLayout(new BorderLayout());
 		
-		tradePanel = new TradePanel();
+		tradePanel = new TradePanel(gameManager);
 		
 		mapView = new MapView();
 		robView = new RobView();
-		mapController = new MapController(mapView, robView);
+		mapController = new MapController(mapView, robView, gameManager);
 		mapView.setController(mapController);
 		robView.setController(mapController);
 		

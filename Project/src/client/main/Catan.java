@@ -5,6 +5,7 @@ import javax.swing.*;
 import client.catan.*;
 import client.communication.HTTPProxy;
 import client.controller.Facade;
+import client.data.GameManager;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
@@ -19,7 +20,8 @@ public class Catan extends JFrame
 	
 	private CatanPanel catanPanel;
 	
-	public Catan()
+	
+	public Catan(GameManager gameManager)
 	{
 		//second commit
 		client.base.OverlayView.setWindow(this);
@@ -27,7 +29,7 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel();
+		catanPanel = new CatanPanel(gameManager);
 		this.setContentPane(catanPanel);
 		
 		display();
@@ -57,10 +59,13 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				new Catan();
-				
 				HTTPProxy proxy = new HTTPProxy("localhost", 8081);
-				Facade facade = new Facade(proxy, 2);
+				GameManager gameManager = new GameManager(proxy,2);
+				
+				new Catan(gameManager);
+				
+				
+				Facade facade = new Facade(proxy, 2, gameManager);
 				
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();

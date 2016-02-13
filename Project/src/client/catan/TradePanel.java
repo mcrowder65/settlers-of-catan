@@ -3,6 +3,7 @@ package client.catan;
 import java.awt.*;
 import javax.swing.*;
 
+import client.data.GameManager;
 import client.domestic.*;
 import client.maritime.*;
 import client.misc.*;
@@ -21,7 +22,7 @@ public class TradePanel extends JPanel
 	private MaritimeTradeOverlay maritimeOverlay;
 	private MaritimeTradeController maritimeController;
 	
-	public TradePanel()
+	public TradePanel(GameManager gameManager)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -34,7 +35,8 @@ public class TradePanel extends JPanel
 		domesticController = new DomesticTradeController(domesticView,
 														 domesticOverlay,
 														 domesticWaitView,
-														 domesticAcceptOverlay);
+														 domesticAcceptOverlay,
+														 gameManager);
 		domesticView.setController(domesticController);
 		domesticOverlay.setController(domesticController);
 		domesticWaitView.setController(domesticController);
@@ -43,7 +45,8 @@ public class TradePanel extends JPanel
 		maritimeView = new MaritimeTradeView();
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
-														 maritimeOverlay);
+														 maritimeOverlay,
+														 gameManager);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		

@@ -18,7 +18,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private GameState currState;
 
-	public MapController(IMapView view, IRobView robView) {
+	public MapController(IMapView view, IRobView robView, GameManager gameManager) {
 
 		super(view);
 
@@ -26,6 +26,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 		initFromModel();
 		this.currState = new IsNotTurnState();
+		gameManager.addObserver(this);
 	}
 
 	private void setState(String state){

@@ -14,11 +14,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	private Map<ResourceBarElement, IAction> elementActions;
 	private GameState currState;
-	
+
 	public ResourceBarController(IResourceBarView view) {
 
 		super(view);
-		
+
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		this.currState = new IsNotTurnState();
 	}
@@ -37,6 +37,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void setElementAction(ResourceBarElement element, IAction action) {
 
 		elementActions.put(element, action);
+	}
+
+	private void setState(String state){
+
+		this.currState =  currState.identifyState(state);
 	}
 
 	@Override
@@ -63,11 +68,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void playCard() {
 		executeElementAction(ResourceBarElement.PLAY_CARD);
 	}
-	
+
 	private void executeElementAction(ResourceBarElement element) {
-		
+
 		if (elementActions.containsKey(element)) {
-			
+
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
@@ -76,7 +81,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

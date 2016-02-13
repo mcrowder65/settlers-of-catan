@@ -15,7 +15,7 @@ public class RollController extends Controller implements IRollController,Observ
 
 	private IRollResultView resultView;
 	private GameState currState;
-	
+
 	/**
 	 * RollController constructor
 	 * 
@@ -25,11 +25,11 @@ public class RollController extends Controller implements IRollController,Observ
 	public RollController(IRollView view, IRollResultView resultView) {
 
 		super(view);
-		
+
 		setResultView(resultView);
 		this.currState = new IsNotTurnState();
 	}
-	
+
 	public IRollResultView getResultView() {
 		return resultView;
 	}
@@ -40,7 +40,12 @@ public class RollController extends Controller implements IRollController,Observ
 	public IRollView getRollView() {
 		return (IRollView)getView();
 	}
-	
+
+	private void setState(String state){
+
+		this.currState =  currState.identifyState(state);
+	}
+
 	@Override
 	public void rollDice() {
 
@@ -50,7 +55,7 @@ public class RollController extends Controller implements IRollController,Observ
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

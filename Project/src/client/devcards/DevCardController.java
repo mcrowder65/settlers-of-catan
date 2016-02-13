@@ -8,6 +8,7 @@ import java.util.Observer;
 import client.base.*;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.gamestate.PlayingState;
 
 
 /**
@@ -45,6 +46,11 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	public IBuyDevCardView getBuyCardView() {
 		return buyCardView;
+	}
+	
+	private void setState(String state){
+		
+		this.currState =  currState.identifyState(state);
 	}
 
 	@Override
@@ -107,7 +113,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+	
+		//this.setState(arg.getStatus());
 	}
 
 }

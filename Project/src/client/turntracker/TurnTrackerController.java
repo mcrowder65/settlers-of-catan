@@ -16,18 +16,23 @@ import client.gamestate.IsNotTurnState;
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 
 	private GameState currState;
-	
+
 	public TurnTrackerController(ITurnTrackerView view) {
-		
+
 		super(view);
-		
+
 		initFromModel();
 		this.currState = new IsNotTurnState();
 	}
-	
+
+	private void setState(String state){
+
+		this.currState =  currState.identifyState(state);
+	}
+
 	@Override
 	public ITurnTrackerView getView() {
-		
+
 		return (ITurnTrackerView)super.getView();
 	}
 
@@ -35,7 +40,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void endTurn() {
 
 	}
-	
+
 	private void initFromModel() {
 		//<temp>
 		getView().setLocalPlayerColor(CatanColor.red);
@@ -45,7 +50,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

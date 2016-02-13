@@ -30,18 +30,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
+			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
 
 		super(tradeView);
-		
+
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		this.currState = new IsNotTurnState();
 	}
-	
+
 	public IDomesticTradeView getTradeView() {
-		
+
 		return (IDomesticTradeView)super.getView();
 	}
 
@@ -69,6 +69,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.acceptOverlay = acceptOverlay;
 	}
 
+	private void setState(String state){
+
+		this.currState =  currState.identifyState(state);
+	}
+
 	@Override
 	public void startTrade() {
 
@@ -89,7 +94,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 
 		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
+		//		getWaitOverlay().showModal();
 	}
 
 	@Override
@@ -127,7 +132,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

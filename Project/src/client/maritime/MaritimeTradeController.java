@@ -17,20 +17,20 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	private IMaritimeTradeOverlay tradeOverlay;
 	private GameState currState;
-	
+
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
-		
+
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
 		this.currState = new IsNotTurnState();
 	}
-	
+
 	public IMaritimeTradeView getTradeView() {
-		
+
 		return (IMaritimeTradeView)super.getView();
 	}
-	
+
 	public IMaritimeTradeOverlay getTradeOverlay() {
 		return tradeOverlay;
 	}
@@ -39,9 +39,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		this.tradeOverlay = tradeOverlay;
 	}
 
+	private void setState(String state){
+
+		this.currState =  currState.identifyState(state);
+	}
+
 	@Override
 	public void startTrade() {
-		
+
 		getTradeOverlay().showModal();
 	}
 
@@ -80,7 +85,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

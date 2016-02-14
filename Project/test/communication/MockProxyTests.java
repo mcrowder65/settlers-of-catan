@@ -62,82 +62,82 @@ public class MockProxyTests {
 	}
 	@Test
 	public void testSendChat() {
-		GetModelResponse response = mock.sendChat("content");
+		GetModelResponse response = mock.sendChat(0, "content");
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testBuildRoad() {
-		GetModelResponse response = mock.buildRoad(new EdgeLocation(new HexLocation(0,0),EdgeDirection.North), true);
+		GetModelResponse response = mock.buildRoad(0, new EdgeLocation(new HexLocation(0,0),EdgeDirection.North), true);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testBuildSettlement() {
-		GetModelResponse response = mock.buildSettlement(new VertexLocation(new HexLocation(0,0),VertexDirection.East), false);
+		GetModelResponse response = mock.buildSettlement(0, new VertexLocation(new HexLocation(0,0),VertexDirection.East), false);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testBuildCity() {
-		GetModelResponse response = mock.buildCity(new VertexLocation(new HexLocation(0,0),VertexDirection.East));
+		GetModelResponse response = mock.buildCity(0, new VertexLocation(new HexLocation(0,0),VertexDirection.East));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testBuyDevCard() {
-		GetModelResponse response = mock.buyDevCard();
+		GetModelResponse response = mock.buyDevCard(0);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testRobPlayer() {
-		GetModelResponse response = mock.robPlayer(2, new HexLocation(0,0));
+		GetModelResponse response = mock.robPlayer(0, 2, new HexLocation(0,0));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testSoldier() {
-		GetModelResponse response = mock.Soldier(2, new HexLocation(0,0));
+		GetModelResponse response = mock.Soldier(0, 2, new HexLocation(0,0));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testYearOfPlenty() {
-		GetModelResponse response = mock.Year_Of_Plenty(ResourceType.BRICK, ResourceType.WHEAT);
+		GetModelResponse response = mock.Year_Of_Plenty(0, ResourceType.BRICK, ResourceType.WHEAT);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testMonument() {
-		GetModelResponse response = mock.Monument();
+		GetModelResponse response = mock.Monument(0);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testMonopoly() {
-		GetModelResponse response = mock.Monopoly(ResourceType.ORE);
+		GetModelResponse response = mock.Monopoly(0,ResourceType.ORE);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testRoadBuilding() {
-		GetModelResponse response = mock.Road_Building(new EdgeLocation(new HexLocation(0,0),EdgeDirection.North), new EdgeLocation(new HexLocation(0,0),EdgeDirection.North));
+		GetModelResponse response = mock.Road_Building(0, new EdgeLocation(new HexLocation(0,0),EdgeDirection.North), new EdgeLocation(new HexLocation(0,0),EdgeDirection.North));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testOfferTrade() {
-		GetModelResponse response = mock.offerTrade(new TradeOffer(2,3, new ResourceList(0,0,0,0,0)));
+		GetModelResponse response = mock.offerTrade(0, new TradeOffer(2,3, new ResourceList(0,0,0,0,0)));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testAcceptTrade() {
-		GetModelResponse response = mock.acceptTrade(true);
+		GetModelResponse response = mock.acceptTrade(0, true);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testMaritimeTrade() {
-		GetModelResponse response = mock.maritimeTrade(2, ResourceType.BRICK, ResourceType.SHEEP);
+		GetModelResponse response = mock.maritimeTrade(0, 2, ResourceType.BRICK, ResourceType.SHEEP);
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testDiscardCards() {
-		GetModelResponse response = mock.discardCards(new ResourceList(0,0,1,0,0));
+		GetModelResponse response = mock.discardCards(0, new ResourceList(0,0,1,0,0));
 		assertTrue(response.isSuccess());
 	}
 	@Test
 	public void testFinishTurn() {
-		GetModelResponse response = mock.finishTurn();
+		GetModelResponse response = mock.finishTurn(0);
 		assertTrue(response.isSuccess());
 	}
 

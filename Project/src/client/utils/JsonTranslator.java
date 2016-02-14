@@ -2,6 +2,7 @@ package client.utils;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -22,6 +23,9 @@ public class JsonTranslator {
 	}
 	public Object makeGenericObject(String json, Object object){
 		return new Gson().fromJson(json, object.getClass());
+	}
+	public HashMap<String, String> makeKeyValuePairs(String json) {
+		return (HashMap<String,String>)(new Gson().fromJson(json, HashMap.class));
 	}
 	public List<GameInfo> makeListOfGames(String json){
 		JsonParser parser = new JsonParser();

@@ -1,5 +1,6 @@
 package client.utils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -36,6 +37,11 @@ public class Translator {
 	public static List<GameInfo> makeListOfGames(String json){
 		return jsonTranslator.makeListOfGames(json);
 	}
+	
+	public static HashMap<String,String> makeKeyValuePairs(String json) {
+		return jsonTranslator.makeKeyValuePairs(json);
+	}
+	
 	/**
 	 * Converts the object to its JSON representation.
 	 * @param object

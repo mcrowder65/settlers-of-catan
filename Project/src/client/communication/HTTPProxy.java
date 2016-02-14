@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class HTTPProxy implements IProxy{
 	 */
 	private String gameCookie;
 
+	
+	private int playerId;
 	
 	/**
 	 * Constructs a new instance of HTTPProxy.
@@ -157,7 +160,7 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().close();
 		
 		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
-		
+		Map<String, List<String>> mymap = conn.getHeaderFields();
 		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {
@@ -213,6 +216,7 @@ public class HTTPProxy implements IProxy{
 		HTTPJsonResponse httpResponse = new HTTPJsonResponse();
 		try {
 			httpResponse = request == null ? doGet(path) : doPost(path, request);
+			
 		} 
 		catch (IOException e) 
 		{
@@ -222,7 +226,7 @@ public class HTTPProxy implements IProxy{
 		return httpResponse;
 	}
 	@Override
-	public GetModelResponse sendChat(String content) {
+	public GetModelResponse sendChat(int playerIndex, String content) {
 		SendChatCommand command = new SendChatCommand(playerIndex, content);
 		return sendCommand(command);	
 	}
@@ -310,83 +314,83 @@ public class HTTPProxy implements IProxy{
 //	SendChatCommand command = new SendChatCommand(playerIndex, content);
 //	return sendCommand(command);
 	@Override
-	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
+	public GetModelResponse rollNumber(int playerIndex, int number) throws IllegalArgumentException {
 		RollNumberCommand command = new RollNumberCommand(playerIndex, number);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse robPlayer(int playerIndex, int victimIndex, HexLocation location) throws IllegalArgumentException {
 		RobPlayerCommand command = new RobPlayerCommand(playerIndex, location, victimIndex);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse finishTurn() {
+	public GetModelResponse finishTurn(int playerIndex) {
 		FinishTurnCommand command = new FinishTurnCommand(playerIndex);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse buyDevCard() {
+	public GetModelResponse buyDevCard(int playerIndex) {
 		BuyDevCardCommand command = new BuyDevCardCommand(playerIndex);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
+	public GetModelResponse Year_Of_Plenty(int playerIndex, ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
 		YearOfPlentyCommand command = new YearOfPlentyCommand(playerIndex, resource1, resource2);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
+	public GetModelResponse Road_Building(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
 		RoadBuildingCommand command = new RoadBuildingCommand(playerIndex, spot1, spot2);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse Soldier(int playerIndex, int victimIndex, HexLocation location) throws IllegalArgumentException {
 		SoldierCommand command = new SoldierCommand(playerIndex, location, victimIndex);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse Monopoly(ResourceType resource) {
+	public GetModelResponse Monopoly(int playerIndex, ResourceType resource) {
 		MonopolyCommand command = new MonopolyCommand(playerIndex, resource);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse Monument() {
+	public GetModelResponse Monument(int playerIndex) {
 		MonumentCommand command = new MonumentCommand(playerIndex);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
 		BuildRoadCommand command = new BuildRoadCommand(playerIndex, free, roadLocation);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
 		BuildSettlementCommand command = new BuildSettlementCommand(playerIndex, free, vertexLocation);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
+	public GetModelResponse buildCity(int playerIndex, VertexLocation vertexLocation) throws IllegalArgumentException {
 		BuildCityCommand command = new BuildCityCommand(playerIndex, vertexLocation);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
+	public GetModelResponse offerTrade(int playerIndex, TradeOffer offer) throws IllegalArgumentException {
 		OfferTradeCommand command = new OfferTradeCommand(offer.getSender(), offer.getReciever(), offer.getOffer());
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
+	public GetModelResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
 		MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, inputResource, outputResource);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse acceptTrade(boolean willAccept) {
+	public GetModelResponse acceptTrade(int playerIndex, boolean willAccept) {
 		AcceptTradeCommand command = new AcceptTradeCommand(playerIndex, willAccept);
 		return sendCommand(command);
 	}
 	@Override
-	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
+	public GetModelResponse discardCards(int playerIndex, ResourceList discardedCards) throws IllegalArgumentException {
 		DiscardCardsCommand command = new DiscardCardsCommand(playerIndex, discardedCards);
 		return sendCommand(command);
 	}
@@ -394,6 +398,24 @@ public class HTTPProxy implements IProxy{
 	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
 		HTTPJsonResponse response =  sendRequest("/util/changeLogLevel", new ChangeLogLevelRequest(loggingLevel));
 		return new Response(response.getResponseCode(), response.getResponseBody());
+	}
+	@Override
+	public int getPlayerId() {
+		try {
+		String decoded = URLDecoder.decode(userCookie);
+		HashMap<String,String> kvPairs = Translator.makeKeyValuePairs(decoded);
+		
+		if (!kvPairs.containsKey("playerID")) 
+			return -1;
+	
+			Object o = kvPairs.get("playerID");
+			Double d = (Double)o;
+			
+			int playerId = d.intValue();
+			return playerId;
+		} catch (Exception ex) {
+			ex.printStackTrace(); return -1;
+		}
 	}
 
 	public AIType getAIType(String type){

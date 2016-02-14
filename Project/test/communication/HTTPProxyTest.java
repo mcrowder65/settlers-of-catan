@@ -21,7 +21,7 @@ public class HTTPProxyTest {
 	static HTTPProxy httpProxy;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		httpProxy = new HTTPProxy(2, "localhost", 8081);
+		httpProxy = new HTTPProxy("localhost", 8081);
 	}
 
 	@AfterClass

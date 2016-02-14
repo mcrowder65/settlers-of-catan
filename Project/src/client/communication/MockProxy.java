@@ -87,79 +87,82 @@ public class MockProxy implements IProxy {
 		return null;
 	}
 	@Override
-	public GetModelResponse sendChat(String content) {
+	public GetModelResponse sendChat(int playerIndex, String content) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse rollNumber(int number) throws IllegalArgumentException {
+	public GetModelResponse rollNumber(int playerIndex, int number) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse robPlayer(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse robPlayer(int playerIndex, int victimIndex, HexLocation location) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse finishTurn() {
+	public GetModelResponse finishTurn(int playerIndex) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse buyDevCard() {
+	public GetModelResponse buyDevCard(int playerIndex) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse Year_Of_Plenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
+	public GetModelResponse Year_Of_Plenty(int playerIndex, ResourceType resource1, ResourceType resource2) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse Road_Building(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
+	public GetModelResponse Road_Building(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse Soldier(int victimIndex, HexLocation location) throws IllegalArgumentException {
+	public GetModelResponse Soldier(int playerIndex, int victimIndex, HexLocation location) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse Monopoly(ResourceType resource) {
+	public GetModelResponse Monopoly(int playerIndex, ResourceType resource) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse Monument() {
+	public GetModelResponse Monument(int playerIndex) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse buildRoad(EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse buildSettlement(VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
+	public GetModelResponse buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse buildCity(VertexLocation vertexLocation) throws IllegalArgumentException {
+	public GetModelResponse buildCity(int playerIndex, VertexLocation vertexLocation) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse offerTrade(TradeOffer offer) throws IllegalArgumentException {
+	public GetModelResponse offerTrade(int playerIndex, TradeOffer offer) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource)
+	public GetModelResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
 			throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse acceptTrade(boolean willAccept) {
+	public GetModelResponse acceptTrade(int playerIndex, boolean willAccept) {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
-	public GetModelResponse discardCards(ResourceList discardedCards) throws IllegalArgumentException {
+	public GetModelResponse discardCards(int playerIndex, ResourceList discardedCards) throws IllegalArgumentException {
 		return new GetModelResponse(200, readResponse("model"));
 	}
 	@Override
 	public Response changeLogLevel(LogLevel loggingLevel) throws IllegalArgumentException {
 		return new Response(200, "Success");
 	}
-
+	@Override
+	public int getPlayerId() {
+		return 0;
+	}
 
 
 

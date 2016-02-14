@@ -200,15 +200,15 @@ public class FacadeCanDoTestB {
 		gameModel.getTurnTracker().setStatus("Robbing");
 		DevCardList oldDev = new DevCardList(0,1,0,0,0);
 		DevCardList newDev = new DevCardList(0,0,0,0,0);
-		gameModel.getLocalPlayer().setOldDevCards(oldDev);
-		gameModel.getLocalPlayer().setNewDevCards(newDev);
-		gameModel.getLocalPlayer().setVictoryPoints(9);
+		gameModel.getLocalPlayer(0).setOldDevCards(oldDev);
+		gameModel.getLocalPlayer(0).setNewDevCards(newDev);
+		gameModel.getLocalPlayer(0).setVictoryPoints(9);
 
 		assertFalse(facade.canUseMonument());
 
 		//Player status == Playing / Can play 
 		gameModel.getTurnTracker().setStatus("Playing");
-		gameModel.getLocalPlayer().setVictoryPoints(9);
+		gameModel.getLocalPlayer(0).setVictoryPoints(9);
 		assertTrue(facade.canUseMonument());
 		
 		//wrongTurn player 2
@@ -232,21 +232,21 @@ public class FacadeCanDoTestB {
 		gameModel.getTurnTracker().setStatus("Robbing");
 		DevCardList oldDev = new DevCardList(0,1,0,0,0);
 		DevCardList newDev = new DevCardList(0,0,0,0,0);
-		gameModel.getLocalPlayer().setOldDevCards(oldDev);
-		gameModel.getLocalPlayer().setNewDevCards(newDev);
-		gameModel.getLocalPlayer().setVictoryPoints(9);
+		gameModel.getLocalPlayer(0).setOldDevCards(oldDev);
+		gameModel.getLocalPlayer(0).setNewDevCards(newDev);
+		gameModel.getLocalPlayer(0).setVictoryPoints(9);
 
 		assertFalse(facade.canUseMonument());
 
 
 		//Player status != Playing / Can / Not Enough Victory points
-		gameModel.getLocalPlayer().setVictoryPoints(0);
+		gameModel.getLocalPlayer(0).setVictoryPoints(0);
 		oldDev = new DevCardList(0,0,0,0,0);
-		gameModel.getLocalPlayer().setOldDevCards(oldDev);
+		gameModel.getLocalPlayer(0).setOldDevCards(oldDev);
 		assertFalse(facade.canUseMonument());
 
 		newDev = new DevCardList(0,1,0,0,0);
-		gameModel.getLocalPlayer().setNewDevCards(newDev);
+		gameModel.getLocalPlayer(0).setNewDevCards(newDev);
 		assertFalse(facade.canUseMonument());
 
 
@@ -256,13 +256,13 @@ public class FacadeCanDoTestB {
 
 
 		//Player status == Playing / Can play / Not enough victory points
-		gameModel.getLocalPlayer().setVictoryPoints(0);
+		gameModel.getLocalPlayer(0).setVictoryPoints(0);
 		oldDev = new DevCardList(0,1,0,0,0);
-		gameModel.getLocalPlayer().setOldDevCards(oldDev);
+		gameModel.getLocalPlayer(0).setOldDevCards(oldDev);
 		assertFalse(facade.canUseMonument());
 
 		//Player status == Playing / Can play 
-		gameModel.getLocalPlayer().setVictoryPoints(9);
+		gameModel.getLocalPlayer(0).setVictoryPoints(9);
 		assertTrue(facade.canUseMonument());
 
 	}

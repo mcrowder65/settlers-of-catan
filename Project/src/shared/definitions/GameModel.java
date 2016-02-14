@@ -69,11 +69,7 @@ public class GameModel {
 	 * unique identifier of the game that the player is in 
 	 */
 	private String gameCookie;
-	/**
-	 * the local player who has this instance running
-	 */
-	private Player localPlayer;
-	
+
 	
 	public ResourceList getBank() throws IllegalArgumentException {
 		return bank;
@@ -147,11 +143,28 @@ public class GameModel {
 	public void setGameCookie(String gameCookie)  throws IllegalArgumentException {
 		this.gameCookie = gameCookie;
 	}
-	public Player getLocalPlayer() throws IllegalArgumentException{
-		return localPlayer;
+	public Player getLocalPlayer(int playerId) {
+		for (int n = 0; n < players.length; n++) {
+			if (players[n] != null && players[playerId].getPlayerID() == playerId) 
+				return players[playerId];
+		}
+		return null;
 	}
-	public void setLocalPlayer(Player localPlayer)  throws IllegalArgumentException {
-		this.localPlayer = localPlayer;
+	/**
+	 * WARNING!! FOR TESTING ONLY!!!!!!!!!!!
+	 * @param player
+	 */
+	public void setLocalPlayer(Player player) {
+		if (players == null)
+			players = new Player[4];
+		players[0] = player;
+	}
+	public int getLocalIndex(int playerId) {
+		for (int n = 0; n < players.length; n++) {
+			if (players[n] != null && players[n].getPlayerID() == playerId) 
+				return n;
+		}
+		return -1;
 	}
 	
 	

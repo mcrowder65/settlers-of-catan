@@ -15,15 +15,19 @@ public class Facade {
 
 	private GameManager game;
 	private IProxy proxy;
+	private int playerId;
 
 	public Facade(IProxy proxy, int pollingInterval, GameManager game)
 	{
 		this.proxy = proxy;
-		//game = new GameManager(proxy, pollingInterval);
 		this.game = game;
 	
 	}
-
+	public Facade(IProxy proxy, int pollingInterval)
+	{
+		this.proxy = proxy;
+		game = new GameManager(proxy, pollingInterval);
+	}
 	/**
 	 * This constructor is used for testing only!
 	 * @param gameMan
@@ -32,7 +36,10 @@ public class Facade {
 		this.game = gameMan;
 	}
 
-
+	public int getPlayerIndex() {
+		return game.getModel().getLocalIndex(playerId);
+	}
+	
 	/**
 	 * Allows a user to log into the server.
 	 * @param username, password
@@ -40,6 +47,7 @@ public class Facade {
 	 */
 	public boolean login(String username, String password) throws IllegalArgumentException{
 		Response response = proxy.login(username, password);
+		playerId = proxy.getPlayerId();
 		return response.isSuccess();
 	}
 
@@ -50,6 +58,7 @@ public class Facade {
 	 */
 	public boolean register(String username, String password) throws IllegalArgumentException{
 		Response response = proxy.register(username, password);
+		playerId = proxy.getPlayerId();
 		return response.isSuccess();
 	}
 
@@ -96,7 +105,7 @@ public class Facade {
 	 * @return True if the cards were discarded successfully
 	 */
 	public boolean discardCards(ResourceList list) throws IllegalArgumentException{
-		GetModelResponse response = proxy.discardCards(list);
+		GetModelResponse response = proxy.discardCards(game.getModel().getLocalIndex(playerId), list);
 		return response.isSuccess();
 	}	
 
@@ -106,7 +115,7 @@ public class Facade {
 	 */
 	public int rollNumber() throws IllegalArgumentException{
 		int result = roll() + roll();
-		GetModelResponse response = proxy.rollNumber(result);
+		GetModelResponse response = proxy.rollNumber(game.getModel().getLocalIndex(playerId),result);
 		return response.isSuccess() == true ? result : -1;
 	}
 	public int roll() throws IllegalArgumentException{
@@ -125,7 +134,7 @@ public class Facade {
 	 * @return True if the road was placed
 	 */
 	public boolean buildRoad(EdgeLocation location, boolean free) throws IllegalArgumentException{
-		GetModelResponse response = proxy.buildRoad(location, free);
+		GetModelResponse response = proxy.buildRoad(game.getModel().getLocalIndex(playerId),location, free);
 		return response.isSuccess();
 
 	}
@@ -136,7 +145,7 @@ public class Facade {
 	 * @return True if the settlement was placed
 	 */
 	public boolean buildSettlement(VertexLocation location, boolean free) throws IllegalArgumentException{
-		GetModelResponse response = proxy.buildSettlement(location, free);
+		GetModelResponse response = proxy.buildSettlement(game.getModel().getLocalIndex(playerId),location, free);
 		return response.isSuccess();
 
 	}
@@ -147,7 +156,7 @@ public class Facade {
 	 * @return True if the city was placed
 	 */
 	public boolean buildCity(VertexLocation location) throws IllegalArgumentException{
-		GetModelResponse response = proxy.buildCity(location);
+		GetModelResponse response = proxy.buildCity(game.getModel().getLocalIndex(playerId),location);
 		return response.isSuccess();
 
 	}
@@ -158,7 +167,7 @@ public class Facade {
 	 * @return True if the offer was offered successfully
 	 */
 	public boolean offerTrade(TradeOffer offer) throws IllegalArgumentException{
-		GetModelResponse response = proxy.offerTrade(offer);
+		GetModelResponse response = proxy.offerTrade(game.getModel().getLocalIndex(playerId),offer);
 		return response.isSuccess();
 	}
 
@@ -167,7 +176,7 @@ public class Facade {
 	 * @return True if the offer was offered successfully
 	 */
 	public boolean offerMaritimeTrade(int ratio, ResourceType input, ResourceType output) throws IllegalArgumentException{
-		GetModelResponse response = proxy.maritimeTrade(ratio, input, output);
+		GetModelResponse response = proxy.maritimeTrade(game.getModel().getLocalIndex(playerId),ratio, input, output);
 		return response.isSuccess();
 	}
 
@@ -176,7 +185,7 @@ public class Facade {
 	 * @return
 	 */
 	public boolean finishTurn() throws IllegalArgumentException{
-		GetModelResponse response = proxy.finishTurn();
+		GetModelResponse response = proxy.finishTurn(game.getModel().getLocalIndex(playerId));
 		return response.isSuccess();
 	}
 
@@ -185,7 +194,7 @@ public class Facade {
 	 * @return True if the card was bought successfully
 	 */
 	public boolean buyDevCard() throws IllegalArgumentException{
-		GetModelResponse response = proxy.buyDevCard();
+		GetModelResponse response = proxy.buyDevCard(game.getModel().getLocalIndex(playerId));
 		return response.isSuccess();
 	}
 
@@ -196,13 +205,13 @@ public class Facade {
 	 * @return True if the card was played
 	 */
 	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IllegalArgumentException{
-		GetModelResponse response = proxy.Year_Of_Plenty(resource1, resource2);
+		GetModelResponse response = proxy.Year_Of_Plenty(game.getModel().getLocalIndex(playerId),resource1, resource2);
 		return response.isSuccess();
 
 	}
 
 	public boolean playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException{
-		GetModelResponse response = proxy.Road_Building(spot1, spot2);
+		GetModelResponse response = proxy.Road_Building(game.getModel().getLocalIndex(playerId),spot1, spot2);
 		return response.isSuccess();
 	}
 
@@ -213,7 +222,7 @@ public class Facade {
 	 * @return True if the Soldier Card was played successfully
 	 */
 	public boolean playSoldier(int victimIndex, HexLocation location) throws IllegalArgumentException{
-		GetModelResponse response = proxy.Soldier(victimIndex, location);
+		GetModelResponse response = proxy.Soldier(game.getModel().getLocalIndex(playerId),victimIndex, location);
 		return response.isSuccess();
 	}
 
@@ -223,12 +232,12 @@ public class Facade {
 	 * @return True if the card was played
 	 */
 	public boolean playMonopoly(ResourceType resource) throws IllegalArgumentException{
-		GetModelResponse response = proxy.Monopoly(resource);
+		GetModelResponse response = proxy.Monopoly(game.getModel().getLocalIndex(playerId),resource);
 		return response.isSuccess();
 	}
 
 	public boolean playMonument() throws IllegalArgumentException{
-		GetModelResponse response = proxy.Monument();
+		GetModelResponse response = proxy.Monument(game.getModel().getLocalIndex(playerId));
 		return response.isSuccess();
 	}
 
@@ -239,7 +248,7 @@ public class Facade {
 	 * @return True if the Robber was moved
 	 */
 	public boolean placeRobber(int victimIndex, HexLocation location) throws IllegalArgumentException{
-		GetModelResponse response = proxy.robPlayer(victimIndex, location);
+		GetModelResponse response = proxy.robPlayer(game.getModel().getLocalIndex(playerId),victimIndex, location);
 		return response.isSuccess();
 
 	}
@@ -250,7 +259,7 @@ public class Facade {
 	 * @return True if the message was sent
 	 */
 	public boolean sendChat(String message) throws IllegalArgumentException{
-		GetModelResponse response = proxy.sendChat(message);
+		GetModelResponse response = proxy.sendChat(game.getModel().getLocalIndex(playerId),message);
 		return response.isSuccess();
 
 	}
@@ -262,7 +271,7 @@ public class Facade {
 	 * @return True if the offer was accepted successfully
 	 */
 	public boolean acceptTrade(boolean willAccept) throws IllegalArgumentException{
-		GetModelResponse response = proxy.acceptTrade(willAccept);
+		GetModelResponse response = proxy.acceptTrade(game.getModel().getLocalIndex(playerId),willAccept);
 		return response.isSuccess();
 
 	}
@@ -274,7 +283,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canDiscardCards() throws IllegalArgumentException{
-		boolean canDiscard = game.getModel().getLocalPlayer().hasMoreThanSeven();
+		boolean canDiscard = game.getModel().getLocalPlayer(playerId).hasMoreThanSeven();
 		return canDiscard;
 	}
 
@@ -284,7 +293,7 @@ public class Facade {
 	 */
 	public boolean canRollNumber() throws IllegalArgumentException{
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -306,7 +315,7 @@ public class Facade {
 	 */
 	public boolean canBuildRoad(EdgeLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -318,11 +327,11 @@ public class Facade {
 			return false;
 		}
 		
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuildRoad();
+		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildRoad();
 		if(enoughResources == false){
 			return false;
 		}
-		int owner = game.getModel().getLocalPlayer().getPlayerIndex();
+		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
 		boolean canLayOnMap = false;
 		if(status == "FirstRound" || status == "SecondRound"){
@@ -345,7 +354,7 @@ public class Facade {
 	 */
 	public boolean canBuildSettlement(VertexLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -356,11 +365,11 @@ public class Facade {
 		if(status != "Playing" && status != "FirstRound" && status != "SecondRound"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuildSettlement();
+		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildSettlement();
 		if(enoughResources == false){
 			return false;
 		}
-		int owner = game.getModel().getLocalPlayer().getPlayerIndex();
+		int owner = game.getModel().getLocalIndex(playerId);
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = false;
 		boolean canLay = false;
@@ -389,7 +398,7 @@ public class Facade {
 	 */
 	public boolean canBuildCity(VertexLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -400,11 +409,11 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuildCity();
+		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildCity();
 		if(enoughResources == false){
 			return false;
 		}
-		int owner = game.getModel().getLocalPlayer().getPlayerIndex();
+		int owner = game.getModel().getLocalIndex(playerId);
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = game.getModel().getMap().canBuildCity(vertex);
 		if(canLayOnMap == false){
@@ -420,7 +429,7 @@ public class Facade {
 	 */
 	public boolean canOfferTrade() throws IllegalArgumentException {
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -431,7 +440,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canOfferTrade();
+		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canOfferTrade();
 
 		return enoughResources;
 	}
@@ -444,7 +453,7 @@ public class Facade {
 	 */
 	public boolean canMaritimeTrade() throws IllegalArgumentException {
 		boolean isTurn = false;
-		int playerIndex = game.getModel().getLocalPlayer().getPlayerIndex();
+		int playerIndex = game.getModel().getLocalIndex(playerId);
 		if(playerIndex == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
@@ -465,7 +474,7 @@ public class Facade {
 		}
 
 		//player has at least 2 of the same
-		if(!game.getModel().getLocalPlayer().enoughResourceCardsToTrade()){
+		if(!game.getModel().getLocalPlayer(playerId).enoughResourceCardsToTrade()){
 			//Not enough resources to offer a maritime trade. 
 			return false; 
 		}
@@ -480,7 +489,7 @@ public class Facade {
 	 */
 	public boolean canFinishTurn() throws IllegalArgumentException{
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -500,7 +509,7 @@ public class Facade {
 	 */
 	public boolean canBuyDevCard() throws IllegalArgumentException{
 		boolean isTurn = false;
-		if(game.getModel().getLocalPlayer().getPlayerIndex() == game.getModel().getTurnTracker().getCurrentTurn())
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
@@ -511,7 +520,7 @@ public class Facade {
 		if(status != "Playing"){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer().canBuyDevCard();
+		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuyDevCard();
 		if(enoughResources == false){
 			return false;
 		}
@@ -532,7 +541,7 @@ public class Facade {
 	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -559,7 +568,7 @@ public class Facade {
 	public boolean canUseRoadBuilder() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -585,7 +594,7 @@ public class Facade {
 	public boolean canUseSoldier() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -613,7 +622,7 @@ public class Facade {
 	public boolean canUseMonopoly() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -640,7 +649,7 @@ public class Facade {
 	public boolean canUseMonument() throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -666,7 +675,7 @@ public class Facade {
 	public boolean canPlaceRobber(HexLocation location) throws IllegalArgumentException{
 		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer();
+		Player localPlayer = model.getLocalPlayer(playerId);
 		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
 			isTurn = true;
 		}
@@ -698,7 +707,7 @@ public class Facade {
 	 * @return True if the user can accept the offer
 	 */
 	public boolean canAcceptTrade(TradeOffer offer) throws IllegalArgumentException {
-		boolean canAccept = game.getModel().getLocalPlayer().canAcceptTrade(offer);
+		boolean canAccept = game.getModel().getLocalPlayer(playerId).canAcceptTrade(offer);
 		return canAccept;
 	}
 

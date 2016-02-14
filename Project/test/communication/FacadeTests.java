@@ -29,14 +29,18 @@ public class FacadeTests {
 	static GameModel gameModel;
 	static HTTPProxy proxy;
 	static int gameId;
+	static Player localPlayer;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		game = new GameManager();
 		gameModel = new GameModel();
-		proxy = new HTTPProxy(0, "localhost", 8081);
+		proxy = new HTTPProxy("localhost", 8081);
 		game.updateModel(gameModel);
 		game.setProxy(proxy);
-		facade = new Facade(proxy, 3);
+	    localPlayer = new Player();
+		localPlayer.setPlayerID(0);
+		game.getModel().setLocalPlayer(localPlayer);
+		facade = new Facade(proxy, 3, game);
 		
 	}
 
@@ -44,6 +48,7 @@ public class FacadeTests {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -56,7 +61,8 @@ public class FacadeTests {
 		boolean register = facade.register("matt", "crowder");
 		boolean login = facade.login("matt", "crowder");
 		if(register == false && login == false) fail();
-		
+		localPlayer.setPlayerID(proxy.getPlayerId());
+		game.getModel().setLocalPlayer(localPlayer);
 	}
 	@Test
 	public void bLogin() {
@@ -64,6 +70,9 @@ public class FacadeTests {
 		if(login == false) fail();
 		login = facade.login("quinn", "snell");
 		if(login == true) fail();
+		localPlayer.setPlayerID(proxy.getPlayerId());
+		game.getModel().setLocalPlayer(localPlayer);
+		
 	}
 	@Test
 	public void cListGames(){

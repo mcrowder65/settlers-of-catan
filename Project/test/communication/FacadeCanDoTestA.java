@@ -1610,19 +1610,19 @@ public class FacadeCanDoTestA {
 		
 		//Insufficient resources
 		resources.setOre(0);
-		gameModel.getLocalPlayer().setResources(resources);
+		gameModel.getLocalPlayer(0).setResources(resources);
 		result = facade.canBuyDevCard();
 		assertFalse(result);
 		resources.setOre(1);
 		
 		resources.setWheat(0);
-		gameModel.getLocalPlayer().setResources(resources);
+		gameModel.getLocalPlayer(0).setResources(resources);
 		result = facade.canBuyDevCard();
 		assertFalse(result);
 		resources.setWheat(1);
 		
 		resources.setSheep(0);
-		gameModel.getLocalPlayer().setResources(resources);
+		gameModel.getLocalPlayer(0).setResources(resources);
 		result = facade.canBuyDevCard();
 		assertFalse(result);
 		resources.setSheep(1);

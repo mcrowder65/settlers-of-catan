@@ -1,5 +1,10 @@
 package client.gamestate;
 
-public class IsNotTurnState extends GameState {
+import client.controller.Facade;
 
+public class IsNotTurnState extends GameState {
+	
+	public IsNotTurnState(){
+		
+	}
 }

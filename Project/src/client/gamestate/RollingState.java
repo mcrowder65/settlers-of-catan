@@ -9,12 +9,12 @@ public class RollingState extends GameState {
 	}
 	
 	@Override
-	public int rollNumber(Facade facade) throws IllegalArgumentException{
+	public int rollNumber() throws IllegalArgumentException{
 		return facade.rollNumber();
 	}
 	
 	@Override
-	public boolean canRollNumber(Facade facade){
+	public boolean canRollNumber(){
 		return facade.canRollNumber();
 	}
 	

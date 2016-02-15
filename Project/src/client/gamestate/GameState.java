@@ -14,6 +14,8 @@ import shared.locations.VertexLocation;
 
 public abstract class GameState {
 
+	protected Facade facade;
+	
 	public GameState identifyState(String state){
 		
 		GameState gameState = new IsNotTurnState();
@@ -29,121 +31,121 @@ public abstract class GameState {
 		return gameState;
 	}
 	
-	public boolean canPlaceRoad(EdgeLocation edgeLoc, Facade facade) throws IllegalArgumentException{
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canPlaceSettlement(VertexLocation vertLoc, Facade facade) throws IllegalArgumentException{
+	public boolean canPlaceSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canPlaceCity(VertexLocation vertLoc, Facade facade) throws IllegalArgumentException{
+	public boolean canPlaceCity(VertexLocation vertLoc) throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canPlaceRobber(HexLocation hexLoc, Facade facade) throws IllegalArgumentException{
+	public boolean canPlaceRobber(HexLocation hexLoc) throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public void placeRoad(EdgeLocation edgeLoc, Facade facade) throws IllegalArgumentException{
+	public void placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 
 	}
 
-	public void placeSettlement(VertexLocation vertLoc, Facade facade) throws IllegalArgumentException{
+	public void placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 
 	}
 
-	public void placeCity(VertexLocation vertLoc, Facade facade) throws IllegalArgumentException{
+	public void placeCity(VertexLocation vertLoc) throws IllegalArgumentException{
 
 	}
 
-	public void placeRobber(HexLocation hexLoc, Facade facade) throws IllegalArgumentException{
+	public void placeRobber(HexLocation hexLoc) throws IllegalArgumentException{
 
 	}
 	
-	public void cancelMove(Facade facade) throws IllegalArgumentException{
+	public void cancelMove() throws IllegalArgumentException{
 
 	}
 
-	public void playSoldierCard(Facade facade) throws IllegalArgumentException{	
+	public void playSoldierCard() throws IllegalArgumentException{	
 
 	}
 
-	public void playRoadBuildingCard(Facade facade) throws IllegalArgumentException{	
+	public void playRoadBuildingCard() throws IllegalArgumentException{	
 
 	}
 
-	public void robPlayer(RobPlayerInfo victim, Facade facade) throws IllegalArgumentException{	
+	public void robPlayer(RobPlayerInfo victim) throws IllegalArgumentException{	
 
 	}
 	
-	public void discardCards(ResourceList list, Facade facade) throws IllegalArgumentException{
+	public void discardCards(ResourceList list) throws IllegalArgumentException{
 		
 	}	
 	
-	public int rollNumber(Facade facade) throws IllegalArgumentException{
+	public int rollNumber() throws IllegalArgumentException{
 		return -1;
 	}
 	
-	public void offerTrade(TradeOffer offer, Facade facade) throws IllegalArgumentException{
+	public void offerTrade(TradeOffer offer) throws IllegalArgumentException{
 	
 	}
 
-	public boolean canOfferTrade(Facade facade) throws IllegalArgumentException {
+	public boolean canOfferTrade() throws IllegalArgumentException {
 		return false;
 
 	}
 
-	public boolean canMaritimeTrade(Facade facade) throws IllegalArgumentException {
+	public boolean canMaritimeTrade() throws IllegalArgumentException {
 		return false;
 	}
 
-	public boolean canFinishTurn(Facade facade) throws IllegalArgumentException{
-
-		return false;
-	}
-
-	public boolean canBuyDevCard(Facade facade) throws IllegalArgumentException{
+	public boolean canFinishTurn() throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canUseYearOfPlenty(Facade facade) throws IllegalArgumentException{
+	public boolean canBuyDevCard() throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canUseRoadBuilder(Facade facade) throws IllegalArgumentException{
-		return false;
-	}
-
-	public boolean canUseSoldier(Facade facade) throws IllegalArgumentException{
-
-		return false;
-
-	}
-
-	public boolean canUseMonopoly(Facade facade) throws IllegalArgumentException{
-		return false;
-	}
-
-	public boolean canUseMonument(Facade facade) throws IllegalArgumentException{
+	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
 
 		return false;
 	}
 
-	public boolean canSendChat(Facade facade) throws IllegalArgumentException{
+	public boolean canUseRoadBuilder() throws IllegalArgumentException{
+		return false;
+	}
+
+	public boolean canUseSoldier() throws IllegalArgumentException{
+
+		return false;
+
+	}
+
+	public boolean canUseMonopoly() throws IllegalArgumentException{
+		return false;
+	}
+
+	public boolean canUseMonument() throws IllegalArgumentException{
+
+		return false;
+	}
+
+	public boolean canSendChat() throws IllegalArgumentException{
 		return true;
 	}
-	public boolean canAcceptTrade(TradeOffer offer,Facade facade) throws IllegalArgumentException {
+	public boolean canAcceptTrade(TradeOffer offer) throws IllegalArgumentException {
 		return false;
 	}
 	
-	public boolean canRollNumber(Facade facade) throws IllegalArgumentException{
+	public boolean canRollNumber() throws IllegalArgumentException{
 		return false;
 	}
 }

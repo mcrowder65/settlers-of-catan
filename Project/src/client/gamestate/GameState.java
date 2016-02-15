@@ -67,8 +67,6 @@ public abstract class GameState {
 		return false;
 	}
 	
-	
-	
 	public boolean cancelMove() throws IllegalArgumentException{
 		return false;
 	}

@@ -51,48 +51,50 @@ public abstract class GameState {
 		return false;
 	}
 
-	public void placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
-
+	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
+		return false;
 	}
 
-	public void placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
-
+	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
+		return false;
 	}
 
-	public void placeCity(VertexLocation vertLoc) throws IllegalArgumentException{
-
+	public boolean placeCity(VertexLocation vertLoc) throws IllegalArgumentException{
+		return false;
 	}
 
-	public void placeRobber(HexLocation hexLoc) throws IllegalArgumentException{
-
-	}
-	
-	public void cancelMove() throws IllegalArgumentException{
-
-	}
-
-	public void playSoldierCard() throws IllegalArgumentException{	
-
-	}
-
-	public void playRoadBuildingCard() throws IllegalArgumentException{	
-
-	}
-
-	public void robPlayer(RobPlayerInfo victim) throws IllegalArgumentException{	
-
+	public boolean placeRobber(HexLocation hexLoc) throws IllegalArgumentException{
+		return false;
 	}
 	
-	public void discardCards(ResourceList list) throws IllegalArgumentException{
-		
+	
+	
+	public boolean cancelMove() throws IllegalArgumentException{
+		return false;
+	}
+
+	public boolean playSoldierCard() throws IllegalArgumentException{	
+		return false;
+	}
+
+	public boolean playRoadBuildingCard() throws IllegalArgumentException{	
+		return false;
+	}
+
+	public boolean robPlayer(RobPlayerInfo victim) throws IllegalArgumentException{	
+		return false;
+	}
+	
+	public boolean discardCards(ResourceList list) throws IllegalArgumentException{
+		return false;
 	}	
 	
 	public int rollNumber() throws IllegalArgumentException{
 		return -1;
 	}
 	
-	public void offerTrade(TradeOffer offer) throws IllegalArgumentException{
-	
+	public boolean offerTrade(TradeOffer offer) throws IllegalArgumentException{
+		return false;
 	}
 
 	public boolean canOfferTrade() throws IllegalArgumentException {
@@ -146,6 +148,9 @@ public abstract class GameState {
 	}
 	
 	public boolean canRollNumber() throws IllegalArgumentException{
+		return false;
+	}
+	public boolean canDiscardCards() throws IllegalArgumentException{
 		return false;
 	}
 }

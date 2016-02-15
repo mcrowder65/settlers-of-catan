@@ -19,4 +19,14 @@ public class FirstRoundState extends GameState {
 	public boolean canPlaceSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 		return facade.canBuildSettlement(vertLoc);
 	}
+	
+	@Override
+	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
+		return facade.buildRoad(edgeLoc,true);
+	}
+	
+	@Override
+	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
+		return facade.buildSettlement(vertLoc,true);
+	}
 }

@@ -18,6 +18,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 	private Facade facade;
+	private PlayerInfo player;
 	
 	/**
 	 * JoinGameController constructor
@@ -38,6 +39,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 		
 		this.facade = facade;
+		player = new PlayerInfo();
+		player.setId(facade.getPlayerId());
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -95,7 +98,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		PlayerInfo player = new PlayerInfo();
 		getJoinGameView().setGames(facade.listGames(),player);
 		getJoinGameView().showModal();
 	}
@@ -115,7 +117,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void createNewGame() {
 		
-		getNewGameView().closeModal();
+	  int gameId =	facade.createGame(
+				getNewGameView().getTitle(), 
+				getNewGameView().getRandomlyPlaceHexes(), 
+				getNewGameView().getRandomlyPlaceNumbers(), 
+				getNewGameView().getUseRandomPorts());
+		
+		if (gameId > -1) {
+			getJoinGameView().setGames(facade.listGames(), player);
+			getNewGameView().closeModal();
+			
+		}
+		else
+			; //TODO: Error Message
 	}
 
 	@Override

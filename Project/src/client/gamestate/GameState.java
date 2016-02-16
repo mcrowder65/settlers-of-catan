@@ -16,7 +16,7 @@ public abstract class GameState {
 
 	protected Facade facade;
 	
-	public GameState identifyState(String state){
+	public GameState identifyState(String state) {
 		
 		GameState gameState = new IsNotTurnState();
 		

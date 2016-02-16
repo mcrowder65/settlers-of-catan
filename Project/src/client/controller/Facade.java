@@ -39,6 +39,9 @@ public class Facade {
 	public int getPlayerIndex() {
 		return game.getModel().getLocalIndex(playerId);
 	}
+	public int getPlayerId() {
+		return game.getProxy().getPlayerId();
+	}
 	
 	/**
 	 * Allows a user to log into the server.

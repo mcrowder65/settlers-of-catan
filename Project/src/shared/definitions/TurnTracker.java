@@ -132,6 +132,20 @@ public class TurnTracker {
 		
 	}
 	
+	/**
+	 * Determines if the playerIndex is the current turn
+	 * @param playerIndex
+	 * @return
+	 */
+	public boolean isMyTurn(int playerIndex){
+		if(this.currentTurn == playerIndex){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	
 	@Override
 	public int hashCode() {

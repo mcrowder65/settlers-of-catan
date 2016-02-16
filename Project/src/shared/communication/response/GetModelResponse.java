@@ -10,7 +10,7 @@ public class GetModelResponse extends Response {
 	public GetModelResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);
 		if (success) {
-			if (json.equals("true")) {
+			if (json.equals("\"true\"")) {
 				updated = false;
 			} else {
 				model = Translator.jsonToObject(json);

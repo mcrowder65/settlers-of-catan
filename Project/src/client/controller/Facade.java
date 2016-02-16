@@ -43,7 +43,12 @@ public class Facade {
 	public int getPlayerId() {
 		return game.getProxy().getPlayerId();
 	}
-	
+	public void startPoller() {
+		game.getPoller().startPolling();
+	}
+	public void stopPoller() {
+		game.getPoller().stopPolling();
+	}
 	/**
 	 * Allows a user to log into the server.
 	 * @param username, password

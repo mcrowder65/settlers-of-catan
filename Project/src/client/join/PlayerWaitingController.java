@@ -43,6 +43,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			typeStrings[n] = aiTypes.get(n).toString();
 		}
 		getView().setAIChoices(typeStrings);
+		
 	}
 
 	@Override

@@ -106,8 +106,12 @@ public class GameModel {
 		return players;
 	}
 	public PlayerInfo[] getPlayersLite() {
-		PlayerInfo[] playersLite = new PlayerInfo[players.length];
-		for (int n = 0; n < players.length; n++) {
+		int playerCount = 0;
+		for (playerCount = 0; playerCount < players.length; playerCount++) {
+			if (players[playerCount] == null) break;
+		}
+		PlayerInfo[] playersLite = new PlayerInfo[playerCount];
+		for (int n = 0; n < playerCount; n++) {
 			playersLite[n] = new PlayerInfo(players[n]);
 		}
 		return playersLite;

@@ -35,7 +35,7 @@ public class Poller extends Observable {
 	/**
 	 * The latest version as received by the proxy.
 	 */
-	private int localVersion;
+	private int localVersion = -1;
 	
 	/**
 	 * A wrapper for the TimerTask class
@@ -49,16 +49,16 @@ public class Poller extends Observable {
 		@Override
 		public void run() {
 		
-			GetModelResponse response = proxy.getModel(localVersion);
-			if (response.isSuccess() && response.isUpdated())
+			GetModelResponse response = proxy.getModel();
+			if (response.isSuccess() && response.isUpdated()) {
 				localVersion = response.getModel().getVersion();
 			    setChanged();
 				notifyObservers(response.getModel());
-				
 			}
 			
+			
 		}
-	
+	}
 	
 	
 	
@@ -129,7 +129,8 @@ public class Poller extends Observable {
 		polling = true;
 		timer = new Timer();
 		pollingTask = new PollingTask();
-		timer.schedule(pollingTask, interval * 1000);
+		timer.schedule(pollingTask, 0, interval * 1000);
+		
 		
 	}
 	/**

@@ -72,7 +72,7 @@ public class GameManager extends Observable implements Observer{
 		//TODO: Update local model (SYNCHRONIZED)
 		
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(model);
 		
 	}
 	

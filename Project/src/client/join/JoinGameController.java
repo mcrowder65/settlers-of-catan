@@ -161,6 +161,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	  if (success) {
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
+		facade.startPoller();
 		joinAction.execute();
 	  } else 
 		  ; //TODO: Show error message

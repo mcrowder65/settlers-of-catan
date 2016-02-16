@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
@@ -23,12 +24,12 @@ public class RollController extends Controller implements IRollController,Observ
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView, GameManager gameManager) {
+	public RollController(IRollView view, IRollResultView resultView, GameManager gameManager, Facade facade) {
 
 		super(view);
 
 		setResultView(resultView);
-		this.currState = new IsNotTurnState();
+		this.currState = new IsNotTurnState(facade);
 		gameManager.addObserver(this);
 	}
 

@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
@@ -20,12 +21,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private GameState currState;
 
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay,
-			GameManager gameManager) {
+			GameManager gameManager, Facade facade) {
 
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
-		this.currState = new IsNotTurnState();
+		this.currState = new IsNotTurnState(facade);
 		gameManager.addObserver(this);
 	}
 

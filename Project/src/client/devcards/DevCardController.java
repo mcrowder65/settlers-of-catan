@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
@@ -31,14 +32,14 @@ public class DevCardController extends Controller implements IDevCardController,
 	 * @param roadAction Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
 	 */
 	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
-								IAction soldierAction, IAction roadAction, GameManager gameManager) {
+								IAction soldierAction, IAction roadAction, GameManager gameManager, Facade facade) {
 
 		super(view);
 		
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
-		this.currState = new IsNotTurnState();
+		this.currState = new IsNotTurnState(facade);
 		gameManager.addObserver(this);
 	}
 

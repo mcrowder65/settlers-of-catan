@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import client.communication.*;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.turntracker.*;
 
@@ -19,7 +20,7 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
-	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, GameManager gameManager) {
+	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, GameManager gameManager, Facade facade) {
 		
 		this.setLayout(new BorderLayout());
 		
@@ -37,7 +38,7 @@ public class LeftPanel extends JPanel {
         chatView.setController(chatController);
 		
 		turnView = new TurnTrackerView(titlePanel, gameStatePanel);
-		turnController = new TurnTrackerController(turnView, gameManager);
+		turnController = new TurnTrackerController(turnView, gameManager, facade);
 		turnView.setController(turnController);
 		
 //		gameStatePanel.setController(turnController);

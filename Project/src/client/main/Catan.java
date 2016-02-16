@@ -21,14 +21,14 @@ public class Catan extends JFrame
 	private CatanPanel catanPanel;
 	
 	
-	public Catan(GameManager gameManager)
+	public Catan(GameManager gameManager, Facade facade)
 	{
 		//second commit
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel(gameManager);
+		catanPanel = new CatanPanel(gameManager, facade);
 		this.setContentPane(catanPanel);
 		
 		display();
@@ -61,11 +61,11 @@ public class Catan extends JFrame
 				HTTPProxy proxy = new HTTPProxy("localhost", 8081);
 				GameManager gameManager = new GameManager(proxy,2);
 				
-				new Catan(gameManager);
+				
 				
 				
 				Facade facade = new Facade(proxy, 2, gameManager);
-				
+				new Catan(gameManager, facade);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(

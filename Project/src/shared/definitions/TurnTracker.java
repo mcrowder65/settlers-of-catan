@@ -6,39 +6,7 @@ package shared.definitions;
  */
 public class TurnTracker {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + currentTurn;
-		result = prime * result + largestArmy;
-		result = prime * result + longestRoad;
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TurnTracker other = (TurnTracker) obj;
-		if (currentTurn != other.currentTurn)
-			return false;
-		if (largestArmy != other.largestArmy)
-			return false;
-		if (longestRoad != other.longestRoad)
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
-	}
+	
 	/**
 	 * Who's turn it is (0-3)
 	 */
@@ -164,8 +132,54 @@ public class TurnTracker {
 		
 	}
 	
+	/**
+	 * Determines if the playerIndex is the current turn
+	 * @param playerIndex
+	 * @return
+	 */
+	public boolean isMyTurn(int playerIndex){
+		if(this.currentTurn == playerIndex){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + currentTurn;
+		result = prime * result + largestArmy;
+		result = prime * result + longestRoad;
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TurnTracker other = (TurnTracker) obj;
+		if (currentTurn != other.currentTurn)
+			return false;
+		if (largestArmy != other.largestArmy)
+			return false;
+		if (longestRoad != other.longestRoad)
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
 	
 	
 	

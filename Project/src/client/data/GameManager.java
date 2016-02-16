@@ -39,6 +39,7 @@ public class GameManager extends Observable implements Observer{
 		setProxy(proxy);
 		poller = new Poller(proxy, pollingInterval);
 		poller.addObserver(this);
+
 		
 	}
 	
@@ -70,6 +71,8 @@ public class GameManager extends Observable implements Observer{
 		this.model = model;
 		//TODO: Update local model (SYNCHRONIZED)
 		
+		this.setChanged();
+		this.notifyObservers();
 		
 	}
 	

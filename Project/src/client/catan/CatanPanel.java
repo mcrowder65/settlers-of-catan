@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import shared.definitions.ResourceType;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
@@ -32,14 +33,14 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel(GameManager gameManager)
+	public CatanPanel(GameManager gameManager, Facade facade)
 	{
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
-		midPanel = new MidPanel(gameManager);
-		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(), gameManager);
-		rightPanel = new RightPanel(midPanel.getMapController(), gameManager);
+		midPanel = new MidPanel(gameManager, facade);
+		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(), gameManager, facade);
+		rightPanel = new RightPanel(midPanel.getMapController(), gameManager, facade);
 		
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(leftPanel, BorderLayout.WEST);
@@ -49,13 +50,13 @@ public class CatanPanel extends JPanel
 		discardView = new DiscardView();
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
-		discardController = new DiscardController(discardView, discardWaitView, gameManager);
+		discardController = new DiscardController(discardView, discardWaitView, gameManager, facade);
 		discardView.setController(discardController);
 		discardWaitView.setController(discardController);
 		
 		rollView = new RollView();
 		rollResultView = new RollResultView();
-		rollController = new RollController(rollView, rollResultView, gameManager);
+		rollController = new RollController(rollView, rollResultView, gameManager, facade);
 		rollView.setController(rollController);
 		rollResultView.setController(rollController);
 		

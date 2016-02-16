@@ -115,7 +115,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				JButton joinButton;
 				boolean isPlayerInGame = false;
 				java.util.List<PlayerInfo> allPlayers = game.getPlayers();
-				for (int n = 0; n < players.length(); n++) {
+				for (int n = 0; n < allPlayers.size(); n++) {
 					if (allPlayers.get(n).getId() == localPlayer.getId()) {
 						isPlayerInGame = true;
 						break;

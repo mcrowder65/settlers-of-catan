@@ -2,6 +2,7 @@ package client.controller;
 
 import shared.locations.*;
 
+import java.util.List;
 import java.util.Random;
 
 import client.communication.IProxy;
@@ -74,6 +75,10 @@ public class Facade {
 		return response.getGames();
 	}
 
+	public List<AIType> listAI() {
+		ListAIResponse response = proxy.listAI();
+		return response.getAITypes();
+	}
 	/**
 	 * This method allows the user to join an existing game.
 	 * @param gameId- Id of the game.

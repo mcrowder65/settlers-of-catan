@@ -26,11 +26,15 @@ public class ListAIResponse extends Response {
 	}
 	public AIType getAIType(String type){
 		switch(type){
-		case "LARGEST_ARMY":
+		case "\"LARGEST_ARMY\"":
 			return AIType.LARGEST_ARMY;
 		default:
 			return null;
 		}
+	}
+	
+	public List<AIType> getAITypes() {
+		return aiTypes;
 	}
 
 }

@@ -1,5 +1,6 @@
 package shared.definitions;
 
+import client.data.PlayerInfo;
 import shared.locations.*;
 
 
@@ -103,6 +104,13 @@ public class GameModel {
 	}
 	public Player[] getPlayers() throws IllegalArgumentException{
 		return players;
+	}
+	public PlayerInfo[] getPlayersLite() {
+		PlayerInfo[] playersLite = new PlayerInfo[players.length];
+		for (int n = 0; n < players.length; n++) {
+			playersLite[n] = new PlayerInfo(players[n]);
+		}
+		return playersLite;
 	}
 	public void setPlayers(Player[] players)  throws IllegalArgumentException {
 		this.players = players;

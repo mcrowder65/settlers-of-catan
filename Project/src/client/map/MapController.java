@@ -5,6 +5,7 @@ import java.util.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
+import client.controller.Facade;
 import client.data.*;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
@@ -18,14 +19,14 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private GameState currState;
 
-	public MapController(IMapView view, IRobView robView, GameManager gameManager) {
+	public MapController(IMapView view, IRobView robView, GameManager gameManager, Facade facade) {
 
 		super(view);
 
 		setRobView(robView);
 
 		initFromModel();
-		this.currState = new IsNotTurnState();
+		this.currState = new IsNotTurnState(facade);
 		gameManager.addObserver(this);
 	}
 
@@ -115,24 +116,21 @@ public class MapController extends Controller implements IMapController, Observe
 
 		//</temp>
 	}
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 
-		return true;
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+		return currState.canPlaceRoad(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-
-		return true;
+		return currState.canPlaceSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-
-		return true;
+		return currState.canPlaceCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-
-		return true;
+		return currState.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
@@ -163,25 +161,25 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void cancelMove() {
-
+		//TODO MATT 
 	}
 
 	public void playSoldierCard() {	
-
+		currState.playSoldierCard();
 	}
 
 	public void playRoadBuildingCard() {	
-
+		currState.playRoadBuildingCard();
 	}
 
 	public void robPlayer(RobPlayerInfo victim) {	
-
+		currState.robPlayer(victim);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-	
+		GameModel model = (GameModel)arg;
+		GameMap map = model.getMap();
 	}
 
 }

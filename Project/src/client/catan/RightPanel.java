@@ -6,6 +6,7 @@ import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;
 import client.base.*;
+import client.controller.Facade;
 import client.data.GameManager;
 import client.map.*;
 import client.devcards.*;
@@ -23,7 +24,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController, GameManager gameManager)
+	public RightPanel(final IMapController mapController, GameManager gameManager, Facade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -47,7 +48,7 @@ public class RightPanel extends JPanel
 			}
 		};
 		devCardController = new DevCardController(playCardView, buyCardView,
-												  soldierAction, roadAction, gameManager);
+												  soldierAction, roadAction, gameManager, facade);
 		playCardView.setController(devCardController);
 		buyCardView.setController(devCardController);
 		
@@ -61,7 +62,7 @@ public class RightPanel extends JPanel
 		// Initialize resource bar view and controller
 		//
 		resourceView = new ResourceBarView();
-		resourceController = new ResourceBarController(resourceView, gameManager);
+		resourceController = new ResourceBarController(resourceView, gameManager, facade);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,
 																  PieceType.ROAD));

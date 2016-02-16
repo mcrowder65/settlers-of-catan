@@ -115,7 +115,6 @@ public class MapController extends Controller implements IMapController, Observe
 
 		//</temp>
 	}
-
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 
 		return true;

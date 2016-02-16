@@ -43,7 +43,7 @@ public class JsonTranslator {
 				
 				CatanColor color = (jsPlayer.has("color")) ? Translator.getCatanColor(jsPlayer.get("color").getAsString()) : null;
 				String name = (jsPlayer.has("name")) ? jsPlayer.get("name").getAsString() : null;
-				int playerID = (jsPlayer.has("playerID")) ? jsPlayer.get("id").getAsInt() : -1;
+				int playerID = (jsPlayer.has("id")) ? jsPlayer.get("id").getAsInt() : -1;
 				if(color != null)
 					gameInfo.addPlayer(new PlayerInfo(playerID, name, color));
 			}

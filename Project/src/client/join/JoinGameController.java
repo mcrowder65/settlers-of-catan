@@ -40,7 +40,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		this.facade = facade;
 		player = new PlayerInfo();
-		player.setId(facade.getPlayerId());
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -98,6 +97,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+		player.setId(facade.getPlayerId());
 		getJoinGameView().setGames(facade.listGames(),player);
 		getJoinGameView().showModal();
 	}

@@ -18,7 +18,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 	private IRobView robView;
 	private GameState currState;
-
+	private boolean firstTime;
 	public MapController(IMapView view, IRobView robView, GameManager gameManager, Facade facade) {
 
 		super(view);
@@ -27,6 +27,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
+		firstTime = true;
 		gameManager.addObserver(this);
 	}
 
@@ -134,12 +135,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-
 		getView().placeRoad(edgeLoc, CatanColor.orange);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-
 		getView().placeSettlement(vertLoc, CatanColor.orange);
 	}
 
@@ -176,23 +175,81 @@ public class MapController extends Controller implements IMapController, Observe
 		currState.robPlayer(victim);
 	}
 
+	public void initMap(GameMap map){
+		firstTime = false;
+		Random rand = new Random();
+
+		for (int x = 0; x <= 3; ++x) {
+
+			int maxY = 3 - x;			
+			for (int y = -3; y <= maxY; ++y) {				
+				int r = rand.nextInt(HexType.values().length);
+				HexType hexType = HexType.values()[r];
+				HexLocation hexLoc = new HexLocation(x, y);
+				getView().addHex(hexLoc, hexType);
+			}
+
+			if (x != 0) {
+				int minY = x - 3;
+				for (int y = minY; y <= 3; ++y) {
+					int r = rand.nextInt(HexType.values().length);
+					HexType hexType = HexType.values()[r];
+					HexLocation hexLoc = new HexLocation(-x, y);
+					getView().addHex(hexLoc, hexType);
+				}
+			}
+		}
+
+		PortType portType = PortType.BRICK;
+		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+
+		getView().placeRobber(new HexLocation(0, 0));
+
+		getView().addNumber(new HexLocation(-2, 0), 2);
+		getView().addNumber(new HexLocation(-2, 1), 3);
+		getView().addNumber(new HexLocation(-2, 2), 4);
+		getView().addNumber(new HexLocation(-1, 0), 5);
+		getView().addNumber(new HexLocation(-1, 1), 6);
+		getView().addNumber(new HexLocation(1, -1), 8);
+		getView().addNumber(new HexLocation(1, 0), 9);
+		getView().addNumber(new HexLocation(2, -2), 10);
+		getView().addNumber(new HexLocation(2, -1), 11);
+		getView().addNumber(new HexLocation(2, 0), 12);
+	}
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
-		VertexObject[] cites = map.getCities();
-		Hex[] hexes = map.getHexes();
-		Port[] ports = map.getPorts();
-		int radius = map.getRadius();
-		EdgeValue[] roads = map.getRoads();
-		HexLocation robber = map.getRobber();
-		VertexObject[] settlements = setSettlements(map.getSettlements());
+		
+		if(firstTime) initMap(map);
+		placeCities(map.getCities());
+		setRoads(map.getRoads());
+		placeRobber(map.getRobber());
+		setSettlements(map.getSettlements());
+		
 	}
-	public VertexObject[] setSettlements(VertexObject[] temp){
-		VertexObject[] settlements = new VertexObject[temp.length];
-		
-		
-		return settlements;
+	public void placeCities(VertexObject[] cities){
+		for(int i = 0; i < cities.length; i++){
+			placeCity(cities[i].getLocation());
+		}
+	}
+	public void setSettlements(VertexObject[] settlements){
+		for(int i = 0; i < settlements.length; i++){
+			placeSettlement(settlements[i].getLocation());
+		}
+	}
+	public void setRobber(HexLocation robber){
+		placeRobber(robber);
+	}
+	public void setRoads(EdgeValue[] roads){
+		for(int i = 0; i < roads.length; i++){
+			placeRoad(roads[i].getLocation());
+		}
 	}
 }
 

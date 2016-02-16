@@ -6,8 +6,8 @@ import shared.locations.VertexLocation;
 
 public class SecondRoundState extends GameState {
 	
-	public SecondRoundState(){
-		
+	public SecondRoundState(Facade facade){
+		super(facade);
 	}
 	
 	@Override

@@ -4,7 +4,7 @@ import client.controller.Facade;
 
 public class RobbingState extends GameState {
 
-	public RobbingState(){
-		
+	public RobbingState(Facade facade){
+		super(facade);
 	}
 }

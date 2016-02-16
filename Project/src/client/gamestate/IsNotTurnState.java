@@ -5,8 +5,8 @@ import shared.definitions.TradeOffer;
 
 public class IsNotTurnState extends GameState {
 	
-	public IsNotTurnState(){
-		
+	public IsNotTurnState(Facade facade){
+		super(facade);
 	}
 	
 	@Override

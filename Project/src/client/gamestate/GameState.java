@@ -14,19 +14,23 @@ import shared.locations.VertexLocation;
 
 public abstract class GameState {
 
-	protected Facade facade;
+	protected Facade facade; 
+	
+	public GameState(Facade facade){
+		this.facade = facade;
+	}
 	
 	public GameState identifyState(String state) {
 		
-		GameState gameState = new IsNotTurnState();
+		GameState gameState = new IsNotTurnState(facade);
 		
-		if(state.equals("Discarding")) gameState = new DiscardingState();
-		else if(state.equals("First Round")) gameState = new FirstRoundState();
-		else if(state.equals("Is Not Turn")) gameState = new IsNotTurnState();
-		else if(state.equals("Playing")) gameState = new PlayingState();
-		else if(state.equals("Robbing")) gameState = new RobbingState();
-		else if(state.equals("Rolling")) gameState = new RollingState();
-		else if(state.equals("Second Round")) gameState = new SecondRoundState();
+		if(state.equals("Discarding")) gameState = new DiscardingState(facade);
+		else if(state.equals("First Round")) gameState = new FirstRoundState(facade);
+		else if(state.equals("Is Not Turn")) gameState = new IsNotTurnState(facade);
+		else if(state.equals("Playing")) gameState = new PlayingState(facade);
+		else if(state.equals("Robbing")) gameState = new RobbingState(facade);
+		else if(state.equals("Rolling")) gameState = new RollingState(facade);
+		else if(state.equals("Second Round")) gameState = new SecondRoundState(facade);
 		
 		return gameState;
 	}

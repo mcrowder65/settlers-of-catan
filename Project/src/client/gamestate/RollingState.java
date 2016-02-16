@@ -4,8 +4,8 @@ import client.controller.Facade;
 
 public class RollingState extends GameState {
 
-	public RollingState(){
-		
+	public RollingState(Facade facade){
+		super(facade);
 	}
 	
 	@Override

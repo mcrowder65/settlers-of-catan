@@ -8,8 +8,8 @@ import shared.locations.VertexLocation;
 
 public class PlayingState extends GameState {
 
-	public PlayingState(){
-		
+	public PlayingState(Facade facade){
+		super(facade);
 	}
 	
 	@Override

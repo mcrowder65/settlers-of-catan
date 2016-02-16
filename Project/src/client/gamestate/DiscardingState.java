@@ -5,8 +5,8 @@ import shared.definitions.ResourceList;
 
 public class DiscardingState extends GameState {
 
-	public DiscardingState(){
-		
+	public DiscardingState(Facade facade){
+		super(facade);
 	}
 	
 	@Override

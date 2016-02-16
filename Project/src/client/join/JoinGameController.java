@@ -19,6 +19,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IAction joinAction;
 	private Facade facade;
 	private PlayerInfo player;
+	private int currentSelectedGameId = -1;
 	
 	/**
 	 * JoinGameController constructor
@@ -134,8 +135,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-
+		
+		currentSelectedGameId = game.getId();
+		
 		getSelectColorView().showModal();
+		//Disable colors that are already in game (unless you're rejoining)
+		for (PlayerInfo p : game.getPlayers()) {
+			if (p.getId() != player.getId())
+				getSelectColorView().setColorEnabled(p.getColor(), false);
+		}
 	}
 
 	@Override
@@ -147,10 +155,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
 
+	  boolean success= 	facade.joinGame(currentSelectedGameId, color);
+		
 		// If join succeeded
+	  if (success) {
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
+	  } else 
+		  ; //TODO: Show error message
+	
 	}
 
 }

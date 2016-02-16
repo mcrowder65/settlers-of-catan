@@ -180,7 +180,19 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
+		VertexObject[] cites = map.getCities();
+		Hex[] hexes = map.getHexes();
+		Port[] ports = map.getPorts();
+		int radius = map.getRadius();
+		EdgeValue[] roads = map.getRoads();
+		HexLocation robber = map.getRobber();
+		VertexObject[] settlements = setSettlements(map.getSettlements());
 	}
-
+	public VertexObject[] setSettlements(VertexObject[] temp){
+		VertexObject[] settlements = new VertexObject[temp.length];
+		
+		
+		return settlements;
+	}
 }
 

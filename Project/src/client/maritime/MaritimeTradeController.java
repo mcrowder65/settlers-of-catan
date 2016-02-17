@@ -43,10 +43,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		this.tradeOverlay = tradeOverlay;
 	}
 
-	private void setState(String state){
-
-		this.currState =  currState.identifyState(state);
-	}
+	
 
 	@Override
 	public void startTrade() {

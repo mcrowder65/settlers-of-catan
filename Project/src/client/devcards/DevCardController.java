@@ -51,11 +51,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		return buyCardView;
 	}
 	
-	private void setState(String state){
-		
-		this.currState =  currState.identifyState(state);
-	}
-
+	
 	@Override
 	public void startBuyCard() {
 		

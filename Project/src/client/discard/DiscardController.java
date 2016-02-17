@@ -44,10 +44,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		return waitView;
 	}
 
-	private void setState(String state){
-
-		this.currState =  currState.identifyState(state);
-	}
+	
 
 	@Override
 	public void increaseAmount(ResourceType resource) {

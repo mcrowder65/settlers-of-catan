@@ -72,10 +72,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.acceptOverlay = acceptOverlay;
 	}
 
-	private void setState(String state){
-
-		this.currState =  currState.identifyState(state);
-	}
 
 	@Override
 	public void startTrade() {

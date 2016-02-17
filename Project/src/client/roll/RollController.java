@@ -44,10 +44,7 @@ public class RollController extends Controller implements IRollController,Observ
 		return (IRollView)getView();
 	}
 
-	private void setState(String state){
-
-		this.currState =  currState.identifyState(state);
-	}
+	
 
 	@Override
 	public void rollDice() {

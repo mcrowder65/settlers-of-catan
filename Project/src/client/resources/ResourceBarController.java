@@ -43,10 +43,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		elementActions.put(element, action);
 	}
 
-	private void setState(String state){
 
-		this.currState =  currState.identifyState(state);
-	}
 
 	@Override
 	public void buildRoad() {

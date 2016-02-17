@@ -579,6 +579,30 @@ public class Facade {
 
 		return true;
 	}
+	
+	public boolean canUseRoadBuilderPlacement(EdgeLocation location){
+		boolean isTurn = false;
+		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			isTurn = true;
+		}
+		if(isTurn == false){
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(status != "Playing"){
+			return false;
+		}
+		
+		int owner = game.getModel().getLocalIndex(playerId);
+		EdgeValue value = new EdgeValue(owner,location);
+		boolean canLayOnMap = false;
+		canLayOnMap = game.getModel().getMap().canLayRoad(value);
+		if(canLayOnMap == false){
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * This method determines if the player can use the Road Builder Dev card

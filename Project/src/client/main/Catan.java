@@ -7,6 +7,7 @@ import client.communication.HTTPProxy;
 import client.controller.Facade;
 import client.data.GameManager;
 import client.login.*;
+import client.map.IMapController;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
@@ -20,6 +21,7 @@ public class Catan extends JFrame
 	
 	private CatanPanel catanPanel;
 	
+    
 	
 	public Catan(Facade facade)
 	{
@@ -38,6 +40,10 @@ public class Catan extends JFrame
 	{
 		pack();
 		setVisible(true);
+	}
+	
+	public IMapController getMapController() {
+		return catanPanel.getMapController();
 	}
 	
 	//
@@ -65,13 +71,22 @@ public class Catan extends JFrame
 				
 				
 				Facade facade = new Facade(proxy, 2, gameManager);
-				new Catan(facade);
+				Catan catan = new Catan(facade);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView,
 																									facade);
 				playerWaitingView.setController(playerWaitingController);
+				playerWaitingController.setAllPlayersEnteredAction(new IAction() {
+					@Override
+					public void execute() 
+					{
+						catan.getMapController().enterGame();
+					}
+					
+				});
+				
 				
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
@@ -90,6 +105,7 @@ public class Catan extends JFrame
 						playerWaitingController.start();
 					}
 				});
+			
 				joinView.setController(joinController);
 				newGameView.setController(joinController);
 				selectColorView.setController(joinController);

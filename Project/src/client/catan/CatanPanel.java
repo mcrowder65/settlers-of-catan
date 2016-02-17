@@ -12,6 +12,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
+import client.map.IMapController;
 import client.misc.WaitView;
 import client.roll.RollController;
 import client.roll.RollResultView;
@@ -32,6 +33,8 @@ public class CatanPanel extends JPanel
 	private RollView rollView;
 	private RollResultView rollResultView;
 	private RollController rollController;
+	
+	
 	
 	public CatanPanel(Facade facade)
 	{
@@ -118,6 +121,8 @@ public class CatanPanel extends JPanel
 		});
 		this.add(testButton, BorderLayout.SOUTH);
 	}
-	
+	public IMapController getMapController() {
+		return midPanel.getMapController();
+	}
 }
 

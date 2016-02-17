@@ -180,15 +180,17 @@ public class MapController extends Controller implements IMapController, Observe
 	public void initMap(GameMap map){
 		firstTime = false;
 		Random rand = new Random();
-		placePorts(map.getPorts());
+		
 		Hex[] hexes = map.getHexes();
 		
 		for(int i = 0; i < hexes.length; i++){
-			
+			System.out.println("i: " + i); //TODO output
+			System.out.println("resource: " + hexes[i].getResource().name()); //TODO output
 			HexType hexType = hexes[i].getResource().name().equals("NONE") ? HexType.DESERT : 
 				getHexType(hexes[i].getResource().name());
-			if(hexes[i].getNumber() != 0 && !hexType.equals("DESERT"))
+			if(hexes[i].getNumber() != 0)
 				getView().addNumber(hexes[i].getLocation(), hexes[i].getNumber());
+			System.out.println("location: " + hexes[i].getLocation());
 			getView().addHex(hexes[i].getLocation(), hexType);
 		}
 
@@ -216,6 +218,7 @@ public class MapController extends Controller implements IMapController, Observe
 		for(int i = 0; i < water.length; i++){
 			getView().addHex(water[i], HexType.WATER);
 		}	
+		placePorts(map.getPorts());
 	}
 	public EdgeDirection getEdgeDirection(String direction){
 		//NorthWest, North, NorthEast, SouthEast, South, SouthWest;
@@ -226,15 +229,21 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	//WOOD, BRICK, SHEEP, WHEAT, ORE, THREE
 	public PortType getPortType(String resource){
+		System.out.println("RESOURCE: " + resource);//TODO output
 		return resource.equals("WOOD") ? PortType.WOOD : resource.equals("BRICK") ? PortType.BRICK : 
 				resource.equals("SHEEP") ? PortType.SHEEP : resource.equals("WHEAT") ? PortType.WHEAT : 
 				resource.equals("ORE") ? PortType.ORE : resource.equals("THREE") ? PortType.THREE :
+				resource.equals("NONE") ? PortType.THREE :
 					null;
 	}
 	//ResourceType resource, HexLocation location, EdgeDirection direction, int ratio
 	public void placePorts(Port[] ports){
+		System.out.println("placing ports");//TODO output
 		for(int i = 0; i < ports.length; i++){
-		//	getView().addPort(new EdgeLocation(ports[i].getLocation(), getEdgeDirection(ports[i].getDirection().name())),  getPortType(ports[i].getResource().name()));
+			System.out.println("port location: " + ports[i].getLocation()); //TODO output
+			System.out.println("edge direction: " + ports[i].getDirection().name()); //TODO output
+			System.out.println("port type: " + getPortType(ports[i].getResource().name())); //TODO output
+			getView().addPort(new EdgeLocation(ports[i].getLocation(), getEdgeDirection(ports[i].getDirection().name())),  getPortType(ports[i].getResource().name()));
 		}
 	}
 	@Override
@@ -269,8 +278,12 @@ public class MapController extends Controller implements IMapController, Observe
 			placeRoad(roads[i].getLocation());
 		}
 	}
-	public void startGame() {
-		
+
+	public void enterGame() {
+		currState.addObserver(this);
+	}
+	public void leaveGame() {
+		currState.deleteObserver(this);
 	}
 }
 	

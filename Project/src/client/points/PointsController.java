@@ -53,9 +53,9 @@ public class PointsController extends Controller implements IPointsController, O
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		int playerId = model.getTurnTracker().getCurrentTurn();
-		int points = model.getLocalPlayer(playerId).getVictoryPoints();
-		initFromModel(points);
-		
+		//int points = model.getLocalPlayer(playerId).getVictoryPoints();
+		//initFromModel(points);
+		//TODO MATT COMMENTED THIS OUT BC IT'S BROKEN
 	}
 	
 }

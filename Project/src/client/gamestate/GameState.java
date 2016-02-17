@@ -1,5 +1,7 @@
 package client.gamestate;
 
+import java.util.Observer;
+
 import client.controller.Facade;
 import client.data.RobPlayerInfo;
 import shared.communication.response.GetModelResponse;
@@ -168,4 +170,10 @@ public abstract class GameState {
 	}
 	public abstract String getGameStatePanelText();
 	
+	public void addObserver(Observer o) {
+		facade.addObserver(o);
+	}
+	public void deleteObserver(Observer o) {
+		facade.deleteObserver(o);
+	}
 }

@@ -20,7 +20,6 @@ public class ListAIResponse extends Response {
 			String[] ary = json.split(",");
 			for(int i = 0; i < ary.length; i++){
 				aiTypes.add(getAIType(ary[i]));
-				System.out.println("1");
 			}
 		}
 	}

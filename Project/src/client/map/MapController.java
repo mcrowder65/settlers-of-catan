@@ -50,71 +50,71 @@ public class MapController extends Controller implements IMapController, Observe
 
 	protected void initFromModel() {
 
-//		//<temp>
-//
-//		Random rand = new Random();
-//
-//		for (int x = 0; x <= 3; ++x) {
-//
-//			int maxY = 3 - x;			
-//			for (int y = -3; y <= maxY; ++y) {				
-//				int r = rand.nextInt(HexType.values().length);
-//				HexType hexType = HexType.values()[r];
-//				HexLocation hexLoc = new HexLocation(x, y);
-//				
-//				getView().addHex(hexLoc, hexType);
-//				/*
-//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-//						CatanColor.red);
-//				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-//						CatanColor.blue);
-//				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-//						CatanColor.orange);
-//				//getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
-//				//getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
-//				 */
-//			}
-//
-//			if (x != 0) {
-//				int minY = x - 3;
-//				for (int y = minY; y <= 3; ++y) {
-//					int r = rand.nextInt(HexType.values().length);
-//					HexType hexType = HexType.values()[r];
-//					HexLocation hexLoc = new HexLocation(-x, y);
-//					getView().addHex(hexLoc, hexType);
-//					/*getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-//							CatanColor.red);
-//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-//							CatanColor.blue);
-//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-//							CatanColor.orange);
-//					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
-//					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
-//					 */
-//				}
-//			}
-//		}
-//
-//		PortType portType = PortType.BRICK;
-//		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-//
-//		getView().placeRobber(new HexLocation(0, 0));
-//
-//		getView().addNumber(new HexLocation(-2, 0), 2);
-//		getView().addNumber(new HexLocation(-2, 1), 3);
-//		getView().addNumber(new HexLocation(-2, 2), 4);
-//		getView().addNumber(new HexLocation(-1, 0), 5);
-//		getView().addNumber(new HexLocation(-1, 1), 6);
-//		getView().addNumber(new HexLocation(1, -1), 8);
-//		getView().addNumber(new HexLocation(1, 0), 9);
-//		getView().addNumber(new HexLocation(2, -2), 10);
-//		getView().addNumber(new HexLocation(2, -1), 11);
-//		getView().addNumber(new HexLocation(2, 0), 12);
+		//<temp>
+
+		Random rand = new Random();
+
+		for (int x = 0; x <= 3; ++x) {
+
+			int maxY = 3 - x;			
+			for (int y = -3; y <= maxY; ++y) {				
+				int r = rand.nextInt(HexType.values().length);
+				HexType hexType = HexType.values()[r];
+				HexLocation hexLoc = new HexLocation(x, y);
+				
+				getView().addHex(hexLoc, hexType);
+				/*
+				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+						CatanColor.red);
+				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+						CatanColor.blue);
+				//getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+						CatanColor.orange);
+				//getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
+				//getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
+				 */
+			}
+
+			if (x != 0) {
+				int minY = x - 3;
+				for (int y = minY; y <= 3; ++y) {
+					int r = rand.nextInt(HexType.values().length);
+					HexType hexType = HexType.values()[r];
+					HexLocation hexLoc = new HexLocation(-x, y);
+					getView().addHex(hexLoc, hexType);
+					/*getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+							CatanColor.red);
+					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+							CatanColor.blue);
+					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+							CatanColor.orange);
+					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.green);
+					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.purple);
+					 */
+				}
+			}
+		}
+
+		PortType portType = PortType.BRICK;
+		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
+		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+
+		getView().placeRobber(new HexLocation(0, 0));
+
+		getView().addNumber(new HexLocation(-2, 0), 2);
+		getView().addNumber(new HexLocation(-2, 1), 3);
+		getView().addNumber(new HexLocation(-2, 2), 4);
+		getView().addNumber(new HexLocation(-1, 0), 5);
+		getView().addNumber(new HexLocation(-1, 1), 6);
+		getView().addNumber(new HexLocation(1, -1), 8);
+		getView().addNumber(new HexLocation(1, 0), 9);
+		getView().addNumber(new HexLocation(2, -2), 10);
+		getView().addNumber(new HexLocation(2, -1), 11);
+		getView().addNumber(new HexLocation(2, 0), 12);
 
 		//</temp>
 	}
@@ -175,31 +175,25 @@ public class MapController extends Controller implements IMapController, Observe
 	public void robPlayer(RobPlayerInfo victim) {	
 		currState.robPlayer(victim);
 	}
-
+	public HexType getHexType(String resource){
+		return resource.equals("DESERT") ? HexType.DESERT : resource.equals("WOOD") ? HexType.WOOD : 
+				resource.equals("BRICK") ? HexType.BRICK : resource.equals("SHEEP") ? HexType.SHEEP : 
+				resource.equals("WHEAT") ? HexType.WHEAT : resource.equals("ORE") ? HexType.ORE : 
+				resource.equals("WATER") ? HexType.WATER : null;
+	}
 	public void initMap(GameMap map){
 		firstTime = false;
 		Random rand = new Random();
+		Hex[] hexes = map.getHexes();
 		
-//		for (int x = 0; x <= 3; ++x) {
-//			
-//			int maxY = 3 - x;			
-//			for (int y = -3; y <= maxY; ++y) {				
-//				int r = rand.nextInt(HexType.values().length);
-//				HexType hexType = HexType.values()[r];
-//				HexLocation hexLoc = new HexLocation(x, y);
-//				getView().addHex(hexLoc, hexType);
-//			}
-//
-//			if (x != 0) {
-//				int minY = x - 3;
-//				for (int y = minY; y <= 3; ++y) {
-//					int r = rand.nextInt(HexType.values().length);
-//					HexType hexType = HexType.values()[r];
-//					HexLocation hexLoc = new HexLocation(-x, y);
-//					getView().addHex(hexLoc, hexType);
-//				}
-//			}
-//		}
+		for(int i = 0; i < hexes.length; i++){
+			if(hexes[i].getNumber() != 0)
+				getView().addNumber(hexes[i].getLocation(), hexes[i].getNumber());
+			HexType hexType = hexes[i].getResource().name().equals("NONE") ? HexType.DESERT : getHexType(hexes[i].getResource().name());
+			getView().addHex(hexes[i].getLocation(), hexType);
+		}
+
+		
 		HexLocation[] water = {
 				new HexLocation(-3,0), 
 				new HexLocation(-3,1), 
@@ -223,98 +217,6 @@ public class MapController extends Controller implements IMapController, Observe
 		for(int i = 0; i < water.length; i++){
 			getView().addHex(water[i], HexType.WATER);
 		}
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-
-		getView().placeRobber(new HexLocation(0, 0));
-		
-		Integer[] nums =  {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
-		LinkedHashSet<Integer> rands = new LinkedHashSet<Integer>();
-		for(int i = 0; i < nums.length; i++){
-			int tempSize = rands.size();
-			Random randy = new Random();
-			do{
-				int randNum = randy.nextInt((17 - 0) + 1) + 0;
-				rands.add(randNum);
-			}while(rands.size() == tempSize);
-			
-		}
-		
-		Integer[] randArray = rands.toArray(new Integer[rands.size()]);
-		getView().addNumber(new HexLocation(-2, 0), nums[randArray[0]]);
-		getView().addNumber(new HexLocation(-2, 1), nums[randArray[1]]);
-		getView().addNumber(new HexLocation(-2, 2), nums[randArray[2]]);
-		getView().addNumber(new HexLocation(-1, -1), nums[randArray[3]]);
-		getView().addNumber(new HexLocation(-1, 0), nums[randArray[4]]);
-		getView().addNumber(new HexLocation(-1, 1), nums[randArray[5]]);
-		getView().addNumber(new HexLocation(-1, 2), nums[randArray[6]]);
-		getView().addNumber(new HexLocation(0, -1), nums[randArray[7]]);
-		getView().addNumber(new HexLocation(0, 0), nums[randArray[8]]);
-		getView().addNumber(new HexLocation(0, 1), nums[randArray[9]]);
-		getView().addNumber(new HexLocation(0, 2), nums[randArray[10]]);
-		getView().addNumber(new HexLocation(1, -2), nums[randArray[11]]);
-		getView().addNumber(new HexLocation(1, -1), nums[randArray[12]]);
-		getView().addNumber(new HexLocation(1, 0), nums[randArray[13]]);
-		getView().addNumber(new HexLocation(1, 1), nums[randArray[14]]);
-		getView().addNumber(new HexLocation(2, -2), nums[randArray[15]]);
-		getView().addNumber(new HexLocation(2, -1), nums[randArray[16]]);
-		getView().addNumber(new HexLocation(2, 0), nums[randArray[17]]);
-		HexType[] hexTypes = {
-				HexType.WOOD,
-				HexType.WOOD,
-				HexType.WOOD,
-				HexType.WOOD,
-				HexType.WHEAT,
-				HexType.WHEAT,
-				HexType.WHEAT,
-				HexType.WHEAT,
-				HexType.BRICK,
-				HexType.BRICK,
-				HexType.BRICK,
-				HexType.SHEEP,
-				HexType.SHEEP,
-				HexType.SHEEP,
-				HexType.SHEEP,
-				HexType.ORE,
-				HexType.ORE,
-				HexType.ORE,
-				HexType.DESERT
-			};
-		rands = new LinkedHashSet<Integer>();
-		for(int i = 0; i < hexTypes.length; i++){
-			int tempSize = rands.size();
-			Random randy = new Random();
-			do{
-				int randNum = randy.nextInt((18 - 0) + 1) + 0;
-				rands.add(randNum);
-			}while(rands.size() == tempSize);
-		}
-		randArray = rands.toArray(new Integer[rands.size()]);
-		getView().addHex(new HexLocation(-2, 0), hexTypes[randArray[0]]);
-		getView().addHex(new HexLocation(-2, 1), hexTypes[randArray[1]]);
-		getView().addHex(new HexLocation(-2, 2), hexTypes[randArray[2]]);
-		getView().addHex(new HexLocation(-1, -1), hexTypes[randArray[3]]);
-		getView().addHex(new HexLocation(-1, 0), hexTypes[randArray[4]]);
-		getView().addHex(new HexLocation(-1, 1), hexTypes[randArray[5]]);
-		getView().addHex(new HexLocation(-1, 2), hexTypes[randArray[6]]);
-		getView().addHex(new HexLocation(0, -1), hexTypes[randArray[7]]);
-		getView().addHex(new HexLocation(0, 0), hexTypes[randArray[8]]);
-		getView().addHex(new HexLocation(0, 1), hexTypes[randArray[9]]);
-		getView().addHex(new HexLocation(0, 2), hexTypes[randArray[10]]);
-		getView().addHex(new HexLocation(1, -2), hexTypes[randArray[11]]);
-		getView().addHex(new HexLocation(1, -1), hexTypes[randArray[12]]);
-		getView().addHex(new HexLocation(1, 0), hexTypes[randArray[13]]);
-		getView().addHex(new HexLocation(1, 1), hexTypes[randArray[14]]);
-		getView().addHex(new HexLocation(2, -2), hexTypes[randArray[15]]);
-		getView().addHex(new HexLocation(2, -1), hexTypes[randArray[16]]);
-		getView().addHex(new HexLocation(2, 0), hexTypes[randArray[17]]);
-		getView().addHex(new HexLocation(0,-2), hexTypes[randArray[18]]);
-		//getView().addHex(hexLoc, hexType);
 	}
 	@Override
 	public void update(Observable o, Object arg) {
@@ -347,6 +249,126 @@ public class MapController extends Controller implements IMapController, Observe
 		for(int i = 0; i < roads.length; i++){
 			placeRoad(roads[i].getLocation());
 		}
+	}
+	
+	public void mapControllerrandomize(){
+//		Random rand = new Random();
+//		
+//		HexLocation[] water = {
+//				new HexLocation(-3,0), 
+//				new HexLocation(-3,1), 
+//				new HexLocation(-3,2), 
+//				new HexLocation(-3,3), 
+//				new HexLocation(-2,3), 
+//				new HexLocation(-1,3), 
+//				new HexLocation(0,3), 
+//				new HexLocation(1,2), 
+//				new HexLocation(2,1), 
+//				new HexLocation(3,0), 
+//				new HexLocation(3,-1), 
+//				new HexLocation(3,-2), 
+//				new HexLocation(3,-3), 
+//				new HexLocation(2,-3), 
+//				new HexLocation(1,-3), 
+//				new HexLocation(0,-3), 
+//				new HexLocation(-1,-2), 
+//				new HexLocation(-2,-1)
+//		};
+//		for(int i = 0; i < water.length; i++){
+//			getView().addHex(water[i], HexType.WATER);
+//		}
+//		PortType portType = PortType.BRICK;
+//		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+//
+//		getView().placeRobber(new HexLocation(0, 0));
+//		
+//		Integer[] nums =  {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
+//		LinkedHashSet<Integer> rands = new LinkedHashSet<Integer>();
+//		for(int i = 0; i < nums.length; i++){
+//			int tempSize = rands.size();
+//			Random randy = new Random();
+//			do{
+//				int randNum = randy.nextInt((17 - 0) + 1) + 0;
+//				rands.add(randNum);
+//			}while(rands.size() == tempSize);
+//			
+//		}
+//		
+//		Integer[] randArray = rands.toArray(new Integer[rands.size()]);
+//		getView().addNumber(new HexLocation(-2, 0), nums[randArray[0]]);
+//		getView().addNumber(new HexLocation(-2, 1), nums[randArray[1]]);
+//		getView().addNumber(new HexLocation(-2, 2), nums[randArray[2]]);
+//		getView().addNumber(new HexLocation(-1, -1), nums[randArray[3]]);
+//		getView().addNumber(new HexLocation(-1, 0), nums[randArray[4]]);
+//		getView().addNumber(new HexLocation(-1, 1), nums[randArray[5]]);
+//		getView().addNumber(new HexLocation(-1, 2), nums[randArray[6]]);
+//		getView().addNumber(new HexLocation(0, -1), nums[randArray[7]]);
+//		getView().addNumber(new HexLocation(0, 0), nums[randArray[8]]);
+//		getView().addNumber(new HexLocation(0, 1), nums[randArray[9]]);
+//		getView().addNumber(new HexLocation(0, 2), nums[randArray[10]]);
+//		getView().addNumber(new HexLocation(1, -2), nums[randArray[11]]);
+//		getView().addNumber(new HexLocation(1, -1), nums[randArray[12]]);
+//		getView().addNumber(new HexLocation(1, 0), nums[randArray[13]]);
+//		getView().addNumber(new HexLocation(1, 1), nums[randArray[14]]);
+//		getView().addNumber(new HexLocation(2, -2), nums[randArray[15]]);
+//		getView().addNumber(new HexLocation(2, -1), nums[randArray[16]]);
+//		getView().addNumber(new HexLocation(2, 0), nums[randArray[17]]);
+//		HexType[] hexTypes = {
+//				HexType.WOOD,
+//				HexType.WOOD,
+//				HexType.WOOD,
+//				HexType.WOOD,
+//				HexType.WHEAT,
+//				HexType.WHEAT,
+//				HexType.WHEAT,
+//				HexType.WHEAT,
+//				HexType.BRICK,
+//				HexType.BRICK,
+//				HexType.BRICK,
+//				HexType.SHEEP,
+//				HexType.SHEEP,
+//				HexType.SHEEP,
+//				HexType.SHEEP,
+//				HexType.ORE,
+//				HexType.ORE,
+//				HexType.ORE,
+//				HexType.DESERT
+//			};
+//		rands = new LinkedHashSet<Integer>();
+//		for(int i = 0; i < hexTypes.length; i++){
+//			int tempSize = rands.size();
+//			Random randy = new Random();
+//			do{
+//				int randNum = randy.nextInt((18 - 0) + 1) + 0;
+//				rands.add(randNum);
+//			}while(rands.size() == tempSize);
+//		}
+//		randArray = rands.toArray(new Integer[rands.size()]);
+//		getView().addHex(new HexLocation(-2, 0), hexTypes[randArray[0]]);
+//		getView().addHex(new HexLocation(-2, 1), hexTypes[randArray[1]]);
+//		getView().addHex(new HexLocation(-2, 2), hexTypes[randArray[2]]);
+//		getView().addHex(new HexLocation(-1, -1), hexTypes[randArray[3]]);
+//		getView().addHex(new HexLocation(-1, 0), hexTypes[randArray[4]]);
+//		getView().addHex(new HexLocation(-1, 1), hexTypes[randArray[5]]);
+//		getView().addHex(new HexLocation(-1, 2), hexTypes[randArray[6]]);
+//		getView().addHex(new HexLocation(0, -1), hexTypes[randArray[7]]);
+//		getView().addHex(new HexLocation(0, 0), hexTypes[randArray[8]]);
+//		getView().addHex(new HexLocation(0, 1), hexTypes[randArray[9]]);
+//		getView().addHex(new HexLocation(0, 2), hexTypes[randArray[10]]);
+//		getView().addHex(new HexLocation(1, -2), hexTypes[randArray[11]]);
+//		getView().addHex(new HexLocation(1, -1), hexTypes[randArray[12]]);
+//		getView().addHex(new HexLocation(1, 0), hexTypes[randArray[13]]);
+//		getView().addHex(new HexLocation(1, 1), hexTypes[randArray[14]]);
+//		getView().addHex(new HexLocation(2, -2), hexTypes[randArray[15]]);
+//		getView().addHex(new HexLocation(2, -1), hexTypes[randArray[16]]);
+//		getView().addHex(new HexLocation(2, 0), hexTypes[randArray[17]]);
+//		getView().addHex(new HexLocation(0,-2), hexTypes[randArray[18]]);
+//		//getView().addHex(hexLoc, hexType);
 	}
 }
 

@@ -19,7 +19,17 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	private Facade facade;
 	private PlayerInfo[] players = new PlayerInfo[4];
+	private IAction allPlayersEnteredAction;
+	private int localCount = 0;
 	
+	public IAction getAllPlayersEnteredAction() {
+		return allPlayersEnteredAction;
+	}
+
+	public void setAllPlayersEnteredAction(IAction allPlayersEnteredAction) {
+		this.allPlayersEnteredAction = allPlayersEnteredAction;
+	}
+
 	public PlayerWaitingController(IPlayerWaitingView view, Facade facade) {
 
 		super(view);
@@ -56,11 +66,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		GameModel model = (GameModel)arg1;
 		PlayerInfo[] playersLite = model.getPlayersLite();
 		
-		getView().setPlayers(playersLite);
+		if (playersLite.length != localCount) {
+			localCount = playersLite.length;
+			getView().closeModal();
+			getView().setPlayers(playersLite);
+			getView().showModal();
+		}
+		
+		
 		if (playersLite.length == 4) {
 			facade.deleteObserver(this);
 			getView().closeModal();
-			
+		    //allPlayersEnteredAction.execute();
 		}
 		
 	}

@@ -52,6 +52,8 @@ public class MapComponent extends JComponent
 	private static Map<EdgeDirection, Point2D> EDGE_POINTS;
 	private static Map<EdgeDirection, java.lang.Double> PORT_ROTATIONS;
 	
+	
+	
 	static
 	{
 		HEX_IMAGES = new HashMap<HexType, BufferedImage>();

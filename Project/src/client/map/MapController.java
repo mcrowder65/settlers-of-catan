@@ -269,6 +269,8 @@ public class MapController extends Controller implements IMapController, Observe
 			placeRoad(roads[i].getLocation());
 		}
 	}
-	
+	public void startGame() {
+		
+	}
 }
 	

@@ -26,12 +26,13 @@ public abstract class GameState {
 		GameState gameState =  null; 
 		if (!turnTracker.isMyTurn(facade.getPlayerIndex())) gameState = new IsNotTurnState(facade);
 		else if(turnTracker.getStatus().equals("Discarding")) gameState = new DiscardingState(facade);
-		else if(turnTracker.getStatus().equals("First Round")) gameState = new FirstRoundState(facade);
+		else if(turnTracker.getStatus().equals("FirstRound")) gameState = new FirstRoundState(facade);
 		else if(turnTracker.getStatus().equals("Playing")) gameState = new PlayingState(facade);
 		else if(turnTracker.getStatus().equals("Robbing")) gameState = new RobbingState(facade);
 		else if(turnTracker.getStatus().equals("Rolling")) gameState = new RollingState(facade);
-		else if(turnTracker.getStatus().equals("Second Round")) gameState = new SecondRoundState(facade);
-		
+		else if(turnTracker.getStatus().equals("SecondRound")) gameState = new SecondRoundState(facade);
+		else
+			System.out.println(turnTracker.getStatus() + " was not recognized by identifyState()");
 		return gameState;
 	}
 	

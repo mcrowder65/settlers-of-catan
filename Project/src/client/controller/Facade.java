@@ -603,6 +603,12 @@ public class Facade {
 		}
 		return true;
 	}
+	
+	public void placeRoadBuilder(EdgeLocation location){
+		int owner = game.getModel().getLocalIndex(playerId);
+		EdgeValue value = new EdgeValue(owner,location);
+		game.getModel().getMap().buildRoad(value);
+	}
 
 	/**
 	 * This method determines if the player can use the Road Builder Dev card

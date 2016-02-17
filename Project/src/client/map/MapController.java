@@ -19,6 +19,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private GameState currState;
 	private boolean firstTime;
+
 	public MapController(IMapView view, IRobView robView, Facade facade) {
 
 		super(view);
@@ -28,7 +29,7 @@ public class MapController extends Controller implements IMapController, Observe
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
 		firstTime = true;
-		facade.addObserver(this);
+		
 	}
 
 
@@ -269,8 +270,11 @@ public class MapController extends Controller implements IMapController, Observe
 			placeRoad(roads[i].getLocation());
 		}
 	}
-	public void startGame() {
-		
+	public void enterGame() {
+		currState.addObserver(this);
+	}
+	public void leaveGame() {
+		currState.deleteObserver(this);
 	}
 }
 	

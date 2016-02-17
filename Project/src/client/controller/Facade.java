@@ -609,6 +609,10 @@ public class Facade {
 		EdgeValue value = new EdgeValue(owner,location);
 		game.getModel().getMap().buildRoad(value);
 	}
+	
+	public void deleteRoad(EdgeLocation location){
+		game.getModel().getMap().deleteRoad(location);
+	}
 
 	/**
 	 * This method determines if the player can use the Road Builder Dev card

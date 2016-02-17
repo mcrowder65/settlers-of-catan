@@ -366,6 +366,8 @@ public class Facade {
 		}
 		return true;
 	}
+	
+
 
 	/**
 	 * This method determines if the user can lay a settlement at the location
@@ -604,10 +606,11 @@ public class Facade {
 		return true;
 	}
 	
-	public void placeRoadBuilder(EdgeLocation location){
+	public boolean placeRoadBuilder(EdgeLocation location){
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
 		game.getModel().getMap().buildRoad(value);
+		return true;
 	}
 	
 	public void deleteRoad(EdgeLocation location){

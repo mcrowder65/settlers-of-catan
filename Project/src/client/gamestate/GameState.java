@@ -40,6 +40,14 @@ public abstract class GameState {
 
 		return false;
 	}
+	
+	public boolean canPlaceRoadDevCard(EdgeLocation location){
+		return false;
+	}
+	
+	public boolean placeRoadDevCard(EdgeLocation location){
+		return false;
+	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 

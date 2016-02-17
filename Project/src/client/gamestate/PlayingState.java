@@ -8,6 +8,9 @@ import shared.locations.VertexLocation;
 
 public class PlayingState extends GameState {
 
+	private EdgeLocation road1;
+	private EdgeLocation road2;
+	
 	public PlayingState(Facade facade){
 		super(facade);
 	}
@@ -15,6 +18,21 @@ public class PlayingState extends GameState {
 	@Override
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.canBuildRoad(edgeLoc);
+	}
+	@Override
+	public boolean playRoadBuildingCard(){	
+		if(road1 == null || road2 == null){
+			return false;
+		}
+		boolean worked = facade.playRoadBuilding(road1,road2);
+		if(worked == false){
+			return false;
+		}
+		facade.deleteRoad(road1);
+		facade.deleteRoad(road2);
+		road1 = null;
+		road2 = null;
+		return true;
 	}
 	
 	@Override
@@ -26,8 +44,24 @@ public class PlayingState extends GameState {
 	public boolean canPlaceCity(VertexLocation vertLoc) throws IllegalArgumentException{
 		return facade.canBuildCity(vertLoc);
 	}
-
-	
+	@Override
+	public boolean canPlaceRoadDevCard(EdgeLocation location){
+		return facade.canUseRoadBuilderPlacement(location);
+	}
+	@Override
+	public boolean placeRoadDevCard(EdgeLocation location){
+		if(facade.placeRoadBuilder(location) == true){
+			if(road1 == null){
+				road1 = location;
+			}
+			else if(road2 == null){
+				road2 = location;
+			}
+			return true;
+		}
+		
+		return false;
+	}
 	@Override
 	public boolean canOfferTrade() throws IllegalArgumentException {
 		return facade.canOfferTrade();

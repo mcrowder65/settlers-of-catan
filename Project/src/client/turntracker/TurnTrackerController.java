@@ -31,10 +31,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 	}
 
-	private void setState(String state){
-
-		this.currState =  currState.identifyState(state);
-	}
+	
 
 	@Override
 	public ITurnTrackerView getView() {
@@ -58,7 +55,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
 		if ( DataUtils.countNumPlayers(model.getPlayers())  == 4) {
-			//getView().updateGameState(stateMessage, enable);
+			getView().updateGameState(currState.getGameStatePanelText(), true); //TODO: ERIC
 			
 		}
 

@@ -17,4 +17,8 @@ public class DiscardingState extends GameState {
 	public boolean canDiscardCards(){
 		return facade.canDiscardCards();
 	}
+	@Override
+	public String getGameStatePanelText() {
+		return "Discard";
+	}
 }

@@ -178,9 +178,9 @@ public class MapController extends Controller implements IMapController, Observe
 	public void initMap(GameMap map){
 		firstTime = false;
 		Random rand = new Random();
-
+		
 		for (int x = 0; x <= 3; ++x) {
-
+			int iterator = 0;
 			int maxY = 3 - x;			
 			for (int y = -3; y <= maxY; ++y) {				
 				int r = rand.nextInt(HexType.values().length);
@@ -196,6 +196,8 @@ public class MapController extends Controller implements IMapController, Observe
 					HexType hexType = HexType.values()[r];
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
+					
+					
 				}
 			}
 		}
@@ -209,24 +211,49 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
 
 		getView().placeRobber(new HexLocation(0, 0));
+		
+		Integer[] nums =  {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
+		LinkedHashSet<Integer> rands = new LinkedHashSet<Integer>();
+		for(int i = 0; i < nums.length; i++){
+			int tempSize = rands.size();
+			Random randy = new Random();
+			do{
+				int randNum = randy.nextInt((17 - 0) + 1) + 0;
+				rands.add(randNum);
+			}while(rands.size() == tempSize);
+			
+		}
+		
+		Integer[] randArray = rands.toArray(new Integer[rands.size()]);
+		
+		getView().addNumber(new HexLocation(-2, 0), nums[randArray[0]]);
+		getView().addNumber(new HexLocation(-2, 1), nums[randArray[1]]);
+		getView().addNumber(new HexLocation(-2, 2), nums[randArray[2]]);
+		getView().addNumber(new HexLocation(-1, -1), nums[randArray[3]]);
+		getView().addNumber(new HexLocation(-1, 0), nums[randArray[4]]);
+		getView().addNumber(new HexLocation(-1, 1), nums[randArray[5]]);
+		getView().addNumber(new HexLocation(-1, 2), nums[randArray[6]]);
+		getView().addNumber(new HexLocation(0, -1), nums[randArray[7]]);
+		getView().addNumber(new HexLocation(0, 0), nums[randArray[8]]);
+		getView().addNumber(new HexLocation(0, 1), nums[randArray[9]]);
+		getView().addNumber(new HexLocation(0, 2), nums[randArray[10]]);
+		getView().addNumber(new HexLocation(1, -2), nums[randArray[11]]);
+		getView().addNumber(new HexLocation(1, -1), nums[randArray[12]]);
+		getView().addNumber(new HexLocation(1, 0), nums[randArray[13]]);
+		getView().addNumber(new HexLocation(1, 1), nums[randArray[14]]);
+		getView().addNumber(new HexLocation(2, -2), nums[randArray[15]]);
+		getView().addNumber(new HexLocation(2, -1), nums[randArray[16]]);
+		getView().addNumber(new HexLocation(2, 0), nums[randArray[17]]);
 
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
 	}
 	@Override
 	public void update(Observable o, Object arg) {
+	
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
 		
-		if(firstTime) initMap(map);
+		if(firstTime) 
+			initMap(map);
 		placeCities(map.getCities());
 		setRoads(map.getRoads());
 		//placeRobber(map.getRobber());

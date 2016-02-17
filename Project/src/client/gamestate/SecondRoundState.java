@@ -29,4 +29,8 @@ public class SecondRoundState extends GameState {
 	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 		return facade.buildSettlement(vertLoc,true);
 	}
+	@Override
+	public String getGameStatePanelText() {
+		return "Place Initial Pieces";
+	}
 }

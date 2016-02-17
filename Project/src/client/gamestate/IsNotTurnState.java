@@ -13,4 +13,8 @@ public class IsNotTurnState extends GameState {
 	public boolean canAcceptTrade(TradeOffer offer){
 		return facade.canAcceptTrade(offer);
 	}
+	@Override
+	public String getGameStatePanelText() {
+		return "Place Road!";
+	}
 }

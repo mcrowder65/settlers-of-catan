@@ -155,4 +155,6 @@ public abstract class GameState {
 	public boolean canDiscardCards() throws IllegalArgumentException{
 		return false;
 	}
+	public abstract String getGameStatePanelText();
+	
 }

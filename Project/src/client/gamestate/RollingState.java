@@ -17,5 +17,8 @@ public class RollingState extends GameState {
 	public boolean canRollNumber(){
 		return facade.canRollNumber();
 	}
-	
+	@Override
+	public String getGameStatePanelText() {
+		return "Roll the Dice";
+	}
 }

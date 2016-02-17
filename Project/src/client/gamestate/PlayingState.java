@@ -94,6 +94,9 @@ public class PlayingState extends GameState {
 		return facade.offerTrade(offer);
 	}
 	
-
+	@Override
+	public String getGameStatePanelText() {
+		return "Finish Turn";
+	}
 
 }

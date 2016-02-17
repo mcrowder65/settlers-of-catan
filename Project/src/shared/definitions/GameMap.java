@@ -887,6 +887,10 @@ public class GameMap {
 	public void updateSettlementArray() throws IllegalArgumentException{
 		settlements = allSettlements.toArray(settlements);
 	}
+	
+	public void updateRoadArray(){
+		roads = allRoads.toArray(roads);
+	}
 
 	/**
 	 * When a Settlement is upgraded to a City, the settlement should be eliminated,
@@ -914,6 +918,50 @@ public class GameMap {
 			}
 		}
 		
+
+	}
+	
+	public void deleteRoad(EdgeLocation location) throws IllegalArgumentException{
+		int x = location.getHexLoc().getX();
+		int y = location.getHexLoc().getY();
+		EdgeDirection direction = location.getDir();
+		
+		
+		if(allRoads.size() >0){
+			for(int i = allRoads.size()-1; i >=0; i--){
+				int xTemp = allRoads.get(i).getLocation().getHexLoc().getX();
+				int yTemp = allRoads.get(i).getLocation().getHexLoc().getY();
+				EdgeDirection directionTemp = allRoads.get(i).getLocation().getDir();
+	
+				if( (x == xTemp) && (y == yTemp)){
+					if(direction == directionTemp){
+						allRoads.remove(i);
+						updateRoadArray();
+					}
+				}
+			}
+		}
+		
+		HexLocation loc = location.getHexLoc();
+		EdgeDirection oppDirection = direction.getOppositeDirection();
+		HexLocation oppoLoc = getOppositeHex(loc,oppDirection);
+		
+		
+		
+		if(allRoads.size() >0){
+			for(int i = allRoads.size()-1; i >=0; i--){
+				int xTemp = allRoads.get(i).getLocation().getHexLoc().getX();
+				int yTemp = allRoads.get(i).getLocation().getHexLoc().getY();
+				EdgeDirection directionTemp = allRoads.get(i).getLocation().getDir();
+	
+				if( (x == xTemp) && (y == yTemp)){
+					if(oppDirection == directionTemp){
+						allRoads.remove(i);
+						updateRoadArray();
+					}
+				}
+			}
+		}
 
 	}
 	

@@ -130,7 +130,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			
 		}
 		else
-			; //TODO: Error Message
+			; 
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		facade.startPoller();
 		joinAction.execute();
 	  } else 
-		  ; //TODO: Show error message
+		  ; 
 	
 	}
 

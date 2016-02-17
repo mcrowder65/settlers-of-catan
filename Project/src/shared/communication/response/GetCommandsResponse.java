@@ -8,7 +8,7 @@ public class GetCommandsResponse extends Response {
 	public GetCommandsResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);
 		if (success) {
-			//TODO: Parse commands
+		
 		}
 	}
 

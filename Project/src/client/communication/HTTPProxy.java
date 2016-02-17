@@ -266,18 +266,15 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public Response loadGame(String name) throws IllegalArgumentException {
-		// TODO some other phase?
 		return null;
 	}
 	@Override
 	public Response saveGame(int id, String filename) throws IllegalArgumentException {
-		// TODO some other phase?
+
 		return null;
 	}
 	@Override
 	public GetModelResponse reset() {
-		// TODO some other phase?
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
@@ -303,12 +300,10 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public GetCommandsResponse getCommands() {
-		// TODO Another phase
 		return null;
 	}
 	@Override
 	public GetModelResponse executeCommands(List<String> commands) throws IllegalArgumentException {
-		// TODO Another phase
 		return null;
 	}
 //	SendChatCommand command = new SendChatCommand(playerIndex, content);

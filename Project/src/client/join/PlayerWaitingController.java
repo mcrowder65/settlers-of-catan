@@ -55,7 +55,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void update(Observable arg0, Object arg1) {
 		GameModel model = (GameModel)arg1;
 		PlayerInfo[] playersLite = model.getPlayersLite();
-		//TODO: This function is buggy. fix it
+		
 		getView().setPlayers(playersLite);
 		if (playersLite.length == 4) {
 			facade.deleteObserver(this);

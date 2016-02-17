@@ -57,7 +57,7 @@ public class RollController extends Controller implements IRollController,Observ
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	
 
 	}
 

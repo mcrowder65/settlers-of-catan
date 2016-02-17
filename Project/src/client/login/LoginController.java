@@ -77,7 +77,6 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
-		// TODO: log in user
 		
 		//System.out.println("in signIn");
 
@@ -104,7 +103,7 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void register() {
 		
-		// TODO: register new user (which, if successful, also logs them in)
+		
 		String username = this.getLoginView().getRegisterUsername();
 		String password = this.getLoginView().getRegisterPassword();
 		String passConfirmed = this.getLoginView().getRegisterPasswordRepeat();

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import client.base.*;
 import client.controller.Facade;
+import shared.definitions.GameModel;
 
 
 /**
@@ -28,7 +29,7 @@ public class PointsController extends Controller implements IPointsController, O
 		
 		facade.addObserver(this);
 		
-		initFromModel();
+		initFromModel(2);
 	}
 	
 	public IPointsView getPointsView() {
@@ -43,14 +44,17 @@ public class PointsController extends Controller implements IPointsController, O
 		this.finishedView = finishedView;
 	}
 
-	private void initFromModel() {	
-		getPointsView().setPoints(0);
+	private void initFromModel(int points) {	
+		getPointsView().setPoints(points);
 	
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		GameModel model = (GameModel)arg;
+		int playerId = model.getTurnTracker().getCurrentTurn();
+		int points = model.getLocalPlayer(playerId).getVictoryPoints();
+		initFromModel(points);
 		
 	}
 	

@@ -7,6 +7,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import shared.definitions.GameModel;
 
 
 /**
@@ -83,7 +84,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-	
+		GameModel model = (GameModel)arg;
+		String state = model.getTurnTracker().getStatus();
+		this.currState = currState.identifyState(state);
 
 	}
 

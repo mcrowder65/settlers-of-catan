@@ -1,6 +1,7 @@
 package client.turntracker;
 
 import shared.definitions.CatanColor;
+import shared.definitions.GameModel;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -10,6 +11,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.utils.DataUtils;
 
 
 /**
@@ -26,6 +28,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
 		facade.addObserver(this);
+		
 	}
 
 	private void setState(String state){
@@ -52,7 +55,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		GameModel model = (GameModel)arg;
+		currState = currState.identifyState(model.getTurnTracker());
+		if ( DataUtils.countNumPlayers(model.getPlayers())  == 4) {
+			//getView().updateGameState(stateMessage, enable);
+			
+		}
 
 	}
 

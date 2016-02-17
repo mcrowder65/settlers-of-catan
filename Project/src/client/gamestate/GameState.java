@@ -51,109 +51,111 @@ public abstract class GameState {
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) throws IllegalArgumentException{
-
 		return false;
 	}
 
-	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
-		return false;
+	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException,IllegalStateException{
+		throw new IllegalStateException();
 	}
 
-	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
-		return false;
+	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
+		throw new IllegalStateException();
 	}
 
-	public boolean placeCity(VertexLocation vertLoc) throws IllegalArgumentException{
-		return false;
+	public boolean placeCity(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
+		throw new IllegalStateException();
 	}
 
-	public boolean placeRobber(HexLocation hexLoc) throws IllegalArgumentException{
-		return false;
+	public boolean placeRobber(HexLocation hexLoc) throws IllegalArgumentException, IllegalStateException{
+		throw new IllegalStateException();
 	}
 	
-	public boolean cancelMove() throws IllegalArgumentException{
-		return false;
+	public boolean cancelMove() throws IllegalStateException{
+		throw new IllegalStateException();
 	}
 
-	public boolean playSoldierCard() throws IllegalArgumentException{	
-		return false;
+	public boolean playSoldierCard() throws IllegalStateException{	
+		throw new IllegalStateException();
 	}
 
-	public boolean playRoadBuildingCard() throws IllegalArgumentException{	
-		return false;
+	public boolean playRoadBuildingCard() throws IllegalStateException{	
+		throw new IllegalStateException();
 	}
 
-	public boolean robPlayer(RobPlayerInfo victim) throws IllegalArgumentException{	
-		return false;
+	public boolean robPlayer(RobPlayerInfo victim) throws IllegalArgumentException, IllegalStateException{	
+		throw new IllegalStateException();
 	}
 	
-	public boolean discardCards(ResourceList list) throws IllegalArgumentException{
-		return false;
+	public boolean discardCards(ResourceList list) throws IllegalArgumentException, IllegalStateException{
+		throw new IllegalStateException();
 	}	
 	
-	public int rollNumber() throws IllegalArgumentException{
-		return -1;
+	public int rollNumber() throws IllegalStateException{
+		throw new IllegalStateException();
 	}
 	
-	public boolean offerTrade(TradeOffer offer) throws IllegalArgumentException{
-		return false;
+	public boolean offerTrade(TradeOffer offer) throws IllegalStateException, IllegalArgumentException{
+		throw new IllegalStateException();
 	}
 
-	public boolean canOfferTrade() throws IllegalArgumentException {
-		return false;
-
-	}
-
-	public boolean canMaritimeTrade() throws IllegalArgumentException {
-		return false;
-	}
-
-	public boolean canFinishTurn() throws IllegalArgumentException{
-
-		return false;
-	}
-
-	public boolean canBuyDevCard() throws IllegalArgumentException{
-
-		return false;
-	}
-
-	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
-
-		return false;
-	}
-
-	public boolean canUseRoadBuilder() throws IllegalArgumentException{
-		return false;
-	}
-
-	public boolean canUseSoldier() throws IllegalArgumentException{
-
+	public boolean canOfferTrade()  {
 		return false;
 
 	}
 
-	public boolean canUseMonopoly() throws IllegalArgumentException{
+	public boolean canMaritimeTrade() {
 		return false;
 	}
 
-	public boolean canUseMonument() throws IllegalArgumentException{
+	public boolean canFinishTurn(){
 
 		return false;
 	}
 
-	public boolean canSendChat() throws IllegalArgumentException{
+	public boolean canBuyDevCard() {
+
+		return false;
+	}
+
+	public boolean canUseYearOfPlenty() {
+
+		return false;
+	}
+
+	public boolean canUseRoadBuilder() {
+		return false;
+	}
+
+	public boolean canUseSoldier() {
+
+		return false;
+
+	}
+
+	public boolean canUseMonopoly() {
+		return false;
+	}
+
+	public boolean canUseMonument() {
+
+		return false;
+	}
+
+	public boolean canSendChat() {
 		return true;
 	}
 	public boolean canAcceptTrade(TradeOffer offer) throws IllegalArgumentException {
 		return false;
 	}
 	
-	public boolean canRollNumber() throws IllegalArgumentException{
+	public boolean canRollNumber() {
 		return false;
 	}
-	public boolean canDiscardCards() throws IllegalArgumentException{
+	public boolean canDiscardCards() {
 		return false;
+	}
+	public boolean finishTurn() throws IllegalStateException {
+		throw new IllegalStateException();
 	}
 	public abstract String getGameStatePanelText();
 	

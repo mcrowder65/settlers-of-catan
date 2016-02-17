@@ -8,6 +8,7 @@ import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import shared.definitions.GameModel;
+import shared.definitions.TurnTracker;
 
 
 /**
@@ -83,7 +84,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		String state = model.getTurnTracker().getStatus();
-		this.currState = currState.identifyState(state);
+		TurnTracker turn = model.getTurnTracker();
+		this.currState = currState.identifyState(turn);
 
 	}
 

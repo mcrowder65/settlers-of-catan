@@ -767,6 +767,10 @@ public class Facade {
 
 
 
+	public GameModel fetchModel() {
+		GetModelResponse response = proxy.getModel();
+		return response.getModel();
+	}
 
 
 

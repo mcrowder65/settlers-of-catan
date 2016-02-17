@@ -21,13 +21,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private GameState currState;
 
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay,
-			GameManager gameManager, Facade facade) {
+			Facade facade) {
 
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
 		this.currState = new IsNotTurnState(facade);
-		gameManager.addObserver(this);
+		facade.addObserver(this);
 	}
 
 	public IMaritimeTradeView getTradeView() {

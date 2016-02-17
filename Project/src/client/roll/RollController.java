@@ -24,13 +24,13 @@ public class RollController extends Controller implements IRollController,Observ
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView, GameManager gameManager, Facade facade) {
+	public RollController(IRollView view, IRollResultView resultView, Facade facade) {
 
 		super(view);
 
 		setResultView(resultView);
 		this.currState = new IsNotTurnState(facade);
-		gameManager.addObserver(this);
+		facade.addObserver(this);
 	}
 
 	public IRollResultView getResultView() {

@@ -24,7 +24,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController, GameManager gameManager, Facade facade)
+	public RightPanel(final IMapController mapController, Facade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -48,7 +48,7 @@ public class RightPanel extends JPanel
 			}
 		};
 		devCardController = new DevCardController(playCardView, buyCardView,
-												  soldierAction, roadAction, gameManager, facade);
+												  soldierAction, roadAction, facade);
 		playCardView.setController(devCardController);
 		buyCardView.setController(devCardController);
 		
@@ -62,7 +62,7 @@ public class RightPanel extends JPanel
 		// Initialize resource bar view and controller
 		//
 		resourceView = new ResourceBarView();
-		resourceController = new ResourceBarController(resourceView, gameManager, facade);
+		resourceController = new ResourceBarController(resourceView, facade);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,
 																  PieceType.ROAD));

@@ -17,13 +17,13 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private Map<ResourceBarElement, IAction> elementActions;
 	private GameState currState;
 
-	public ResourceBarController(IResourceBarView view, GameManager gameManager, Facade facade) {
+	public ResourceBarController(IResourceBarView view, Facade facade) {
 
 		super(view);
 
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		this.currState = new IsNotTurnState(facade);
-		gameManager.addObserver(this);
+		facade.addObserver(this);
 	}
 
 	@Override

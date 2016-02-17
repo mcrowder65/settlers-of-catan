@@ -3,6 +3,7 @@ package client.controller;
 import shared.locations.*;
 
 import java.util.List;
+import java.util.Observer;
 import java.util.Random;
 
 import client.communication.IProxy;
@@ -48,6 +49,12 @@ public class Facade {
 	}
 	public void stopPoller() {
 		game.getPoller().stopPolling();
+	}
+	public void addObserver(Observer o) {
+		game.addObserver(o);
+	}
+	public void deleteObserver(Observer o) {
+		game.deleteObserver(o);
 	}
 	/**
 	 * Allows a user to log into the server.

@@ -32,7 +32,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, GameManager gameManager, Facade facade) {
+			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
 
 		super(tradeView);
 
@@ -40,7 +40,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		this.currState = new IsNotTurnState(facade);
-		gameManager.addObserver(this);
+		facade.addObserver(this);
 	}
 
 	public IDomesticTradeView getTradeView() {

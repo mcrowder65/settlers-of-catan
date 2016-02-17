@@ -19,13 +19,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	private GameState currState;
 
-	public TurnTrackerController(ITurnTrackerView view, GameManager gameManager, Facade facade) {
+	public TurnTrackerController(ITurnTrackerView view, Facade facade) {
 
 		super(view);
 
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
-		gameManager.addObserver(this);
+		facade.addObserver(this);
 	}
 
 	private void setState(String state){

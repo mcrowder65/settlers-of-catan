@@ -23,7 +23,7 @@ public class TradePanel extends JPanel
 	private MaritimeTradeOverlay maritimeOverlay;
 	private MaritimeTradeController maritimeController;
 	
-	public TradePanel(GameManager gameManager, Facade facade)
+	public TradePanel(Facade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -37,7 +37,7 @@ public class TradePanel extends JPanel
 														 domesticOverlay,
 														 domesticWaitView,
 														 domesticAcceptOverlay,
-														 gameManager, facade);
+														  facade);
 		domesticView.setController(domesticController);
 		domesticOverlay.setController(domesticController);
 		domesticWaitView.setController(domesticController);
@@ -47,7 +47,7 @@ public class TradePanel extends JPanel
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
 														 maritimeOverlay,
-														 gameManager, facade);
+														 facade);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		

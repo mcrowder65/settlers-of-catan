@@ -20,7 +20,7 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
-	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, GameManager gameManager, Facade facade) {
+	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, Facade facade) {
 		
 		this.setLayout(new BorderLayout());
 		
@@ -38,7 +38,7 @@ public class LeftPanel extends JPanel {
         chatView.setController(chatController);
 		
 		turnView = new TurnTrackerView(titlePanel, gameStatePanel);
-		turnController = new TurnTrackerController(turnView, gameManager, facade);
+		turnController = new TurnTrackerController(turnView, facade);
 		turnView.setController(turnController);
 		
 //		gameStatePanel.setController(turnController);

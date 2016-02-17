@@ -20,11 +20,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	private Facade facade;
 	private PlayerInfo[] players = new PlayerInfo[4];
 	
-	public PlayerWaitingController(IPlayerWaitingView view, GameManager game, Facade facade) {
+	public PlayerWaitingController(IPlayerWaitingView view, Facade facade) {
 
 		super(view);
 		this.facade = facade;
-		game.addObserver(this);
 	}
 
 	@Override
@@ -36,6 +35,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 
+		facade.addObserver(this);
 		getView().showModal();
 		List<AIType> aiTypes = facade.listAI();
 		String[] typeStrings = new String[aiTypes.size()];
@@ -55,9 +55,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void update(Observable arg0, Object arg1) {
 		GameModel model = (GameModel)arg1;
 		PlayerInfo[] playersLite = model.getPlayersLite();
+		//TODO: This function is buggy. fix it
 		getView().setPlayers(playersLite);
 		if (playersLite.length == 4) {
+			facade.deleteObserver(this);
 			getView().closeModal();
+			
 		}
 		
 	}

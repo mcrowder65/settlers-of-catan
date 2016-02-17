@@ -17,16 +17,16 @@ public class MidPanel extends JPanel
 	private MapController mapController;
 	private GameStatePanel gameStatePanel;
 	
-	public MidPanel(GameManager gameManager, Facade facade)
+	public MidPanel(Facade facade)
 	{
 		
 		this.setLayout(new BorderLayout());
 		
-		tradePanel = new TradePanel(gameManager, facade);
+		tradePanel = new TradePanel(facade);
 		
 		mapView = new MapView();
 		robView = new RobView();
-		mapController = new MapController(mapView, robView, gameManager, facade);
+		mapController = new MapController(mapView, robView, facade);
 		mapView.setController(mapController);
 		robView.setController(mapController);
 		

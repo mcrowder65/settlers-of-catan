@@ -8,6 +8,7 @@ import shared.definitions.GameModel;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
 import shared.definitions.TradeOffer;
+import shared.definitions.TurnTracker;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -20,17 +21,16 @@ public abstract class GameState {
 		this.facade = facade;
 	}
 	
-	public GameState identifyState(String state) {
+	public GameState identifyState(TurnTracker turnTracker) {
 		
-		GameState gameState = new IsNotTurnState(facade);
-		
-		if(state.equals("Discarding")) gameState = new DiscardingState(facade);
-		else if(state.equals("First Round")) gameState = new FirstRoundState(facade);
-		else if(state.equals("Is Not Turn")) gameState = new IsNotTurnState(facade);
-		else if(state.equals("Playing")) gameState = new PlayingState(facade);
-		else if(state.equals("Robbing")) gameState = new RobbingState(facade);
-		else if(state.equals("Rolling")) gameState = new RollingState(facade);
-		else if(state.equals("Second Round")) gameState = new SecondRoundState(facade);
+		GameState gameState =  null; 
+		if (!turnTracker.isMyTurn(facade.getPlayerIndex())) gameState = new IsNotTurnState(facade);
+		else if(turnTracker.getStatus().equals("Discarding")) gameState = new DiscardingState(facade);
+		else if(turnTracker.getStatus().equals("First Round")) gameState = new FirstRoundState(facade);
+		else if(turnTracker.getStatus().equals("Playing")) gameState = new PlayingState(facade);
+		else if(turnTracker.getStatus().equals("Robbing")) gameState = new RobbingState(facade);
+		else if(turnTracker.getStatus().equals("Rolling")) gameState = new RollingState(facade);
+		else if(turnTracker.getStatus().equals("Second Round")) gameState = new SecondRoundState(facade);
 		
 		return gameState;
 	}

@@ -2,14 +2,16 @@ package client.utils;
 
 import java.util.List;
 
+import shared.definitions.Player;
+
 public class DataUtils {
 
-	public static int countNumPlayers(List list) {
-		for (int n = 0; n < list.size(); n++) {
-			if (list.get(n) == null) {
+	public static int countNumPlayers(Player[] players) {
+		for (int n = 0; n < players.length; n++) {
+			if (players[n] == null) {
 				return n;
 			}
 		}
-		return list.size();
+		return players.length;
 	}
 }

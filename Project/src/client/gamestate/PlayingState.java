@@ -15,6 +15,7 @@ public class PlayingState extends GameState {
 		super(facade);
 	}
 	
+	
 	@Override
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.canBuildRoad(edgeLoc);

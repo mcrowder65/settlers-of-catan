@@ -127,7 +127,7 @@ public abstract class GameState {
 
 		return false;
 	}
-
+	
 	public boolean canUseYearOfPlenty() {
 
 		return false;

@@ -125,21 +125,21 @@ public class CatanPanel extends JPanel
 		return midPanel.getMapController();
 	}
 	public void enterGame() {
-		leftPanel.getHistoryController().enterGame();
-		leftPanel.getChatController().enterGame();
-		leftPanel.getTurnController().enterGame();
-		midPanel.getMapController().enterGame();
-		rightPanel.getPointsController().enterGame();
-		rightPanel.getResourceController().enterGame();
+		//leftPanel.getHistoryController().enterGame();
+		//leftPanel.getChatController().enterGame();
+		//leftPanel.getTurnController().enterGame();
+		//midPanel.getMapController().enterGame();
+		//rightPanel.getPointsController().enterGame();
+		//rightPanel.getResourceController().enterGame();
 		
 	}
 	public void leaveGame() {
-		leftPanel.getHistoryController().leaveGame();
-		leftPanel.getChatController().leaveGame();
-		leftPanel.getTurnController().leaveGame();
-		midPanel.getMapController().leaveGame();
-		rightPanel.getPointsController().leaveGame();
-		rightPanel.getResourceController().leaveGame();
+	//	leftPanel.getHistoryController().leaveGame();
+		//leftPanel.getChatController().leaveGame();
+	//	leftPanel.getTurnController().leaveGame();
+		//midPanel.getMapController().leaveGame();
+	//	rightPanel.getPointsController().leaveGame();
+		//rightPanel.getResourceController().leaveGame();
 	}
 }
 

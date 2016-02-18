@@ -14,6 +14,7 @@ import shared.definitions.GameModel;
 public class PointsController extends Controller implements IPointsController, Observer {
 
 	private IGameFinishedView finishedView;
+	private Facade facade;
 	
 	/**
 	 * PointsController constructor
@@ -27,8 +28,8 @@ public class PointsController extends Controller implements IPointsController, O
 		
 		setFinishedView(finishedView);
 		
+		this.facade = facade;
 		facade.addObserver(this);
-		
 		initFromModel(2);
 	}
 	
@@ -52,10 +53,10 @@ public class PointsController extends Controller implements IPointsController, O
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
-		int playerId = model.getTurnTracker().getCurrentTurn();
-		//int points = model.getLocalPlayer(playerId).getVictoryPoints();
-		//initFromModel(points);
-		//TODO MATT COMMENTED THIS OUT BC IT'S BROKEN
+		int playerId = facade.getPlayerId();
+		int points = model.getLocalPlayer(playerId).getVictoryPoints();
+		initFromModel(points);
+		
 	}
 	
 }

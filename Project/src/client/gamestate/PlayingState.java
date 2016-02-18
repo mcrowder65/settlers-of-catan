@@ -19,6 +19,7 @@ public class PlayingState extends GameState {
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.canBuildRoad(edgeLoc);
 	}
+	
 	@Override
 	public boolean playRoadBuildingCard(){	
 		if(road1 == null || road2 == null){

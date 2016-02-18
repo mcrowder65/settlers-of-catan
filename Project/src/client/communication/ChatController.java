@@ -1,16 +1,23 @@
 package client.communication;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.controller.Facade;
 
 
 /**
  * Chat controller implementation
  */
-public class ChatController extends Controller implements IChatController {
+public class ChatController extends Controller implements IChatController, Observer {
 
-	public ChatController(IChatView view) {
+	public ChatController(IChatView view, Facade facade) {
 		
 		super(view);
+		
+		facade.addObserver(this);
+		
 	}
 
 	@Override
@@ -20,6 +27,12 @@ public class ChatController extends Controller implements IChatController {
 
 	@Override
 	public void sendMessage(String message) {
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 

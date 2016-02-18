@@ -321,7 +321,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status == "Rolling"){
+		if(status.equals( "Rolling")){
 			return true;
 		}
 		return false;
@@ -343,7 +343,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing" && status != "FirstRound" && status != "SecondRound"){
+		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
 		
@@ -354,7 +354,7 @@ public class Facade {
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
 		boolean canLayOnMap = false;
-		if(status == "FirstRound" || status == "SecondRound"){
+		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
 			canLayOnMap = game.getModel().getMap().hasRoadAllPlayers(location);
 		}
 		else{
@@ -384,7 +384,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing" && status != "FirstRound" && status != "SecondRound"){
+		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildSettlement();
@@ -395,7 +395,7 @@ public class Facade {
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = false;
 		boolean canLay = false;
-		if(status == "FirstRound" || status == "SecondRound"){
+		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
 			canLayOnMap = game.getModel().getMap().hasMunicipality(location);
 			if(canLayOnMap == false){
 				return true;
@@ -428,7 +428,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildCity();
@@ -459,7 +459,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canOfferTrade();
@@ -484,7 +484,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean hasPort = game.getModel().getMap().hasPort(playerIndex);
@@ -519,7 +519,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status == "Rolling"){
+		if(status.equals( "Rolling")){
 			return false;
 		}
 		return true;
@@ -539,7 +539,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuyDevCard();
@@ -571,7 +571,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean playerCheck = localPlayer.canPlayYearOfPlentyCard();
@@ -592,7 +592,7 @@ public class Facade {
 			return false;
 		}
 		String status = game.getModel().getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		
@@ -633,7 +633,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean playerCheck = localPlayer.canPlayRoadBuilding();
@@ -659,7 +659,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean playerCheck = localPlayer.canPlaySoldierCard();
@@ -687,7 +687,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals( "Playing")){
 			return false;
 		}
 		boolean playerCheck = localPlayer.canPlayMonopolyCard();
@@ -714,7 +714,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Playing"){
+		if(!status.equals("Playing")){
 			return false;
 		}
 		boolean playerCheck = localPlayer.canPlayMonumentCard();
@@ -740,7 +740,7 @@ public class Facade {
 			return false;
 		}
 		String status = model.getTurnTracker().getStatus();
-		if(status != "Robbing"){
+		if(!status.equals( "Robbing")){
 			return false;
 		}
 		boolean mapCheck = model.getMap().canLayRobber(location);

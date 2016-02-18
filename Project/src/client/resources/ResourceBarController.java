@@ -8,6 +8,8 @@ import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import shared.definitions.GameModel;
+import shared.definitions.Player;
+import shared.definitions.ResourceList;
 import shared.definitions.TurnTracker;
 
 
@@ -18,6 +20,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	private Map<ResourceBarElement, IAction> elementActions;
 	private GameState currState;
+	private Facade facade;
 
 	public ResourceBarController(IResourceBarView view, Facade facade) {
 
@@ -25,7 +28,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		this.currState = new IsNotTurnState(facade);
-		facade.addObserver(this);
+		
+		this.facade = facade;
+		this.facade.addObserver(this);
+	
+
 	}
 
 	@Override
@@ -42,6 +49,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void setElementAction(ResourceBarElement element, IAction action) {
 
 		elementActions.put(element, action);
+		
 	}
 
 
@@ -79,6 +87,45 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			action.execute();
 		}
 	}
+	
+	private void populateResources(GameModel model) {
+		Player player = model.getLocalPlayer(facade.getPlayerId());
+		ResourceList resource = player.getResources();
+		
+		int wood = resource.getWood();
+		int brick = resource.getBrick();
+		int sheep = resource.getSheep();
+		int wheat = resource.getWheat();
+		int ore = resource.getOre();
+		
+		getView().setElementAmount(ResourceBarElement.WOOD, wood);
+		getView().setElementAmount(ResourceBarElement.BRICK, brick);
+		getView().setElementAmount(ResourceBarElement.SHEEP, sheep);
+		getView().setElementAmount(ResourceBarElement.WHEAT, wheat);
+		getView().setElementAmount(ResourceBarElement.ORE, ore);
+		
+		
+		
+		int roads = player.getRoads();
+		int settlements = player.getSettlements();
+		int cities = player.getCities();
+		
+		getView().setElementAmount(ResourceBarElement.ROAD, roads);
+		getView().setElementEnabled(ResourceBarElement.ROAD, player.canBuildRoad());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, settlements);
+		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, player.canBuildSettlement());
+		getView().setElementAmount(ResourceBarElement.CITY, cities);
+		getView().setElementEnabled(ResourceBarElement.CITY, player.canBuildCity());
+		
+		boolean clickable = facade.canBuyDevCard();
+		System.out.println(clickable);
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, clickable);
+		
+		int soldiers = player.getSoldiers();
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, soldiers);
+		
+		
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -86,6 +133,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		String state = model.getTurnTracker().getStatus();
 		TurnTracker turn = model.getTurnTracker();
 		this.currState = currState.identifyState(turn);
+		
+		
+		
+		this.populateResources(model);
 
 	}
 

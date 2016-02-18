@@ -25,8 +25,6 @@ public class ChatController extends Controller implements IChatController, Obser
 		super(view);
 		this.facade = facade;
 		this.facade.addObserver(this);
-		
-		
 	}
 
 	@Override
@@ -41,7 +39,7 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void update(Observable o, Object arg) {
-		GameModel model = (GameModel)arg;
+		/*GameModel model = (GameModel)arg;
 		MessageList messages = model.getChat();
 		MessageLine[] lines = messages.getLines();
 		List<LogEntry> entries = new ArrayList();
@@ -61,7 +59,7 @@ public class ChatController extends Controller implements IChatController, Obser
 			}	
 		}
 		
-		this.getView().setEntries(entries);
+		this.getView().setEntries(entries);*/
 		
 	}
 

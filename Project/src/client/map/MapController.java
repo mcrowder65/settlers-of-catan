@@ -239,6 +239,7 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
+		currState = currState.identifyState(model.getTurnTracker());
 		
 		if(firstTime) 
 			initMap(map);
@@ -247,6 +248,8 @@ public class MapController extends Controller implements IMapController, Observe
 		setRoads(map.getRoads(), model.getPlayers());
 		
 		setSettlements(map.getSettlements(), model.getPlayers());
+		
+		
 		
 	}
 	public void placeCities(VertexObject[] cities, Player[] players){
@@ -276,6 +279,13 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void enterGame() {
 		currState.addObserver(this);
+		GameModel model = currState.fetchModel();
+		if (model.getTurnTracker().getStatus().equals("FirstRound") ||
+				model.getTurnTracker().getStatus().equals("SecondRound")) {
+				
+				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				
+			}
 	}
 	public void leaveGame() {
 		currState.deleteObserver(this);

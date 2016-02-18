@@ -176,4 +176,11 @@ public abstract class GameState {
 	public void deleteObserver(Observer o) {
 		facade.deleteObserver(o);
 	}
+
+	public int getPlayerId() {
+		return facade.getPlayerId();
+	}
+	public GameModel fetchModel() {
+		return facade.fetchModel();
+	}
 }

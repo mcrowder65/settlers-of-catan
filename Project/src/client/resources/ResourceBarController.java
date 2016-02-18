@@ -30,8 +30,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		this.currState = new IsNotTurnState(facade);
 		
 		this.facade = facade;
-		this.facade.addObserver(this);
-	
+
 
 	}
 
@@ -140,5 +139,14 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	}
 
+
+	public void enterGame() {
+		this.facade.addObserver(this);
+		
+	}
+	public void leaveGame() {
+		this.facade.deleteObserver(this);
+		
+	}
 }
 

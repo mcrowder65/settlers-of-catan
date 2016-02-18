@@ -28,7 +28,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
-		facade.addObserver(this);
 		this.facade = facade;
 		
 	}
@@ -61,6 +60,16 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			
 		}
 
+	}
+	
+
+	public void enterGame() {
+		this.facade.addObserver(this);
+		
+	}
+	public void leaveGame() {
+		this.facade.deleteObserver(this);
+		
 	}
 
 }

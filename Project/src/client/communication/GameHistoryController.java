@@ -19,7 +19,6 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		//initFromModel();
 		this.facade = facade;
-		this.facade.addObserver(this);
 		
 	}
 	
@@ -72,6 +71,15 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		}
 		
 		getView().setEntries(entries);
+		
+	}
+	
+	public void enterGame() {
+		this.facade.addObserver(this);
+		
+	}
+	public void leaveGame() {
+		this.facade.deleteObserver(this);
 		
 	}
 	

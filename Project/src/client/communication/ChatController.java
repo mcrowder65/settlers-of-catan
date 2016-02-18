@@ -24,7 +24,6 @@ public class ChatController extends Controller implements IChatController, Obser
 		
 		super(view);
 		this.facade = facade;
-		this.facade.addObserver(this);
 	}
 
 	@Override
@@ -63,5 +62,13 @@ public class ChatController extends Controller implements IChatController, Obser
 		
 	}
 
+	public void enterGame() {
+		this.facade.addObserver(this);
+		
+	}
+	public void leaveGame() {
+		this.facade.deleteObserver(this);
+		
+	}
 }
 

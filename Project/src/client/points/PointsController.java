@@ -29,7 +29,6 @@ public class PointsController extends Controller implements IPointsController, O
 		setFinishedView(finishedView);
 		
 		this.facade = facade;
-		facade.addObserver(this);
 		initFromModel(2);
 	}
 	
@@ -56,6 +55,16 @@ public class PointsController extends Controller implements IPointsController, O
 		int playerId = facade.getPlayerId();
 		int points = model.getLocalPlayer(playerId).getVictoryPoints();
 		initFromModel(points);
+		
+	}
+	
+
+	public void enterGame() {
+		this.facade.addObserver(this);
+		
+	}
+	public void leaveGame() {
+		this.facade.deleteObserver(this);
 		
 	}
 	

@@ -20,6 +20,7 @@ import client.utils.DataUtils;
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 
 	private GameState currState;
+	private Facade facade;
 
 	public TurnTrackerController(ITurnTrackerView view, Facade facade) {
 
@@ -28,6 +29,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
 		facade.addObserver(this);
+		this.facade = facade;
 		
 	}
 
@@ -41,7 +43,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-			
+		facade.finishTurn();
 	}
 
 	private void initFromModel() {

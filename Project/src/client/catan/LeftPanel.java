@@ -20,6 +20,18 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
+	public GameHistoryController getHistoryController() {
+		return historyController;
+	}
+
+	public ChatController getChatController() {
+		return chatController;
+	}
+
+	public TurnTrackerController getTurnController() {
+		return turnController;
+	}
+
 	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, Facade facade) {
 		
 		this.setLayout(new BorderLayout());

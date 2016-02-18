@@ -77,7 +77,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		if (playersLite.length == 4) {
 			facade.deleteObserver(this);
 			getView().closeModal();
-		    //allPlayersEnteredAction.execute();
+			if (allPlayersEnteredAction != null)
+				allPlayersEnteredAction.execute();
+			else 
+				System.out.println("WARNING! allPlayersEnteredAction was not set");
 		}
 		
 	}

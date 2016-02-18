@@ -82,7 +82,7 @@ public class Catan extends JFrame
 					@Override
 					public void execute() 
 					{
-						catan.getMapController().enterGame();
+						catan.catanPanel.enterGame();
 					}
 					
 				});

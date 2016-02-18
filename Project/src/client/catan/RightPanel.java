@@ -18,6 +18,18 @@ public class RightPanel extends JPanel
 	private PlayDevCardView playCardView;
 	private BuyDevCardView buyCardView;
 	private DevCardController devCardController;
+	public DevCardController getDevCardController() {
+		return devCardController;
+	}
+
+	public PointsController getPointsController() {
+		return pointsController;
+	}
+
+	public ResourceBarController getResourceController() {
+		return resourceController;
+	}
+
 	private PointsView pointsView;
 	private GameFinishedView finishedView;
 	private PointsController pointsController;

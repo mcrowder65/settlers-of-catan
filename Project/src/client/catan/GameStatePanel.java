@@ -55,5 +55,7 @@ public class GameStatePanel extends JPanel
 		};
 		button.addActionListener(actionListener);
 	}
+	
+
 }
 

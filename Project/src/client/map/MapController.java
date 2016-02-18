@@ -29,7 +29,6 @@ public class MapController extends Controller implements IMapController, Observe
 		initFromModel();
 		this.currState = new IsNotTurnState(facade);
 		firstTime = true;
-		facade.addObserver(this);
 	}
 
 

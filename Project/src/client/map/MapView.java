@@ -200,6 +200,20 @@ public class MapView extends PanelView implements IMapView
 			overlay.cancelDrop();
 			overlay.closeModal();
 		}
+
+		@Override
+		public void enterGame() {
+			assert false;
+			
+		}
+
+		@Override
+		public void leaveGame() {
+			assert false;
+			
+		}
+
+	
 	};
 	
 	private static class MapOverlay extends OverlayView

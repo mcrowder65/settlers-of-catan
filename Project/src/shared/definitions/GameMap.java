@@ -420,17 +420,8 @@ public class GameMap {
 		int owner = value.getOwner();
 		EdgeLocation location = value.getLocation();
 		HexLocation hex = location.getHexLoc();
-		Boolean isLand = this.isLand(hex);
 		Boolean hasProperty = false;
 		EdgeDirection direction = location.getDir();
-		if(isLand == false){
-			return false;
-		}
-		
-		Boolean hasRoad = this.hasRoadAllPlayers(location);
-		if(hasRoad == true){
-			return false;
-		}
 		
 		if(direction == EdgeDirection.SouthWest){
 			VertexLocation property = new VertexLocation(hex, VertexDirection.West);
@@ -553,9 +544,7 @@ public class GameMap {
 		
 			}
 		}
-		else{
-			return true;
-		}
+
 		return false; //No road found - location is available 
 	}
 	

@@ -157,8 +157,8 @@ public class GameModel {
 	}
 	public Player getLocalPlayer(int playerId) {
 		for (int n = 0; n < players.length; n++) {
-			if (players[n] != null && players[playerId].getPlayerID() == playerId) 
-				return players[playerId];
+			if (players[n] != null && players[n].getPlayerID() == playerId) 
+				return players[n];
 		}
 		return null;
 	}

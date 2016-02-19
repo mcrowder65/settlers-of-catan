@@ -20,6 +20,9 @@ import shared.definitions.Player;
 public class ChatController extends Controller implements IChatController, Observer {
 
 	private Facade facade;
+	private int currentNumberOfMessages;
+	private Object lockObject = new Object();
+	
 	public ChatController(IChatView view, Facade facade) {
 		
 		super(view);
@@ -33,33 +36,43 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void sendMessage(String message) {
-		facade.sendChat(message);
+		synchronized (lockObject) {
+			boolean success = facade.sendChat(message);
+			if (success) {
+				currentNumberOfMessages++;
+				GameModel model = facade.fetchModel();
+				MessageList messages = model.getChat();
+				updateMessageView(messages, model);
+			}
+		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		GameModel model = (GameModel)arg;
-		MessageList messages = model.getChat();
+		synchronized (lockObject) {
+			GameModel model = (GameModel)arg;
+			MessageList messages = model.getChat();
+			if (messages.getLines().length > currentNumberOfMessages) {
+				currentNumberOfMessages = messages.getLines().length;
+				updateMessageView(messages, model);
+			}	
+		}
+	}
+	
+	private void updateMessageView(MessageList messages, GameModel model) {
 		MessageLine[] lines = messages.getLines();
-		List<LogEntry> entries = new ArrayList();
-		Player[] allPlayers = model.getPlayers();
+		List<LogEntry> entries = new ArrayList<LogEntry>();
 		for(int i =0; i<lines.length; i++){
 			MessageLine line = lines[i];
 			String message = line.getMessage();
 			String source = line.getSource();
-			for(int j=0; j<allPlayers.length; j++){
-				Player player = allPlayers[j];
-				String name = player.getName();
-				if(name.equals(source)){
-					CatanColor color = player.getColor();
-					LogEntry entry = new LogEntry(color,message);
-					entries.add(entry);
-				}
-			}	
+			Player sourcePlayer = model.findPlayerByName(source);
+			LogEntry entry = new LogEntry(sourcePlayer.getColor(), message);
+			entries.add(entry);
 		}
 		
-		this.getView().setEntries(entries);
 		
+		getView().setEntries(entries);
 	}
 
 	public void enterGame() {

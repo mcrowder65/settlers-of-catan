@@ -112,12 +112,12 @@ public class PlayingState extends GameState {
 
 	@Override
 	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
-		return facade.buildRoad(edgeLoc,true);
+		return facade.buildRoad(edgeLoc,false);
 	}
 
 	@Override
 	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
-		return facade.buildSettlement(vertLoc,true);
+		return facade.buildSettlement(vertLoc,false);
 	}
 
 	@Override

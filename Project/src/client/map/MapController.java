@@ -71,8 +71,16 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRoad(EdgeLocation edgeLoc) {
 		if(isRoadInModel(edgeLoc)) 
 			getView().placeRoad(edgeLoc, color);
-		else
+		else{
 			currState.placeRoad(edgeLoc);
+			getView().placeRoad(edgeLoc, color);
+			GameModel model = currState.fetchModel();
+			if (model.getTurnTracker().getStatus().equals("FirstRound") ||
+				model.getTurnTracker().getStatus().equals("SecondRound")) {
+				getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+			}
+		}
+		
 	}
 	public boolean isSettlementInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
@@ -202,11 +210,12 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
-		currState = currState.identifyState(model.getTurnTracker());
 		
+		currState = currState.identifyState(model.getTurnTracker());
+		placeRobber(map.getRobber());
 		if(firstTime) 
 			initMap(map);
-		placeRobber(map.getRobber());
+		
 		placeCities(map.getCities(), model.getPlayers());
 		setRoads(map.getRoads(), model.getPlayers());
 		
@@ -247,9 +256,8 @@ public class MapController extends Controller implements IMapController, Observe
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				System.out.println("startDrop: road"); //TODO output
 				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-
+				
 			}
 	}
 	public void leaveGame() {

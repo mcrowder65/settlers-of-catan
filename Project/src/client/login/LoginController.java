@@ -110,8 +110,8 @@ public class LoginController extends Controller implements ILoginController {
 		boolean success = false;
 		if(password.equals(passConfirmed)){
 			success = facade.register(username,password);
+			if(!success) return; //TODO how do we throw an error message?
 			success = facade.login(username,password);
-		
 		}
 		
 		if(success == true){

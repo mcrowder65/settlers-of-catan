@@ -16,5 +16,7 @@ public interface IRollView extends IOverlayView
 	 */
 	void setMessage(String message);
 	
+	
+	boolean isModalShowing();
 }
 

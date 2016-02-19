@@ -7,8 +7,11 @@ import shared.locations.*;
 import client.base.*;
 import client.controller.Facade;
 import client.data.*;
+import client.gamestate.FirstRoundState;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.gamestate.SecondRoundState;
+import client.utils.DataUtils;
 
 
 /**
@@ -72,10 +75,17 @@ public class MapController extends Controller implements IMapController, Observe
 		boolean success = currState.placeRoad(edgeLoc);
 		if (success) {
 			placeRoadVisual(edgeLoc, currState.getPlayerColor());
-			GameModel model = currState.fetchModel();
-			if (model.getTurnTracker().getStatus().equals("FirstRound") ||
-				model.getTurnTracker().getStatus().equals("SecondRound")) {
-					getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+			GameModel model = null;
+			synchronized(DataUtils.modelLock) {
+				model = currState.fetchModel();
+			
+				currState = currState.identifyState(model.getTurnTracker());
+				if (currState instanceof FirstRoundState ||
+					currState instanceof SecondRoundState) {
+						getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);
+						
+					
+					}
 			}
 		} else {
 			System.out.println("WARNING! placeRoad in MapController returned a fail.");
@@ -105,12 +115,17 @@ public class MapController extends Controller implements IMapController, Observe
 			boolean success = currState.placeSettlement(vertLoc);
 			if (success) {
 				placeSettlementVisual(vertLoc, currState.getPlayerColor());
-				GameModel model = currState.fetchModel();
-				if (model.getTurnTracker().getStatus().equals("FirstRound") ||
-					model.getTurnTracker().getStatus().equals("SecondRound")) {
-						currState.finishTurn();
-					
-					}
+				GameModel model = null;
+				synchronized(DataUtils.modelLock) {
+					model = currState.fetchModel();
+				
+					currState = currState.identifyState(model.getTurnTracker());
+					if (currState instanceof FirstRoundState ||
+						currState instanceof SecondRoundState) {
+							currState.finishTurn();
+						
+						}
+				}
 			}
 			else
 				System.out.println("WARNING! placeSettlement in MapController failed.");
@@ -247,6 +262,12 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		setSettlements(map.getSettlements(), model.getPlayers());
 		
+		if ( (currState instanceof FirstRoundState || currState instanceof SecondRoundState) 
+				&&  !getView().isOverlayShowing()) {
+			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+			
+			
+		}
 		
 		
 	}
@@ -285,15 +306,23 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void enterGame() {
-		currState.addObserver(this);
-		GameModel model = currState.fetchModel();
-		if (model.getTurnTracker().getStatus().equals("FirstRound") ||
-				model.getTurnTracker().getStatus().equals("SecondRound")) {
+		
+		GameModel model = null;
+		synchronized(DataUtils.modelLock) {
+			model = currState.fetchModel();
+		}
+		
+		currState = currState.identifyState(model.getTurnTracker());
+		if (currState instanceof FirstRoundState ||
+		    currState instanceof SecondRoundState) {
 				
-				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 				
 			}
+		
+		currState.addObserver(this);
+		
 	}
 	public void leaveGame() {
 		currState.deleteObserver(this);

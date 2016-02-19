@@ -19,7 +19,6 @@ public class RollController extends Controller implements IRollController,Observ
 
 	private IRollResultView resultView;
 	private GameState currState;
-    private boolean isShowingRoll = false;
 	/**
 	 * RollController constructor
 	 * 
@@ -60,8 +59,8 @@ public class RollController extends Controller implements IRollController,Observ
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
 		
-		if ( (currState instanceof RollingState) && !isShowingRoll) {
-			isShowingRoll = true;
+		if ( (currState instanceof RollingState) && !getRollView().isModalShowing()) {
+	
 			getRollView().showModal();
 		}
 

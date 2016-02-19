@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import client.data.GameManager;
+import client.utils.DataUtils;
 import shared.communication.response.GetModelResponse;
 /**
  * The Poller class periodically checks the proxy
@@ -49,11 +50,13 @@ public class Poller extends Observable {
 		@Override
 		public void run() {
 		
-			GetModelResponse response = proxy.getModel();
-			if (response.isSuccess() && response.isUpdated()) {
-				localVersion = response.getModel().getVersion();
-			    setChanged();
-				notifyObservers(response.getModel());
+			synchronized(DataUtils.modelLock) {
+				GetModelResponse response = proxy.getModel();
+				if (response.isSuccess() && response.isUpdated()) {
+					localVersion = response.getModel().getVersion();
+				    setChanged();
+					notifyObservers(response.getModel());
+				}
 			}
 			
 			

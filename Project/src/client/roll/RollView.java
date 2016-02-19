@@ -72,6 +72,7 @@ public class RollView extends OverlayView implements IRollView {
 				closeModal();
 				
 				getController().rollDice();
+				System.out.println("im in here");
 			}
 		}	
 	};

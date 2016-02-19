@@ -346,10 +346,11 @@ public class Facade {
 		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
-		
-		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildRoad();
-		if(enoughResources == false){
-			return false;
+		if(!status.equals("FirstRound") && !status.equals("SecondRound")){
+			boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildRoad();
+			if(enoughResources == false){
+				return false;
+			}
 		}
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);

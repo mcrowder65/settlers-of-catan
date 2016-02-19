@@ -563,16 +563,16 @@ public class MapComponent extends JComponent
 					switch (dropType)
 					{
 						case ROAD:
-							getController().serverPlaceRoad(dropEdgeLoc);
+							getController().placeRoad(dropEdgeLoc);
 							break;
 						case SETTLEMENT:
-							getController().serverPlaceSettlement(dropVertLoc);
+							getController().placeSettlement(dropVertLoc);
 							break;
 						case CITY:
-							getController().serverPlaceCity(dropVertLoc);
+							getController().placeCity(dropVertLoc);
 							break;
 						case ROBBER:
-							getController().serverPlaceRobber(dropHexLoc);
+							getController().placeRobber(dropHexLoc);
 							break;
 						default:
 							assert false;

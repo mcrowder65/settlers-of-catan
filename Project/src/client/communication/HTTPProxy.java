@@ -396,7 +396,7 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public int getPlayerId() {
-		try {
+		try {//TODO make it so you don't get a null pointer exception if you're already registered.
 		String decoded = URLDecoder.decode(userCookie);
 		HashMap<String,String> kvPairs = Translator.makeKeyValuePairs(decoded);
 		

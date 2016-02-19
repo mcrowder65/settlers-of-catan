@@ -3,6 +3,7 @@ package client.join;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import client.base.*;
 import client.controller.Facade;
@@ -21,6 +22,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	private PlayerInfo[] players = new PlayerInfo[4];
 	private IAction allPlayersEnteredAction;
 	private int localCount = 0;
+	private Object lockObject = new Object();
 	
 	public IAction getAllPlayersEnteredAction() {
 		return allPlayersEnteredAction;
@@ -34,6 +36,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		super(view);
 		this.facade = facade;
+	
 	}
 
 	@Override
@@ -59,30 +62,41 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
 
-		boolean success = facade.addAI(getView().getSelectedAI());
+		synchronized (lockObject) {
+			boolean success = facade.addAI(getView().getSelectedAI());
+			if (success) {
+				localCount++;
+				GameModel model = facade.fetchModel();
+				PlayerInfo[] playersLite = model.getPlayersLite();
+				getView().closeModal();
+				getView().setPlayers(playersLite);
+				getView().showModal();
+			}
+		}
 	}
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		GameModel model = (GameModel)arg1;
-		PlayerInfo[] playersLite = model.getPlayersLite();
-		
-		if (playersLite.length != localCount) {
-			localCount = playersLite.length;
-			getView().closeModal();
-			getView().setPlayers(playersLite);
-			getView().showModal();
+		synchronized(lockObject) {
+			GameModel model = (GameModel)arg1;
+			PlayerInfo[] playersLite = model.getPlayersLite();
+			
+			if (playersLite.length != localCount) {
+				localCount = playersLite.length;
+				getView().closeModal();
+				getView().setPlayers(playersLite);
+				getView().showModal();
+			}
+			
+			
+			if (playersLite.length == 4) {
+				facade.deleteObserver(this);
+				getView().closeModal();
+				if (allPlayersEnteredAction != null)
+					allPlayersEnteredAction.execute();
+				else 
+					System.out.println("WARNING! allPlayersEnteredAction was not set");
+			}
 		}
-		
-		
-		if (playersLite.length == 4) {
-			facade.deleteObserver(this);
-			getView().closeModal();
-			if (allPlayersEnteredAction != null)
-				allPlayersEnteredAction.execute();
-			else 
-				System.out.println("WARNING! allPlayersEnteredAction was not set");
-		}
-		
 	}
 
 }

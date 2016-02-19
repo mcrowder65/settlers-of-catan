@@ -48,7 +48,8 @@ public class RollController extends Controller implements IRollController,Observ
 
 	@Override
 	public void rollDice() {
-
+		int result = currState.rollNumber();
+		this.getResultView().setRollValue(result);
 		getResultView().showModal();
 	}
 

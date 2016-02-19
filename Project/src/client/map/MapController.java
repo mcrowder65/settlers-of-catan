@@ -283,8 +283,9 @@ public class MapController extends Controller implements IMapController, Observe
 		if (model.getTurnTracker().getStatus().equals("FirstRound") ||
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
-				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				
+				//getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+
 			}
 	}
 	public void leaveGame() {

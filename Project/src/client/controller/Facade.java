@@ -353,9 +353,10 @@ public class Facade {
 		}
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
+		boolean hasRoad = false;
 		boolean canLayOnMap = false;
 		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
-			canLayOnMap = game.getModel().getMap().hasRoadAllPlayers(location);
+			hasRoad = game.getModel().getMap().hasRoadAllPlayers(location);
 			HexLocation loc = location.getHexLoc();
 			boolean isLand = game.getModel().getMap().isLand(loc);
 			EdgeDirection direction = location.getDir();
@@ -363,7 +364,7 @@ public class Facade {
 			if(isLand == false){
 				isLand = game.getModel().getMap().isLand(locOpp);
 			}
-			if(isLand == false || canLayOnMap == false){
+			if(isLand == false || hasRoad == true){
 				return false;
 			}
 			boolean canLayThisRound = game.getModel().getMap().canLayRoadFirstRounds(value);
@@ -375,7 +376,7 @@ public class Facade {
 			}
 		}
 		else{
-			canLayOnMap = game.getModel().getMap().canLayRoad(value);
+			 canLayOnMap = game.getModel().getMap().canLayRoad(value);
 		}
 		
 		if(canLayOnMap == false){

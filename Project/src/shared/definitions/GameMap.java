@@ -553,9 +553,7 @@ public class GameMap {
 		
 			}
 		}
-		else{
-			return true;
-		}
+
 		return false; //No road found - location is available 
 	}
 	

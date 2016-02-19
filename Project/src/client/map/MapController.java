@@ -63,7 +63,7 @@ public class MapController extends Controller implements IMapController, Observe
 		EdgeValue temp = new EdgeValue(currState.getPlayerId(), edgeLoc);
 		EdgeValue[] roads = map.getRoads();
 		for(int i = 0; i < roads.length; i++){
-			if(roads[i].equals(temp))
+			if(roads[i].getLocation().equals(temp.getLocation()))
 				return true;
 		}
 		return false;
@@ -77,12 +77,10 @@ public class MapController extends Controller implements IMapController, Observe
 	public boolean isSettlementInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
 		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
-		VertexObject temp = new VertexObject(currState.getPlayerId(), tempVL);
 		VertexObject[] settlements = map.getSettlements();
 		for(int i = 0; i < settlements.length; i++){
-			if(settlements[i].equals(temp))
+			if(settlements[i].getLocation().equals(tempVL))
 				return true;
-				
 		}
 		
 		return false;
@@ -96,10 +94,9 @@ public class MapController extends Controller implements IMapController, Observe
 	public boolean isCityInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
 		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
-		VertexObject temp = new VertexObject(currState.getPlayerId(), tempVL);
 		VertexObject[] cities = map.getCities();
 		for(int i = 0; i < cities.length; i++){
-			if(cities[i].equals(temp))
+			if(cities[i].getLocation().equals(tempVL))
 				return true;
 		}
 		return false;
@@ -250,7 +247,7 @@ public class MapController extends Controller implements IMapController, Observe
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				
+				System.out.println("startDrop: road"); //TODO output
 				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 
 			}

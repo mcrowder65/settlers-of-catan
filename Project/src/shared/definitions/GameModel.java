@@ -116,6 +116,14 @@ public class GameModel {
 		}
 		return playersLite;
 	}
+	public Player findPlayerByName(String name) {
+		for (int n = 0; n < players.length; n++) {
+			if (players[n] == null) break;
+			if (players[n].getName().equals(name)) 
+				return players[n];
+		}
+		return null;
+	}
 	public void setPlayers(Player[] players)  throws IllegalArgumentException {
 		this.players = players;
 	}

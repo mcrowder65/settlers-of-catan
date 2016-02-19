@@ -256,7 +256,7 @@ public class MapController extends Controller implements IMapController, Observe
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-
+				
 			}
 	}
 	public void leaveGame() {

@@ -33,4 +33,8 @@ public class SecondRoundState extends GameState {
 	public String getGameStatePanelText() {
 		return "Place Initial Pieces";
 	}
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return false;
+	}
 }

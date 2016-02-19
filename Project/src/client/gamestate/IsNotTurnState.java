@@ -15,6 +15,10 @@ public class IsNotTurnState extends GameState {
 	}
 	@Override
 	public String getGameStatePanelText() {
-		return "Place Road!";
+		return "Wait for your Turn";
+	}
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return false;
 	}
 }

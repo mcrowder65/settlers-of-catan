@@ -21,4 +21,8 @@ public class DiscardingState extends GameState {
 	public String getGameStatePanelText() {
 		return "Discard";
 	}
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return false;
+	}
 }

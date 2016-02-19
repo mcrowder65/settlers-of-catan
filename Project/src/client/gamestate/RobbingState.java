@@ -11,4 +11,8 @@ public class RobbingState extends GameState {
 	public String getGameStatePanelText() {
 		return "Choose who to rob";
 	}
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return false;
+	}
 }

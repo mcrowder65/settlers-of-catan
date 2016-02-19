@@ -134,5 +134,8 @@ public class PlayingState extends GameState {
 	public String getGameStatePanelText() {
 		return "Finish Turn";
 	}
-
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return true;
+	}
 }

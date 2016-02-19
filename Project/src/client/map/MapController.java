@@ -113,7 +113,6 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	
 	public void placeRobber(HexLocation hexLoc) {
-		currState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
 		//getRobView().showModal();
 	}

@@ -1718,7 +1718,7 @@ public class GameMap {
 		return false;
 	}
 	
-public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, int owner) throws IllegalArgumentException{
+	public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, int owner) throws IllegalArgumentException{
 		
 		if(vDirection == VertexDirection.NorthWest){
 			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.North);
@@ -1749,130 +1749,57 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 			
 		}
 		else if (vDirection == VertexDirection.NorthEast){
-			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
-			EdgeValue road1 = new EdgeValue(owner,location1);
-			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.NorthEast);
-			EdgeValue road2 = new EdgeValue(owner,location2);
-			Boolean hasRoad1 = this.hasRoadPersonal(road1);
-			Boolean hasRoad2 = this.hasRoadPersonal(road2);
 			
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(homeHex, EdgeDirection.NorthWest);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(homeHex, EdgeDirection.North);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			HexLocation oppNorth = this.getOppositeHex(homeHex, EdgeDirection.North);
-			location1 = new EdgeLocation(oppNorth, EdgeDirection.South);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorth, EdgeDirection.SouthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppNorth, EdgeDirection.SouthEast);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorth, EdgeDirection.NorthEast);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			HexLocation oppNorthEast = this.getOppositeHex(homeHex, EdgeDirection.NorthEast);
-			location1 = new EdgeLocation(oppNorthEast, EdgeDirection.South);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthEast, EdgeDirection.SouthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppNorthEast, EdgeDirection.North);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthEast, EdgeDirection.NorthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-		}
-		else if (vDirection == VertexDirection.East){
 			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.North);
 			EdgeValue road1 = new EdgeValue(owner,location1);
 			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.NorthEast);
 			EdgeValue road2 = new EdgeValue(owner,location2);
 			Boolean hasRoad1 = this.hasRoadPersonal(road1);
 			Boolean hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			location1 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.North), EdgeDirection.South);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(homeHex, EdgeDirection.South);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.North), EdgeDirection.SouthEast);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			HexLocation oppNorthEast = this.getOppositeHex(homeHex, EdgeDirection.NorthEast);
-			location1 = new EdgeLocation(oppNorthEast, EdgeDirection.NorthWest);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.NorthEast), EdgeDirection.NorthWest);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthEast, EdgeDirection.SouthWest);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.NorthEast), EdgeDirection.SouthWest);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
+				return true;
+			}
+		}
+		else if (vDirection == VertexDirection.East){
+			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.NorthEast);
+			EdgeValue road1 = new EdgeValue(owner,location1);
+			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
+			EdgeValue road2 = new EdgeValue(owner,location2);
+			Boolean hasRoad1 = this.hasRoadPersonal(road1);
+			Boolean hasRoad2 = this.hasRoadPersonal(road2);
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			location1 = new EdgeLocation(oppNorthEast, EdgeDirection.SouthEast);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.NorthEast), EdgeDirection.South);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthEast, EdgeDirection.South);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.NorthEast), EdgeDirection.SouthWest);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			HexLocation oppSouthEast = this.getOppositeHex(homeHex, EdgeDirection.SouthEast);
-			location1 = new EdgeLocation(oppSouthEast, EdgeDirection.NorthWest);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.SouthEast), EdgeDirection.North);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthEast, EdgeDirection.SouthWest);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.SouthEast), EdgeDirection.NorthWest);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppSouthEast, EdgeDirection.North);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthEast, EdgeDirection.NorthEast);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
@@ -1880,63 +1807,27 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 		else if (vDirection == VertexDirection.SouthEast){
 			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.South);
 			EdgeValue road1 = new EdgeValue(owner,location1);
-			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthWest);
+			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
 			EdgeValue road2 = new EdgeValue(owner,location2);
 			Boolean hasRoad1 = this.hasRoadPersonal(road1);
 			Boolean hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			location1 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.South), EdgeDirection.North);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(homeHex, EdgeDirection.NorthEast);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.South), EdgeDirection.NorthEast);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			HexLocation oppSouthEast = this.getOppositeHex(homeHex, EdgeDirection.SouthEast);
-			location1 = new EdgeLocation(oppSouthEast, EdgeDirection.NorthWest);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.SouthEast), EdgeDirection.SouthWest);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthEast, EdgeDirection.North);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.SouthEast), EdgeDirection.NorthWest);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppSouthEast, EdgeDirection.SouthWest);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthEast, EdgeDirection.South);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			HexLocation oppSouth = this.getOppositeHex(homeHex, EdgeDirection.South);
-			location1 = new EdgeLocation(oppSouth, EdgeDirection.North);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouth, EdgeDirection.NorthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppSouth, EdgeDirection.SouthEast);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouth, EdgeDirection.NorthEast);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
@@ -1945,132 +1836,58 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 		else if (vDirection == VertexDirection.SouthWest){
 			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.South);
 			EdgeValue road1 = new EdgeValue(owner,location1);
-			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthEast);
+			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthWest);
 			EdgeValue road2 = new EdgeValue(owner,location2);
 			Boolean hasRoad1 = this.hasRoadPersonal(road1);
 			Boolean hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			location1 = new EdgeLocation(homeHex, EdgeDirection.SouthWest);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.South), EdgeDirection.North);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(homeHex, EdgeDirection.NorthWest);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.South), EdgeDirection.NorthWest);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			HexLocation oppSouth = this.getOppositeHex(homeHex, EdgeDirection.South);
-			location1 = new EdgeLocation(oppSouth, EdgeDirection.NorthEast);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.SouthWest), EdgeDirection.NorthEast);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouth, EdgeDirection.North);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.SouthWest), EdgeDirection.SouthEast);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppSouth, EdgeDirection.SouthWest);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouth, EdgeDirection.NorthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			HexLocation oppSouthWest = this.getOppositeHex(homeHex, EdgeDirection.SouthWest);
-			location1 = new EdgeLocation(oppSouthWest, EdgeDirection.North);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthWest, EdgeDirection.NorthEast);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppSouthWest, EdgeDirection.SouthEast);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthWest, EdgeDirection.South);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
 		}
 		else if (vDirection == VertexDirection.West){
-			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.South);
+			EdgeLocation location1 = new EdgeLocation(homeHex, EdgeDirection.NorthWest);
 			EdgeValue road1 = new EdgeValue(owner,location1);
 			EdgeLocation location2 = new EdgeLocation(homeHex, EdgeDirection.SouthWest);
 			EdgeValue road2 = new EdgeValue(owner,location2);
 			Boolean hasRoad1 = this.hasRoadPersonal(road1);
 			Boolean hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			location1 = new EdgeLocation(homeHex, EdgeDirection.North);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.NorthWest), EdgeDirection.South);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(homeHex, EdgeDirection.NorthWest);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.NorthWest), EdgeDirection.SouthEast);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
 			
-			HexLocation oppSouthWest = this.getOppositeHex(homeHex, EdgeDirection.SouthWest);
-			location1 = new EdgeLocation(oppSouthWest, EdgeDirection.NorthEast);
+			location1 = new EdgeLocation(getOppositeHex(homeHex, EdgeDirection.SouthWest), EdgeDirection.North);
 			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthWest, EdgeDirection.SouthEast);
+			location2 = new EdgeLocation(getOppositeHex(homeHex,EdgeDirection.SouthWest), EdgeDirection.NorthEast);
 			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
+			if(hasRoad1 == true || hasRoad2 == true){
 				return true;
 			}
-			
-			location1 = new EdgeLocation(oppSouthWest, EdgeDirection.North);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppSouthWest, EdgeDirection.NorthWest);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			HexLocation oppNorthWest = this.getOppositeHex(homeHex, EdgeDirection.NorthWest);
-			location1 = new EdgeLocation(oppNorthWest, EdgeDirection.SouthEast);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthWest, EdgeDirection.NorthEast);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
-			location1 = new EdgeLocation(oppNorthWest, EdgeDirection.SouthWest);
-			road1 = new EdgeValue(owner,location1);
-			location2 = new EdgeLocation(oppNorthWest, EdgeDirection.South);
-			road2 = new EdgeValue(owner,location2);
-			hasRoad1 = this.hasRoadPersonal(road1);
-			hasRoad2 = this.hasRoadPersonal(road2);
-			if(hasRoad1 == true && hasRoad2 == true){
-				return true;
-			}
-			
 		}
-		
 		return false;
 	}
 	
@@ -2289,7 +2106,14 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 					return false;
 				}
 			}
-			return true;
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
+			}
+			
 		}
 		else if(vertexDirection == VertexDirection.NorthEast){
 			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.East);
@@ -2311,7 +2135,13 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 					return false;
 				}
 			}
-			return true;
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		
 		else if(vertexDirection == VertexDirection.East){
@@ -2334,7 +2164,13 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 					return false;
 				}
 			}
-			return true;
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else if(vertexDirection == VertexDirection.SouthEast){
 			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.East);
@@ -2356,7 +2192,13 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 					return false;
 				}
 			}
-			return true;
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else if(vertexDirection == VertexDirection.SouthWest){
 			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.SouthEast);
@@ -2377,6 +2219,13 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 				if(hasProperty == true){
 					return false;
 				}
+			}
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
 			}
 			
 		}
@@ -2399,6 +2248,13 @@ public boolean oneRoadChecker(HexLocation homeHex, VertexDirection vDirection, i
 				if(hasProperty == true){
 					return false;
 				}
+			}
+			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
+			if(hasOneRoad == true){
+				return true;
+			}
+			else{
+				return false;
 			}
 			
 		}

@@ -416,6 +416,111 @@ public class GameMap {
 		return false;
 	}
 	
+	public Boolean canLayRoadFirstRounds(EdgeValue value) throws IllegalArgumentException{
+		int owner = value.getOwner();
+		EdgeLocation location = value.getLocation();
+		HexLocation hex = location.getHexLoc();
+		Boolean isLand = this.isLand(hex);
+		Boolean hasProperty = false;
+		EdgeDirection direction = location.getDir();
+		if(isLand == false){
+			return false;
+		}
+		
+		Boolean hasRoad = this.hasRoadAllPlayers(location);
+		if(hasRoad == true){
+			return false;
+		}
+		
+		if(direction == EdgeDirection.SouthWest){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+			
+		}
+		else if(direction == EdgeDirection.NorthWest){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+		}
+		else if(direction == EdgeDirection.North){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+		}
+		else if(direction == EdgeDirection.NorthEast){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+		}
+		else if(direction == EdgeDirection.SouthEast){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+		}
+		else if(direction == EdgeDirection.South){
+			VertexLocation property = new VertexLocation(hex, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hex, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Determines if any player has a road built in a location
 	 * Returns true if there is already a road there

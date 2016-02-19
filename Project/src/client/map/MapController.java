@@ -76,9 +76,9 @@ public class MapController extends Controller implements IMapController, Observe
 			getView().placeRoad(edgeLoc, color);
 			GameModel model = currState.fetchModel();
 			if (model.getTurnTracker().getStatus().equals("FirstRound") ||
-					model.getTurnTracker().getStatus().equals("SecondRound")) {
-					getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				}
+				model.getTurnTracker().getStatus().equals("SecondRound")) {
+				getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+			}
 		}
 		
 	}
@@ -210,11 +210,12 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();
-		currState = currState.identifyState(model.getTurnTracker());
 		
+		currState = currState.identifyState(model.getTurnTracker());
+		placeRobber(map.getRobber());
 		if(firstTime) 
 			initMap(map);
-		placeRobber(map.getRobber());
+		
 		placeCities(map.getCities(), model.getPlayers());
 		setRoads(map.getRoads(), model.getPlayers());
 		

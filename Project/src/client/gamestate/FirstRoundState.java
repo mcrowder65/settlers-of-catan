@@ -31,6 +31,10 @@ public class FirstRoundState extends GameState {
 	}
 
 	@Override
+	public boolean finishTurn() {
+		return facade.finishTurn();
+	}
+	@Override
 	public String getGameStatePanelText() {
 		return "Place Initial Pieces";
 	}

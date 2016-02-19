@@ -637,6 +637,10 @@ public class GameMap {
 				}
 			}
 		}
+		
+		if(direction == VertexDirection.West){
+			//HecLocation hex = 
+		}
 
 		//If there's no municipality at that vertex
 		return false;

@@ -64,6 +64,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 			@Override
 			public void execute()
 			{
+				
 				getController().endTurn();
 			}
 		});

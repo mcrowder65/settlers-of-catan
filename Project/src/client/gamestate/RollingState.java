@@ -21,4 +21,8 @@ public class RollingState extends GameState {
 	public String getGameStatePanelText() {
 		return "Roll the Dice";
 	}
+	@Override
+	public boolean isGameStatePanelEnabled() {
+		return false;
+	}
 }

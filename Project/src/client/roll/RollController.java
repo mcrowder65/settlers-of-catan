@@ -8,6 +8,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import shared.definitions.GameModel;
 
 
 /**
@@ -48,15 +49,16 @@ public class RollController extends Controller implements IRollController,Observ
 
 	@Override
 	public void rollDice() {
-		//int result = currState.rollNumber();
-		//this.getResultView().setRollValue(result);
+		int result = currState.rollNumber();
+		this.getResultView().setRollValue(result);
 		getResultView().showModal();
 		System.out.println("in here");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-	
+		GameModel model = (GameModel)arg;
+		currState = currState.identifyState(model.getTurnTracker());
 
 	}
 

@@ -42,12 +42,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-		facade.finishTurn();
+		currState.finishTurn();
 	}
 
 	private void initFromModel() {
 		//<temp>
-		getView().setLocalPlayerColor(CatanColor.red);
+		getView().setLocalPlayerColor(CatanColor.orange);
+		
 		//</temp>
 	}
 
@@ -56,9 +57,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
 		if ( DataUtils.countNumPlayers(model.getPlayers())  == 4) {
-			getView().updateGameState(currState.getGameStatePanelText(), true); //TODO: ERIC
-			
+			getView().updateGameState(currState.getGameStatePanelText(), currState.isGameStatePanelEnabled()); 
 		}
+		
+		//initFromModel
 
 	}
 	

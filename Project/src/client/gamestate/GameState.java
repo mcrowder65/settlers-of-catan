@@ -169,6 +169,7 @@ public abstract class GameState {
 		throw new IllegalStateException();
 	}
 	public abstract String getGameStatePanelText();
+	public abstract boolean isGameStatePanelEnabled();
 	
 	public void addObserver(Observer o) {
 		facade.addObserver(o);

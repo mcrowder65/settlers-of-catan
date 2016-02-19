@@ -1643,7 +1643,155 @@ public class GameMap {
 		}
 		return false;
 	}
-	
+	public boolean canBuildSettlementFirstRound(VertexObject settlement) throws IllegalArgumentException{
+		
+		int owner = settlement.getOwner();
+		VertexLocation location = settlement.getLocation();
+		HexLocation hexLoc = location.getHexLoc();
+		VertexDirection vertexDirection = location.getDir();
+		
+		Boolean hasProperty = this.hasMunicipality(location);
+		if(hasProperty == true){
+			return false;
+		}
+		
+		if(vertexDirection == VertexDirection.NorthWest){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.West);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(vertexDirection == VertexDirection.NorthEast){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.East);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		else if(vertexDirection == VertexDirection.East){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.NorthEast);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.SouthEast);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(vertexDirection == VertexDirection.SouthEast){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.East);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(vertexDirection == VertexDirection.SouthWest){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.West);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
+			return true;
+		}
+		else if(vertexDirection == VertexDirection.West){
+			VertexLocation property = new VertexLocation(hexLoc, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			property = new VertexLocation(hexLoc, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				return false;
+			}
+			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.SouthWest);
+			Boolean isHexLand = this.isLand(oppositeHex);
+			if(isHexLand == true){
+				property = new VertexLocation(oppositeHex, VertexDirection.NorthWest);
+				hasProperty = this.hasMunicipality(property);
+				if(hasProperty == true){
+					return false;
+				}
+			}
+			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
+			return true;
+		}
+		return false;
+	}
 	public boolean canBuildCity(VertexObject city) throws IllegalArgumentException{
 		return hasSettlement(city);
 	}

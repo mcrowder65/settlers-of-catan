@@ -401,17 +401,33 @@ public class Facade {
 		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
-		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildSettlement();
-		if(enoughResources == false){
-			return false;
+		if(!status.equals("FirstRound") && !status.equals("SecondRound")){
+			boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildSettlement();
+			if(enoughResources == false){
+				return false;
+			}
 		}
+		
 		int owner = game.getModel().getLocalIndex(playerId);
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = false;
 		boolean canLay = false;
 		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
-			canLayOnMap = game.getModel().getMap().hasMunicipality(location);
-			if(canLayOnMap == false){
+			//canLayOnMap = game.getModel().getMap().hasMunicipality(location);
+			//HexLocation hex = location.getHexLoc();
+			//boolean isLand = game.getModel().getMap().isLand(hex);
+			//if(isLand == false){
+				//return false;
+			//}
+			//if(canLayOnMap == false){
+				//return true;
+			//}
+			//high
+			boolean canLaySet = game.getModel().getMap().canBuildSettlementFirstRound(vertex);
+			if(canLaySet == false){
+				return false;
+			}
+			else{
 				return true;
 			}
 		}

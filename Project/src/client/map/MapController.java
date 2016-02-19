@@ -58,19 +58,62 @@ public class MapController extends Controller implements IMapController, Observe
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return currState.canPlaceRobber(hexLoc);
 	}
-
+	public boolean isRoadInModel(EdgeLocation edgeLoc){
+		GameMap map = currState.fetchModel().getMap();
+		EdgeValue temp = new EdgeValue(currState.getPlayerId(), edgeLoc);
+		EdgeValue[] roads = map.getRoads();
+		for(int i = 0; i < roads.length; i++){
+			if(roads[i].equals(temp))
+				return true;
+		}
+		return false;
+	}
 	public void placeRoad(EdgeLocation edgeLoc) {
-		getView().placeRoad(edgeLoc, color);
+		if(isRoadInModel(edgeLoc)) 
+			getView().placeRoad(edgeLoc, color);
+		else
+			currState.placeRoad(edgeLoc);
+	}
+	public boolean isSettlementInModel(VertexLocation vertLoc){
+		GameMap map = currState.fetchModel().getMap();
+		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
+		VertexObject temp = new VertexObject(currState.getPlayerId(), tempVL);
+		VertexObject[] settlements = map.getSettlements();
+		for(int i = 0; i < settlements.length; i++){
+			if(settlements[i].equals(temp))
+				return true;
+				
+		}
+		
+		return false;
 	}
 	public void placeSettlement(VertexLocation vertLoc) {
-		getView().placeSettlement(vertLoc, color);
+		if(isSettlementInModel(vertLoc))
+			getView().placeSettlement(vertLoc, color);
+		else
+			currState.placeSettlement(vertLoc);
 	}
-
+	public boolean isCityInModel(VertexLocation vertLoc){
+		GameMap map = currState.fetchModel().getMap();
+		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
+		VertexObject temp = new VertexObject(currState.getPlayerId(), tempVL);
+		VertexObject[] cities = map.getCities();
+		for(int i = 0; i < cities.length; i++){
+			if(cities[i].equals(temp))
+				return true;
+		}
+		return false;
+	}
 	public void placeCity(VertexLocation vertLoc) {
-		getView().placeCity(vertLoc, color);
+		if(isCityInModel(vertLoc))
+			getView().placeCity(vertLoc, color);
+		else
+			currState.placeCity(vertLoc);
 	}
-
+	
+	
 	public void placeRobber(HexLocation hexLoc) {
+		currState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
 		//getRobView().showModal();
 	}
@@ -208,35 +251,12 @@ public class MapController extends Controller implements IMapController, Observe
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				
+				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 
 			}
 	}
 	public void leaveGame() {
 		currState.deleteObserver(this);
-	}
-
-
-	@Override
-	public void serverPlaceRoad(EdgeLocation dropEdgeLoc) {
-		currState.placeRoad(dropEdgeLoc);
-	}
-
-
-	@Override
-	public void serverPlaceSettlement(VertexLocation dropVertLoc) {
-		currState.placeSettlement(dropVertLoc);
-	}
-
-
-	@Override
-	public void serverPlaceCity(VertexLocation dropVertLoc) {
-		currState.placeCity(dropVertLoc);
-	}
-
-
-	@Override
-	public void serverPlaceRobber(HexLocation dropHexLoc) {
-		currState.placeRobber(dropHexLoc);
 	}
 }

@@ -8,6 +8,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.gamestate.RollingState;
 import shared.definitions.GameModel;
 
 
@@ -18,7 +19,7 @@ public class RollController extends Controller implements IRollController,Observ
 
 	private IRollResultView resultView;
 	private GameState currState;
-
+    private boolean isShowingRoll = false;
 	/**
 	 * RollController constructor
 	 * 
@@ -52,13 +53,17 @@ public class RollController extends Controller implements IRollController,Observ
 		int result = currState.rollNumber();
 		this.getResultView().setRollValue(result);
 		getResultView().showModal();
-		System.out.println("in here");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
+		
+		if ( (currState instanceof RollingState) && !isShowingRoll) {
+			isShowingRoll = true;
+			getRollView().showModal();
+		}
 
 	}
 

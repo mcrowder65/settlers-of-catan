@@ -71,8 +71,16 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRoad(EdgeLocation edgeLoc) {
 		if(isRoadInModel(edgeLoc)) 
 			getView().placeRoad(edgeLoc, color);
-		else
+		else{
 			currState.placeRoad(edgeLoc);
+			getView().placeRoad(edgeLoc, color);
+			GameModel model = currState.fetchModel();
+			if (model.getTurnTracker().getStatus().equals("FirstRound") ||
+					model.getTurnTracker().getStatus().equals("SecondRound")) {
+					getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				}
+		}
+		
 	}
 	public boolean isSettlementInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
@@ -247,7 +255,6 @@ public class MapController extends Controller implements IMapController, Observe
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				System.out.println("startDrop: road"); //TODO output
 				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 
 			}

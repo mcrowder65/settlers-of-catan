@@ -44,7 +44,6 @@ public class MapController extends Controller implements IMapController, Observe
 		this.robView = robView;
 	}
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		//System.out.println("can place road? " + it); //TODO output in mapcontroller
 		return currState.canPlaceRoad(edgeLoc);
 	}
 
@@ -72,9 +71,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-
 		getView().placeRobber(hexLoc);
-
 		//getRobView().showModal();
 	}
 
@@ -211,7 +208,7 @@ public class MapController extends Controller implements IMapController, Observe
 				model.getTurnTracker().getStatus().equals("SecondRound")) {
 				
 				getView().startDrop(PieceType.ROAD, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
-				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
+				getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 
 			}
 	}
@@ -222,28 +219,24 @@ public class MapController extends Controller implements IMapController, Observe
 
 	@Override
 	public void serverPlaceRoad(EdgeLocation dropEdgeLoc) {
-		// TODO Auto-generated method stub
 		currState.placeRoad(dropEdgeLoc);
 	}
 
 
 	@Override
 	public void serverPlaceSettlement(VertexLocation dropVertLoc) {
-		// TODO Auto-generated method stub
 		currState.placeSettlement(dropVertLoc);
 	}
 
 
 	@Override
 	public void serverPlaceCity(VertexLocation dropVertLoc) {
-		// TODO Auto-generated method stub
 		currState.placeCity(dropVertLoc);
 	}
 
 
 	@Override
 	public void serverPlaceRobber(HexLocation dropHexLoc) {
-		// TODO Auto-generated method stub
 		currState.placeRobber(dropHexLoc);
 	}
 }

@@ -131,15 +131,15 @@ public class MapView extends PanelView implements IMapView
 		}
 		
 		@Override
-		public void serverPlaceRoad(EdgeLocation edgeLoc)
+		public void placeRoad(EdgeLocation edgeLoc)
 		{
 			
 			closeModal();
-			getController().serverPlaceRoad(edgeLoc);
+			getController().placeRoad(edgeLoc);
 		}
 		
 		@Override
-		public void serverPlaceSettlement(VertexLocation vertLoc)
+		public void placeSettlement(VertexLocation vertLoc)
 		{
 			
 			closeModal();
@@ -147,7 +147,7 @@ public class MapView extends PanelView implements IMapView
 		}
 		
 		@Override
-		public void serverPlaceCity(VertexLocation vertLoc)
+		public void placeCity(VertexLocation vertLoc)
 		{
 			
 			closeModal();
@@ -155,7 +155,7 @@ public class MapView extends PanelView implements IMapView
 		}
 		
 		@Override
-		public void serverPlaceRobber(HexLocation hexLoc)
+		public void placeRobber(HexLocation hexLoc)
 		{
 			
 			closeModal();
@@ -212,33 +212,6 @@ public class MapView extends PanelView implements IMapView
 			assert false;
 			
 		}
-
-		@Override
-		public void placeRoad(EdgeLocation edgeLoc) {
-			// TODO if something is with placing roads it could be because of this
-		}
-
-		@Override
-		public void placeSettlement(VertexLocation vertLoc) {
-			// TODO if something is wrong with placing settlements it could be bc of this
-			
-		}
-
-		@Override
-		public void placeCity(VertexLocation vertLoc) {
-			// TODO if something is wrong with placing cities it could be bc of this
-			
-		}
-
-		@Override
-		public void placeRobber(HexLocation hexLoc) {
-			// TODO if something is wrong with placing the robber it could be bc of this.
-			
-		}
-
-
-
-	
 	};
 	
 	private static class MapOverlay extends OverlayView

@@ -139,13 +139,5 @@ public interface IMapController extends IController
 
 	void enterGame();
 	void leaveGame();
-
-	void serverPlaceRoad(EdgeLocation dropEdgeLoc);
-
-	void serverPlaceSettlement(VertexLocation dropVertLoc);
-
-	void serverPlaceCity(VertexLocation dropVertLoc);
-
-	void serverPlaceRobber(HexLocation dropHexLoc);
 }
 

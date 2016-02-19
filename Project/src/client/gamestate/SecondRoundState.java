@@ -37,4 +37,8 @@ public class SecondRoundState extends GameState {
 	public boolean isGameStatePanelEnabled() {
 		return false;
 	}
+	@Override
+	public boolean finishTurn() {
+		return facade.finishTurn();
+	}
 }

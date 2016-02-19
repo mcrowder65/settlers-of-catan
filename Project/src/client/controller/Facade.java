@@ -44,6 +44,10 @@ public class Facade {
 	public int getPlayerId() {
 		return game.getProxy().getPlayerId();
 	}
+	public CatanColor getPlayerColor() {
+		return game.getModel().getLocalPlayer(playerId).getColor();
+		
+	}
 	public void startPoller() {
 		game.getPoller().startPolling();
 	}

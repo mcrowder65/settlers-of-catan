@@ -181,6 +181,9 @@ public abstract class GameState {
 	public int getPlayerId() {
 		return facade.getPlayerId();
 	}
+	public CatanColor getPlayerColor() {
+		return facade.getPlayerColor();
+	}
 	public GameModel fetchModel() {
 		return facade.fetchModel();
 	}

@@ -131,6 +131,11 @@ public class PlayingState extends GameState {
 	}
 	
 	@Override
+	public boolean finishTurn() {
+		return facade.finishTurn();
+	}
+	
+	@Override
 	public String getGameStatePanelText() {
 		return "Finish Turn";
 	}

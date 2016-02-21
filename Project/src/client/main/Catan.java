@@ -65,12 +65,12 @@ public class Catan extends JFrame
 			public void run()
 			{
 				HTTPProxy proxy = new HTTPProxy(args[0], Integer.parseInt(args[1]));
-				GameManager gameManager = new GameManager(proxy,2);
+				GameManager gameManager = new GameManager(proxy,1);
 				
 				
 				
 				
-				Facade facade = new Facade(proxy, 2, gameManager);
+				Facade facade = new Facade(proxy, 1, gameManager);
 				Catan catan = new Catan(facade);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();

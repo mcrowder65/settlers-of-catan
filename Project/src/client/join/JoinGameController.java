@@ -130,7 +130,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			
 		}
 		else
-			; 
+		   showCreateGameFail();
 	}
 
 	@Override
@@ -164,8 +164,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		facade.startPoller();
 		joinAction.execute();
 	  } else 
-		  ; 
+		  showJoinGameFail();
 	
+	}
+	
+	private void showCreateGameFail() {
+		messageView.setTitle("Error!");
+		messageView.setMessage("Create game failed.");
+		messageView.showModal();
+	}
+	private void showJoinGameFail() {
+		messageView.setTitle("Error!");
+		messageView.setMessage("Join game failed.");
+		messageView.showModal();
 	}
 
 }

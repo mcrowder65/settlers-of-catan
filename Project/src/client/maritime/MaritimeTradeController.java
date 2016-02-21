@@ -84,7 +84,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGetResource(ResourceType resource) {
 		getTradeOverlay().selectGetOption(resource, 1);
-		get = resource;
+		get = resource;//TODO matt - test to make sure get never gets set to something else when cancelling
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().selectGiveOption(resource, 4);
 		
 		getTradeOverlay().showGetOptions(types);
-		give = resource;
+		give = resource; //TODO matt - test to make sure give never gets set to something else when cancelling
 	}
 
 	@Override

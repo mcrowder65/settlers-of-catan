@@ -42,7 +42,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.currState = new IsNotTurnState(facade);
 		facade.addObserver(this);
 	}
-
+	
+	
 	public IDomesticTradeView getTradeView() {
 
 		return (IDomesticTradeView)super.getView();
@@ -72,21 +73,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.acceptOverlay = acceptOverlay;
 	}
 
-
+	int receiver;
 	@Override
 	public void startTrade() {
-
+		getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		System.out.println("decrease resource amount: " + resource);//TODO output
+	
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-
+		System.out.println("increase resource amount: " + resource);//TODO output
 	}
 
 	@Override
@@ -98,22 +100,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-
+		System.out.println("setPlayer to trade with: " + playerIndex);
+		receiver = playerIndex;
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		System.out.println("setResourceToReceive: " + resource);//TODO output
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-
+		System.out.println("set resource to send: " + resource);//TODO output
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-
+		System.out.println("unset resource: " + resource);//TODO output
 	}
 
 	@Override

@@ -44,5 +44,8 @@ public interface ILoginView extends IOverlayView
 	 */
 	String getRegisterPasswordRepeat();
 	
+	
+	boolean isRegisterFieldsValid();
+	
 }
 

@@ -97,29 +97,49 @@ public class LoginController extends Controller implements ILoginController {
 		if(success == true){
 			getLoginView().closeModal();
 			loginAction.execute();
+		} else {
+			showLoginFail();
 		}
 	}
 
 	@Override
 	public void register() {
 		
-		
-		String username = this.getLoginView().getRegisterUsername();
-		String password = this.getLoginView().getRegisterPassword();
-		String passConfirmed = this.getLoginView().getRegisterPasswordRepeat();
-		boolean success = false;
-		if(password.equals(passConfirmed)){
-			success = facade.register(username,password);
-			if(!success) return; //TODO how do we throw an error message?
-			success = facade.login(username,password);
+		if (!getLoginView().isRegisterFieldsValid()){
+			showRegisterFail();
+			return;	
 		}
 		
-		if(success == true){
+		String username = getLoginView().getRegisterUsername();
+		String password = getLoginView().getRegisterPassword();
+		
+		boolean success = false;
+	    success = facade.register(username,password);
+		if(!success) {
+			showRegisterFail();
+			return;
+		}
+		success = facade.login(username,password);
+		if(success){
 			// If register succeeded
 			getLoginView().closeModal();
 			loginAction.execute();
+		} else {
+			showRegisterFail();
+			return;
 		}
 	
+	}
+	
+	private void showLoginFail() {
+		messageView.setTitle("Error!");
+		messageView.setMessage("Sign in failed.");
+		messageView.showModal();
+	}
+	private void showRegisterFail() {
+		messageView.setTitle("Warning!");
+		messageView.setMessage("Invalid username or password.");
+		messageView.showModal();
 	}
 
 }

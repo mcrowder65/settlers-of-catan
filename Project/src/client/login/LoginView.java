@@ -81,7 +81,11 @@ public class LoginView extends OverlayView implements ILoginView
 
         initComponents();
     }
-
+      
+    @Override
+    public boolean isRegisterFieldsValid() {
+    	return registerPanel.isFieldsValid();
+    }
     private void initComponents()
     {
         JComponent left = initLeftComponents();
@@ -278,6 +282,10 @@ public class LoginView extends OverlayView implements ILoginView
         private JLabel lblPasswordAgain = null;
         private JTextField txtPasswordAgain = null;
         private JButton btnRegister = null;
+        
+        private  TextFieldValidator usernameValidator = null;
+        private TextFieldValidator passValidator = null;
+        private TextFieldValidator passAgainValidator = null;
 
         public RegisterPanel()
         {
@@ -367,7 +375,7 @@ public class LoginView extends OverlayView implements ILoginView
             });
 
             //Code to check if the username length is correct!
-            TextFieldValidator usernameValidator = new TextFieldValidator(txtUsername)
+             usernameValidator = new TextFieldValidator(txtUsername)
             {
                 @Override
                 public boolean validateContents(String username)
@@ -397,7 +405,7 @@ public class LoginView extends OverlayView implements ILoginView
 
             };
 
-            TextFieldValidator passValidator = new TextFieldValidator(txtPassword)
+            passValidator = new TextFieldValidator(txtPassword)
             {
 
                 @Override
@@ -426,7 +434,7 @@ public class LoginView extends OverlayView implements ILoginView
 
             };
 
-            TextFieldValidator passAgainValidator = new TextFieldValidator(txtPasswordAgain)
+            passAgainValidator = new TextFieldValidator(txtPasswordAgain)
             {
 
                 @Override
@@ -447,6 +455,10 @@ public class LoginView extends OverlayView implements ILoginView
             txtPasswordAgain.getDocument().addDocumentListener(passAgainValidator);
 
         }
+        
+        public boolean isFieldsValid() {
+        	return usernameValidator.isValid() && passValidator.isValid() && passAgainValidator.isValid();
+        }
     }
 
     private static abstract class TextFieldValidator implements DocumentListener, FocusListener
@@ -457,6 +469,7 @@ public class LoginView extends OverlayView implements ILoginView
         private JTextField textFieldValidate = null;
         private Border originalBorder = null;
         private Border redBorder = null;
+        private boolean valid = true;
 
         public TextFieldValidator(JTextField textFieldValidate)
         {
@@ -502,12 +515,17 @@ public class LoginView extends OverlayView implements ILoginView
             if (validateContents(contents))
             {
                 textFieldValidate.setBorder(originalBorder);
+                valid = true;
             }
             else
             {
                 Border errorBorder = BorderFactory.createCompoundBorder(originalBorder, redBorder);
                 textFieldValidate.setBorder(errorBorder);
+                valid = false;
             }
+        }
+        public boolean isValid() {
+        	return valid;
         }
     }
 

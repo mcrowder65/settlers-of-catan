@@ -737,19 +737,9 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseMonument() throws IllegalArgumentException{
-		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals("Playing")){
-			return false;
-		}
+		
 		boolean playerCheck = localPlayer.canPlayMonumentCard();
 		if(playerCheck == false){
 			return false;
@@ -763,19 +753,8 @@ public class Facade {
 	 * @return True if the user can move the Robber
 	 */
 	public boolean canPlaceRobber(HexLocation location) throws IllegalArgumentException{
-		boolean isTurn = false;
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals( "Robbing")){
-			return false;
-		}
+		
 		boolean mapCheck = model.getMap().canLayRobber(location);
 		if(mapCheck == false){
 			return false;

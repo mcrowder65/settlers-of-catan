@@ -36,7 +36,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 		this.waitView = waitView;
 		this.currState = new IsNotTurnState(facade);
-	
+		currState.addObserver(this);
 	}
 
 	public IDiscardView getDiscardView() {
@@ -64,12 +64,6 @@ public class DiscardController extends Controller implements IDiscardController,
 	
 	}
 	
-	public void enterGame() {
-		currState.addObserver(this);
-	}
-	public void leaveGame() {
-		currState.deleteObserver(this);
-	}
 
 	@Override
 	public void discard() {
@@ -82,16 +76,21 @@ public class DiscardController extends Controller implements IDiscardController,
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
 		IDiscardView view = getDiscardView();
-		if (currState instanceof DiscardingState && !view.isModalShowing()) {
+		if (currState instanceof DiscardingState && !view.isModalShowing() && currState.getPlayerResources().total() > 7) {
 			
 			ResourceList myResources = currState.getPlayerResources();
+			
 			view.setResourceMaxAmount(ResourceType.WOOD, myResources.getWood());
 			view.setResourceMaxAmount(ResourceType.BRICK, myResources.getBrick());
 			view.setResourceMaxAmount(ResourceType.ORE, myResources.getOre());
 			view.setResourceMaxAmount(ResourceType.SHEEP, myResources.getSheep());
 			view.setResourceMaxAmount(ResourceType.WHEAT, myResources.getWheat());
 			
-			
+			view.setResourceAmountChangeEnabled(ResourceType.WOOD, myResources.getWood() > 0, false);
+			view.setResourceAmountChangeEnabled(ResourceType.BRICK, myResources.getBrick() > 0, false);
+			view.setResourceAmountChangeEnabled(ResourceType.ORE, myResources.getOre() > 0, false);
+			view.setResourceAmountChangeEnabled(ResourceType.SHEEP, myResources.getSheep() > 0, false);
+			view.setResourceAmountChangeEnabled(ResourceType.WHEAT, myResources.getWheat() > 0, false);
 			view.showModal();
 		}
 	}

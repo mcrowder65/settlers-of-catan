@@ -2315,11 +2315,11 @@ public class GameMap {
 	}
 	public VertexObject findMunicipality(VertexLocation location) {
 		for (VertexObject obj : allSettlements) {
-			if (obj.getLocation().equals(location))
+			if (obj.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation()))
 				return obj;
 		}
 		for (VertexObject obj : allCities) {
-			if (obj.getLocation().equals(location))
+			if (obj.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation()))
 				return obj;
 		}
 		return null;

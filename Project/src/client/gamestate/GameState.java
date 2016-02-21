@@ -27,8 +27,8 @@ public abstract class GameState {
 	public GameState identifyState(TurnTracker turnTracker) {
 		
 		GameState gameState =  null; 
-		if (!turnTracker.isMyTurn(facade.getPlayerIndex())) gameState = new IsNotTurnState(facade);
-		else if(turnTracker.getStatus().equals("Discarding")) gameState = new DiscardingState(facade);
+		if(turnTracker.getStatus().equals("Discarding")) gameState = new DiscardingState(facade);
+		else if (!turnTracker.isMyTurn(facade.getPlayerIndex())) gameState = new IsNotTurnState(facade);
 		else if(turnTracker.getStatus().equals("FirstRound")) gameState = new FirstRoundState(facade);
 		else if(turnTracker.getStatus().equals("Playing")) gameState = new PlayingState(facade);
 		else if(turnTracker.getStatus().equals("Robbing")) gameState = new RobbingState(facade);

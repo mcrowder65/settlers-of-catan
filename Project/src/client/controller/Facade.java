@@ -794,13 +794,14 @@ public class Facade {
 		 List<VertexObject> municipalities = game.getModel().getMap().getBorderingMunicipalities(hexLoc);
 		 for (VertexObject obj : municipalities) {
 			 Player owner = game.getModel().getPlayers()[obj.getOwner()];
-			 //TODO: Put that line back in, testing
+			 //TODO: Put that line back in, testin
 			 if (obj.getOwner() != playerIndex /*&& owner.getNumOfCards() > 7*/ && !usedIndices[obj.getOwner()]) {
 				 RobPlayerInfo robPlayer = new RobPlayerInfo( owner);
 				 info.add(robPlayer);
 				 usedIndices[obj.getOwner()] = true;
 			 }
 		 }
+		 ;
 		 RobPlayerInfo[] arrayInfo = new RobPlayerInfo[info.size()];
 		 for (int n = 0; n < arrayInfo.length; n++) {
 			 arrayInfo[n] = info.get(n);

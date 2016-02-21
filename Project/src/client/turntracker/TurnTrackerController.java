@@ -46,7 +46,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-		currState.finishTurn();
+		synchronized (DataUtils.modelLock) {
+			boolean success = currState.finishTurn();
+			if (success) {
+				GameModel model = currState.fetchModel();
+				currState = currState.identifyState(model.getTurnTracker());
+				getView().updateGameState(currState.getGameStatePanelText(), currState.isGameStatePanelEnabled());
+			
+			}
+		}
 	}
 	
 	private void startInit(GameModel model){

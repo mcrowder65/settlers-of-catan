@@ -183,6 +183,9 @@ public class ResourceList {
 		return true;
 	}
 	
+	public int total() {
+		return wood + brick + ore + sheep + wheat;
+	}
 }
 
 

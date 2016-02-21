@@ -14,6 +14,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	private Facade facade;
 	private int currentNumberOfMessages = 0;
+	final int maxNumOfMessages = 30;
 	public GameHistoryController(IGameHistoryView view, Facade facade) {
 		
 		super(view);
@@ -53,7 +54,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		MessageList messages = model.getLog();
-		if (messages.getLines().length > currentNumberOfMessages) {
+		if (messages.getLines().length > currentNumberOfMessages || messages.getLines().length == maxNumOfMessages) {
 			currentNumberOfMessages = messages.getLines().length;
 			MessageLine[] lines = messages.getLines();
 			List<LogEntry> entries = new ArrayList<LogEntry>();

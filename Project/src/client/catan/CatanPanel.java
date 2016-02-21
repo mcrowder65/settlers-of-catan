@@ -131,6 +131,7 @@ public class CatanPanel extends JPanel
 		midPanel.getMapController().enterGame();
 		rightPanel.getPointsController().enterGame();
 		rightPanel.getResourceController().enterGame();
+	
 		
 	}
 	public void leaveGame() {

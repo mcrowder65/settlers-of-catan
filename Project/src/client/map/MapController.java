@@ -166,6 +166,7 @@ public class MapController extends Controller implements IMapController, Observe
 		placeRobberVisual(hexLoc);
 		movedRobberLocation = hexLoc;
 		robView.setPlayers(currState.getRobbablePlayers(hexLoc));
+		
 		robView.showModal();
 		
 	}
@@ -279,7 +280,7 @@ public class MapController extends Controller implements IMapController, Observe
 			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 			
 			
-		} else if (currState instanceof RobbingState && !getView().isOverlayShowing()) {
+		} else if (currState instanceof RobbingState && !getView().isOverlayShowing() && !getRobView().isModalShowing()) {
 			startRobber(); 
 		}
 		

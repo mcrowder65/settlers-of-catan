@@ -788,19 +788,28 @@ public class Facade {
 	}
 
    
-	public List<RobPlayerInfo> getRobbablePlayers(HexLocation hexLoc, int playerIndex) {
+	public RobPlayerInfo[] getRobbablePlayers(HexLocation hexLoc, int playerIndex) {
 		 boolean[] usedIndices = new boolean[4];
 		 List<RobPlayerInfo> info = new ArrayList<RobPlayerInfo>();
 		 List<VertexObject> municipalities = game.getModel().getMap().getBorderingMunicipalities(hexLoc);
 		 for (VertexObject obj : municipalities) {
 			 Player owner = game.getModel().getPlayers()[obj.getOwner()];
-			 if (obj.getOwner() != playerIndex && owner.getNumOfCards() > 7 && !usedIndices[obj.getOwner()]) {
+			 //TODO: Put that line back in, testing
+			 if (obj.getOwner() != playerIndex /*&& owner.getNumOfCards() > 7*/ && !usedIndices[obj.getOwner()]) {
 				 RobPlayerInfo robPlayer = new RobPlayerInfo( owner);
 				 info.add(robPlayer);
 				 usedIndices[obj.getOwner()] = true;
 			 }
 		 }
-		 return info;
+		 RobPlayerInfo[] arrayInfo = new RobPlayerInfo[info.size()];
+		 for (int n = 0; n < arrayInfo.length; n++) {
+			 arrayInfo[n] = info.get(n);
+		 }
+		 
+		 return arrayInfo;
+	}
+	public ResourceList getResources(int playerIndex) {
+		return game.getModel().getPlayers()[playerIndex].getResources();
 	}
 
 

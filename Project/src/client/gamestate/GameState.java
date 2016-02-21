@@ -188,8 +188,11 @@ public abstract class GameState {
 	public GameModel fetchModel() {
 		return facade.fetchModel();
 	}
-	public List<RobPlayerInfo> getRobbablePlayers(HexLocation hexLoc) {
+	public RobPlayerInfo[] getRobbablePlayers(HexLocation hexLoc) {
 		return facade.getRobbablePlayers(hexLoc, getPlayerIndex());
+	}
+	public ResourceList getPlayerResources() {
+		return facade.getResources(getPlayerIndex());
 	}
 	
 }

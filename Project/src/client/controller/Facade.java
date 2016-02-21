@@ -342,6 +342,9 @@ public class Facade {
 	 * @return True if the road can be placed in the location
 	 */
 	public boolean canBuildRoad(EdgeLocation location) throws IllegalArgumentException {
+		if(location == null){
+			return false;
+		}
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{

@@ -156,17 +156,72 @@ public class ResourceList {
 	public int getWood() {
 		return wood;
 	}
+	
+	public int getResource(ResourceType resourceType) {
+		switch (resourceType) {
+		case BRICK:
+			return brick;
+		case ORE:
+			return ore;
+		case SHEEP:
+			return sheep;
+		case WHEAT:
+			return wheat;
+		case WOOD:
+			return wood;
+		default:
+			return -1;
+		
+		}
+	}
 	/**
 	 * Used to add resource cards to the Bank
 	 * @param resourceType = Type
 	 * @param quantity = How many cards should be added 
 	 */
-	public void addResource(String resourceType, int quantity){
-		if(resourceType == "brick") brick += quantity;
-		else if(resourceType == "ore") ore += quantity;
-		else if(resourceType == "sheep") sheep += quantity;
-		else if(resourceType == "wheat") wheat += quantity;
-		else wood++;
+	public void addResource(ResourceType resourceType, int quantity){
+		switch (resourceType) {
+		case BRICK:
+			brick += quantity;
+			break;
+		case ORE:
+			ore += quantity;
+			break;
+		case SHEEP:
+			sheep += quantity;
+			break;
+		case WHEAT:
+			wheat += quantity;
+			break;
+		case WOOD:
+			wood += quantity;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void removeResource(ResourceType resourceType, int quantity){
+		//TODO: Data integrity
+		switch (resourceType) {
+		case BRICK:
+			brick -= quantity;
+			break;
+		case ORE:
+			ore -= quantity;
+			break;
+		case SHEEP:
+			sheep -= quantity;
+			break;
+		case WHEAT:
+			wheat -= quantity;
+			break;
+		case WOOD:
+			wood -= quantity;
+			break;
+		default:
+			break;
+		}
 	}
 	
 	/**
@@ -186,6 +241,8 @@ public class ResourceList {
 	public int total() {
 		return wood + brick + ore + sheep + wheat;
 	}
+	
+	
 }
 
 

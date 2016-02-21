@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
+import client.utils.DataUtils;
 import shared.definitions.*;
 import shared.locations.*;
 
@@ -20,7 +21,6 @@ public class MapView extends PanelView implements IMapView
 	private MapOverlay overlay;
 	//Used to prevent the controller from seeing the modal was closed
 	//until it handles the action
-	private boolean simulateModalShowing = false;
 	
 	public MapView()
 	{
@@ -103,7 +103,7 @@ public class MapView extends PanelView implements IMapView
 	
 	@Override
 	public boolean isOverlayShowing() {
-		return overlay.isModalShowing() || simulateModalShowing;
+		return overlay.isModalShowing();
 	}
 	
 	private IMapController overlayController = new IMapController() {
@@ -142,37 +142,37 @@ public class MapView extends PanelView implements IMapView
 		@Override
 		public void placeRoad(EdgeLocation edgeLoc)
 		{
-			simulateModalShowing = true;
+			synchronized (DataUtils.modelLock) {
 			closeModal();
 			getController().placeRoad(edgeLoc);
-			simulateModalShowing = false;
+			}
 		}
 		
 		@Override
 		public void placeSettlement(VertexLocation vertLoc)
 		{
-			simulateModalShowing = true;
+			synchronized (DataUtils.modelLock) {
 			closeModal();
 			getController().placeSettlement(vertLoc);
-			simulateModalShowing = false;
+			}
 		}
 		
 		@Override
 		public void placeCity(VertexLocation vertLoc)
 		{
-			simulateModalShowing = true;
+			synchronized (DataUtils.modelLock) {
 			closeModal();
 			getController().placeCity(vertLoc);
-			simulateModalShowing = false;
+			}
 		}
 		
 		@Override
 		public void placeRobber(HexLocation hexLoc)
 		{
-			simulateModalShowing = true;
+			synchronized (DataUtils.modelLock) {
 			closeModal();
 			getController().placeRobber(hexLoc);
-			simulateModalShowing = false;
+			}
 		}
 		
 		@Override

@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import client.base.*;
+import client.utils.DataUtils;
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -69,10 +70,12 @@ public class RollView extends OverlayView implements IRollView {
 			
 			if (e.getSource() == rollButton) {
 				
-				closeModal();
+				synchronized(DataUtils.modelLock) {
+					closeModal();
+					
+					getController().rollDice();
+				}
 				
-				getController().rollDice();
-				System.out.println("im in here");
 			}
 		}	
 	};

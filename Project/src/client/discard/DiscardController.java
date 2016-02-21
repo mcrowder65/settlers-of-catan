@@ -12,6 +12,7 @@ import client.gamestate.DiscardingState;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.misc.*;
+import client.utils.DataUtils;
 
 
 /**
@@ -22,7 +23,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	private IWaitView waitView;
 	private GameState currState;
 	private int neededToDiscard;
-	private int currentAmountToDiscard;
+	private ResourceList currentDiscarding;
+	private ResourceList myResources;
 
 	/**
 	 * DiscardController constructor
@@ -51,24 +53,44 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		currentAmountToDiscard++;
-		getDiscardView().setStateMessage(currentAmountToDiscard + "/" + neededToDiscard);
-		getDiscardView().setDiscardButtonEnabled(currentAmountToDiscard == neededToDiscard);
+		currentDiscarding.addResource(resource, 1);
+		getDiscardView().setStateMessage(currentDiscarding.total() + "/" + neededToDiscard);
+		getDiscardView().setResourceAmountChangeEnabled(
+				resource, 
+				myResources.getResource(resource) > currentDiscarding.getResource(resource),
+				true);
+		getDiscardView().setDiscardButtonEnabled(currentDiscarding.total() == neededToDiscard);
+		getDiscardView().setResourceDiscardAmount(resource, currentDiscarding.getResource(resource));
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) {
-		currentAmountToDiscard--;
-		getDiscardView().setStateMessage(currentAmountToDiscard + "/" + neededToDiscard);
-		getDiscardView().setDiscardButtonEnabled(currentAmountToDiscard == neededToDiscard);
-	
+		currentDiscarding.removeResource(resource, 1);
+		getDiscardView().setStateMessage(currentDiscarding.total() + "/" + neededToDiscard);
+		getDiscardView().setResourceAmountChangeEnabled(
+				resource, 
+				true,
+				 currentDiscarding.getResource(resource) > 0);
+		getDiscardView().setDiscardButtonEnabled(currentDiscarding.total() == neededToDiscard);
+		getDiscardView().setResourceDiscardAmount(resource, currentDiscarding.getResource(resource));
 	}
 	
 
 	@Override
 	public void discard() {
 
-		getDiscardView().closeModal();
+		synchronized (DataUtils.modelLock) {
+			boolean success = currState.discardCards(currentDiscarding);
+			if (success)
+			{
+				
+				getDiscardView().closeModal();
+				
+			} else {
+				//TODO: Error message
+			}
+		
+		}
 	}
 
 	@Override
@@ -78,7 +100,11 @@ public class DiscardController extends Controller implements IDiscardController,
 		IDiscardView view = getDiscardView();
 		if (currState instanceof DiscardingState && !view.isModalShowing() && currState.getPlayerResources().total() > 7) {
 			
-			ResourceList myResources = currState.getPlayerResources();
+		    myResources = currState.getPlayerResources();
+			currentDiscarding = new ResourceList(0,0,0,0,0);
+			neededToDiscard = myResources.total() / 2;
+			
+			getDiscardView().setStateMessage(currentDiscarding.total() + "/" + neededToDiscard);
 			
 			view.setResourceMaxAmount(ResourceType.WOOD, myResources.getWood());
 			view.setResourceMaxAmount(ResourceType.BRICK, myResources.getBrick());

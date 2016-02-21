@@ -41,7 +41,6 @@ public class GameStatePanel extends JPanel
 	
 	public void updateGameState(String stateMessage, boolean enable)
 	{
-		System.out.println(stateMessage);
 		
 		button.setText(stateMessage);
 		button.setEnabled(enable);

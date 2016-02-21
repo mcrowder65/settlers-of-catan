@@ -661,6 +661,24 @@ public class GameMap {
 					}
 				}
 			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.SouthEast == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.NorthEast == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
 		}
 		
 		if(direction == VertexDirection.NorthWest){
@@ -672,6 +690,24 @@ public class GameMap {
 			int y2 = temp2.getY();
 			if(allCities.size() >0){
 				for(VertexObject temp : cities){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.SouthEast == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.West == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
 					int xTemp = temp.getLocation().getHexLoc().getX();
 					int yTemp = temp.getLocation().getHexLoc().getY();
 					VertexDirection directionTemp = temp.getLocation().getDir();
@@ -716,6 +752,24 @@ public class GameMap {
 					}
 				}
 			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.NorthWest == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.East == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
 		}
 		if(direction == VertexDirection.SouthEast){
 			HexLocation hex = getOppositeHex(location,EdgeDirection.South);
@@ -726,6 +780,24 @@ public class GameMap {
 			int y2 = temp2.getY();
 			if(allCities.size() >0){
 				for(VertexObject temp : cities){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.NorthEast == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.West == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
 					int xTemp = temp.getLocation().getHexLoc().getX();
 					int yTemp = temp.getLocation().getHexLoc().getY();
 					VertexDirection directionTemp = temp.getLocation().getDir();
@@ -770,6 +842,24 @@ public class GameMap {
 					}
 				}
 			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.SouthWest == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.NorthWest == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
 			
 		}
 		if(direction == VertexDirection.NorthEast){
@@ -781,6 +871,24 @@ public class GameMap {
 			int y2 = temp2.getY();
 			if(allCities.size() >0){
 				for(VertexObject temp : cities){
+					int xTemp = temp.getLocation().getHexLoc().getX();
+					int yTemp = temp.getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = temp.getLocation().getDir();
+		
+					if((x1 == xTemp) && (y1 == yTemp)){
+						if(VertexDirection.West == directionTemp){
+							return true;
+						}
+					}
+					if((x2 == xTemp) && (y2 == yTemp)){
+						if(VertexDirection.SouthEast == directionTemp){
+							return true;
+						}
+					}
+				}
+			}
+			if(allSettlements.size()>0){
+				for(VertexObject temp : settlements){
 					int xTemp = temp.getLocation().getHexLoc().getX();
 					int yTemp = temp.getLocation().getHexLoc().getY();
 					VertexDirection directionTemp = temp.getLocation().getDir();

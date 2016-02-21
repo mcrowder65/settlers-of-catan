@@ -31,7 +31,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private PollingTask pollingTask;
 	private int interval;
 	private GameInfo[] currentGames;
-	
+	private boolean isFinished = false;
 	/**
 	 * JoinGameController constructor
 	 * 
@@ -134,7 +134,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	private void updateGames(GameInfo[] info) {
-		if (isGamesDifferent(info)) {
+		if (isGamesDifferent(info) && !isFinished) {
 			currentGames = info;
 			if (getJoinGameView().isModalShowing())
 				getJoinGameView().closeModal();
@@ -204,15 +204,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color) {
 
 	  boolean success= 	facade.joinGame(currentSelectedGameId, color);
-		
+	  synchronized(listGameLock) {	
 		// If join succeeded
-	  if (success) {
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		facade.startPoller();
-		joinAction.execute();
-	  } else 
-		  showJoinGameFail();
+		  if (success) {
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			isFinished = true;
+			timer.cancel();
+			facade.startPoller();
+			joinAction.execute();
+		  } else 
+			  showJoinGameFail();
+	  }
 	
 	}
 	

@@ -7,10 +7,7 @@ import shared.locations.*;
 import client.base.*;
 import client.controller.Facade;
 import client.data.*;
-import client.gamestate.FirstRoundState;
-import client.gamestate.GameState;
-import client.gamestate.IsNotTurnState;
-import client.gamestate.SecondRoundState;
+import client.gamestate.*;
 import client.utils.DataUtils;
 
 
@@ -282,6 +279,8 @@ public class MapController extends Controller implements IMapController, Observe
 			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 			
 			
+		} else if (currState instanceof RobbingState && !getView().isOverlayShowing()) {
+			startRobber(); 
 		}
 		
 		

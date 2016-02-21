@@ -529,6 +529,10 @@ public class GameMap {
 		EdgeDirection direction = location.getDir();
 	
 		//Loop through the array of allRoads to see if there is already a road in the location
+		HexLocation oppositeHex = getOppositeHex(hexLocation, direction);
+		int xOpp = oppositeHex.getX();
+		int yOpp = oppositeHex.getY();
+		EdgeDirection directionOpp = direction.getOppositeDirection();
 		if(allRoads.size() > 0){
 			for(int i=0; i<roads.length; i++){
 				//Extracting info from the roads in the roads array
@@ -541,6 +545,9 @@ public class GameMap {
 				
 				//Checking to see if there is already a road in that location
 				if(xRoadCoord == xCoord && yCoord == yRoadCoord && direction == roadDirection){
+					return true;
+				}
+				if(xRoadCoord == xOpp && yOpp == yRoadCoord && directionOpp == roadDirection){
 					return true;
 				}
 		

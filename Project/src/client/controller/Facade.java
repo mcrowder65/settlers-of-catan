@@ -54,6 +54,9 @@ public class Facade {
 	public void stopPoller() {
 		game.getPoller().stopPolling();
 	}
+	public int getPollingInterval() {
+		return game.getPoller().getInterval();
+	}
 	public void addObserver(Observer o) {
 		game.addObserver(o);
 	}
@@ -803,7 +806,7 @@ public class Facade {
 		return response.getModel();
 	}
 
-
+   
 
 
 

@@ -48,7 +48,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 
-		facade.addObserver(this);
+		
 		getView().showModal();
 		List<AIType> aiTypes = facade.listAI();
 		String[] typeStrings = new String[aiTypes.size()];
@@ -56,7 +56,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			typeStrings[n] = aiTypes.get(n).toString();
 		}
 		getView().setAIChoices(typeStrings);
-		
+		update(null, facade.fetchModel());
+		facade.addObserver(this);
 	}
 
 	@Override

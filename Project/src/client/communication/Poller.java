@@ -44,8 +44,8 @@ public class Poller extends Observable {
 	class PollingTask extends TimerTask {
 		/**
 		 * The method that will be called every x seconds,
-		 * where x is TIMER_FREQUENCY.
-		 * Calls the proxy's checkServerVersion method.
+		 * where x is the interval from the constructor.
+		 * Calls the proxy's getModel method.
 		 */
 		@Override
 		public void run() {

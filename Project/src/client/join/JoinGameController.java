@@ -1,11 +1,17 @@
 package client.join;
 
+import shared.communication.response.GetModelResponse;
 import shared.definitions.CatanColor;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import client.base.*;
 import client.communication.HTTPProxy;
 import client.controller.Facade;
 import client.data.*;
 import client.misc.*;
+import client.utils.DataUtils;
 
 
 /**
@@ -20,6 +26,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private Facade facade;
 	private PlayerInfo player;
 	private int currentSelectedGameId = -1;
+	private Object listGameLock = new Object();
+	private Timer timer;
+	private PollingTask pollingTask;
+	private int interval;
+	private GameInfo[] currentGames;
 	
 	/**
 	 * JoinGameController constructor
@@ -40,8 +51,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 		
 		this.facade = facade;
+		interval = facade.getPollingInterval();
 		player = new PlayerInfo();
 	}
+	
+	class PollingTask extends TimerTask {
+		@Override
+		public void run() {
+			synchronized(listGameLock) {
+				GameInfo[] info = facade.listGames();
+				updateGames(info);
+			}
+		}
+	}
+	
 	
 	public IJoinGameView getJoinGameView() {
 		
@@ -99,10 +122,27 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		player.setId(facade.getPlayerId());
-		getJoinGameView().setGames(facade.listGames(),player);
+		GameInfo[] info = facade.listGames();
+		currentGames = info;
+		getJoinGameView().setGames(currentGames,player);
 		getJoinGameView().showModal();
+		
+		
+		timer = new Timer();
+		pollingTask = new PollingTask();
+		timer.schedule(pollingTask, 0, interval * 1000);
 	}
 
+	private void updateGames(GameInfo[] info) {
+		if (isGamesDifferent(info)) {
+			currentGames = info;
+			if (getJoinGameView().isModalShowing())
+				getJoinGameView().closeModal();
+			getJoinGameView().setGames(currentGames,player);
+			
+			getJoinGameView().showModal();
+		}
+	}
 	@Override
 	public void startCreateNewGame() {
 		
@@ -125,8 +165,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getNewGameView().getUseRandomPorts());
 		
 		if (gameId > -1) {
-			getJoinGameView().setGames(facade.listGames(), player);
 			getNewGameView().closeModal();
+			
+			//The color doesn't matter because we're going to re-join and pick a new one anyway
+			facade.joinGame(gameId, CatanColor.red);
+			
+			synchronized(listGameLock) {
+				GameInfo[] info = facade.listGames();
+				updateGames(info);
+			}
+			
 			
 		}
 		else
@@ -178,6 +226,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		messageView.setMessage("Join game failed.");
 		messageView.showModal();
 	}
+	private boolean isGamesDifferent(GameInfo[] newGames) {
+		if (newGames.length != currentGames.length)
+			return true;
+		for (int n = 0; n < currentGames.length; n++) {
+			if (newGames[n].getPlayers().size() != currentGames[n].getPlayers().size())
+				return true;
+			for (int m = 0; m < currentGames[n].getPlayers().size(); m++) {
+				if (newGames[n].getPlayers().get(m).getId() != currentGames[n].getPlayers().get(m).getId())
+					return true;
+			}
+			
+		}
+		
+		return false;
+	}
 
+	
 }
 

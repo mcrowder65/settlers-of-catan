@@ -21,12 +21,12 @@ public class SecondRoundState extends GameState {
 	}
 	
 	@Override
-	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
+	public boolean buildRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.buildRoad(edgeLoc,true);
 	}
 	
 	@Override
-	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
+	public boolean buildSettlement(VertexLocation vertLoc) throws IllegalArgumentException{
 		return facade.buildSettlement(vertLoc,true);
 	}
 	@Override

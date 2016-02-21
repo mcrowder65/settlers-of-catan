@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import client.data.RobPlayerInfo;
+
 /**
  * Class to represent the entire map
  * Contains Hexes, ports, roads, settlemetns, cities, a radius, and a robber
@@ -2304,4 +2306,34 @@ public class GameMap {
 		}
 		return true;
 	}
+	public VertexObject findMunicipality(VertexLocation location) {
+		for (VertexObject obj : allSettlements) {
+			if (obj.getLocation().equals(location))
+				return obj;
+		}
+		for (VertexObject obj : allCities) {
+			if (obj.getLocation().equals(location))
+				return obj;
+		}
+		return null;
+	}
+	public List<VertexObject> getBorderingMunicipalities(HexLocation hexLoc) {
+		List<VertexObject> municipalities = new ArrayList<VertexObject>();
+		VertexObject v = null;
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.NorthWest));
+		if (v != null) municipalities.add(v);
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.NorthEast));
+		if (v != null) municipalities.add(v);
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.SouthWest));
+		if (v != null) municipalities.add(v);
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.SouthEast));
+		if (v != null) municipalities.add(v);
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.West));
+		if (v != null) municipalities.add(v);
+		v = findMunicipality(hexLoc.getBorderingVertex(VertexDirection.East));
+		if (v != null) municipalities.add(v);
+		return municipalities;
+		
+	}
+	
 }

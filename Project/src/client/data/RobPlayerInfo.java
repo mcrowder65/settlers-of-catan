@@ -1,5 +1,7 @@
 package client.data;
 
+import shared.definitions.Player;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -21,6 +23,18 @@ public class RobPlayerInfo extends PlayerInfo
 	public RobPlayerInfo()
 	{
 		super();
+	}
+	
+	public RobPlayerInfo(PlayerInfo info) {
+		super();
+		this.setColor(info.getColor());
+		this.setId(info.getId());
+		this.setName(info.getName());
+		this.setPlayerIndex(info.getPlayerIndex());
+	}
+	public RobPlayerInfo(Player player) {
+		super(player);
+		setNumCards(player.getNumOfCards());
 	}
 	
 	public int getNumCards()

@@ -2,6 +2,7 @@ package client.controller;
 
 import shared.locations.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Random;
 import client.communication.IProxy;
 import client.data.GameInfo;
 import client.data.GameManager;
+import client.data.RobPlayerInfo;
 import shared.communication.*;
 import shared.communication.response.*;
 import shared.definitions.*;
@@ -310,7 +312,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canDiscardCards() throws IllegalArgumentException{
-		boolean canDiscard = game.getModel().getLocalPlayer(playerId).hasMoreThanSeven();
+		boolean canDiscard = game.getModel().getLocalPlayer(playerId).getNumOfCards() > 7;
 		return canDiscard;
 	}
 
@@ -807,7 +809,20 @@ public class Facade {
 	}
 
    
-
+	public List<RobPlayerInfo> getRobbablePlayers(HexLocation hexLoc, int playerIndex) {
+		 boolean[] usedIndices = new boolean[4];
+		 List<RobPlayerInfo> info = new ArrayList<RobPlayerInfo>();
+		 List<VertexObject> municipalities = game.getModel().getMap().getBorderingMunicipalities(hexLoc);
+		 for (VertexObject obj : municipalities) {
+			 Player owner = game.getModel().getPlayers()[obj.getOwner()];
+			 if (obj.getOwner() != playerIndex && owner.getNumOfCards() > 7 && !usedIndices[obj.getOwner()]) {
+				 RobPlayerInfo robPlayer = new RobPlayerInfo( owner);
+				 info.add(robPlayer);
+				 usedIndices[obj.getOwner()] = true;
+			 }
+		 }
+		 return info;
+	}
 
 
 

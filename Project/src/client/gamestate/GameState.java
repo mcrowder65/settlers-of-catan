@@ -1,5 +1,6 @@
 package client.gamestate;
 
+import java.util.List;
 import java.util.Observer;
 
 import client.controller.Facade;
@@ -65,21 +66,18 @@ public abstract class GameState {
 		return false;
 	}
 
-	public boolean placeRoad(EdgeLocation edgeLoc) throws IllegalArgumentException,IllegalStateException{
+	public boolean buildRoad(EdgeLocation edgeLoc) throws IllegalArgumentException,IllegalStateException{
 		throw new IllegalStateException();
 	}
 
-	public boolean placeSettlement(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
+	public boolean buildSettlement(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
 		throw new IllegalStateException();
 	}
 
-	public boolean placeCity(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
+	public boolean buildCity(VertexLocation vertLoc) throws IllegalArgumentException, IllegalStateException{
 		throw new IllegalStateException();
 	}
 
-	public boolean placeRobber(HexLocation hexLoc) throws IllegalArgumentException, IllegalStateException{
-		throw new IllegalStateException();
-	}
 	
 	public boolean cancelMove() throws IllegalStateException{
 		throw new IllegalStateException();
@@ -93,7 +91,7 @@ public abstract class GameState {
 		throw new IllegalStateException();
 	}
 
-	public boolean robPlayer(RobPlayerInfo victim) throws IllegalArgumentException, IllegalStateException{	
+	public boolean placeRobber(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalArgumentException, IllegalStateException{	
 		throw new IllegalStateException();
 	}
 	
@@ -181,10 +179,17 @@ public abstract class GameState {
 	public int getPlayerId() {
 		return facade.getPlayerId();
 	}
+	public int getPlayerIndex() {
+		return facade.getPlayerIndex();
+	}
 	public CatanColor getPlayerColor() {
 		return facade.getPlayerColor();
 	}
 	public GameModel fetchModel() {
 		return facade.fetchModel();
 	}
+	public List<RobPlayerInfo> getRobbablePlayers(HexLocation hexLoc) {
+		return facade.getRobbablePlayers(hexLoc, getPlayerIndex());
+	}
+	
 }

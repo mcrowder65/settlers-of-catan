@@ -1,6 +1,10 @@
 package shared.definitions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import shared.locations.*;
 
 
@@ -124,6 +128,7 @@ public class GameModel {
 		}
 		return null;
 	}
+	
 	public void setPlayers(Player[] players)  throws IllegalArgumentException {
 		this.players = players;
 	}
@@ -187,6 +192,6 @@ public class GameModel {
 		return -1;
 	}
 	
-	
+
 	
 }

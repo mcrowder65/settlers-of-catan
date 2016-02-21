@@ -22,6 +22,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private GameState currState;
 	private boolean firstTime;
+	private HexLocation movedRobberLocation;
 
 	public MapController(IMapView view, IRobView robView, Facade facade) {
 
@@ -61,6 +62,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return currState.canPlaceRobber(hexLoc);
 	}
+	/*
 	public boolean isRoadInModel(EdgeLocation edgeLoc){
 		GameMap map = currState.fetchModel().getMap();
 		EdgeValue temp = new EdgeValue(currState.getPlayerId(), edgeLoc);
@@ -70,9 +72,9 @@ public class MapController extends Controller implements IMapController, Observe
 				return true;
 		}
 		return false;
-	}
+	}*/
 	public void placeRoad(EdgeLocation edgeLoc) {
-		boolean success = currState.placeRoad(edgeLoc);
+		boolean success = currState.buildRoad(edgeLoc);
 		if (success) {
 			placeRoadVisual(edgeLoc, currState.getPlayerColor());
 			GameModel model = null;
@@ -95,7 +97,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRoadVisual(EdgeLocation edgeLoc, CatanColor color) {
 		getView().placeRoad(edgeLoc, color);
 	}
-	
+	/*
 	public boolean isSettlementInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
 		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
@@ -106,17 +108,17 @@ public class MapController extends Controller implements IMapController, Observe
 		}
 		
 		return false;
-	}
+	}*/
 	public void placeSettlement(VertexLocation vertLoc) {
 		/*if(isSettlementInModel(vertLoc))
 			getView().placeSettlement(vertLoc, color);
 		else*/
-			
-			boolean success = currState.placeSettlement(vertLoc);
+		synchronized(DataUtils.modelLock) {
+			boolean success = currState.buildSettlement(vertLoc);
 			if (success) {
 				placeSettlementVisual(vertLoc, currState.getPlayerColor());
 				GameModel model = null;
-				synchronized(DataUtils.modelLock) {
+				
 					model = currState.fetchModel();
 				
 					currState = currState.identifyState(model.getTurnTracker());
@@ -125,14 +127,16 @@ public class MapController extends Controller implements IMapController, Observe
 							currState.finishTurn();
 						
 						}
-				}
+				
 			}
 			else
 				System.out.println("WARNING! placeSettlement in MapController failed.");
+		}
 	}
 	public void placeSettlementVisual(VertexLocation vertLoc, CatanColor color) {
 		getView().placeSettlement(vertLoc, color);
 	}
+	/*
 	public boolean isCityInModel(VertexLocation vertLoc){
 		GameMap map = currState.fetchModel().getMap();
 		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
@@ -142,12 +146,12 @@ public class MapController extends Controller implements IMapController, Observe
 				return true;
 		}
 		return false;
-	}
+	}*/
 	public void placeCity(VertexLocation vertLoc) {
 		/*if(isCityInModel(vertLoc))
 			getView().placeCity(vertLoc, color);
 		else*/
-		boolean success = currState.placeCity(vertLoc);
+		boolean success = currState.buildCity(vertLoc);
 		if (success)
 			placeCityVisual(vertLoc, currState.getPlayerColor());
 		else
@@ -157,14 +161,22 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().placeCity(vertLoc, color);
 	}
 	
+	public void startRobber() {
+	    getView().startDrop(PieceType.ROBBER, CatanColor.red, false);
+	}
 	
 	public void placeRobber(HexLocation hexLoc) {
-		getView().placeRobber(hexLoc);
-		//getRobView().showModal();
+		placeRobberVisual(hexLoc);
+		movedRobberLocation = hexLoc;
+		robView.setPlayers((RobPlayerInfo[])  currState.getRobbablePlayers(hexLoc).toArray());
+		robView.showModal();
+		
 	}
-
+	public void placeRobberVisual(HexLocation hexLoc) {
+		getView().placeRobber(hexLoc);
+	}
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-
+		
 		getView().startDrop(pieceType, CatanColor.orange, true);
 	}
 
@@ -180,7 +192,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void robPlayer(RobPlayerInfo victim) {	
-		//currState.robPlayer(victim);
+		if (movedRobberLocation == null) 
+			System.out.println("WARNING! movedRobberLocation in robPlayer was not set.");
+		else
+			currState.placeRobber(movedRobberLocation, victim);
 	}
 	public HexType getHexType(String resource){
 		return resource.equals("DESERT") ? HexType.DESERT : resource.equals("WOOD") ? HexType.WOOD : 
@@ -253,7 +268,7 @@ public class MapController extends Controller implements IMapController, Observe
 		GameMap map = model.getMap();
 		
 		currState = currState.identifyState(model.getTurnTracker());
-		placeRobber(map.getRobber());
+		placeRobberVisual(map.getRobber());
 		if(firstTime) 
 			initMap(map);
 		
@@ -291,9 +306,7 @@ public class MapController extends Controller implements IMapController, Observe
 			placeSettlementVisual(settlements[i].getLocation(), color);
 		}
 	}
-	public void setRobber(HexLocation robber){
-		placeRobber(robber);
-	}
+	
 	public void setRoads(EdgeValue[] roads, Player[] players){
 		for(int i = 0; i < roads.length; i++){
 			EdgeValue road = roads[i];

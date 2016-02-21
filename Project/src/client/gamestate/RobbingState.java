@@ -1,6 +1,8 @@
 package client.gamestate;
 
 import client.controller.Facade;
+import client.data.RobPlayerInfo;
+import shared.locations.HexLocation;
 
 public class RobbingState extends GameState {
 
@@ -14,5 +16,11 @@ public class RobbingState extends GameState {
 	@Override
 	public boolean isGameStatePanelEnabled() {
 		return false;
+	}
+	@Override
+	public boolean placeRobber(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalArgumentException
+	{
+		return facade.placeRobber(victim.getPlayerIndex(), hexLoc);
+		
 	}
 }

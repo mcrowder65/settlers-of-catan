@@ -482,7 +482,7 @@ public class Player {
 		settlements = settlements -1;
 	}
 	
-	public boolean hasMoreThanSeven(){
+	public int getNumOfCards(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
@@ -490,11 +490,7 @@ public class Player {
 		int ore = resources.getOre();
 		
 		int total = brick + wood + sheep + grain + ore;
-		if(total > 7){
-			return true;
-		}
-		
-		return false;
+		return total;
 	}
 	
 	public void removeOldDevCard(DevCardList devCard) throws IllegalArgumentException{

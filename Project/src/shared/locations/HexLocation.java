@@ -92,6 +92,11 @@ public class HexLocation
 				return null;
 		}
 	}
-	
+	public EdgeLocation getBorderingEdge(EdgeDirection dir) {
+		return new EdgeLocation(this, dir);
+	}
+	public VertexLocation getBorderingVertex(VertexDirection dir) {
+		return new VertexLocation(this, dir);
+	}
 }
 

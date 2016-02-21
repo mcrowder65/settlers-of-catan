@@ -20,6 +20,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private IMaritimeTradeOverlay tradeOverlay;
 	private GameState currState;
 	private ResourceType[] types;
+	private Facade facade;
 	ResourceType give;
 	ResourceType get;
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay,
@@ -29,7 +30,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		setTradeOverlay(tradeOverlay);
 		this.currState = new IsNotTurnState(facade);
 		facade.addObserver(this);
-
+		this.facade = facade;
 		
 		types = new ResourceType[5];
 		types[0] = ResourceType.SHEEP;
@@ -68,6 +69,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().hideGiveOptions();
 		getTradeOverlay().closeModal();
+		boolean tradeSuccess = facade.offerMaritimeTrade(4, give, get);
+		if(!tradeSuccess)
+			System.out.println("SOMEHOW THE MARITIME TRADE BROKE... THIS SHOULD NOT BE APPEARING!!!!!!");
 	}
 
 	@Override

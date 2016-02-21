@@ -1,5 +1,7 @@
 package shared.definitions;
 
+import java.util.ArrayList;
+
 import shared.locations.*;
 /**
  * class to wrap all the different resources 
@@ -42,7 +44,29 @@ public class ResourceList {
 			return false;
 		return true;
 	}
-
+	public ResourceType[] getGiveableResources(){
+		int size = 0;
+		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();
+		if(brick >= 4){
+			resources.add(ResourceType.BRICK);
+		}
+		if(ore >= 4){
+			resources.add(ResourceType.ORE);
+		}
+		if(sheep >= 4){
+			resources.add(ResourceType.SHEEP);
+		}
+		if(wheat >= 4){
+			resources.add(ResourceType.WHEAT);
+		}
+		if(wood >= 4){
+			resources.add(ResourceType.WOOD);
+		}
+		ResourceType[] resourceArray = new ResourceType[resources.size()];
+		for(int i = 0; i < resources.size(); i++)
+			resourceArray[i] = resources.get(i); //idk why... but toArray was giving me trouble - Matt
+		return resourceArray;
+	}
 	/**
 	 * Number of brick resources
 	 */

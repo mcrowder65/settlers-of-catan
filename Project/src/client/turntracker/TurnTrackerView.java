@@ -133,6 +133,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		gameStatePanel.updateGameState(stateMessage, enable);
 	}
 	
+
+	
 }
 
 

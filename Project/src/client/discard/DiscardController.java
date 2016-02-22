@@ -12,6 +12,7 @@ import client.gamestate.DiscardingState;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.misc.*;
+import client.roll.IRollResultView;
 import client.utils.DataUtils;
 
 
@@ -25,6 +26,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	private int neededToDiscard;
 	private ResourceList currentDiscarding;
 	private ResourceList myResources;
+	private IRollResultView rollResultView;
+	
 
 	/**
 	 * DiscardController constructor
@@ -32,11 +35,12 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * @param view View displayed to let the user select cards to discard
 	 * @param waitView View displayed to notify the user that they are waiting for other players to discard
 	 */
-	public DiscardController(IDiscardView view, IWaitView waitView, Facade facade) {
+	public DiscardController(IDiscardView view, IWaitView waitView, IRollResultView rollResultView, Facade facade) {
 
 		super(view);
 
 		this.waitView = waitView;
+		this.rollResultView = rollResultView;
 		this.currState = new IsNotTurnState(facade);
 		currState.addObserver(this);
 	}

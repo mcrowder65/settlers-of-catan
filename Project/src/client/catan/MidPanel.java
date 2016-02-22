@@ -6,6 +6,7 @@ import javax.swing.*;
 import client.controller.Facade;
 import client.data.GameManager;
 import client.map.*;
+import client.roll.IRollResultView;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel
@@ -17,7 +18,7 @@ public class MidPanel extends JPanel
 	private MapController mapController;
 	private GameStatePanel gameStatePanel;
 	
-	public MidPanel(Facade facade)
+	public MidPanel(IRollResultView rollResultView, Facade facade)
 	{
 		
 		this.setLayout(new BorderLayout());
@@ -26,7 +27,7 @@ public class MidPanel extends JPanel
 		
 		mapView = new MapView();
 		robView = new RobView();
-		mapController = new MapController(mapView, robView, facade);
+		mapController = new MapController(mapView, robView, rollResultView, facade);
 		mapView.setController(mapController);
 		robView.setController(mapController);
 		

@@ -40,8 +40,10 @@ public class CatanPanel extends JPanel
 	{
 		this.setLayout(new BorderLayout());
 		
+		rollResultView = new RollResultView();
+		
 		titlePanel = new TitlePanel();
-		midPanel = new MidPanel(facade);
+		midPanel = new MidPanel(rollResultView, facade);
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(),facade);
 		rightPanel = new RightPanel(midPanel.getMapController(),  facade);
 		
@@ -50,15 +52,17 @@ public class CatanPanel extends JPanel
 		this.add(midPanel, BorderLayout.CENTER);
 		this.add(rightPanel, BorderLayout.EAST);
 		
+	
+		
 		discardView = new DiscardView();
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
-		discardController = new DiscardController(discardView, discardWaitView, facade);
+		discardController = new DiscardController(discardView, discardWaitView, rollResultView, facade);
 		discardView.setController(discardController);
 		discardWaitView.setController(discardController);
 		
 		rollView = new RollView();
-		rollResultView = new RollResultView();
+		
 		rollController = new RollController(rollView, rollResultView, facade);
 		rollView.setController(rollController);
 		rollResultView.setController(rollController);

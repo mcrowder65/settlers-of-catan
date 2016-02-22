@@ -8,6 +8,7 @@ import client.base.*;
 import client.controller.Facade;
 import client.data.*;
 import client.gamestate.*;
+import client.roll.IRollResultView;
 import client.utils.DataUtils;
 
 
@@ -17,16 +18,19 @@ import client.utils.DataUtils;
 public class MapController extends Controller implements IMapController, Observer {
 
 	private IRobView robView;
+	private IRollResultView rollResultView;
 	private GameState currState;
 	private boolean firstTime;
 	private HexLocation movedRobberLocation;
+	
 
-	public MapController(IMapView view, IRobView robView, Facade facade) {
+	public MapController(IMapView view, IRobView robView,IRollResultView rollResultView, Facade facade) {
 
 		super(view);
 
 		setRobView(robView);
 
+		this.rollResultView = rollResultView;
 		this.currState = new IsNotTurnState(facade);
 		firstTime = true;
 		
@@ -280,12 +284,21 @@ public class MapController extends Controller implements IMapController, Observe
 			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 			
 			
-		} else if (currState instanceof RobbingState && !getView().isOverlayShowing() && !getRobView().isModalShowing()) {
+		} else if (currState instanceof RobbingState 
+				&& !getView().isOverlayShowing() 
+				&& !getRobView().isModalShowing() 
+				&& !getRollResultView().isModalShowing()) {
+			
 			startRobber(); 
 		}
 		
 		
 	}
+	public IRollResultView getRollResultView() {
+		return rollResultView;
+	}
+
+
 	public void setCities(VertexObject[] cities, Player[] players){
 		for(int i = 0; i < cities.length; i++){
 			VertexObject city = cities[i];

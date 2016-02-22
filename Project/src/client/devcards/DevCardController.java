@@ -138,6 +138,7 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
+		//boolean success = currState.useMonopoly(resource);
 		
 	}
 

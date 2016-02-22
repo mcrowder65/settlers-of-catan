@@ -9,6 +9,7 @@ import client.base.*;
 import client.controller.Facade;
 import client.data.GameManager;
 import client.data.PlayerInfo;
+import client.utils.DataUtils;
 import shared.definitions.AIType;
 import shared.definitions.GameModel;
 
@@ -22,7 +23,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	private PlayerInfo[] players = new PlayerInfo[4];
 	private IAction allPlayersEnteredAction;
 	private int localCount = 0;
-	private Object lockObject = new Object();
 	
 	public IAction getAllPlayersEnteredAction() {
 		return allPlayersEnteredAction;
@@ -63,7 +63,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
 
-		synchronized (lockObject) {
+		synchronized (DataUtils.modelLock) {
 			boolean success = facade.addAI(getView().getSelectedAI());
 			if (success) {
 				localCount++;
@@ -77,8 +77,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		synchronized(lockObject) {
-			GameModel model = (GameModel)arg1;
+		   GameModel model = (GameModel)arg1;
 			PlayerInfo[] playersLite = model.getPlayersLite();
 			
 			if (playersLite.length != localCount) {
@@ -97,7 +96,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				else 
 					System.out.println("WARNING! allPlayersEnteredAction was not set");
 			}
-		}
+		
 	}
 
 }

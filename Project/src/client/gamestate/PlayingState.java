@@ -102,7 +102,7 @@ public class PlayingState extends GameState {
 
 	@Override
 	public boolean canUseSoldier() throws IllegalArgumentException{
-		return canUseSoldier();
+		return facade.canUseSoldier();
 	}
 
 	@Override

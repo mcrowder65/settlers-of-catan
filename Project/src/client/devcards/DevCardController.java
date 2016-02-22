@@ -1,5 +1,6 @@
 package client.devcards;
 
+import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
@@ -76,11 +77,13 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startPlayCard() {
-		//DevCardList devCards = facade.getGameManager().getLocalPlayer(facade.getPlayerIdex()).getOldDevCards();
+		DevCardList devCards = facade.getDevCards();
 		boolean canPlayMonument = currState.canUseMonument();
 		if(canPlayMonument == true){
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,true);
-			//int numCards = facade.getGameManager().getLocalPlayer(facade.getPlayerIndex().);
+			int numCards = devCards.getMonument();
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, numCards);
+			
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,false);
@@ -88,6 +91,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		boolean canPlayRoadB = currState.canUseRoadBuilder();
 		if(canPlayRoadB == true){
 			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,true);
+			int numCards = devCards.getRoadBuilding();
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, numCards);
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,false);
@@ -95,6 +100,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		boolean canPlayMonopoly = currState.canUseMonopoly();
 		if(canPlayMonopoly == true){
 			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,true);
+			int numCards = devCards.getMonopoly();
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, numCards);
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,false);
@@ -102,6 +109,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		boolean canPlayYOP = currState.canUseYearOfPlenty();
 		if(canPlayYOP == true){
 			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,true);
+			int numCards = devCards.getYearOfPlenty();
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, numCards);
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,false);
@@ -109,11 +118,12 @@ public class DevCardController extends Controller implements IDevCardController,
 		boolean canPlaySoldierCard = currState.canUseSoldier();
 		if(canPlaySoldierCard == true){
 			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,true);
+			int numCards = devCards.getSoldier();
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, numCards);
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,false);
 		}
-		//getPlayCardView().setCardAmount(DevCardType.SOLDIER, 4);
 		getPlayCardView().showModal();
 	}
 

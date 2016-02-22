@@ -164,7 +164,10 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		boolean success = currState.playYearOfPlenty(resource1, resource2);
+		if(success == true){
+			getPlayCardView().closeModal();
+		}
 	}
 
 	@Override

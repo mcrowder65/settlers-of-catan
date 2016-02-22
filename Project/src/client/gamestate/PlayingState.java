@@ -20,6 +20,11 @@ public class PlayingState extends GameState {
 	public boolean useMonopoly(ResourceType resource) {
 		return facade.playMonopoly(resource);
 	}
+	
+	@Override
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) {
+		return facade.playYearOfPlenty(resource1, resource2);
+	}
 	@Override
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.canBuildRoad(edgeLoc);

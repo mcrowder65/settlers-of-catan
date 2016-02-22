@@ -135,6 +135,10 @@ public abstract class GameState {
 
 		return false;
 	}
+	
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) {
+		return false;
+	}
 
 	public boolean canUseRoadBuilder() {
 		return false;

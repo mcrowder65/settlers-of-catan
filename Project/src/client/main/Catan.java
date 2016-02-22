@@ -25,7 +25,7 @@ public class Catan extends JFrame
 	
 	public Catan(Facade facade)
 	{
-		//second commit
+		//TODO general note, games can't have empty names.
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

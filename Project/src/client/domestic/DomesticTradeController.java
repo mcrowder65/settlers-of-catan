@@ -2,6 +2,7 @@ package client.domestic;
 
 import shared.definitions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,6 +13,7 @@ import client.data.GameManager;
 import client.data.PlayerInfo;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.gamestate.PlayingState;
 import client.misc.*;
 
 
@@ -43,13 +45,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
 			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
-
+		
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		this.currState = new IsNotTurnState(facade);
+		this.currState = new PlayingState(facade); //TODO how should we handle this..?
 		initializeMaps();
 		facade.addObserver(this);
 		getTradeOverlay().setStateMessage("select the resources you want to trade");
@@ -201,13 +203,46 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 		checkState();
 	}
-
+	public TradeOffer constructTradeOffer(){
+		int totalBricks = 0;
+		int totalOre = 0;
+		int totalSheep = 0;
+		int totalWood = 0;
+		int totalWheat = 0;
+		for(ResourceType i : send.keySet()){
+			if(i == ResourceType.BRICK)
+				totalBricks = send.get(i);
+			else if(i == ResourceType.ORE)
+				totalOre = send.get(i);
+			else if(i == ResourceType.SHEEP)
+				totalSheep = send.get(i);
+			else if(i == ResourceType.WOOD)
+				totalWood = send.get(i);
+			else if(i == ResourceType.WHEAT)
+				totalWheat = send.get(i);
+		}
+		for(ResourceType i : receive.keySet()){
+			if(i == ResourceType.BRICK)
+				totalBricks = -receive.get(i);
+			else if(i == ResourceType.ORE)
+				totalOre = -receive.get(i);
+			else if(i == ResourceType.SHEEP)
+				totalSheep = -receive.get(i);
+			else if(i == ResourceType.WOOD)
+				totalWood = -receive.get(i);
+			else if(i == ResourceType.WHEAT)
+				totalWheat = -receive.get(i);
+		}
+		ResourceList resources = new ResourceList(totalBricks, totalOre, totalSheep, totalWheat, totalWood);
+		return new TradeOffer(currState.getPlayerIndex(), receiver, resources);
+	}
 	@Override
 	public void sendTradeOffer() {
-		outputMaps();//TODO output
-		//TODO send trade over and see if they accept!!!
+		
+		boolean accepted = currState.offerTrade(constructTradeOffer());
 		getTradeOverlay().closeModal();
-		//		getWaitOverlay().showModal();
+		getWaitOverlay().showModal();
+		clearTrade();
 	}
 
 	@Override
@@ -244,18 +279,26 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if(send.containsKey(resource)) send.remove(resource);
 		checkState();
 	}
-
+	public void clearTrade(){
+		for(ResourceType i : send.keySet())
+			getTradeOverlay().setResourceAmount(i, "0");
+		for(ResourceType i : receive.keySet())
+			getTradeOverlay().setResourceAmount(i, "0");
+		initializeMaps();
+		getTradeOverlay().reset();
+	}
 	@Override
 	public void cancelTrade() {
-		initializeMaps();//TODO MAKE SURE TO CANCEL
-		getTradeOverlay().reset();
+	
+		clearTrade();
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
+		getAcceptOverlay().showModal();
 		
-		getAcceptOverlay().closeModal();
+		//getAcceptOverlay().closeModal();
 		//initializeMaps();
 	}
 	public boolean doneSelectingResources(){
@@ -286,7 +329,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) {
 
-		
+		getAcceptOverlay().showModal();
 	}
 	public void outputMaps(){
 		System.out.println("*************************************************");

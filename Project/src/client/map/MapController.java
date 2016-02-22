@@ -25,6 +25,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean isPlayingSoldier = false;
 	private int roadBuildingPassNum = 0;
 	private EdgeLocation roadBuildingFirstPassLocation = null;
+	private boolean disableUpdates = false;
 	
 
 	public MapController(IMapView view, IRobView robView,IRollResultView rollResultView, Facade facade) {
@@ -96,12 +97,17 @@ public class MapController extends Controller implements IMapController, Observe
 					switch (roadBuildingPassNum) {
 					case 1:
 						roadBuildingFirstPassLocation = edgeLoc;
+						currState.placeRoadLocally(edgeLoc);
 						getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 						roadBuildingPassNum = 2;
+						disableUpdates = true;//Need to do this or something like it
+						                      //in order to prevent the update function
+						                      //from overwriting the placed temp road
 					case 2:
 						currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc);
 						roadBuildingPassNum = 0;
-					
+						roadBuildingFirstPassLocation = null;
+						disableUpdates = false;
 					}
 				}
 			}
@@ -206,7 +212,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void playRoadBuildingCard() {	
-		currState.playRoadBuildingCard();
+		roadBuildingPassNum = 0;
+		getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 	}
 
 	public void robPlayer(RobPlayerInfo victim) {	
@@ -288,6 +295,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	@Override
 	public void update(Observable o, Object arg) {
+		
+		if (disableUpdates) return;
 		
 		GameModel model = (GameModel)arg;
 		GameMap map = model.getMap();

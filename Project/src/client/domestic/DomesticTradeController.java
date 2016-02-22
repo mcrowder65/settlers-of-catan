@@ -2,12 +2,14 @@ package client.domestic;
 
 import shared.definitions.*;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
 import client.controller.Facade;
 import client.data.GameManager;
+import client.data.PlayerInfo;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.misc.*;
@@ -22,7 +24,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private GameState currState;
-
+	private HashMap<ResourceType, Integer> send;
+	private HashMap<ResourceType, Integer> receive;
+	private int bricks = 0;
+	private int wood = 0;
+	private int sheep = 0;
+	private int wheat = 0;
+	private int ore = 0;
+	private boolean playersWereSet = false;
+	private int receiver = -1;
 	/**
 	 * DomesticTradeController constructor
 	 * 
@@ -40,9 +50,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		this.currState = new IsNotTurnState(facade);
+		initializeMaps();
 		facade.addObserver(this);
+		getTradeOverlay().setStateMessage("select the resources you want to trade");
 	}
-	
+	public void findWhichResourcesIHave(){
+		ResourceList resources = currState.getPlayerResources();
+		bricks = resources.getBrick();
+		wood = resources.getWood();
+		sheep = resources.getSheep();
+		ore = resources.getOre();
+		wheat = resources.getWheat();
+	}
+	public void initializeMaps(){
+		send = new HashMap<ResourceType, Integer>();
+		receive = new HashMap<ResourceType, Integer>();
+	}
 	
 	public IDomesticTradeView getTradeView() {
 
@@ -72,70 +95,225 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void setAcceptOverlay(IAcceptTradeOverlay acceptOverlay) {
 		this.acceptOverlay = acceptOverlay;
 	}
-
-	int receiver;
+	
 	@Override
 	public void startTrade() {
-		getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
+		if(!playersWereSet){
+			getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
+			playersWereSet = true;
+		}
+		getTradeOverlay().setResourceSelectionEnabled(true);
+		findWhichResourcesIHave();
+		initializeMaps();
+		
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		System.out.println("decrease resource amount: " + resource);//TODO output
-	
+		if(send.containsKey(resource)){
+			send.put(resource, send.get(resource) - 1);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true); //technically a else statement
+			if(send.get(resource) == 0)
+				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+			
+		}
+		else if(receive.containsKey(resource)){
+			receive.put(resource, receive.get(resource) - 1);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true); //technically a else statement
+			if(receive.get(resource) == 0)
+				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+			
+		}
+		checkState();
 	}
-
+	public boolean canSendResource(ResourceType resource){
+		boolean can = true;
+		if(resource == ResourceType.BRICK){
+			if(bricks == 0){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.ORE){
+			if(ore == 0){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.WOOD){
+			if(wood == 0){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.WHEAT){
+			if(wheat == 0){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.SHEEP){
+			if(sheep == 0){
+				can = false;
+			}
+		}
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, can, false);
+		return can;
+	}
+	public boolean canIncreaseResource(ResourceType resource, int amount){
+		boolean can = true;
+		if(resource == ResourceType.BRICK){
+			if(bricks == amount){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.ORE){
+			if(ore == amount){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.WOOD){
+			if(wood == amount){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.WHEAT){
+			if(wheat == amount){
+				can = false;
+			}
+		}
+		else if(resource == ResourceType.SHEEP){
+			if(sheep == amount){
+				can = false;
+			}
+		}
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, can, true);
+		if(!can)
+			getTradeOverlay().setResourceAmount(resource, Integer.toString(amount - 1));
+		return can;
+	}
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		System.out.println("increase resource amount: " + resource);//TODO output
+		if(send.containsKey(resource)){
+			send.put(resource, send.get(resource) + 1);
+			canIncreaseResource(resource, send.get(resource));
+		}
+		else if(receive.containsKey(resource)){
+			receive.put(resource, receive.get(resource) + 1);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
+		}
+		checkState();
 	}
 
 	@Override
 	public void sendTradeOffer() {
-
+		outputMaps();//TODO output
+		//TODO send trade over and see if they accept!!!
 		getTradeOverlay().closeModal();
 		//		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		System.out.println("setPlayer to trade with: " + playerIndex);
 		receiver = playerIndex;
+		
+		checkState();
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-		System.out.println("setResourceToReceive: " + resource);//TODO output
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		receive.put(resource, 0);
+		getTradeOverlay().setResourceAmount(resource, "0");
+		if(send.containsKey(resource))
+			send.remove(resource);
+		
+		checkState();
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-		System.out.println("set resource to send: " + resource);//TODO output
+		if(canSendResource(resource)) send.put(resource, 0);
+		getTradeOverlay().setResourceAmount(resource, "0");
+		if(receive.containsKey(resource))
+			receive.remove(resource);
+		
+		checkState();
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-		System.out.println("unset resource: " + resource);//TODO output
+		if(receive.containsKey(resource)) receive.remove(resource);
+		if(send.containsKey(resource)) send.remove(resource);
+		checkState();
 	}
 
 	@Override
 	public void cancelTrade() {
-
+		initializeMaps();//TODO MAKE SURE TO CANCEL
+		getTradeOverlay().reset();
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		
 		getAcceptOverlay().closeModal();
+		//initializeMaps();
 	}
-
+	public boolean doneSelectingResources(){
+		int sendAmount = 0;
+		for(ResourceType rT : send.keySet()){
+			sendAmount += send.get(rT);
+		}
+		
+		int receiveAmount = 0;
+		for(ResourceType rT : receive.keySet())
+			receiveAmount += receive.get(rT);
+		return sendAmount > 0 && receiveAmount > 0 ? true : false;
+	}
+	public void checkIfReadyToTrade(){
+		getTradeOverlay().setTradeEnabled(false);
+		if(receiver != -1 && doneSelectingResources()){
+			getTradeOverlay().setTradeEnabled(true);
+			getTradeOverlay().setStateMessage("Trade!");
+		}
+	}
+	public void checkState(){
+		if(!doneSelectingResources())
+			getTradeOverlay().setStateMessage("select the resources you want to trade");
+		else if(doneSelectingResources() && receiver == -1)
+			getTradeOverlay().setStateMessage("choose with whom you want to trade");
+		checkIfReadyToTrade();
+	}
 	@Override
 	public void update(Observable o, Object arg) {
+
 		
-
 	}
-
+	public void outputMaps(){
+		System.out.println("*************************************************");
+		if(send.containsKey(ResourceType.BRICK))
+			System.out.println("sending " + send.get(ResourceType.BRICK) + " bricks");
+		if(receive.containsKey(ResourceType.BRICK))
+			System.out.println("receiving " + receive.get(ResourceType.BRICK) + " bricks");
+		
+		if(send.containsKey(ResourceType.WHEAT))
+			System.out.println("sending " + send.get(ResourceType.WHEAT) + " wheat");
+		if(receive.containsKey(ResourceType.WHEAT))
+			System.out.println("receiving " + receive.get(ResourceType.WHEAT) + " wheat");
+		
+		if(send.containsKey(ResourceType.WOOD))
+			System.out.println("sending " + send.get(ResourceType.WOOD) + " wood");
+		if(receive.containsKey(ResourceType.WOOD))
+			System.out.println("receiving " + receive.get(ResourceType.WOOD) + " wood");
+		
+		if(send.containsKey(ResourceType.SHEEP))
+			System.out.println("sending " + send.get(ResourceType.SHEEP) + " sheep");
+		if(receive.containsKey(ResourceType.SHEEP))
+			System.out.println("receiving " + receive.get(ResourceType.SHEEP) + " sheep");
+		
+		if(send.containsKey(ResourceType.ORE))
+			System.out.println("sending " + send.get(ResourceType.ORE) + " ore");
+		if(receive.containsKey(ResourceType.ORE))
+			System.out.println("receiving " + receive.get(ResourceType.ORE) + " ore");
+	}
 }
 

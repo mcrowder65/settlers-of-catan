@@ -51,7 +51,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		this.currState = new PlayingState(facade); //TODO how should we handle this..?
+		this.currState = new IsNotTurnState(facade); //TODO how should we handle this..?
 		initializeMaps();
 		facade.addObserver(this);
 		getTradeOverlay().setStateMessage("select the resources you want to trade");
@@ -329,7 +329,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) {
 
-		getAcceptOverlay().showModal();
 	}
 	public void outputMaps(){
 		System.out.println("*************************************************");

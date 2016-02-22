@@ -120,6 +120,18 @@ public class GameModel {
 		}
 		return playersLite;
 	}
+	public PlayerInfo[] getOtherPlayers(int playerID){
+		ArrayList<PlayerInfo> oP = new ArrayList<PlayerInfo>();
+		for(int i = 0; i < 4; i++){
+			if(players[i].getPlayerID() != playerID)
+				oP.add(new PlayerInfo(players[i]));
+		}
+		
+		PlayerInfo[] otherPlayers = new PlayerInfo[3];
+		for(int i = 0; i < 3; i++)
+			otherPlayers[i] = oP.get(i);
+		return otherPlayers;
+	}
 	public Player findPlayerByName(String name) {
 		for (int n = 0; n < players.length; n++) {
 			if (players[n] == null) break;

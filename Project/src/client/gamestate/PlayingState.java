@@ -2,6 +2,7 @@ package client.gamestate;
 
 import client.controller.Facade;
 import client.data.RobPlayerInfo;
+import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -15,7 +16,10 @@ public class PlayingState extends GameState {
 		super(facade);
 	}
 	
-	
+	@Override
+	public boolean useMonopoly(ResourceType resource) {
+		return facade.playMonopoly(resource);
+	}
 	@Override
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) throws IllegalArgumentException{
 		return facade.canBuildRoad(edgeLoc);

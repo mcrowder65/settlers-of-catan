@@ -10,6 +10,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.GameModel;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
 import shared.definitions.TurnTracker;
 import shared.locations.EdgeLocation;
@@ -146,6 +147,10 @@ public abstract class GameState {
 	}
 
 	public boolean canUseMonopoly() {
+		return false;
+	}
+	
+	public boolean useMonopoly(ResourceType resource) {
 		return false;
 	}
 

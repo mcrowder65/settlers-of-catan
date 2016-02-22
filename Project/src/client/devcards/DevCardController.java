@@ -23,6 +23,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction soldierAction;
 	private IAction roadAction;
 	private GameState currState;
+	private Facade facade;
 	
 	/**
 	 * DevCardController constructor
@@ -42,6 +43,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		this.roadAction = roadAction;
 		this.currState = new IsNotTurnState(facade);
 		facade.addObserver(this);
+		this.facade = facade;
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -74,9 +76,11 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startPlayCard() {
+		//DevCardList devCards = facade.getGameManager().getLocalPlayer(facade.getPlayerIdex()).getOldDevCards();
 		boolean canPlayMonument = currState.canUseMonument();
 		if(canPlayMonument == true){
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,true);
+			//int numCards = facade.getGameManager().getLocalPlayer(facade.getPlayerIndex().);
 		}
 		else{
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,false);

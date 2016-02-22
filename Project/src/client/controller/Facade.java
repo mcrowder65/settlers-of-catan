@@ -65,6 +65,9 @@ public class Facade {
 	public void deleteObserver(Observer o) {
 		game.deleteObserver(o);
 	}
+	public DevCardList getDevCards(){
+		return game.getModel().getLocalPlayer(playerId).getOldDevCards();
+	}
 	/**
 	 * Allows a user to log into the server.
 	 * @param username, password

@@ -296,7 +296,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		getAcceptOverlay().showModal();
+		//getAcceptOverlay().showModal();
 		
 		//getAcceptOverlay().closeModal();
 		//initializeMaps();

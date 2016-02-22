@@ -23,6 +23,8 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean firstTime;
 	private HexLocation movedRobberLocation;
 	private boolean isPlayingSoldier = false;
+	private int roadBuildingPassNum = 0;
+	private EdgeLocation roadBuildingFirstPassLocation = null;
 	
 
 	public MapController(IMapView view, IRobView robView,IRollResultView rollResultView, Facade facade) {
@@ -90,6 +92,18 @@ public class MapController extends Controller implements IMapController, Observe
 						
 					
 					}
+				else {
+					switch (roadBuildingPassNum) {
+					case 1:
+						roadBuildingFirstPassLocation = edgeLoc;
+						getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+						roadBuildingPassNum = 2;
+					case 2:
+						currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc);
+						roadBuildingPassNum = 0;
+					
+					}
+				}
 			}
 		} else {
 			System.out.println("WARNING! placeRoad in MapController returned a fail.");
@@ -180,7 +194,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.orange, true);
+		getView().startDrop(pieceType, currState.getPlayerColor(), true);
 	}
 
 	public void cancelMove() {
@@ -189,8 +203,6 @@ public class MapController extends Controller implements IMapController, Observe
 	public void playSoldierCard() {	
 		isPlayingSoldier = true;
 		startRobber();
-		//
-		
 	}
 
 	public void playRoadBuildingCard() {	

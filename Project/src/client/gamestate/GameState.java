@@ -48,7 +48,7 @@ public abstract class GameState {
 		return false;
 	}
 	
-	public boolean placeRoadDevCard(EdgeLocation location){
+	public boolean placeRoadLocally(EdgeLocation location){
 		return false;
 	}
 
@@ -87,7 +87,7 @@ public abstract class GameState {
 		throw new IllegalStateException();
 	}
 
-	public boolean playRoadBuildingCard() throws IllegalStateException{	
+	public boolean playRoadBuildingCard(EdgeLocation loc1, EdgeLocation loc2) throws IllegalStateException{	
 		throw new IllegalStateException();
 	}
 

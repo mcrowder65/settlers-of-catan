@@ -156,4 +156,9 @@ public class PlayingState extends GameState {
 		return facade.playSoldier(victim.getPlayerIndex(), hexLoc);
 		
 	}
+	
+	@Override
+	public boolean canPlaceRobber(HexLocation hexLoc) {
+		return facade.canPlaceRobber(hexLoc);
+	}
 }

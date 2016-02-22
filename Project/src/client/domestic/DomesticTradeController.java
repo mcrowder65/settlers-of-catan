@@ -35,6 +35,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private int ore = 0;
 	private boolean playersWereSet = false;
 	private int receiver = -1;
+	private Facade facade;
 	/**
 	 * DomesticTradeController constructor
 	 * 
@@ -47,12 +48,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
 		
 		super(tradeView);
-
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		this.currState = new IsNotTurnState(facade); //TODO how should we handle this..?
 		initializeMaps();
+		this.facade = facade;
 		facade.addObserver(this);
 		getTradeOverlay().setStateMessage("select the resources you want to trade");
 	}
@@ -100,6 +101,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	
 	@Override
 	public void startTrade() {
+		
 		if(!playersWereSet){
 			getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
 			playersWereSet = true;
@@ -241,7 +243,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		boolean accepted = currState.offerTrade(constructTradeOffer());
 		getTradeOverlay().closeModal();
-		getWaitOverlay().showModal();
+		getWaitOverlay().showModal(); //TODO configure this.
+		
 		clearTrade();
 	}
 
@@ -296,10 +299,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		//getAcceptOverlay().showModal();
+		facade.acceptTrade(willAccept);
+		getAcceptOverlay().reset();
+		getAcceptOverlay().closeModal();
 		
-		//getAcceptOverlay().closeModal();
-		//initializeMaps();
 	}
 	public boolean doneSelectingResources(){
 		int sendAmount = 0;
@@ -326,9 +329,62 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setStateMessage("choose with whom you want to trade");
 		checkIfReadyToTrade();
 	}
+	public void getResources(ResourceList offer){
+		//BRICK, SHEEP, WHEAT, ORE, WOOD
+		if(offer.getBrick() > 0)
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, offer.getBrick());
+		if(offer.getBrick() < 0)
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, -1 * offer.getBrick());
+		
+		if(offer.getSheep() > 0)
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, offer.getSheep());
+		if(offer.getSheep() < 0)
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, -1 * offer.getSheep());
+		
+		if(offer.getWheat() > 0)
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, offer.getWheat());
+		if(offer.getSheep() < 0)
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, -1 * offer.getWheat());
+		
+		if(offer.getOre() > 0)
+			getAcceptOverlay().addGetResource(ResourceType.ORE, offer.getOre());
+		if(offer.getOre() < 0)
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, -1 * offer.getOre());
+		
+		if(offer.getWood() > 0)
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, offer.getWood());
+		if(offer.getWood() < 0)
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, -1 * offer.getWood());
+	}
 	@Override
 	public void update(Observable o, Object arg) {
-
+		GameModel gameModel = (GameModel)arg;
+		currState = currState.identifyState(gameModel.getTurnTracker());
+		
+		if(!getAcceptOverlay().isModalShowing()){
+			if(gameModel.getTradeOffer() != null){
+				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
+					getAcceptOverlay().setAcceptEnabled(false);
+					TradeOffer tradeOffer = gameModel.getTradeOffer();
+					ResourceList offer = tradeOffer.getOffer();
+					getResources(offer);
+					getAcceptOverlay().showModal();
+					return; 
+				}
+				if(currState.getPlayerIndex() == gameModel.getTradeOffer().getReciever()){
+					TradeOffer tradeOffer = gameModel.getTradeOffer();
+					ResourceList offer = tradeOffer.getOffer();
+					getResources(offer);
+					getAcceptOverlay().showModal();
+				}
+			}
+		}
+			
+		if(getWaitOverlay().isModalShowing()){
+			if(gameModel.getTradeOffer() == null)
+				getWaitOverlay().closeModal();
+		}
+		
 	}
 	public void outputMaps(){
 		System.out.println("*************************************************");

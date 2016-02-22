@@ -73,8 +73,10 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void buyCard() {
-		
-		getBuyCardView().closeModal();
+		boolean success = currState.buyDevCard();
+		if(success == true){
+			getBuyCardView().closeModal();
+		}
 	}
 
 	@Override
@@ -165,6 +167,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		devCards = model.getLocalPlayer(facade.getPlayerId()).getOldDevCards();
+		currState = currState.identifyState(model.getTurnTracker());
 	}
 
 }

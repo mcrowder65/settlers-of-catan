@@ -209,9 +209,6 @@ public class GameMap {
 		HexLocation hex = location.getHexLoc();
 		Boolean isLand = this.isLand(hex);
 		EdgeDirection direction = location.getDir();
-		if(isLand == false){
-			return false;
-		}
 		
 		Boolean hasRoad = this.hasRoadAllPlayers(location);
 		if(hasRoad == true){
@@ -232,25 +229,56 @@ public class GameMap {
 				return true;
 			}
 			
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthWest);
+			EdgeDirection oppDir = EdgeDirection.NorthWest.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.South);
+			oppDir = EdgeDirection.South.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
 			
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
-				if(isHexLand == true){
-					newLocation = new EdgeLocation(oppositeHex,EdgeDirection.SouthEast);
-					road = new EdgeValue(owner, newLocation);
-					alreadyHasRoad = this.hasRoadPersonal(road);
-					if(alreadyHasRoad == true){
-						return true;
-					}
-					
-					newLocation = new EdgeLocation(oppositeHex,EdgeDirection.North);
-					road = new EdgeValue(owner, newLocation);
-					alreadyHasRoad = this.hasRoadPersonal(road);
-					if(alreadyHasRoad == true){
-						return true;
-					}
-				}
+			newLocation = new EdgeLocation(oppositeHex,EdgeDirection.SouthEast);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(oppositeHex, EdgeDirection.SouthEast);
+			oppDir = EdgeDirection.SouthEast.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			newLocation = new EdgeLocation(oppositeHex,EdgeDirection.North);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(oppositeHex, EdgeDirection.North);
+			oppDir = EdgeDirection.North.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
 			}
 			
 			
@@ -269,10 +297,38 @@ public class GameMap {
 				return true;
 			}
 			
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.SouthWest);
+			EdgeDirection oppDir = EdgeDirection.SouthWest.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.North);
+			oppDir = EdgeDirection.North.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
+			
 				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.NorthEast);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+				
+				opp = getOppositeHex(hex, EdgeDirection.NorthEast);
+				oppDir = EdgeDirection.NorthEast.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
 				road = new EdgeValue(owner, newLocation);
 				alreadyHasRoad = this.hasRoadPersonal(road);
 				if(alreadyHasRoad == true){
@@ -285,7 +341,16 @@ public class GameMap {
 				if(alreadyHasRoad == true){
 					return true;
 				}
-			}
+				
+				opp = getOppositeHex(hex, EdgeDirection.South);
+				oppDir = EdgeDirection.South.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+			
 		}
 		else if(direction == EdgeDirection.North){
 			EdgeLocation newLocation = new EdgeLocation(hex,EdgeDirection.NorthWest);
@@ -301,10 +366,37 @@ public class GameMap {
 				return true;
 			}
 			
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthWest);
+			EdgeDirection oppDir = EdgeDirection.NorthWest.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.NorthEast);
+			oppDir = EdgeDirection.NorthEast.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+		
+			
 				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.SouthEast);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+				
+				opp = getOppositeHex(hex, EdgeDirection.SouthEast);
+				oppDir = EdgeDirection.SouthEast.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
 				road = new EdgeValue(owner, newLocation);
 				alreadyHasRoad = this.hasRoadPersonal(road);
 				if(alreadyHasRoad == true){
@@ -317,7 +409,16 @@ public class GameMap {
 				if(alreadyHasRoad == true){
 					return true;
 				}
-			}
+				
+				opp = getOppositeHex(hex, EdgeDirection.SouthWest);
+				oppDir = EdgeDirection.SouthWest.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+			
 		}
 		else if(direction == EdgeDirection.NorthEast){
 			EdgeLocation newLocation = new EdgeLocation(hex,EdgeDirection.North);
@@ -332,10 +433,36 @@ public class GameMap {
 			if(alreadyHasRoad == true){
 				return true;
 			}
+			
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.North);
+			EdgeDirection oppDir = EdgeDirection.North.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
+			oppDir = EdgeDirection.SouthEast.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
+			
 				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.South);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+				opp = getOppositeHex(hex, EdgeDirection.South);
+				oppDir = EdgeDirection.South.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
 				road = new EdgeValue(owner, newLocation);
 				alreadyHasRoad = this.hasRoadPersonal(road);
 				if(alreadyHasRoad == true){
@@ -348,7 +475,14 @@ public class GameMap {
 				if(alreadyHasRoad == true){
 					return true;
 				}
-			}
+				opp = getOppositeHex(hex, EdgeDirection.NorthWest);
+				oppDir = EdgeDirection.NorthWest.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
 		}
 		else if(direction == EdgeDirection.SouthEast){
 			EdgeLocation newLocation = new EdgeLocation(hex,EdgeDirection.NorthEast);
@@ -363,11 +497,35 @@ public class GameMap {
 			if(alreadyHasRoad == true){
 				return true;
 			}
+			
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthEast);
+			EdgeDirection oppDir = EdgeDirection.NorthEast.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.South);
+			oppDir = EdgeDirection.South.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
 			
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
 				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.SouthWest);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+				opp = getOppositeHex(hex, EdgeDirection.SouthWest);
+				oppDir = EdgeDirection.SouthWest.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
 				road = new EdgeValue(owner, newLocation);
 				alreadyHasRoad = this.hasRoadPersonal(road);
 				if(alreadyHasRoad == true){
@@ -380,7 +538,15 @@ public class GameMap {
 				if(alreadyHasRoad == true){
 					return true;
 				}
-			}
+				opp = getOppositeHex(hex, EdgeDirection.North);
+				oppDir = EdgeDirection.North.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+
 		}
 		else if(direction == EdgeDirection.South){
 			EdgeLocation newLocation = new EdgeLocation(hex,EdgeDirection.SouthWest);
@@ -395,11 +561,35 @@ public class GameMap {
 			if(alreadyHasRoad == true){
 				return true;
 			}
+			HexLocation opp = getOppositeHex(hex, EdgeDirection.SouthWest);
+			EdgeDirection oppDir = EdgeDirection.SouthWest.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
+			
+			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
+			oppDir = EdgeDirection.SouthEast.getOppositeDirection();
+			newLocation = new EdgeLocation(opp,oppDir);
+			road = new EdgeValue(owner, newLocation);
+			alreadyHasRoad = this.hasRoadPersonal(road);
+			if(alreadyHasRoad == true){
+				return true;
+			}
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
 			
-			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.NorthEast);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
+				opp = getOppositeHex(hex, EdgeDirection.NorthEast);
+				oppDir = EdgeDirection.NorthEast.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
 				road = new EdgeValue(owner, newLocation);
 				alreadyHasRoad = this.hasRoadPersonal(road);
 				if(alreadyHasRoad == true){
@@ -412,8 +602,17 @@ public class GameMap {
 				if(alreadyHasRoad == true){
 					return true;
 				}
+				
+				opp = getOppositeHex(hex, EdgeDirection.NorthWest);
+				oppDir = EdgeDirection.NorthWest.getOppositeDirection();
+				newLocation = new EdgeLocation(opp,oppDir);
+				road = new EdgeValue(owner, newLocation);
+				alreadyHasRoad = this.hasRoadPersonal(road);
+				if(alreadyHasRoad == true){
+					return true;
+				}
 			}
-		}
+		
 		
 		return false;
 	}

@@ -117,7 +117,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementEnabled(ResourceBarElement.CITY, player.canBuildCity());
 		
 		boolean clickable = facade.canBuyDevCard();
-		getView().setElementEnabled(ResourceBarElement.BUY_CARD, clickable);
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
 		
 		int soldiers = player.getSoldiers();
 		getView().setElementAmount(ResourceBarElement.SOLDIERS, soldiers);

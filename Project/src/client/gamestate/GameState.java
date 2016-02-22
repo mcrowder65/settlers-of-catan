@@ -126,6 +126,10 @@ public abstract class GameState {
 		return false;
 	}
 	
+	public boolean buyDevCard(){
+		return false;
+	}
+	
 	public boolean canUseYearOfPlenty() {
 
 		return false;

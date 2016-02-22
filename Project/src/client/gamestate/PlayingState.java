@@ -22,6 +22,11 @@ public class PlayingState extends GameState {
 	}
 	
 	@Override
+	public boolean buyDevCard() throws IllegalArgumentException{
+		return facade.buyDevCard();
+	}
+	
+	@Override
 	public boolean playRoadBuildingCard(){	
 		if(road1 == null || road2 == null){
 			return false;

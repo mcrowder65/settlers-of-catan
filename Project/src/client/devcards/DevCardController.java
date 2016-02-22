@@ -1,5 +1,6 @@
 package client.devcards;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 import java.util.Observable;
@@ -56,6 +57,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void startBuyCard() {
 		
 		getBuyCardView().showModal();
+		
 	}
 
 	@Override
@@ -72,7 +74,42 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startPlayCard() {
-		
+		boolean canPlayMonument = currState.canUseMonument();
+		if(canPlayMonument == true){
+			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,true);
+		}
+		else{
+			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,false);
+		}
+		boolean canPlayRoadB = currState.canUseRoadBuilder();
+		if(canPlayRoadB == true){
+			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,true);
+		}
+		else{
+			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,false);
+		}
+		boolean canPlayMonopoly = currState.canUseMonopoly();
+		if(canPlayMonopoly == true){
+			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,true);
+		}
+		else{
+			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,false);
+		}
+		boolean canPlayYOP = currState.canUseYearOfPlenty();
+		if(canPlayYOP == true){
+			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,true);
+		}
+		else{
+			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,false);
+		}
+		boolean canPlaySoldierCard = currState.canUseSoldier();
+		if(canPlaySoldierCard == true){
+			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,true);
+		}
+		else{
+			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,false);
+		}
+		//getPlayCardView().setCardAmount(DevCardType.SOLDIER, 4);
 		getPlayCardView().showModal();
 	}
 

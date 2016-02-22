@@ -162,6 +162,10 @@ public abstract class GameState {
 
 		return false;
 	}
+	
+	public boolean playMonument(){
+		return false;
+	}
 
 	public boolean canSendChat() {
 		return true;

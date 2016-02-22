@@ -22,6 +22,11 @@ public class PlayingState extends GameState {
 	}
 	
 	@Override
+	public boolean playMonument(){
+		return facade.playMonument();
+	}
+	
+	@Override
 	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) {
 		return facade.playYearOfPlenty(resource1, resource2);
 	}

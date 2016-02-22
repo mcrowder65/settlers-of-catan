@@ -147,12 +147,14 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonumentCard() {
-		
+		boolean success = currState.playMonument();
+		if(success == true){
+			getPlayCardView().closeModal();
+		}
 	}
 
 	@Override
 	public void playRoadBuildCard() {
-		
 		roadAction.execute();
 	}
 

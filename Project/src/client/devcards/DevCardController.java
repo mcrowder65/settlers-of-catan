@@ -2,6 +2,7 @@ package client.devcards;
 
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
+import shared.definitions.GameModel;
 import shared.definitions.ResourceType;
 
 import java.util.Observable;
@@ -25,6 +26,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction roadAction;
 	private GameState currState;
 	private Facade facade;
+	private DevCardList devCards;
 	
 	/**
 	 * DevCardController constructor
@@ -77,7 +79,6 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startPlayCard() {
-		DevCardList devCards = facade.getDevCards();
 		boolean canPlayMonument = currState.canUseMonument();
 		if(canPlayMonument == true){
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,true);
@@ -162,7 +163,8 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void update(Observable o, Object arg) {
-	
+		GameModel model = (GameModel)arg;
+		devCards = model.getLocalPlayer(facade.getPlayerId()).getOldDevCards();
 	}
 
 }

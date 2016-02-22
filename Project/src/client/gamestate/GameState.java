@@ -83,7 +83,7 @@ public abstract class GameState {
 		throw new IllegalStateException();
 	}
 
-	public boolean playSoldierCard() throws IllegalStateException{	
+	public boolean playSoldierCard(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalStateException{	
 		throw new IllegalStateException();
 	}
 

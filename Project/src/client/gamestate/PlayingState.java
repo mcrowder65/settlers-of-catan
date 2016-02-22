@@ -1,6 +1,7 @@
 package client.gamestate;
 
 import client.controller.Facade;
+import client.data.RobPlayerInfo;
 import shared.definitions.TradeOffer;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -147,5 +148,12 @@ public class PlayingState extends GameState {
 	@Override
 	public boolean isGameStatePanelEnabled() {
 		return true;
+	}
+	
+	@Override
+	public boolean playSoldierCard(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalArgumentException
+	{
+		return facade.playSoldier(victim.getPlayerIndex(), hexLoc);
+		
 	}
 }

@@ -22,6 +22,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private GameState currState;
 	private boolean firstTime;
 	private HexLocation movedRobberLocation;
+	private boolean isPlayingSoldier = false;
 	
 
 	public MapController(IMapView view, IRobView robView,IRollResultView rollResultView, Facade facade) {
@@ -186,7 +187,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void playSoldierCard() {	
-		currState.playSoldierCard();
+		isPlayingSoldier = true;
+		startRobber();
+		//
+		
 	}
 
 	public void playRoadBuildingCard() {	
@@ -196,8 +200,15 @@ public class MapController extends Controller implements IMapController, Observe
 	public void robPlayer(RobPlayerInfo victim) {	
 		if (movedRobberLocation == null) 
 			System.out.println("WARNING! movedRobberLocation in robPlayer was not set.");
-		else
-			currState.placeRobber(movedRobberLocation, victim);
+		else {
+			
+			if (isPlayingSoldier)
+				currState.playSoldierCard(movedRobberLocation, victim);
+			else
+				currState.placeRobber(movedRobberLocation, victim);
+			
+			isPlayingSoldier = false;
+		}
 	}
 	public HexType getHexType(String resource){
 		return resource.equals("DESERT") ? HexType.DESERT : resource.equals("WOOD") ? HexType.WOOD : 

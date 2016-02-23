@@ -1,5 +1,6 @@
 package client.gamestate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
@@ -9,6 +10,7 @@ import shared.communication.response.GetModelResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameModel;
 import shared.definitions.Player;
+import shared.definitions.Port;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
@@ -79,6 +81,10 @@ public abstract class GameState {
 		throw new IllegalStateException();
 	}
 
+	public List<Port>getPersonalPorts(){
+		List<Port> ports = new ArrayList();
+		return ports;
+	}
 	
 	public boolean cancelMove() throws IllegalStateException{
 		throw new IllegalStateException();

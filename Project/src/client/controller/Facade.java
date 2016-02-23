@@ -295,7 +295,7 @@ public class Facade {
 		return response.isSuccess();
 	}
 	
-	public List<Port> getPorts(){
+	public List<Port> getPersonalPorts(){
 		return game.getModel().getMap().getPersonalPorts(game.getModel().getLocalIndex(playerId));
 	}
 

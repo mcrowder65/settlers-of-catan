@@ -1,7 +1,11 @@
 package client.gamestate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.controller.Facade;
 import client.data.RobPlayerInfo;
+import shared.definitions.Port;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
 import shared.locations.EdgeLocation;
@@ -24,6 +28,11 @@ public class PlayingState extends GameState {
 	@Override
 	public boolean playMonument(){
 		return facade.playMonument();
+	}
+	
+	@Override
+	public List<Port>getPersonalPorts(){
+		return facade.getPersonalPorts();
 	}
 	
 	@Override

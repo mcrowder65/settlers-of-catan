@@ -101,6 +101,523 @@ public class GameMap {
 	public Port[] getPorts() throws IllegalArgumentException{
 		return ports;
 	}
+	
+	public List<Port> getPersonalPorts(int owner){
+		List<Port> personalPorts = new ArrayList();
+		if(allPorts.size() > 0){
+			for(int i=0; i<ports.length; i++){
+				Port portTemp = ports[i];
+				HexLocation portHex = portTemp.getLocation();
+				EdgeDirection portEdge = portTemp.getDirection();
+				if(portEdge == EdgeDirection.North){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthEast){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.East){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.West){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthEast){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.East){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.West){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+				if(portEdge == EdgeDirection.NorthWest){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.East || settlementDirection == VertexDirection.SouthEast){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthWest){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.NorthEast){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.East || settlementDirection == VertexDirection.SouthEast){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthWest){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.NorthEast){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+				if(portEdge == EdgeDirection.NorthEast){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthWest){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthEast){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.NorthWest){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthWest){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
+							if(settlementDirection == VertexDirection.SouthEast){
+								if(oppNorth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.NorthWest){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+				if(portEdge == EdgeDirection.South){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.SouthWest){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.East){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.West){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.SouthWest){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.East){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.West){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+				if(portEdge == EdgeDirection.SouthEast){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.East){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.SouthWest){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthEast){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.East){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
+							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
+								if(oppSouthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
+							if(settlementDirection == VertexDirection.SouthWest){
+								if(oppNorthEast == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthEast){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+				if(portEdge == EdgeDirection.SouthWest){
+					if(allSettlements.size() > 0){
+						for(int x=0; x<settlements.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = settlements[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.West){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.SouthEast){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthWest){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+						}
+					}
+					if(allCities.size() > 0){
+						for(int x=0; x<cities.length; x++){
+							Boolean hasSettle = false;
+							VertexObject settlement = cities[i];
+							VertexLocation loc = settlement.getLocation();
+							HexLocation hexLoc = loc.getHexLoc();
+							VertexDirection settlementDirection = loc.getDir();
+							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.West){
+								if(hexLoc == portHex){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
+							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
+								if(oppSouthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
+							if(settlementDirection == VertexDirection.SouthEast){
+								if(oppNorthWest == hexLoc){
+									hasSettle = true;
+								}
+							}
+							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
+							if(settlementDirection == VertexDirection.NorthWest){
+								if(oppSouth == hexLoc){
+									hasSettle = true;
+								}
+							}
+							
+							if(hasSettle == true){
+								personalPorts.add(portTemp);
+								hasSettle = false;
+							}
+							
+							
+						}
+					}
+				}
+				
+			}
+		}
+		return personalPorts;
+	}
 
 	/**
 	 * gets an array of all the roads on the map

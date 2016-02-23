@@ -293,7 +293,10 @@ public class Facade {
 	public boolean sendChat(String message) throws IllegalArgumentException{
 		GetModelResponse response = proxy.sendChat(game.getModel().getLocalIndex(playerId),message);
 		return response.isSuccess();
-
+	}
+	
+	public List<Port> getPorts(){
+		return game.getModel().getMap().getPersonalPorts(game.getModel().getLocalIndex(playerId));
 	}
 
 	/**

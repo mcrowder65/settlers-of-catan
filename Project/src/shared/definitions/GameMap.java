@@ -103,521 +103,537 @@ public class GameMap {
 	}
 	
 	public List<Port> getPersonalPorts(int owner){
-		List<Port> personalPorts = new ArrayList();
-		if(allPorts.size() > 0){
-			for(int i=0; i<ports.length; i++){
-				Port portTemp = ports[i];
-				HexLocation portHex = portTemp.getLocation();
-				EdgeDirection portEdge = portTemp.getDirection();
-				if(portEdge == EdgeDirection.North){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+		List<Port>myPorts = new ArrayList();
+		if(allSettlements.size() >0){
+			for (int i=0; i<settlements.length; i++){
+				if(settlements[i].getOwner() == owner){
+					VertexObject settlement = settlements[i];
+					VertexLocation location = settlement.getLocation();
+					HexLocation hexLoc = location.getHexLoc();
+					if((hexLoc.getX()==1 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthEast){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.East){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.West){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthEast){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.East){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.West){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-				}
-				
-				if(portEdge == EdgeDirection.NorthWest){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.East || settlementDirection == VertexDirection.SouthEast){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthWest){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.NorthEast){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.East || settlementDirection == VertexDirection.SouthEast){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthWest){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.NorthEast){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-				}
-				
-				if(portEdge == EdgeDirection.NorthEast){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					if((hexLoc.getX()==3 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.West || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthWest){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthEast){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.NorthWest){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.East || location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.SouthWest){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorth = getOppositeHex(portHex,EdgeDirection.North);
-							if(settlementDirection == VertexDirection.SouthEast){
-								if(oppNorth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.NorthWest){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-				}
-				
-				if(portEdge == EdgeDirection.South){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.SouthWest){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.East){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.West){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.SouthWest){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==3 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.NorthEast){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.East){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.West){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-				}
-				
-				if(portEdge == EdgeDirection.SouthEast){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.East){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					if((hexLoc.getX()==3 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.West || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.SouthWest){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthEast){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthEast || settlementDirection == VertexDirection.East){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.East || location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouthEast = getOppositeHex(portHex,EdgeDirection.SouthEast);
-							if(settlementDirection == VertexDirection.NorthWest || settlementDirection == VertexDirection.West){
-								if(oppSouthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorthEast = getOppositeHex(portHex,EdgeDirection.NorthEast);
-							if(settlementDirection == VertexDirection.SouthWest){
-								if(oppNorthEast == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthEast){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
-							
 						}
 					}
-				}
-				
-				if(portEdge == EdgeDirection.SouthWest){
-					if(allSettlements.size() > 0){
-						for(int x=0; x<settlements.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = settlements[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.West){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==3 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.SouthEast){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
-							}
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthWest){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
-							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
-							}
-							
 						}
 					}
-					if(allCities.size() > 0){
-						for(int x=0; x<cities.length; x++){
-							Boolean hasSettle = false;
-							VertexObject settlement = cities[i];
-							VertexLocation loc = settlement.getLocation();
-							HexLocation hexLoc = loc.getHexLoc();
-							VertexDirection settlementDirection = loc.getDir();
-							if(settlementDirection == VertexDirection.SouthWest || settlementDirection == VertexDirection.West){
-								if(hexLoc == portHex){
-									hasSettle = true;
-								}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppSouthWest = getOppositeHex(portHex,EdgeDirection.SouthWest);
-							if(settlementDirection == VertexDirection.NorthEast || settlementDirection == VertexDirection.East){
-								if(oppSouthWest == hexLoc){
-									hasSettle = true;
-								}
+						}
+					}
+					
+					if((hexLoc.getX()==2 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
 							}
-							
-							HexLocation oppNorthWest = getOppositeHex(portHex,EdgeDirection.NorthWest);
-							if(settlementDirection == VertexDirection.SouthEast){
-								if(oppNorthWest == hexLoc){
-									hasSettle = true;
-								}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
 							}
-							HexLocation oppSouth = getOppositeHex(portHex,EdgeDirection.South);
-							if(settlementDirection == VertexDirection.NorthWest){
-								if(oppSouth == hexLoc){
-									hasSettle = true;
-								}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
 							}
-							
-							if(hasSettle == true){
-								personalPorts.add(portTemp);
-								hasSettle = false;
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
 							}
-							
-							
+						}
+					}
+					if((hexLoc.getX()==3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-2 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-3 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-3 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-3 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-1 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
 						}
 					}
 				}
 				
 			}
 		}
-		return personalPorts;
+		if(allCities.size() >0){
+			for (int i=0; i<cities.length; i++){
+				if(cities[i].getOwner() == owner){
+					VertexObject settlement = cities[i];
+					VertexLocation location = settlement.getLocation();
+					HexLocation hexLoc = location.getHexLoc();
+					if((hexLoc.getX()==1 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==1 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==3 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.West || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.East || location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-3)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==3 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==3 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.West || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.East || location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==3 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==-1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					
+					if((hexLoc.getX()==2 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==2 &&ports[j].getLocation().getY()==1){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-2 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-2 &&ports[j].getLocation().getY()==3){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-3 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-3 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.SouthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-3 && hexLoc.getY()==1)&&(location.getDir()==VertexDirection.NorthEast)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-3 &&ports[j].getLocation().getY()==0){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					if((hexLoc.getX()==-1 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.SouthEast || location.getDir()==VertexDirection.SouthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-1 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.NorthEast || location.getDir()==VertexDirection.NorthWest)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==0 && hexLoc.getY()==-2)&&(location.getDir()==VertexDirection.West)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+					else if((hexLoc.getX()==-2 && hexLoc.getY()==-1)&&(location.getDir()==VertexDirection.East)){          
+						for(int j=0; j<ports.length; j++){
+							if(ports[j].getLocation().getX() ==-1 &&ports[j].getLocation().getY()==-2){
+								myPorts.add(ports[j]);
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		return myPorts;
 	}
+	
+	
 
 	/**
 	 * gets an array of all the roads on the map

@@ -223,30 +223,30 @@ public class GameMap {
 							}
 						}
 					}
-					if((hexLoc.getX()==3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
+					if((hexLoc.getX()==0 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==0 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.SouthEast)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.West)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.East)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
@@ -486,30 +486,30 @@ public class GameMap {
 							}
 						}
 					}
-					if((hexLoc.getX()==3 && hexLoc.getY()==0)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
+					if((hexLoc.getX()==0 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.NorthWest || location.getDir()==VertexDirection.NorthEast)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==0 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.SouthWest || location.getDir()==VertexDirection.SouthEast)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==1 && hexLoc.getY()==2)&&(location.getDir()==VertexDirection.West)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}
 					}
 					else if((hexLoc.getX()==-1 && hexLoc.getY()==3)&&(location.getDir()==VertexDirection.East)){          
 						for(int j=0; j<ports.length; j++){
-							if(ports[j].getLocation().getX() ==3 &&ports[j].getLocation().getY()==0){
+							if(ports[j].getLocation().getX() ==0 &&ports[j].getLocation().getY()==3){
 								myPorts.add(ports[j]);
 							}
 						}

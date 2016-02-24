@@ -11,6 +11,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
+import client.gamestate.PlayingState;
 
 
 /**
@@ -130,6 +131,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		
 		GameModel gameModel = (GameModel)arg;
 		currState = currState.identifyState(gameModel.getTurnTracker());
+		if (currState instanceof PlayingState)
+			getTradeView().enableMaritimeTrade(true);
+		else
+			getTradeView().enableMaritimeTrade(false);
 	}
 	
 }

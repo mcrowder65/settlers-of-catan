@@ -369,7 +369,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
 				System.out.println(gameModel.getTradeOffer().toString());	
-				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){//TODO facade can accept trade not working.
+				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
 					getAcceptOverlay().setAcceptEnabled(false);
 					TradeOffer tradeOffer = gameModel.getTradeOffer();
 					ResourceList offer = tradeOffer.getOffer();

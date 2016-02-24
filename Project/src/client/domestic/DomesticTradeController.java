@@ -371,7 +371,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 		else if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
-				System.out.println(gameModel.getTradeOffer().toString());	
 				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
 					getAcceptOverlay().setAcceptEnabled(false);
 					TradeOffer tradeOffer = gameModel.getTradeOffer();
@@ -392,32 +391,35 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		
 	}
-	public void outputMaps(){
-		System.out.println("*************************************************");
+	public String outputMaps(){
+		StringBuilder string = new StringBuilder("*************************************************");
+		
 		if(send.containsKey(ResourceType.BRICK))
-			System.out.println("sending " + send.get(ResourceType.BRICK) + " bricks");
+			string.append("sending " + send.get(ResourceType.BRICK) + " bricks" + '\n');
 		if(receive.containsKey(ResourceType.BRICK))
-			System.out.println("receiving " + receive.get(ResourceType.BRICK) + " bricks");
+			string.append("receiving " + receive.get(ResourceType.BRICK) + " bricks" + '\n');
 		
 		if(send.containsKey(ResourceType.WHEAT))
-			System.out.println("sending " + send.get(ResourceType.WHEAT) + " wheat");
+			string.append("sending " + send.get(ResourceType.WHEAT) + " wheat" + '\n');
 		if(receive.containsKey(ResourceType.WHEAT))
-			System.out.println("receiving " + receive.get(ResourceType.WHEAT) + " wheat");
+			string.append("receiving " + receive.get(ResourceType.WHEAT) + " wheat" + '\n');
 		
 		if(send.containsKey(ResourceType.WOOD))
-			System.out.println("sending " + send.get(ResourceType.WOOD) + " wood");
+			string.append("sending " + send.get(ResourceType.WOOD) + " wood" + '\n');
 		if(receive.containsKey(ResourceType.WOOD))
-			System.out.println("receiving " + receive.get(ResourceType.WOOD) + " wood");
+			string.append("receiving " + receive.get(ResourceType.WOOD) + " wood" + '\n');
 		
 		if(send.containsKey(ResourceType.SHEEP))
-			System.out.println("sending " + send.get(ResourceType.SHEEP) + " sheep");
+			string.append("sending " + send.get(ResourceType.SHEEP) + " sheep" + '\n');
 		if(receive.containsKey(ResourceType.SHEEP))
-			System.out.println("receiving " + receive.get(ResourceType.SHEEP) + " sheep");
+			string.append("receiving " + receive.get(ResourceType.SHEEP) + " sheep" + '\n');
 		
 		if(send.containsKey(ResourceType.ORE))
-			System.out.println("sending " + send.get(ResourceType.ORE) + " ore");
+			string.append("sending " + send.get(ResourceType.ORE) + " ore" + '\n');
 		if(receive.containsKey(ResourceType.ORE))
-			System.out.println("receiving " + receive.get(ResourceType.ORE) + " ore");
+			string.append("receiving " + receive.get(ResourceType.ORE) + " ore" + '\n');
+		
+		return string.toString();
 	}
 }
 

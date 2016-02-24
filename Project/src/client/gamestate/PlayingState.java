@@ -134,7 +134,6 @@ public class PlayingState extends GameState {
 	
 	@Override
 	public boolean offerTrade(TradeOffer offer) throws IllegalArgumentException{
-		System.out.println("in here");
 		return facade.offerTrade(offer);
 	}
 	

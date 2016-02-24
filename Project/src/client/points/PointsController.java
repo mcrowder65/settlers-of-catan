@@ -48,10 +48,27 @@ public class PointsController extends Controller implements IPointsController, O
 		getPointsView().setPoints(points);
 	
 	}
+	
+	private void finishGame(GameModel model) {
+		int winner = model.getWinner();
+		String name = model.getPlayers()[model.getLocalIndex(winner)].getName();
+
+		boolean isLocalPlayer = false;
+		if(winner == facade.getPlayerId()) isLocalPlayer = true;
+		
+		finishedView.setWinner(name, isLocalPlayer);
+		finishedView.showModal();
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
+		
+		int winner = model.getWinner();
+		if(winner != -1 && !finishedView.isModalShowing()) {
+			finishGame(model);
+		}
+		
 		int playerId = facade.getPlayerId();
 		int points = model.getLocalPlayer(playerId).getVictoryPoints();
 		initFromModel(points);

@@ -687,16 +687,7 @@ public class Player {
 	}
 	
 	public boolean canPlayMonumentCard() throws IllegalArgumentException{
-		int monumentCard = oldDevCards.getMonument();
-		monumentCard = monumentCard + newDevCards.getMonument();
-		if(monumentCard > 0){
-			int totalPoints = victoryPoints + monumentCard;
-			if(totalPoints >= 10){
-				return true;
-			}
-			
-		}
-		return false;
+		return !this.playedDevCard && (oldDevCards.getMonument() + newDevCards.getMonument() > 0);
 	}
 	
 	public boolean canPlayDevCard() throws IllegalArgumentException{

@@ -21,7 +21,6 @@ import client.misc.*;
  * Domestic trade controller implementation
  */
 public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
-//TODO domestic trade broken :( 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
@@ -51,7 +50,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		this.currState = new IsNotTurnState(facade); //TODO how should we handle this..?
+		this.currState = new IsNotTurnState(facade);
 		initializeMaps();
 		this.facade = facade;
 		facade.addObserver(this);
@@ -236,20 +235,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				totalWheat = -receive.get(i);
 		}
 		ResourceList resources = new ResourceList(totalBricks, totalOre, totalSheep, totalWheat, totalWood);
-		System.out.println("brick: " + resources.getBrick()); //TODO output
-		System.out.println("wheat: " + resources.getWheat());//TODO output
-		System.out.println("sheep: " + resources.getSheep());//TODO output
-		System.out.println("ore: " + resources.getOre());//TODO output
-		System.out.println("wood: " + resources.getWood());//TODO output
 		
 		return new TradeOffer(currState.getPlayerIndex(), receiver, resources);
 	}
 	@Override
 	public void sendTradeOffer() {
-		//TODO sometimes the send trade shows upa  little earlier than expected.
 		boolean accepted = currState.offerTrade(constructTradeOffer());
 		getTradeOverlay().closeModal();
-		getWaitOverlay().showModal(); //TODO configure this.
+		getWaitOverlay().showModal();
 		receiver = -1;
 		clearTrade();
 	}
@@ -372,10 +365,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		else
 			getTradeView().enableDomesticTrade(false);
 		
-		if(!getAcceptOverlay().isModalShowing()){
+		if(getWaitOverlay().isModalShowing()){
+			if(gameModel.getTradeOffer() == null)
+				getWaitOverlay().closeModal();
+		}
+		else if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
 				System.out.println(gameModel.getTradeOffer().toString());	
-				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){//TODO facade can accept trade not working.
+				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
 					getAcceptOverlay().setAcceptEnabled(false);
 					TradeOffer tradeOffer = gameModel.getTradeOffer();
 					ResourceList offer = tradeOffer.getOffer();
@@ -392,10 +389,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 			
-		if(getWaitOverlay().isModalShowing()){
-			if(gameModel.getTradeOffer() == null)
-				getWaitOverlay().closeModal();
-		}
+		
 		
 	}
 	public void outputMaps(){

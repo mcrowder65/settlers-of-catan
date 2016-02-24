@@ -87,12 +87,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGetResource(ResourceType resource) {
 		getTradeOverlay().selectGetOption(resource, 1);
-		get = resource;//TODO matt - test to make sure get never gets set to something else when cancelling
+		get = resource;
 	}
 	private int ratio = 0;
 	@Override
 	public void setGiveResource(ResourceType resource) {
-		//TODO for some reason i made the trade and the get was received but the give view wasn't updated?
 		ArrayList<Port> playerPorts = (ArrayList<Port>) currState.getPersonalPorts();
 		getTradeOverlay().selectGiveOption(resource, 4);
 		ratio = 4;
@@ -112,7 +111,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().showGetOptions(types);
 		
 		
-		give = resource; //TODO matt - test to make sure give never gets set to something else when cancelling
+		give = resource;
 	}
 
 	@Override

@@ -457,7 +457,7 @@ public class Player {
 	public boolean canBuildRoad(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
-		if(brick >0 && wood>0){
+		if(brick >0 && wood>0 && roads>0){
 			return true;
 		}
 		int roadBuildingCard = oldDevCards.getRoadBuilding();
@@ -592,7 +592,7 @@ public class Player {
 		int sheep = resources.getSheep();
 		int grain = resources.getWheat();
 		
-		if(brick>0 && wood>0 && sheep>0 && grain>0){
+		if(brick>0 && wood>0 && sheep>0 && grain>0 && settlements>0){
 			return true;
 		}
 		return false;
@@ -602,7 +602,7 @@ public class Player {
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>2 && grain>1){
+		if(ore>2 && grain>1 && cities>0){
 			return true;
 		}
 		return false;
@@ -687,16 +687,7 @@ public class Player {
 	}
 	
 	public boolean canPlayMonumentCard() throws IllegalArgumentException{
-		int monumentCard = oldDevCards.getMonument();
-		monumentCard = monumentCard + newDevCards.getMonument();
-		if(monumentCard > 0){
-			int totalPoints = victoryPoints + monumentCard;
-			if(totalPoints >= 10){
-				return true;
-			}
-			
-		}
-		return false;
+		return !this.playedDevCard && (oldDevCards.getMonument() + newDevCards.getMonument() > 0);
 	}
 	
 	public boolean canPlayDevCard() throws IllegalArgumentException{
@@ -756,6 +747,7 @@ public class Player {
 	
 	public boolean canAcceptTrade(TradeOffer tradeOffer) throws IllegalArgumentException{
 		ResourceList offer = tradeOffer.getOffer();
+		
 		int brickWanted = offer.getBrick();
 		int sheepWanted = offer.getSheep();
 		int woodWanted = offer.getWood();
@@ -766,17 +758,30 @@ public class Player {
 		int wood = resources.getWood();
 		int ore = resources.getOre();
 		int wheat = resources.getWheat();
-		
-
-
-		
-			//TODO tried doing math.abs of all wants and didn't work - matt
-		
-		if(brick >= brickWanted && sheep >= sheepWanted && wood>=woodWanted && ore>=oreWanted && wheat>=wheatWanted){
-			return true;
+		boolean canAccept = true;
+		if(brickWanted < 0){
+			if(Math.abs(brickWanted) > brick) //reverse
+				canAccept = false;
 		}
-		return false;
+		if(sheepWanted < 0){
+			if(Math.abs(sheepWanted) > sheep)
+				canAccept = false;
+		}
+		if(woodWanted < 0){
+			if(Math.abs(woodWanted) > wood)
+				canAccept = false;
+		}
+		if(oreWanted < 0){
+			if(Math.abs(oreWanted) > ore)
+				canAccept = false;
+		}
+		if(wheatWanted < 0){
+			if(Math.abs(wheatWanted) > wheat)
+				canAccept = false;
+		}
+		return canAccept;
 	}
+	
 	
 	public boolean canOfferTrade() throws IllegalArgumentException{
 		int total = resources.getWheat() + resources.getOre() + resources.getWood() + resources.getSheep() + resources.getBrick();

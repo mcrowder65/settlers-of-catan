@@ -12,6 +12,7 @@ import shared.definitions.GameModel;
 import shared.definitions.MessageLine;
 import shared.definitions.MessageList;
 import shared.definitions.Player;
+import shared.definitions.ResourceType;
 
 
 /**
@@ -45,6 +46,33 @@ public class ChatController extends Controller implements IChatController, Obser
 			else if(message.equals("hello1")) {
 				facade.playMonument();
 			}
+			else if(message.equals("wood")) {
+				for(int i = 0; i < 5; i++){
+					facade.playYearOfPlenty(ResourceType.WOOD, ResourceType.WOOD);
+				}				                                                            
+			}
+			else if(message.equals("brick")) {
+				for(int i = 0; i < 5; i++){
+					facade.playYearOfPlenty(ResourceType.BRICK, ResourceType.BRICK);
+				}				                                                            
+			}
+			else if(message.equals("ore")) {
+				for(int i = 0; i < 5; i++){
+					facade.playYearOfPlenty(ResourceType.ORE, ResourceType.ORE);
+				}				                                                            
+			}
+			else if(message.equals("sheep")) {
+				for(int i = 0; i < 5; i++){
+					facade.playYearOfPlenty(ResourceType.SHEEP, ResourceType.SHEEP);
+				}				                                                            
+			}
+			else if(message.equals("wheat")) {
+				for(int i = 0; i < 5; i++){
+					facade.playYearOfPlenty(ResourceType.WHEAT, ResourceType.WHEAT);
+				}				                                                            
+			}
+			
+		
 			boolean success = facade.sendChat(message);
 			if (success) {
 				currentNumberOfMessages++;

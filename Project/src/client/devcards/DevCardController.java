@@ -25,8 +25,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction soldierAction;
 	private IAction roadAction;
 	private GameState currState;
-	private Facade facade;
-	private DevCardList devCards;
+	private DevCardList oldDevCards;
+	private DevCardList newDevCards;
 	
 	/**
 	 * DevCardController constructor
@@ -45,8 +45,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
 		this.currState = new IsNotTurnState(facade);
-		facade.addObserver(this);
-		this.facade = facade;
+		currState.addObserver(this);
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -81,52 +80,26 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startPlayCard() {
-		boolean canPlayMonument = currState.canUseMonument();
-		if(canPlayMonument == true){
-			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,true);
-			int numCards = devCards.getMonument();
-			getPlayCardView().setCardAmount(DevCardType.MONUMENT, numCards);
-			
-		}
-		else{
-			getPlayCardView().setCardEnabled(DevCardType.MONUMENT,false);
-		}
-		boolean canPlayRoadB = currState.canUseRoadBuilder();
-		if(canPlayRoadB == true){
-			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,true);
-			int numCards = devCards.getRoadBuilding();
-			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, numCards);
-		}
-		else{
-			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,false);
-		}
-		boolean canPlayMonopoly = currState.canUseMonopoly();
-		if(canPlayMonopoly == true){
-			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,true);
-			int numCards = devCards.getMonopoly();
-			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, numCards);
-		}
-		else{
-			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,false);
-		}
-		boolean canPlayYOP = currState.canUseYearOfPlenty();
-		if(canPlayYOP == true){
-			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,true);
-			int numCards = devCards.getYearOfPlenty();
-			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, numCards);
-		}
-		else{
-			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,false);
-		}
-		boolean canPlaySoldierCard = currState.canUseSoldier();
-		if(canPlaySoldierCard == true){
-			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,true);
-			int numCards = devCards.getSoldier();
-			getPlayCardView().setCardAmount(DevCardType.SOLDIER, numCards);
-		}
-		else{
-			getPlayCardView().setCardEnabled(DevCardType.SOLDIER,false);
-		}
+		int numCards;
+		
+		numCards = oldDevCards.getMonument() + newDevCards.getMonument();
+		getPlayCardView().setCardAmount(DevCardType.MONUMENT, numCards);
+		numCards = oldDevCards.getRoadBuilding() + newDevCards.getRoadBuilding();
+		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, numCards);
+		numCards = oldDevCards.getMonopoly() + newDevCards.getMonopoly();
+		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, numCards);
+		numCards = oldDevCards.getYearOfPlenty() + newDevCards.getYearOfPlenty();
+		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, numCards);
+		numCards = oldDevCards.getSoldier() + newDevCards.getSoldier();
+		getPlayCardView().setCardAmount(DevCardType.SOLDIER, numCards);
+		
+		
+		getPlayCardView().setCardEnabled(DevCardType.MONUMENT,currState.canUseMonument());
+		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,currState.canUseRoadBuilder());
+		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,currState.canUseMonopoly());
+		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,currState.canUseYearOfPlenty());
+		getPlayCardView().setCardEnabled(DevCardType.SOLDIER,currState.canUseSoldier());
+		
 		getPlayCardView().showModal();
 	}
 
@@ -175,8 +148,10 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
-		devCards = model.getLocalPlayer(facade.getPlayerId()).getOldDevCards();
 		currState = currState.identifyState(model.getTurnTracker());
+		oldDevCards = model.getLocalPlayer(currState.getPlayerId()).getOldDevCards();
+		newDevCards = model.getLocalPlayer(currState.getPlayerId()).getNewDevCards();
+		
 	}
 
 }

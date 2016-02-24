@@ -27,6 +27,7 @@ public class Catan extends JFrame
 	{
 		//TODO general note, games can't have empty names.
 		//TODO general note, make sure to do default color.
+		//TODO general note, meny and i both used purple when playing over a server.
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

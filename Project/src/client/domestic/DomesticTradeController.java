@@ -21,7 +21,6 @@ import client.misc.*;
  * Domestic trade controller implementation
  */
 public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
-//TODO domestic trade broken :( 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
@@ -236,11 +235,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				totalWheat = -receive.get(i);
 		}
 		ResourceList resources = new ResourceList(totalBricks, totalOre, totalSheep, totalWheat, totalWood);
-		System.out.println("brick: " + resources.getBrick()); //TODO output
-		System.out.println("wheat: " + resources.getWheat());//TODO output
-		System.out.println("sheep: " + resources.getSheep());//TODO output
-		System.out.println("ore: " + resources.getOre());//TODO output
-		System.out.println("wood: " + resources.getWood());//TODO output
 		
 		return new TradeOffer(currState.getPlayerIndex(), receiver, resources);
 	}

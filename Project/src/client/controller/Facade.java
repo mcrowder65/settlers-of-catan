@@ -178,7 +178,7 @@ public class Facade {
 	 */
 	public boolean buildSettlement(VertexLocation location, boolean free) throws IllegalArgumentException{
 		GetModelResponse response = proxy.buildSettlement(game.getModel().getLocalIndex(playerId),location, free);
-		//List<Port>allPorts = this.getPersonalPorts();
+		List<Port>allPorts = this.getPersonalPorts();
 		return response.isSuccess();
 
 	}

@@ -1916,19 +1916,256 @@ public class GameMap {
 		int owner = settlement.getOwner();
 		HexLocation coordinates = settlement.getLocation().getHexLoc();
 		VertexDirection direction = settlement.getLocation().getDir();
-		if(allSettlements.size() > 0){
-			for(int i =0; i<allSettlements.size(); i++){
-				int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
-				int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
-				VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
-				int ownerTemp = allSettlements.get(i).getOwner();
-	
-				if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
-					if(direction == directionTemp){
-						if(owner == ownerTemp)
-						{
-	
-							return true;
+		if(direction == VertexDirection.West){
+			VertexDirection direction2 = VertexDirection.SouthEast;
+			VertexDirection direction3 = VertexDirection.NorthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthWest);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthWest);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.NorthWest){
+			VertexDirection direction2 = VertexDirection.East;
+			VertexDirection direction3 = VertexDirection.SouthWest;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthWest);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.North);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.NorthEast){
+			VertexDirection direction2 = VertexDirection.West;
+			VertexDirection direction3 = VertexDirection.SouthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.North);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.East){
+			VertexDirection direction2 = VertexDirection.SouthWest;
+			VertexDirection direction3 = VertexDirection.NorthWest;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthEast);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(direction == VertexDirection.SouthEast){
+			VertexDirection direction2 = VertexDirection.West;
+			VertexDirection direction3 = VertexDirection.NorthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.SouthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.South);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(direction == VertexDirection.SouthWest){
+			VertexDirection direction2 = VertexDirection.NorthWest;
+			VertexDirection direction3 = VertexDirection.East;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.South);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthWest);
+			if(allSettlements.size() > 0){
+				for(int i =0; i<allSettlements.size(); i++){
+					int xTemp = allSettlements.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allSettlements.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allSettlements.get(i).getLocation().getDir();
+					int ownerTemp = allSettlements.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
 						}
 					}
 				}

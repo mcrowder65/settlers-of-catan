@@ -71,7 +71,10 @@ public class TradeOffer {
 		return offer;
 	}
 
-
+	@Override
+	public String toString() {
+		return "TradeOffer [sender=" + sender + ", receiver=" + receiver + ", offer=" + offer + "]";
+	}
 
 	
 

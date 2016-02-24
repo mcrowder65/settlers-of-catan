@@ -236,15 +236,21 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				totalWheat = -receive.get(i);
 		}
 		ResourceList resources = new ResourceList(totalBricks, totalOre, totalSheep, totalWheat, totalWood);
+		System.out.println("brick: " + resources.getBrick()); //TODO output
+		System.out.println("wheat: " + resources.getWheat());//TODO output
+		System.out.println("sheep: " + resources.getSheep());//TODO output
+		System.out.println("ore: " + resources.getOre());//TODO output
+		System.out.println("wood: " + resources.getWood());//TODO output
+		
 		return new TradeOffer(currState.getPlayerIndex(), receiver, resources);
 	}
 	@Override
 	public void sendTradeOffer() {
-		
+		//TODO sometimes the send trade shows upa  little earlier than expected.
 		boolean accepted = currState.offerTrade(constructTradeOffer());
 		getTradeOverlay().closeModal();
 		getWaitOverlay().showModal(); //TODO configure this.
-		
+		receiver = -1;
 		clearTrade();
 	}
 
@@ -343,7 +349,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		if(offer.getWheat() > 0)
 			getAcceptOverlay().addGetResource(ResourceType.WHEAT, offer.getWheat());
-		if(offer.getSheep() < 0)
+		if(offer.getWheat() < 0)
 			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, -1 * offer.getWheat());
 		
 		if(offer.getOre() > 0)
@@ -363,7 +369,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
-				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
+				System.out.println(gameModel.getTradeOffer().toString());	
+				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){//TODO facade can accept trade not working.
 					getAcceptOverlay().setAcceptEnabled(false);
 					TradeOffer tradeOffer = gameModel.getTradeOffer();
 					ResourceList offer = tradeOffer.getOffer();

@@ -767,6 +767,11 @@ public class Player {
 		int ore = resources.getOre();
 		int wheat = resources.getWheat();
 		
+
+
+		
+			//TODO tried doing math.abs of all wants and didn't work - matt
+		
 		if(brick >= brickWanted && sheep >= sheepWanted && wood>=woodWanted && ore>=oreWanted && wheat>=wheatWanted){
 			return true;
 		}

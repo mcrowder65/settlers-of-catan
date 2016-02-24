@@ -99,6 +99,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,currState.canUseMonopoly());
 		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY,currState.canUseYearOfPlenty());
 		getPlayCardView().setCardEnabled(DevCardType.SOLDIER,currState.canUseSoldier());
+		
+		getPlayCardView().showModal();
 	}
 
 	@Override

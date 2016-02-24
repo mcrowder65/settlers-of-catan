@@ -457,7 +457,7 @@ public class Player {
 	public boolean canBuildRoad(){
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
-		if(brick >0 && wood>0){
+		if(brick >0 && wood>0 && roads>0){
 			return true;
 		}
 		int roadBuildingCard = oldDevCards.getRoadBuilding();
@@ -592,7 +592,7 @@ public class Player {
 		int sheep = resources.getSheep();
 		int grain = resources.getWheat();
 		
-		if(brick>0 && wood>0 && sheep>0 && grain>0){
+		if(brick>0 && wood>0 && sheep>0 && grain>0 && settlements>0){
 			return true;
 		}
 		return false;
@@ -602,7 +602,7 @@ public class Player {
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
 		
-		if(ore>2 && grain>1){
+		if(ore>2 && grain>1 && cities>0){
 			return true;
 		}
 		return false;

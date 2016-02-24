@@ -29,6 +29,7 @@ public class Catan extends JFrame
 		//TODO general note, make sure to do default color.
 		//TODO general note, meny and i both used purple when playing over a server.
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
+		//TODO general note, make sure we get rid of the test button at the bottom of the screen.
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

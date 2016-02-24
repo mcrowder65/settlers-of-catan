@@ -2,6 +2,7 @@ package client.maritime;
 
 import shared.definitions.*;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -61,7 +62,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().showModal();
 		getTradeOverlay().hideGiveOptions();
 		if(currState.getPlayerId() != -1)
-			getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources());
+			getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts()));
+		//ResourceList resourceList = 
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().hideGiveOptions();
 		getTradeOverlay().closeModal();
-		boolean tradeSuccess = facade.offerMaritimeTrade(4, give, get);
+		boolean tradeSuccess = facade.offerMaritimeTrade(ratio, give, get);
 		if(!tradeSuccess)
 			System.out.println("SOMEHOW THE MARITIME TRADE BROKE... THIS SHOULD NOT BE APPEARING!!!!!!");
 	}
@@ -86,12 +88,29 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().selectGetOption(resource, 1);
 		get = resource;//TODO matt - test to make sure get never gets set to something else when cancelling
 	}
-
+	private int ratio = 0;
 	@Override
 	public void setGiveResource(ResourceType resource) {
+		//TODO for some reason i made the trade and the get was received but the give view wasn't updated?
+		ArrayList<Port> playerPorts = (ArrayList<Port>) currState.getPersonalPorts();
 		getTradeOverlay().selectGiveOption(resource, 4);
-		
+		ratio = 4;
+		for(int i = 0; i < playerPorts.size(); i++){
+			if(playerPorts.get(i).getRatio() == 3){
+				getTradeOverlay().selectGiveOption(resource, 3);
+				ratio = 3;
+			}
+			
+		}//CHECK IF THEY HAVE A 3 TO 1 RATIO FIRST
+		for(Port i : playerPorts){
+			if(i.getResource().equals(resource)){
+				getTradeOverlay().selectGiveOption(resource, i.getRatio());
+				ratio = i.getRatio();
+			}
+		}//NOW CHECK IF THEY HAVE A SPECIFIC RESOURCE SO THEN IT OVERWRITES THE 3 TO 1
 		getTradeOverlay().showGetOptions(types);
+		
+		
 		give = resource; //TODO matt - test to make sure give never gets set to something else when cancelling
 	}
 
@@ -103,13 +122,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void unsetGiveValue() {
 		getTradeOverlay().hideGetOptions();
-		getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources()); 
+		getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts())); 
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		
-		
+		GameModel gameModel = (GameModel)arg;
+		currState = currState.identifyState(gameModel.getTurnTracker());
 	}
 	
 }

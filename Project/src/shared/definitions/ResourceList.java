@@ -44,22 +44,45 @@ public class ResourceList {
 			return false;
 		return true;
 	}
-	public ResourceType[] getGiveableResources(){
+	public int getRatio(ResourceType resource, ArrayList<Port> playerPorts){
+		int ratio = 4;
+		
+		for(Port i : playerPorts){
+			if(i.getRatio() == 3)
+				ratio = 3;
+		}
+		for(Port i : playerPorts){
+			if(i.getResource().equals(resource))
+				ratio = i.getRatio();
+		}
+		return ratio;
+	}
+	public ResourceType[] getGiveableResources(ArrayList<Port> playerPorts){
 		int size = 0;
+		int ratio = 4;
+		
 		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();
-		if(brick >= 4){
+		ratio = getRatio(ResourceType.BRICK, playerPorts);
+		if(brick >= ratio){
 			resources.add(ResourceType.BRICK);
 		}
-		if(ore >= 4){
+		ratio = getRatio(ResourceType.ORE, playerPorts);
+		if(ore >= ratio){
 			resources.add(ResourceType.ORE);
 		}
-		if(sheep >= 4){
+		
+		ratio = getRatio(ResourceType.SHEEP, playerPorts);
+		if(sheep >= ratio){
 			resources.add(ResourceType.SHEEP);
 		}
-		if(wheat >= 4){
+		
+		ratio = getRatio(ResourceType.WHEAT, playerPorts);
+		if(wheat >= ratio){
 			resources.add(ResourceType.WHEAT);
 		}
-		if(wood >= 4){
+		
+		ratio = getRatio(ResourceType.WOOD, playerPorts);
+		if(wood >= ratio){
 			resources.add(ResourceType.WOOD);
 		}
 		ResourceType[] resourceArray = new ResourceType[resources.size()];

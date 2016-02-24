@@ -50,7 +50,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		this.currState = new IsNotTurnState(facade); //TODO how should we handle this..?
+		this.currState = new IsNotTurnState(facade); 
 		initializeMaps();
 		this.facade = facade;
 		facade.addObserver(this);
@@ -240,10 +240,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	@Override
 	public void sendTradeOffer() {
-		//TODO sometimes the send trade shows upa  little earlier than expected.
 		boolean accepted = currState.offerTrade(constructTradeOffer());
 		getTradeOverlay().closeModal();
-		getWaitOverlay().showModal(); //TODO configure this.
+		getWaitOverlay().showModal();
 		receiver = -1;
 		clearTrade();
 	}

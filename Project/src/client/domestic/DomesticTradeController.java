@@ -21,7 +21,7 @@ import client.misc.*;
  * Domestic trade controller implementation
  */
 public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
-
+//TODO domestic trade broken :( 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;

@@ -50,7 +50,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		this.currState = new IsNotTurnState(facade); 
+		this.currState = new IsNotTurnState(facade);
 		initializeMaps();
 		this.facade = facade;
 		facade.addObserver(this);
@@ -365,7 +365,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		else
 			getTradeView().enableDomesticTrade(false);
 		
-		if(!getAcceptOverlay().isModalShowing()){
+		if(getWaitOverlay().isModalShowing()){
+			if(gameModel.getTradeOffer() == null)
+				getWaitOverlay().closeModal();
+		}
+		else if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
 				System.out.println(gameModel.getTradeOffer().toString());	
 				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
@@ -385,10 +389,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 			
-		if(getWaitOverlay().isModalShowing()){
-			if(gameModel.getTradeOffer() == null)
-				getWaitOverlay().closeModal();
-		}
+		
 		
 	}
 	public void outputMaps(){

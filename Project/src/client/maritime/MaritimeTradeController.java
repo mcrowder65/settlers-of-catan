@@ -92,7 +92,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private int ratio = 0;
 	@Override
 	public void setGiveResource(ResourceType resource) {
-		//TODO for some reason i made the trade and the get was received but the give view wasn't updated?
 		ArrayList<Port> playerPorts = (ArrayList<Port>) currState.getPersonalPorts();
 		getTradeOverlay().selectGiveOption(resource, 4);
 		ratio = 4;

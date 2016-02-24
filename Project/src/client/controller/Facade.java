@@ -604,25 +604,9 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
-		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals( "Playing")){
-			return false;
-		}
-		boolean playerCheck = localPlayer.canPlayYearOfPlentyCard();
-		if(playerCheck == false){
-			return false;
-		}
-
-		return true;
+		return localPlayer.canPlayYearOfPlentyCard();
 	}
 	
 	public boolean canUseRoadBuilderPlacement(EdgeLocation location){
@@ -666,25 +650,9 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseRoadBuilder() throws IllegalArgumentException{
-		boolean isTurn = false;
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals( "Playing")){
-			return false;
-		}
-		boolean playerCheck = localPlayer.canPlayRoadBuilding();
-		if(playerCheck == false){
-			return false;
-		}
-
-		return true;
+		return localPlayer.canPlayRoadBuilding();
 	}
 	/**
 	 * This method determines if the player can use the Soldier Dev card
@@ -692,25 +660,10 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseSoldier() throws IllegalArgumentException{
-		boolean isTurn = false;
+		
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals( "Playing")){
-			return false;
-		}
-		boolean playerCheck = localPlayer.canPlaySoldierCard();
-		if(playerCheck == false){
-			return false;
-		}
-
-		return true;
+		return localPlayer.canPlaySoldierCard();
 
 	}
 
@@ -720,25 +673,10 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseMonopoly() throws IllegalArgumentException{
-		boolean isTurn = false;
+		
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		if(model.getTurnTracker().getCurrentTurn() == localPlayer.getPlayerIndex()){
-			isTurn = true;
-		}
-		if(isTurn == false){
-			return false;
-		}
-		String status = model.getTurnTracker().getStatus();
-		if(!status.equals( "Playing")){
-			return false;
-		}
-		boolean playerCheck = localPlayer.canPlayMonopolyCard();
-		if(playerCheck == false){
-			return false;
-		}
-
-		return true;
+		return localPlayer.canPlayMonopolyCard();
 	}
 
 	/**
@@ -748,14 +686,8 @@ public class Facade {
 	 */
 	public boolean canUseMonument() throws IllegalArgumentException{
 		GameModel model = game.getModel();
-		Player localPlayer = model.getLocalPlayer(playerId);
-		
-		boolean playerCheck = localPlayer.canPlayMonumentCard();
-		if(playerCheck == false){
-			return false;
-		}
-
-		return true;
+		Player localPlayer = model.getLocalPlayer(playerId);	
+		return localPlayer.canPlayMonumentCard();
 	}
 
 	/**

@@ -218,4 +218,16 @@ public abstract class GameState {
 		return facade.getResources(getPlayerIndex());
 	}
 	
+	public boolean canBuyRoad() {
+		return false;
+	}
+	
+	public boolean canBuySettlement() {
+		return false;
+	}
+	
+	public boolean canBuyCity() {
+		return false;
+	}
+	
 }

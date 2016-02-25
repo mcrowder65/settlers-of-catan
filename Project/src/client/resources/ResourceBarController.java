@@ -110,11 +110,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		int cities = player.getCities();
 		
 		getView().setElementAmount(ResourceBarElement.ROAD, roads);
-		getView().setElementEnabled(ResourceBarElement.ROAD, player.canBuildRoad());
+		getView().setElementEnabled(ResourceBarElement.ROAD, currState.canBuyRoad());
 		getView().setElementAmount(ResourceBarElement.SETTLEMENT, settlements);
-		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, player.canBuildSettlement());
+		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, currState.canBuySettlement());
 		getView().setElementAmount(ResourceBarElement.CITY, cities);
-		getView().setElementEnabled(ResourceBarElement.CITY, player.canBuildCity());
+		getView().setElementEnabled(ResourceBarElement.CITY, currState.canBuyCity());
 		
 		boolean clickable = currState.canBuyDevCard();
 		getView().setElementEnabled(ResourceBarElement.BUY_CARD, clickable);

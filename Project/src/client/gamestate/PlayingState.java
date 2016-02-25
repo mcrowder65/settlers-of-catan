@@ -162,4 +162,20 @@ public class PlayingState extends GameState {
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return facade.canPlaceRobber(hexLoc);
 	}
+	
+	@Override
+	public boolean canBuyRoad() {
+		return facade.canBuyRoad();
+	}
+	
+	@Override
+	public boolean canBuySettlement() {
+		return facade.canBuySettlement();
+	}
+	
+	@Override
+	public boolean canBuyCity() {
+		return facade.canBuyCity();
+	}
+	
 }

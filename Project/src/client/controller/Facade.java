@@ -755,7 +755,51 @@ public class Facade {
 		return game.getModel().getPlayers()[playerIndex].getResources();
 	}
 
+	
+	public boolean canBuyRoad() {
+		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(status.equals( "Playing")){
+			return true;
+		}
+		return game.getModel().getLocalPlayer(playerId).canBuildRoad();
+	}
+	
+	public boolean canBuySettlement() {
+		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(!status.equals( "Playing")){
+			return false;
+		}
+		return game.getModel().getLocalPlayer(playerId).canBuildSettlement();
+		
+	}
+	
+	public boolean canBuyCity() {
+		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
+		{
+			return false;
+		}
+		String status = game.getModel().getTurnTracker().getStatus();
+		if(!status.equals( "Playing")){
+			return false;
+		}
+		return game.getModel().getLocalPlayer(playerId).canBuildCity();
+	}
 
 
+	
+	
+	
+	
+	
+	
+	
 
 }

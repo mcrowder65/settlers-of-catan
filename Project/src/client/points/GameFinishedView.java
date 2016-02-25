@@ -78,6 +78,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 			
 			if (e.getSource() == okButton) {
 				closeModal();
+				//stop poller, open join view
+				// everything back to join game state
 			}
 		}	
 	};

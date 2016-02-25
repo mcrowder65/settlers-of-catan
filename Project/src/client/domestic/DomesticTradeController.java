@@ -371,19 +371,21 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 		else if(!getAcceptOverlay().isModalShowing()){
 			if(gameModel.getTradeOffer() != null){
-				if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
-					getAcceptOverlay().setAcceptEnabled(false);
-					TradeOffer tradeOffer = gameModel.getTradeOffer();
-					ResourceList offer = tradeOffer.getOffer();
-					getResources(offer);
-					getAcceptOverlay().showModal();
-					return; 
-				}
-				if(currState.getPlayerIndex() == gameModel.getTradeOffer().getReciever()){
-					TradeOffer tradeOffer = gameModel.getTradeOffer();
-					ResourceList offer = tradeOffer.getOffer();
-					getResources(offer);
-					getAcceptOverlay().showModal();
+				if(gameModel.getTradeOffer().getReciever() == currState.getPlayerIndex()){
+					if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
+						getAcceptOverlay().setAcceptEnabled(false);
+						TradeOffer tradeOffer = gameModel.getTradeOffer();
+						ResourceList offer = tradeOffer.getOffer();
+						getResources(offer);
+						getAcceptOverlay().showModal();
+						return; 
+					}
+					if(currState.getPlayerIndex() == gameModel.getTradeOffer().getReciever()){
+						TradeOffer tradeOffer = gameModel.getTradeOffer();
+						ResourceList offer = tradeOffer.getOffer();
+						getResources(offer);
+						getAcceptOverlay().showModal();
+					}
 				}
 			}
 		}

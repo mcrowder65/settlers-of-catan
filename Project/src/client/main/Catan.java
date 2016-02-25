@@ -35,6 +35,7 @@ public class Catan extends JFrame
 		//TODO longest road doesn't seem to be working
 		//TODO if i click trade but i can't trade anything cuz i don't have resources, i'll get 1 resource
 		//TODO what is temporary join button?
+		//TODO trade offer is being sent to everyone instead of the actual player
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

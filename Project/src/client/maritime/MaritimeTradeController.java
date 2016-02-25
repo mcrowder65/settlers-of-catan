@@ -61,9 +61,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void startTrade() {
 
 		getTradeOverlay().showModal();
+		ResourceType[] giveableResources = currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts());
+		if(giveableResources.length == 0)
+			getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().hideGiveOptions();
 		if(currState.getPlayerId() != -1)
-			getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts()));
+			getTradeOverlay().showGiveOptions(giveableResources);
 		//ResourceList resourceList = 
 	}
 

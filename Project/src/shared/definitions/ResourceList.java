@@ -58,7 +58,6 @@ public class ResourceList {
 		return ratio;
 	}
 	public ResourceType[] getGiveableResources(ArrayList<Port> playerPorts){
-		int size = 0;
 		int ratio = 4;
 		
 		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();

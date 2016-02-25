@@ -20,7 +20,10 @@ public class RobbingState extends GameState {
 	@Override
 	public boolean placeRobber(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalArgumentException
 	{
-		return facade.placeRobber(victim.getPlayerIndex(), hexLoc);
+		if (victim == null || victim.getNumCards() == 0)
+			return facade.placeRobber(-1, hexLoc);
+		else
+			return facade.placeRobber(victim.getPlayerIndex(), hexLoc);
 		
 	}
 	@Override

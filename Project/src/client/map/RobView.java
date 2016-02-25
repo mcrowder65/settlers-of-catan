@@ -72,7 +72,10 @@ public class RobView extends OverlayView implements IRobView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == defaultButton) {
-				closeModal();
+				synchronized(DataUtils.modelLock) {
+					closeModal();
+					getController().robPlayer(null);
+				}
 			}
 			else{
 				

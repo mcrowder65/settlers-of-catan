@@ -162,10 +162,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getNewGameView().getRandomlyPlaceNumbers(), 
 			getNewGameView().getUseRandomPorts());
        
-		if(getNewGameView().getTitle().equals("")){
-	        showEmptyTitleFail(); //TODO let's make this work - Eric i think you could help me here
-		}
-		else 
+		
        if (gameId > -1) {
 			getNewGameView().closeModal();
 			
@@ -215,13 +212,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			  showJoinGameFail();
 	  }
 	
-	}
-	
-	private void showEmptyTitleFail(){
-		messageView.setTitle("Warning!");
-		messageView.setMessage("The game title is empty.");
-		messageView.showModal();
-		
 	}
 	private void showCreateGameFail() {
 		messageView.setTitle("Error!");

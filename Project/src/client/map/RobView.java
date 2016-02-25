@@ -11,6 +11,7 @@ import java.util.*;
 import shared.definitions.PieceType;
 import client.base.*;
 import client.data.*;
+import client.utils.DataUtils;
 
 
 /**
@@ -77,8 +78,10 @@ public class RobView extends OverlayView implements IRobView {
 				
 				for(int i = 0; i < victimButtons.size(); i++){
 					if(e.getSource() == victimButtons.get(i)){
-						closeModal();
-						getController().robPlayer(victims[i]);
+						synchronized (DataUtils.modelLock) {
+							closeModal();
+							getController().robPlayer(victims[i]);
+						}
 					}
 				}
 				

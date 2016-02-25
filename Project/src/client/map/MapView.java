@@ -170,8 +170,8 @@ public class MapView extends PanelView implements IMapView
 		public void placeRobber(HexLocation hexLoc)
 		{
 			synchronized (DataUtils.modelLock) {
-			closeModal();
-			getController().placeRobber(hexLoc);
+				closeModal();
+				getController().placeRobber(hexLoc);
 			}
 		}
 		

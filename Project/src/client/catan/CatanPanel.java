@@ -123,7 +123,7 @@ public class CatanPanel extends JPanel
 				}
 			}
 		});
-		this.add(testButton, BorderLayout.NORTH);
+		//this.add(testButton, BorderLayout.NORTH);
 	}
 	public IMapController getMapController() {
 		return midPanel.getMapController();

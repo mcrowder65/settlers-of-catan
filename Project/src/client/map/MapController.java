@@ -23,7 +23,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean firstTime;
 	private HexLocation movedRobberLocation;
 	private boolean isPlayingSoldier = false;
-	private int roadBuildingPassNum = 0;
+	private int roadBuildingPassNum = -1;
 	private EdgeLocation roadBuildingFirstPassLocation = null;
 	private boolean disableUpdates = false;
 	
@@ -82,20 +82,24 @@ public class MapController extends Controller implements IMapController, Observe
 		synchronized(DataUtils.modelLock) {
 			
 			switch (roadBuildingPassNum) {
-			case 1: //First road of RoadBuilding devcard
+			case 0: //First road of RoadBuilding devcard
 				roadBuildingFirstPassLocation = edgeLoc;
 				currState.placeRoadLocally(edgeLoc);
+				placeRoadVisual(edgeLoc, currState.getPlayerColor());
 				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
-				roadBuildingPassNum = 2;
+				roadBuildingPassNum = 1;
 				disableUpdates = true;//Need to do this or something like it
 				                      //in order to prevent the update function
 				                      //from overwriting the placed temp road
 				break;
-			case 2: //Second road of RoadBuilding devcard
-				currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc);
-				roadBuildingPassNum = 0;
-				roadBuildingFirstPassLocation = null;
-				disableUpdates = false;
+			case 1: //Second road of RoadBuilding devcard
+				if (currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc))
+				{
+					placeRoadVisual(edgeLoc, currState.getPlayerColor());
+					roadBuildingPassNum = -1;
+					roadBuildingFirstPassLocation = null;
+					disableUpdates = false;
+				}
 				break;
 			default: //Not a devcard, just a regular road
 				boolean success = currState.buildRoad(edgeLoc);

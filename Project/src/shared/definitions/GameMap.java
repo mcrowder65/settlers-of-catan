@@ -73,10 +73,10 @@ public class GameMap {
 		this.cities = cities;
 		this.radius = radius;
 		this.robber = robber;
-		this.allRoads = Arrays.asList(roads);
-		this.allSettlements = Arrays.asList(settlements);
-		this.allCities = Arrays.asList(cities);
-		this.allPorts = Arrays.asList(ports);
+		this.allRoads.addAll(Arrays.asList(roads));
+		this.allSettlements.addAll(Arrays.asList(settlements));
+		this.allCities.addAll(Arrays.asList(cities));
+		this.allPorts.addAll(Arrays.asList(ports));
 	}
 	public boolean isEqual(GameMap other) throws IllegalArgumentException{
 		
@@ -2445,7 +2445,8 @@ public class GameMap {
 	 */
 	public void setPorts(Port[] ports) throws IllegalArgumentException  {
 		this.ports = ports;
-		this.allPorts = Arrays.asList(this.ports);
+		this.allPorts.clear();
+		this.allPorts.addAll(Arrays.asList(this.ports));
 	}
 	/**
 	 * sets all the roads on the map
@@ -2453,7 +2454,8 @@ public class GameMap {
 	 */
 	public void setRoads(EdgeValue[] roads) throws IllegalArgumentException  {
 		this.roads = roads;
-		this.allRoads = Arrays.asList(this.roads);
+		this.allRoads.clear();
+		this.allRoads.addAll(Arrays.asList(this.roads));
 	}
 	/**
 	 * sets all the settlements on the map
@@ -2461,7 +2463,8 @@ public class GameMap {
 	 */
 	public void setSettlements(VertexObject[] settlements) throws IllegalArgumentException  {
 		this.settlements = settlements;
-		this.allSettlements = Arrays.asList(this.settlements);
+		this.allSettlements.clear();
+		this.allSettlements.addAll(Arrays.asList(this.settlements));
 	}
 	/**
 	 * sets all the cities on the map
@@ -2469,7 +2472,8 @@ public class GameMap {
 	 */
 	public void setCities(VertexObject[] cities) throws IllegalArgumentException  {
 		this.cities = cities;
-		this.allCities = Arrays.asList(this.cities);
+		this.allCities.clear();
+		this.allCities.addAll(Arrays.asList(this.cities));
 	}
 	/**
 	 * sets the radius of the map

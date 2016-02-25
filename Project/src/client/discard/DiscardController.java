@@ -59,10 +59,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void increaseAmount(ResourceType resource) {
 		currentDiscarding.addResource(resource, 1);
 		getDiscardView().setStateMessage(currentDiscarding.total() + "/" + neededToDiscard);
-		getDiscardView().setResourceAmountChangeEnabled(
-				resource, 
-				myResources.getResource(resource) > currentDiscarding.getResource(resource),
-				true);
+		toggleEnabling();
 		getDiscardView().setDiscardButtonEnabled(currentDiscarding.total() == neededToDiscard);
 		getDiscardView().setResourceDiscardAmount(resource, currentDiscarding.getResource(resource));
 	}
@@ -71,12 +68,34 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void decreaseAmount(ResourceType resource) {
 		currentDiscarding.removeResource(resource, 1);
 		getDiscardView().setStateMessage(currentDiscarding.total() + "/" + neededToDiscard);
-		getDiscardView().setResourceAmountChangeEnabled(
-				resource, 
-				true,
-				 currentDiscarding.getResource(resource) > 0);
+		toggleEnabling();
 		getDiscardView().setDiscardButtonEnabled(currentDiscarding.total() == neededToDiscard);
 		getDiscardView().setResourceDiscardAmount(resource, currentDiscarding.getResource(resource));
+	}
+	
+	private void toggleEnabling() {
+		boolean belowTotal = currentDiscarding.total() < neededToDiscard;
+		getDiscardView().setResourceAmountChangeEnabled(
+				ResourceType.BRICK, 
+				belowTotal && myResources.getBrick() > currentDiscarding.getBrick(), 
+				currentDiscarding.getBrick() > 0);
+		getDiscardView().setResourceAmountChangeEnabled(
+				ResourceType.SHEEP, 
+				belowTotal && myResources.getSheep() > currentDiscarding.getSheep(), 
+				currentDiscarding.getSheep() > 0);
+		getDiscardView().setResourceAmountChangeEnabled(
+				ResourceType.WHEAT, 
+				belowTotal && myResources.getWheat() > currentDiscarding.getWheat(), 
+				currentDiscarding.getWheat() > 0);
+		getDiscardView().setResourceAmountChangeEnabled(
+				ResourceType.ORE, 
+				belowTotal && myResources.getOre() > currentDiscarding.getOre(), 
+				currentDiscarding.getOre() > 0);
+		getDiscardView().setResourceAmountChangeEnabled(
+				ResourceType.WOOD, 
+				belowTotal && myResources.getWood() > currentDiscarding.getWood(), 
+				currentDiscarding.getWood() > 0);
+		
 	}
 	
 

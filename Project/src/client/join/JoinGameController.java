@@ -145,26 +145,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 	@Override
 	public void startCreateNewGame() {
-		
 		getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
-		
 		getNewGameView().closeModal();
 	}
 
 	@Override
 	public void createNewGame() {
-		
-	  int gameId =	facade.createGame(
-				getNewGameView().getTitle(), 
-				getNewGameView().getRandomlyPlaceHexes(), 
-				getNewGameView().getRandomlyPlaceNumbers(), 
-				getNewGameView().getUseRandomPorts());
-		
-		if (gameId > -1) {
+       int gameId =	facade.createGame(
+			getNewGameView().getTitle(), 
+			getNewGameView().getRandomlyPlaceHexes(), 
+			getNewGameView().getRandomlyPlaceNumbers(), 
+			getNewGameView().getUseRandomPorts());
+        System.out.println("createNewGame()"); //TODO output
+		if(getNewGameView().getTitle().equals("")){
+	        showEmptyTitleFail(); //TODO let's make this work - Eric i think you could help me here
+		}
+		else if (gameId > -1) {
 			getNewGameView().closeModal();
 			
 			//The color doesn't matter because we're going to re-join and pick a new one anyway
@@ -174,16 +174,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				GameInfo[] info = facade.listGames();
 				updateGames(info);
 			}
-			
-			
 		}
 		else
 		   showCreateGameFail();
 	}
-
 	@Override
 	public void startJoinGame(GameInfo game) {
-		
 		currentSelectedGameId = game.getId();
 		
 		getSelectColorView().showModal();
@@ -218,7 +214,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	  }
 	
 	}
-	
+	private void showEmptyTitleFail(){
+		messageView.setTitle("Warning!");
+		messageView.setMessage("The game title is empty.");
+		getNewGameView().closeModal();
+		messageView.showModal();
+		
+	}
 	private void showCreateGameFail() {
 		messageView.setTitle("Error!");
 		messageView.setMessage("Create game failed.");

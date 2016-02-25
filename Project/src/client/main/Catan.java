@@ -25,7 +25,6 @@ public class Catan extends JFrame
 	
 	public Catan(Facade facade)
 	{
-		//TODO general note, games can't have empty names.
 		//TODO general note, make sure to do default color.
 		//TODO general note, meny and i both used purple when playing over a server.
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal

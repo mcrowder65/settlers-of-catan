@@ -25,14 +25,11 @@ public class Catan extends JFrame
 	
 	public Catan(Facade facade)
 	{
-		//TODO general note, make sure to do default color.
-		//TODO general note, meny and i both used purple when playing over a server.
+		//TODO general note, meny and i both used purple when playing over a server. - we can't really fix this bc the poller needs to hit it.... let's discuss
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
 		//TODO general note, make sure we get rid of the test button at the bottom of the screen.
 		//TODO I can click the road and try to place it if it's not my turn... resource bar issue? it shouldn't be highlighted!
 		//TODO do people who roll your number while you have a settlement on that hex do you get the resource too?
-		//TODO longest road doesn't seem to be working
-		//TODO if i click trade but i can't trade anything cuz i don't have resources, i'll get 1 resource
 		//TODO what is temporary join button?
 		//TODO trade offer is being sent to everyone instead of the actual player
 		client.base.OverlayView.setWindow(this);

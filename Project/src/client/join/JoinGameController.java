@@ -160,7 +160,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getNewGameView().getRandomlyPlaceHexes(), 
 			getNewGameView().getRandomlyPlaceNumbers(), 
 			getNewGameView().getUseRandomPorts());
-        System.out.println("createNewGame()"); //TODO output
 		if(getNewGameView().getTitle().equals("")){
 	        showEmptyTitleFail(); //TODO let's make this work - Eric i think you could help me here
 		}

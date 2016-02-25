@@ -33,6 +33,8 @@ public class Catan extends JFrame
 		//TODO I can click the road and try to place it if it's not my turn... resource bar issue? it shouldn't be highlighted!
 		//TODO do people who roll your number while you have a settlement on that hex do you get the resource too?
 		//TODO longest road doesn't seem to be working
+		//TODO if i click trade but i can't trade anything cuz i don't have resources, i'll get 1 resource
+		//TODO what is temporary join button?
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

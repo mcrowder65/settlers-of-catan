@@ -79,40 +79,53 @@ public class MapController extends Controller implements IMapController, Observe
 		return false;
 	}*/
 	public void placeRoad(EdgeLocation edgeLoc) {
-		boolean success = currState.buildRoad(edgeLoc);
-		if (success) {
-			placeRoadVisual(edgeLoc, currState.getPlayerColor());
-			GameModel model = null;
-			synchronized(DataUtils.modelLock) {
-				model = currState.fetchModel();
+		synchronized(DataUtils.modelLock) {
 			
-				currState = currState.identifyState(model.getTurnTracker());
-				if (currState instanceof FirstRoundState ||
-					currState instanceof SecondRoundState) {
-						getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);
-						
+			switch (roadBuildingPassNum) {
+			case 1: //First road of RoadBuilding devcard
+				roadBuildingFirstPassLocation = edgeLoc;
+				currState.placeRoadLocally(edgeLoc);
+				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+				roadBuildingPassNum = 2;
+				disableUpdates = true;//Need to do this or something like it
+				                      //in order to prevent the update function
+				                      //from overwriting the placed temp road
+				break;
+			case 2: //Second road of RoadBuilding devcard
+				currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc);
+				roadBuildingPassNum = 0;
+				roadBuildingFirstPassLocation = null;
+				disableUpdates = false;
+				break;
+			default: //Not a devcard, just a regular road
+				boolean success = currState.buildRoad(edgeLoc);
+				if (success) {
+					placeRoadVisual(edgeLoc, currState.getPlayerColor());
+					GameModel model = null;
 					
-					}
-				else {
-					switch (roadBuildingPassNum) {
-					case 1:
-						roadBuildingFirstPassLocation = edgeLoc;
-						currState.placeRoadLocally(edgeLoc);
-						getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
-						roadBuildingPassNum = 2;
-						disableUpdates = true;//Need to do this or something like it
-						                      //in order to prevent the update function
-						                      //from overwriting the placed temp road
-					case 2:
-						currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc);
-						roadBuildingPassNum = 0;
-						roadBuildingFirstPassLocation = null;
-						disableUpdates = false;
-					}
+						model = currState.fetchModel();
+					
+						currState = currState.identifyState(model.getTurnTracker());
+						if (currState instanceof FirstRoundState ||
+							currState instanceof SecondRoundState) {
+								getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);
+								
+							
+							}
+						else {
+							
+						}
+					
+				} else {
+					System.out.println("WARNING! placeRoad in MapController returned a fail.");
 				}
+				
+				
+				break;
 			}
-		} else {
-			System.out.println("WARNING! placeRoad in MapController returned a fail.");
+			
+			
+		
 		}
 		
 	}
@@ -221,6 +234,8 @@ public class MapController extends Controller implements IMapController, Observe
 			System.out.println("WARNING! movedRobberLocation in robPlayer was not set.");
 		else {
 			
+			
+		
 			if (isPlayingSoldier)
 				currState.playSoldierCard(movedRobberLocation, victim);
 			else

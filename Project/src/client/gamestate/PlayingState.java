@@ -154,7 +154,10 @@ public class PlayingState extends GameState {
 	@Override
 	public boolean playSoldierCard(HexLocation hexLoc, RobPlayerInfo victim) throws IllegalArgumentException
 	{
-		return facade.playSoldier(victim.getPlayerIndex(), hexLoc);
+		if (victim.getNumCards() == 0)
+			return facade.playSoldier(-1, hexLoc);
+		else
+			return facade.playSoldier(victim.getPlayerIndex(), hexLoc);
 		
 	}
 	

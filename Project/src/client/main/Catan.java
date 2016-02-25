@@ -30,6 +30,7 @@ public class Catan extends JFrame
 		//TODO general note, make sure we get rid of the test button at the bottom of the screen.
 		//TODO do people who roll your number while you have a settlement on that hex do you get the resource too? -> yes, everyone gets resources even if its not your turn
 		//TODO create game -> leave name empty -> throws error, but still creates the game
+		//TODO when discarding, up arrows stay active even if you've met the quantity to be discarded
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

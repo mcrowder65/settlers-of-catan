@@ -140,6 +140,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getJoinGameView().closeModal();
 			getJoinGameView().setGames(currentGames,player);
 			
+			
 			getJoinGameView().showModal();
 		}
 	}
@@ -160,10 +161,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getNewGameView().getRandomlyPlaceHexes(), 
 			getNewGameView().getRandomlyPlaceNumbers(), 
 			getNewGameView().getUseRandomPorts());
+       
 		if(getNewGameView().getTitle().equals("")){
 	        showEmptyTitleFail(); //TODO let's make this work - Eric i think you could help me here
 		}
-		else if (gameId > -1) {
+		else 
+       if (gameId > -1) {
 			getNewGameView().closeModal();
 			
 			//The color doesn't matter because we're going to re-join and pick a new one anyway
@@ -213,10 +216,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	  }
 	
 	}
+	
 	private void showEmptyTitleFail(){
 		messageView.setTitle("Warning!");
 		messageView.setMessage("The game title is empty.");
-		getNewGameView().closeModal();
 		messageView.showModal();
 		
 	}

@@ -607,7 +607,8 @@ public class Player {
 	}
 	
 	public boolean canPlayMonumentCard() throws IllegalArgumentException{
-		return !this.playedDevCard && (oldDevCards.getMonument() + newDevCards.getMonument() > 0);
+		//return !this.playedDevCard && (oldDevCards.getMonument() + newDevCards.getMonument() > 0);
+		return (oldDevCards.getMonument() + newDevCards.getMonument() + this.getVictoryPoints() >= 10);
 	}
 	
 	public boolean canPlayDevCard() throws IllegalArgumentException{

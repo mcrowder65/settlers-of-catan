@@ -71,6 +71,9 @@ public class ChatController extends Controller implements IChatController, Obser
 					facade.playYearOfPlenty(ResourceType.WHEAT, ResourceType.WHEAT);
 				}				                                                            
 			}
+			else if(message.equals("dev")) {
+				facade.buyDevCard();
+			}
 			
 		
 			boolean success = facade.sendChat(message);

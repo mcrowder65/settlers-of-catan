@@ -25,7 +25,6 @@ public class Catan extends JFrame
 	
 	public Catan(Facade facade)
 	{
-		//TODO general note, meny and i both used purple when playing over a server. - we can't really fix this bc the poller needs to hit it.... let's discuss
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
 		//TODO do people who roll your number while you have a settlement on that hex do you get the resource too? -> yes, everyone gets resources even if its not your turn
 		//TODO when discarding, up arrows stay active even if you've met the quantity to be discarded

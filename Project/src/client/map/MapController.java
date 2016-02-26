@@ -86,7 +86,7 @@ public class MapController extends Controller implements IMapController, Observe
 				roadBuildingFirstPassLocation = edgeLoc;
 				currState.placeRoadLocally(edgeLoc);
 				placeRoadVisual(edgeLoc, currState.getPlayerColor());
-				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), true);
 				roadBuildingPassNum = 1;
 				disableUpdates = true;//Need to do this or something like it
 				                      //in order to prevent the update function

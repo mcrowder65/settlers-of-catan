@@ -23,7 +23,7 @@ public class Catan extends JFrame
 	
     
 	
-	public Catan(Facade facade)
+	public Catan(IJoinGameController joinController, Facade facade)
 	{
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
 		//TODO general note - make sure we configure the ant client for ours..
@@ -33,7 +33,7 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel(facade);
+		catanPanel = new CatanPanel(joinController, facade);
 		this.setContentPane(catanPanel);
 		
 		display();
@@ -74,7 +74,22 @@ public class Catan extends JFrame
 				
 				
 				Facade facade = new Facade(proxy, 1, gameManager);
-				Catan catan = new Catan(facade);
+				
+				
+				
+				JoinGameView joinView = new JoinGameView();
+				NewGameView newGameView = new NewGameView();
+				SelectColorView selectColorView = new SelectColorView();
+				MessageView joinMessageView = new MessageView();
+				final JoinGameController joinController = new JoinGameController(
+																				 joinView,
+																				 newGameView,
+																				 selectColorView,
+																				 joinMessageView,
+																				 facade);
+				
+				
+				Catan catan = new Catan(joinController, facade);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
@@ -91,16 +106,7 @@ public class Catan extends JFrame
 				});
 				
 				
-				JoinGameView joinView = new JoinGameView();
-				NewGameView newGameView = new NewGameView();
-				SelectColorView selectColorView = new SelectColorView();
-				MessageView joinMessageView = new MessageView();
-				final JoinGameController joinController = new JoinGameController(
-																				 joinView,
-																				 newGameView,
-																				 selectColorView,
-																				 joinMessageView,
-																				 facade);
+			
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()

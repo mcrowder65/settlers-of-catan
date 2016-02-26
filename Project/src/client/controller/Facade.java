@@ -18,6 +18,7 @@ import shared.definitions.*;
 public class Facade {
 
 	private GameManager game;
+	private GameModel tempModel = null;
 	private IProxy proxy;
 	private int playerId;
 
@@ -32,12 +33,17 @@ public class Facade {
 		this.proxy = proxy;
 		game = new GameManager(proxy, pollingInterval);
 	}
+	
 	/**
 	 * This constructor is used for testing only!
 	 * @param gameMan
 	 */
 	public Facade (GameManager gameMan) {
 		this.game = gameMan;
+	}
+	
+	public void setTempModel(){
+		tempModel= game.getModel();
 	}
 
 	public int getPlayerIndex() {
@@ -48,7 +54,9 @@ public class Facade {
 	}
 	public CatanColor getPlayerColor() {
 		return game.getModel().getLocalPlayer(playerId).getColor();
-		
+	}
+	public void NullifyTemp(){
+		this.tempModel = null;
 	}
 	public void startPoller() {
 		game.getPoller().startPolling();
@@ -364,12 +372,12 @@ public class Facade {
 		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
-		if(!status.equals("FirstRound") && !status.equals("SecondRound")){
+		/*if(!status.equals("FirstRound") && !status.equals("SecondRound")){
 			boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildRoad();
 			if(enoughResources == false){
 				return false;
 			}
-		}
+		}*/
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
 		boolean hasRoad = false;
@@ -395,7 +403,12 @@ public class Facade {
 			}
 		}
 		else{
-			 canLayOnMap = game.getModel().getMap().canLayRoad(value);
+			if(this.tempModel == null){
+				canLayOnMap = game.getModel().getMap().canLayRoad(value);
+			}
+			else{
+				canLayOnMap = this.tempModel.getMap().canLayRoad(value);
+			}
 		}
 		
 		if(canLayOnMap == false){
@@ -636,7 +649,9 @@ public class Facade {
 	public boolean placeRoadBuilder(EdgeLocation location){
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
-		game.getModel().getMap().buildRoad(value);
+		//game.getModel().getMap().buildRoad(value);
+		this.setTempModel();
+		this.tempModel.getMap().buildRoad(value);
 		return true;
 	}
 	

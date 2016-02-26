@@ -95,6 +95,7 @@ public class MapController extends Controller implements IMapController, Observe
 			case 1: //Second road of RoadBuilding devcard
 				if (currState.playRoadBuildingCard(roadBuildingFirstPassLocation, edgeLoc))
 				{
+					currState.cancelMove();
 					placeRoadVisual(edgeLoc, currState.getPlayerColor());
 					roadBuildingPassNum = -1;
 					roadBuildingFirstPassLocation = null;
@@ -221,6 +222,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void cancelMove() {
+		currState.cancelMove();
 	}
 
 	public void playSoldierCard() {	

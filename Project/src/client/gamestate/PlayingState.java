@@ -86,6 +86,12 @@ public class PlayingState extends GameState {
 	public boolean canFinishTurn() throws IllegalArgumentException{
 		return facade.canFinishTurn();
 	}
+	
+	@Override
+	public boolean cancelMove() throws IllegalStateException{
+		facade.NullifyTemp();
+		return true;
+	}
 
 	@Override
 	public boolean canBuyDevCard() throws IllegalArgumentException{

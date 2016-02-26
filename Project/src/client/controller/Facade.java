@@ -404,9 +404,29 @@ public class Facade {
 		}
 		else{
 			if(this.tempModel == null){
+				HexLocation loc = location.getHexLoc();
+				boolean isLand = game.getModel().getMap().isLand(loc);
+				EdgeDirection direction = location.getDir();
+				HexLocation locOpp = game.getModel().getMap().getOppositeHex(loc,direction);
+				if(isLand == false){
+					isLand = game.getModel().getMap().isLand(locOpp);
+				}
+				if(isLand == false){
+					return false;
+				}
 				canLayOnMap = game.getModel().getMap().canLayRoad(value);
 			}
 			else{
+				HexLocation loc = location.getHexLoc();
+				boolean isLand = game.getModel().getMap().isLand(loc);
+				EdgeDirection direction = location.getDir();
+				HexLocation locOpp = game.getModel().getMap().getOppositeHex(loc,direction);
+				if(isLand == false){
+					isLand = game.getModel().getMap().isLand(locOpp);
+				}
+				if(isLand == false){
+					return false;
+				}
 				canLayOnMap = this.tempModel.getMap().canLayRoad(value);
 			}
 		}

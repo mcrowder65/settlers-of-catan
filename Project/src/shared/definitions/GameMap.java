@@ -4041,13 +4041,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.West);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4069,13 +4069,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.East);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4098,13 +4098,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.NorthEast);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.SouthEast);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4126,13 +4126,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.East);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4154,13 +4154,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.West);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4182,13 +4182,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.SouthWest);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.NorthWest);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasTwoRoads = this.twoRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasTwoRoads == true){
 				return true;
@@ -4224,13 +4224,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.West);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;
@@ -4253,13 +4253,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.North);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.East);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;
@@ -4282,13 +4282,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.NorthEast);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.SouthEast);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;
@@ -4310,13 +4310,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.East);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;
@@ -4338,13 +4338,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.South);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.West);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;
@@ -4367,13 +4367,13 @@ public class GameMap {
 			}
 			HexLocation oppositeHex = this.getOppositeHex(hexLoc, EdgeDirection.SouthWest);
 			Boolean isHexLand = this.isLand(oppositeHex);
-			if(isHexLand == true){
+			
 				property = new VertexLocation(oppositeHex, VertexDirection.NorthWest);
 				hasProperty = this.hasMunicipality(property);
 				if(hasProperty == true){
 					return false;
 				}
-			}
+			
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;

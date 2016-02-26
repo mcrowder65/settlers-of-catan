@@ -121,6 +121,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+		isFinished = false;
 		player.setId(facade.getPlayerId());
 		GameInfo[] info = facade.listGames();
 		currentGames = info;

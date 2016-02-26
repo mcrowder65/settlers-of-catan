@@ -28,8 +28,9 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 	private JLabel image;
 	private JButton okButton;
 	private JPanel buttonPanel;
-
-	public GameFinishedView() {
+	private IAction onCloseAction;
+	
+	public GameFinishedView(IAction onCloseAction) {
 		
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
@@ -64,6 +65,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		middle.add(Box.createRigidArea(new Dimension(0,5))); // Spacing
 		
 		okButton = new JButton("OK");
+		this.onCloseAction = onCloseAction;
+		
 		okButton.addActionListener(actionListener);
 		Font buttonFont = okButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
@@ -71,6 +74,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(okButton, BorderLayout.PAGE_END);
 	}
+	
+	
 
 	private ActionListener actionListener = new ActionListener() {
 		@Override
@@ -80,6 +85,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 				closeModal();
 				//stop poller, open join view
 				// everything back to join game state
+				onCloseAction.execute();
+				
 			}
 		}	
 	};

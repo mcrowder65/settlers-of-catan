@@ -12,6 +12,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
+import client.join.IJoinGameController;
 import client.map.IMapController;
 import client.misc.WaitView;
 import client.roll.RollController;
@@ -36,7 +37,7 @@ public class CatanPanel extends JPanel
 	
 	
 	
-	public CatanPanel(Facade facade)
+	public CatanPanel(IJoinGameController joinController, Facade facade)
 	{
 		this.setLayout(new BorderLayout());
 		
@@ -45,7 +46,7 @@ public class CatanPanel extends JPanel
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel(rollResultView, facade);
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(),facade);
-		rightPanel = new RightPanel(midPanel.getMapController(),  facade);
+		rightPanel = new RightPanel(midPanel.getMapController(), joinController,  facade);
 		
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(leftPanel, BorderLayout.WEST);

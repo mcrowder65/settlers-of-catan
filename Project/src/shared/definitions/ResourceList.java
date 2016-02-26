@@ -132,6 +132,7 @@ public class ResourceList {
 	 * @param brick
 	 */
 	public void setBrick(int brick) throws IllegalArgumentException {
+		if (brick < 0) throw new IllegalArgumentException("amount cannot be negative.");
 		this.brick = brick;
 	}
 	/**
@@ -139,6 +140,7 @@ public class ResourceList {
 	 * @param ore
 	 */
 	public void setOre(int ore)throws IllegalArgumentException  {
+		if (ore < 0) throw new IllegalArgumentException("amount cannot be negative.");
 		this.ore = ore;
 	}
 	/**
@@ -146,6 +148,7 @@ public class ResourceList {
 	 * @param sheep
 	 */
 	public void setSheep(int sheep)throws IllegalArgumentException  {
+		if (sheep < 0) throw new IllegalArgumentException("amount cannot be negative.");
 		this.sheep = sheep;
 	}
 	/**
@@ -153,6 +156,7 @@ public class ResourceList {
 	 * @param wheat
 	 */
 	public void setWheat(int wheat)throws IllegalArgumentException  {
+		if (wheat < 0) throw new IllegalArgumentException("amount cannot be negative.");
 		this.wheat = wheat;
 	}
 	/**
@@ -160,6 +164,7 @@ public class ResourceList {
 	 * @param wood
 	 */
 	public void setWood(int wood) throws IllegalArgumentException {
+		if (wood < 0) throw new IllegalArgumentException("amount cannot be negative.");
 		this.wood = wood;
 	}
 
@@ -225,22 +230,22 @@ public class ResourceList {
 	 * @param resourceType = Type
 	 * @param quantity = How many cards should be added 
 	 */
-	public void addResource(ResourceType resourceType, int quantity){
+	public void addResource(ResourceType resourceType, int quantity) {
 		switch (resourceType) {
 		case BRICK:
-			brick += quantity;
+			setBrick(brick + quantity);
 			break;
 		case ORE:
-			ore += quantity;
+			setOre(ore + quantity);
 			break;
 		case SHEEP:
-			sheep += quantity;
+			setSheep(sheep + quantity);
 			break;
 		case WHEAT:
-			wheat += quantity;
+			setWheat(wheat + quantity);
 			break;
 		case WOOD:
-			wood += quantity;
+			setWood(wood + quantity);
 			break;
 		default:
 			break;

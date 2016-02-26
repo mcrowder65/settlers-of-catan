@@ -10,6 +10,7 @@ import client.controller.Facade;
 import client.data.GameManager;
 import client.map.*;
 import client.devcards.*;
+import client.join.IJoinGameController;
 
 @SuppressWarnings("serial")
 public class RightPanel extends JPanel
@@ -36,7 +37,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController, Facade facade)
+	public RightPanel(final IMapController mapController, final IJoinGameController joinController, Facade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -59,6 +60,12 @@ public class RightPanel extends JPanel
 				mapController.playRoadBuildingCard();
 			}
 		};
+		IAction gameEndAction = new IAction() {
+			@Override
+			public void execute() {
+				joinController.start();
+			}
+		};
 		devCardController = new DevCardController(playCardView, buyCardView,
 												  soldierAction, roadAction, facade);
 		playCardView.setController(devCardController);
@@ -67,7 +74,7 @@ public class RightPanel extends JPanel
 		// Initialize victory point view and controller
 		//
 		pointsView = new PointsView();
-		finishedView = new GameFinishedView();
+		finishedView = new GameFinishedView(gameEndAction);
 		pointsController = new PointsController(pointsView, finishedView, facade);
 		pointsView.setController(pointsController);
 		

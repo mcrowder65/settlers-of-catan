@@ -95,5 +95,7 @@ public interface IMapView extends IView
 	
 	boolean isOverlayShowing();
 	
+	void resetAll();
+	
 }
 

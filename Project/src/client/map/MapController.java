@@ -403,5 +403,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	public void leaveGame() {
 		currState.deleteObserver(this);
+		getView().resetAll();
+		firstTime = true;
 	}
 }

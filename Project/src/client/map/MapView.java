@@ -102,6 +102,11 @@ public class MapView extends PanelView implements IMapView
 	}
 	
 	@Override
+	public void resetAll() {
+		map.resetAll();
+	}
+	
+	@Override
 	public boolean isOverlayShowing() {
 		return overlay == null ? false : overlay.isModalShowing();
 	}

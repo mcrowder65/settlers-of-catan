@@ -182,12 +182,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 		currentSelectedGameId = game.getId();
 		
-		getSelectColorView().showModal();
+		
+		
+		getSelectColorView().resetAll();
 		//Disable colors that are already in game (unless you're rejoining)
 		for (PlayerInfo p : game.getPlayers()) {
 			if (p.getId() != player.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
+		
+		getSelectColorView().showModal();
 	}
 
 	@Override

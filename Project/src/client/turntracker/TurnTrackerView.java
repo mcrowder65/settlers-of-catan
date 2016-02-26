@@ -22,6 +22,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	private JLabel [] playerPoints;
 	private JLabel [] playerRoad;
 	private JLabel [] playerArmy;
+	private JLabel [] names;
+	private JPanel [] indicators;
 	private Image longestRoadImage;
 	private Image largestArmyImage;
 
@@ -47,6 +49,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerPoints = new JLabel[NUM_PLAYERS];
 		playerRoad = new JLabel[NUM_PLAYERS];
 		playerArmy = new JLabel[NUM_PLAYERS];
+		names =      new JLabel[NUM_PLAYERS];
+		indicators = new JPanel[NUM_PLAYERS];
 		
 		longestRoadImage = ImageUtils.loadImage("images/misc/road.png").getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		largestArmyImage = ImageUtils.loadImage("images/misc/army.png").getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -82,6 +86,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerPanel[playerIndex].setLayout(new BorderLayout());
 		
 		JLabel name = new JLabel(playerName);
+		names[playerIndex] = name;
 		name.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
 		Font labelFont = name.getFont();
 		labelFont = labelFont.deriveFont(Font.BOLD, FONT_SIZE);
@@ -89,6 +94,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerPanel[playerIndex].add(name, BorderLayout.WEST);
 		
 		JPanel indicatorPanel = new JPanel();
+		indicators[playerIndex] = indicatorPanel;
 		indicatorPanel.setBackground(playerColor.getJavaColor());
 		playerPanel[playerIndex].add(indicatorPanel, BorderLayout.CENTER);
 		
@@ -125,6 +131,18 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		else
 			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		
+	}
+	
+	@Override
+	public void reset() {
+		for (int n = 0; n < NUM_PLAYERS; n++) {
+			playerPanel[n].remove(names[n]);
+			playerPanel[n].remove(playerPoints[n]);
+			playerPanel[n].remove(indicators[n]);
+			playerArmy[n].setVisible(false);
+			playerRoad[n].setVisible(false);
+			
+		}
 	}
 
 	@Override

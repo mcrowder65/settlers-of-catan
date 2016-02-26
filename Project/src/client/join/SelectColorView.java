@@ -259,6 +259,14 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 			}
 		}
 	};
+	
+	@Override
+	public void resetAll() {
+		resetButton(selButton);
+		for (int n = 1; n <= 9;  n++) {
+			setColorEnabled(getColorByNumber(n), true);
+		}
+	}
 
 	private void resetButton(int val) {
 		switch (val) {

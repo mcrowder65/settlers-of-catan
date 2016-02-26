@@ -37,7 +37,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController, final IJoinGameController joinController, Facade facade)
+	public RightPanel(final IMapController mapController, final CatanPanel catanPanel, final IJoinGameController joinController, Facade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -63,7 +63,9 @@ public class RightPanel extends JPanel
 		IAction gameEndAction = new IAction() {
 			@Override
 			public void execute() {
+				catanPanel.leaveGame();
 				joinController.start();
+				
 			}
 		};
 		devCardController = new DevCardController(playCardView, buyCardView,

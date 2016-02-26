@@ -78,6 +78,8 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	public void leaveGame() {
 		this.facade.deleteObserver(this);
+		getView().setEntries(new ArrayList<LogEntry>()); //Empty list
+		currentNumberOfMessages = 0;
 		
 	}
 	

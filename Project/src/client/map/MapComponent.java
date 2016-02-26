@@ -412,6 +412,16 @@ public class MapComponent extends JComponent
 		this.repaint();
 	}
 	
+	public void resetAll() {
+	    cities.clear();
+	    settlements.clear();
+	    roads.clear();
+	    ports.clear();
+	    numbers.clear();
+	    hexes.clear();
+	    robber = null;
+	}
+	
 	private ComponentAdapter componentAdapter = new ComponentAdapter() {
 		
 		@Override

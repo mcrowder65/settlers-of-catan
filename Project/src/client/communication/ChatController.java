@@ -120,6 +120,8 @@ public class ChatController extends Controller implements IChatController, Obser
 	}
 	public void leaveGame() {
 		this.facade.deleteObserver(this);
+		currentNumberOfMessages = 0;
+		getView().setEntries(new ArrayList<LogEntry>()); //Empty list
 		
 	}
 }

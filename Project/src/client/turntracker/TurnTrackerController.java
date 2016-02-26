@@ -127,6 +127,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	public void leaveGame() {
 		this.facade.deleteObserver(this);
+		getView().reset();
+		setUpDone = false;
+		
 		
 	}
 

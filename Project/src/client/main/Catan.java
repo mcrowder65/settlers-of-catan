@@ -25,6 +25,7 @@ public class Catan extends JFrame
 	
 	public Catan(IJoinGameController joinController, Facade facade)
 	{
+		//TODO make sure you make your junit test cases work
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
 		//TODO general note - make sure we configure the ant client for ours..
 		//TODO general note - meny, make sure to get rid of those hard coded cheat codes

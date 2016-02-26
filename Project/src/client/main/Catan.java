@@ -26,7 +26,6 @@ public class Catan extends JFrame
 	public Catan(Facade facade)
 	{
 		//TODO general note, what happens when you end a game. who takes care of closing the winnerModal
-		//TODO when discarding, up arrows stay active even if you've met the quantity to be discarded
 		//TODO general note - make sure we configure the ant client for ours..
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");

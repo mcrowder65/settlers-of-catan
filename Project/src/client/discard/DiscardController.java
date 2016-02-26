@@ -110,7 +110,6 @@ public class DiscardController extends Controller implements IDiscardController,
 				getDiscardView().closeModal();
 				
 			} else {
-				//TODO: Error message
 			}
 		
 		}

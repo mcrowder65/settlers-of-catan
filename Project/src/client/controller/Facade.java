@@ -760,10 +760,6 @@ public class Facade {
 		{
 			return false;
 		}
-		String status = game.getModel().getTurnTracker().getStatus();
-		if(status.equals( "Playing")){
-			return true;
-		}
 		return game.getModel().getLocalPlayer(playerId).canBuildRoad();
 	}
 	

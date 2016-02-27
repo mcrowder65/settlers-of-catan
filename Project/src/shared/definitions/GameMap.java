@@ -1416,19 +1416,49 @@ public class GameMap {
 		EdgeDirection direction = location.getDir();
 		
 		if(direction == EdgeDirection.SouthWest){
+			boolean bottomCheck = false;
+			boolean topCheck = false;
+			//topCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.West);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			
+			
+			//bottomCheck
 			property = new VertexLocation(hex, VertexDirection.SouthWest);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
+			
+			if(topCheck == true && bottomCheck ==true){
+				return false;
+			}
 			
 
-			int x = 0;
+			/*int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.South);
 			boolean hasRoad = hasRoadAllPlayers(local);
 			if(hasRoad == true){
@@ -1451,24 +1481,56 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			return true;
 			
 		}
 		else if(direction == EdgeDirection.NorthWest){
+			boolean topCheck = false;
+			boolean bottomCheck = false;
+			
+			//bottomCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.West);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck=true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck=true;
+			}
+
+			
+			//topCheck
 			property = new VertexLocation(hex, VertexDirection.NorthWest);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
 			
-			int x = 0;
+			if(bottomCheck ==true && topCheck ==true){
+				return false;
+			}
+
+			
+			/*int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.North);
 			boolean hasRoad = hasRoadAllPlayers(local);
 			if(hasRoad == true){
@@ -1491,22 +1553,55 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			
 			return true;
 		}
 		else if(direction == EdgeDirection.North){
+			boolean rightCheck = false;
+			boolean leftCheck = false;
+			//leftCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.NorthWest);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			
+			property = new VertexLocation(hex, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				leftCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				leftCheck = true;
+			}
+			
+			
+			//Right check
 			property = new VertexLocation(hex, VertexDirection.NorthEast);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				rightCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				rightCheck = true;
+			}
+			
+			if(rightCheck ==true && leftCheck ==true){
+				return false;
+			}
+			
+			/*
 			int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.NorthEast);
 			boolean hasRoad = hasRoadAllPlayers(local);
@@ -1530,22 +1625,57 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			return true;
 		}
 		else if(direction == EdgeDirection.NorthEast){
+			boolean bottomCheck = false;
+			boolean topCheck = false;
+			
+			//topCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.NorthEast);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			
+			property = new VertexLocation(hex, VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.NorthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			
+			//bottomCheck
 			property = new VertexLocation(hex, VertexDirection.East);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
-			int x = 0;
+			
+			property = new VertexLocation(hex, VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
+			
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.SouthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
+			
+			if(bottomCheck == true && topCheck == true){
+				return false;
+			}
+			
+			/*int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.North);
 			boolean hasRoad = hasRoadAllPlayers(local);
 			if(hasRoad == true){
@@ -1568,22 +1698,54 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			return true;
 		}
 		else if(direction == EdgeDirection.SouthEast){
+			boolean topCheck = false;
+			boolean bottomCheck = true;
+			
+			//topCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.East);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.NorthEast);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				topCheck = true; 
+			}
+			
+			
+			//bottomCheck
 			property = new VertexLocation(hex, VertexDirection.SouthEast);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.SouthWest);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				bottomCheck = true;
+			}
 			
+			if(bottomCheck == true && topCheck == true){
+				return false;
+			}
+			
+			/*
 			int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.South);
 			boolean hasRoad = hasRoadAllPlayers(local);
@@ -1607,24 +1769,57 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			
 			return true;
 		}
 		else if(direction == EdgeDirection.South){
+			boolean rightCheck = false;
+			boolean leftCheck = false;
+			
+			//leftCheck
 			VertexLocation property = new VertexLocation(hex, VertexDirection.SouthWest);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			
+			property = new VertexLocation(hex, VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				leftCheck = true;
+			}
+			
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.West);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				leftCheck = true;
+			}
+			
+			
+			//rightCheck
 			property = new VertexLocation(hex, VertexDirection.SouthEast);
 			hasProperty = this.hasMunicipality(property);
 			if(hasProperty == true){
 				return false;
 			}
+			property = new VertexLocation(hex, VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				rightCheck = true;
+			}
+			property = new VertexLocation(getOppositeHex(hex,direction), VertexDirection.East);
+			hasProperty = this.hasMunicipality(property);
+			if(hasProperty == true){
+				rightCheck = true;
+			}
 			
-			int x = 0;
+			if(rightCheck ==true && leftCheck ==true){
+				return false;
+			}
+			
+			/*int x = 0;
 			EdgeLocation local = new EdgeLocation(hex,EdgeDirection.SouthEast);
 			boolean hasRoad = hasRoadAllPlayers(local);
 			if(hasRoad == true){
@@ -1647,7 +1842,7 @@ public class GameMap {
 			}
 			if(x>1){
 				return false;
-			}
+			}*/
 			
 			
 			return true;

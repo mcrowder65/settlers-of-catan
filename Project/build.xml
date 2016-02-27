@@ -9,6 +9,14 @@
 	<property name="lib" location="lib"/>
 	
 	<property name="build" location="bin"/>
+	<property name="images" location="images"/>
+
+	<property name="host" value="localhost"/>
+
+	<property name="port" value="8081"/>
+	
+	
+	
 	
 	
 	<!-- CLASS PATHS -->
@@ -44,8 +52,43 @@
 						<enable/>
 					</assertions>
 				</java>
+		
+	</target>
+	
+	<target name="package" depends="compile">
+		<jar jarfile="catan-client.jar" basedir="${build}">
+					<manifest>
+						<attribute name="Main-Class" value="client.main.Catan"/>
+						<!--<attribute name="Class-Path" 
+							value="lib/gson-2.2.4.jar" />-->
+					</manifest>
+			        <zipgroupfileset dir="${lib}" includes="**/*.jar" />
+				</jar>
+
+	
+	</target>
+	
+	<target name="client" description="run client" depends="compile">
+		<java classname="main.Catan" fork="yes" jar="catan-client.jar">
+			<classpath>
+				<path refid="all-classpath"/>
+			</classpath>
+			<arg value="${host}"/>
+			<arg value="${port}"/>
+		</java>
+		
+		
 	</target>
 
+	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
+		<zip destfile="tester.zip">
+		   <zipfileset dir="${build}" prefix="build" />
+		   <zipfileset dir="${lib}" prefix="lib"></zipfileset>
+		   <zipfileset dir="${images}" prefix="images"></zipfileset>
+		   <zipfileset dir="" includes="catan-client.jar" ></zipfileset>
+		</zip>
+		
+	</target>
 	
 </project>
 

@@ -68,17 +68,15 @@
 	
 	</target>
 	
-	<target name="client" description="run client" depends="compile">
-		<java classname="main.Catan" fork="yes" jar="catan-client.jar">
-			<classpath>
-				<path refid="all-classpath"/>
-			</classpath>
-			<arg value="${host}"/>
-			<arg value="${port}"/>
-		</java>
-		
-		
-	</target>
+	<target name="client" description="run client">
+			<java fork="yes" jar="catan-client.jar">
+				<arg value="${host}"/>
+				<arg value="${port}"/>
+			</java>
+			
+			
+		</target>
+
 
 	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
 		<zip destfile="tester.zip">

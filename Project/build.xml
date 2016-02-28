@@ -82,9 +82,10 @@
 
 	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
 		<zip destfile="tester.zip">
-		   <zipfileset dir="${build}" prefix="build" />
+		   <zipfileset dir="${build}" prefix="bin" />
 		   <zipfileset dir="${lib}" prefix="lib"></zipfileset>
 		   <zipfileset dir="${images}" prefix="images"></zipfileset>
+		   <zipfileset dir="" includes="build.xml" ></zipfileset>
 		   <zipfileset dir="" includes="catan-client.jar" ></zipfileset>
 		</zip>
 		

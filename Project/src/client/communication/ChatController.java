@@ -38,42 +38,7 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void sendMessage(String message) {
 		synchronized (lockObject) {
-			if(message.equals("hello")) {
-				for(int i = 0; i < 7; i++) {
-					facade.playMonument();
-				}
-			}
-			else if(message.equals("hello1")) {
-				facade.playMonument();
-			}
-			else if(message.equals("wood")) {
-				for(int i = 0; i < 5; i++){
-					facade.playYearOfPlenty(ResourceType.WOOD, ResourceType.WOOD);
-				}				                                                            
-			}
-			else if(message.equals("brick")) {
-				for(int i = 0; i < 5; i++){
-					facade.playYearOfPlenty(ResourceType.BRICK, ResourceType.BRICK);
-				}				                                                            
-			}
-			else if(message.equals("ore")) {
-				for(int i = 0; i < 5; i++){
-					facade.playYearOfPlenty(ResourceType.ORE, ResourceType.ORE);
-				}				                                                            
-			}
-			else if(message.equals("sheep")) {
-				for(int i = 0; i < 5; i++){
-					facade.playYearOfPlenty(ResourceType.SHEEP, ResourceType.SHEEP);
-				}				                                                            
-			}
-			else if(message.equals("wheat")) {
-				for(int i = 0; i < 5; i++){
-					facade.playYearOfPlenty(ResourceType.WHEAT, ResourceType.WHEAT);
-				}				                                                            
-			}
-			else if(message.equals("dev")) {
-				facade.buyDevCard();
-			}
+			
 			
 		
 			boolean success = facade.sendChat(message);

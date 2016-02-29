@@ -56,7 +56,9 @@ public class DevCardController extends Controller implements IDevCardController,
 		return buyCardView;
 	}
 	
-	
+	/**
+	 * shows the modal for buying a devCard
+	 */
 	@Override
 	public void startBuyCard() {
 		
@@ -64,12 +66,18 @@ public class DevCardController extends Controller implements IDevCardController,
 		
 	}
 
+	/**
+	 * closing the modal for buyDevCard
+	 */
 	@Override
 	public void cancelBuyCard() {
 		
 		getBuyCardView().closeModal();
 	}
 
+	/**
+	 * closes the buy card modal 
+	 */
 	@Override
 	public void buyCard() {
 		boolean success = currState.buyDevCard();
@@ -78,10 +86,14 @@ public class DevCardController extends Controller implements IDevCardController,
 		}
 	}
 
+	/**
+	 * shows and populates the modal for playing a dev card
+	 */
 	@Override
 	public void startPlayCard() {
 		int numCards;
 		
+		//sets the amount of cards they have 
 		numCards = oldDevCards.getMonument() + newDevCards.getMonument();
 		getPlayCardView().setCardAmount(DevCardType.MONUMENT, numCards);
 		numCards = oldDevCards.getRoadBuilding() + newDevCards.getRoadBuilding();
@@ -94,6 +106,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		getPlayCardView().setCardAmount(DevCardType.SOLDIER, numCards);
 		
 		
+		//greys in and out the dev card modals 
 		getPlayCardView().setCardEnabled(DevCardType.MONUMENT,currState.canUseMonument());
 		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD,currState.canUseRoadBuilder());
 		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY,currState.canUseMonopoly());
@@ -103,12 +116,18 @@ public class DevCardController extends Controller implements IDevCardController,
 		getPlayCardView().showModal();
 	}
 
+	/**
+	 * close model when they hit cancel
+	 */
 	@Override
 	public void cancelPlayCard() {
 
 		getPlayCardView().closeModal();
 	}
 
+	/**
+	 * plays the monopoly card - sends it to the server
+	 */
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
 		boolean success = currState.useMonopoly(resource);
@@ -118,6 +137,9 @@ public class DevCardController extends Controller implements IDevCardController,
 		
 	}
 
+	/**
+	 * plays monument card - sends it to the server
+	 */
 	@Override
 	public void playMonumentCard() {
 		boolean success = currState.playMonument();
@@ -126,17 +148,26 @@ public class DevCardController extends Controller implements IDevCardController,
 		}
 	}
 
+	/**
+	 * this will call the mapController to pop up the placeRoad modal
+	 */
 	@Override
 	public void playRoadBuildCard() {
 		roadAction.execute();
 	}
 
+	/**
+	 * calls the mapControler to pop up the modal to move th robber
+	 */
 	@Override
 	public void playSoldierCard() {
 		
 		soldierAction.execute();
 	}
 
+	/**
+	 * plays YOP card - sends it to the server
+	 */
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		boolean success = currState.playYearOfPlenty(resource1, resource2);
@@ -145,6 +176,9 @@ public class DevCardController extends Controller implements IDevCardController,
 		}
 	}
 
+	/**
+	 * updates the gameModel and updates the currentState
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;

@@ -127,22 +127,20 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRoadVisual(EdgeLocation edgeLoc, CatanColor color) {
 		getView().placeRoad(edgeLoc, color);
 	}
-	
+	/**
+	 * Uses a lock to synchronize placing settlements
+	 */
 	public void placeSettlement(VertexLocation vertLoc) {
-		
 		synchronized(DataUtils.modelLock) {
 			boolean success = currState.buildSettlement(vertLoc);
 			if (success) {
 				placeSettlementVisual(vertLoc, currState.getPlayerColor());
 				GameModel model = null;
-				
 					model = currState.fetchModel();
-				
 					currState = currState.identifyState(model.getTurnTracker());
-					if (currState instanceof FirstRoundState ||
-						currState instanceof SecondRoundState) {
+					if (currState instanceof FirstRoundState || //finishes turn if you just placed a settlement 
+						currState instanceof SecondRoundState) {//in first or second round.
 							currState.finishTurn();
-						
 						}
 				
 			}
@@ -212,12 +210,21 @@ public class MapController extends Controller implements IMapController, Observe
 			isPlayingSoldier = false;
 		}
 	}
+	/**
+	 * Gets the current HexType given a specific resource.
+	 * @param resource the type of Resource.
+	 * @return HexTypes
+	 */
 	public HexType getHexType(String resource){
 		return resource.equals("DESERT") ? HexType.DESERT : resource.equals("WOOD") ? HexType.WOOD : 
 				resource.equals("BRICK") ? HexType.BRICK : resource.equals("SHEEP") ? HexType.SHEEP : 
 				resource.equals("WHEAT") ? HexType.WHEAT : resource.equals("ORE") ? HexType.ORE : 
 				resource.equals("WATER") ? HexType.WATER : null;
 	}
+	/**
+	 * Places the hexes on the map based on the hexes passed in.
+	 * @param hexes Array passed in
+	 */
 	public void placeHexes(Hex[] hexes){
 		for(int i = 0; i < hexes.length; i++){
 			HexType hexType = hexes[i].getResource().name().equals("NONE") ? HexType.DESERT : 
@@ -227,6 +234,9 @@ public class MapController extends Controller implements IMapController, Observe
 			getView().addHex(hexes[i].getLocation(), hexType);
 		}
 	}
+	/**
+	 * Places the water hard coded in
+	 */
 	public void placeWater(){
 		HexLocation[] water = {
 				new HexLocation(-3,0), 

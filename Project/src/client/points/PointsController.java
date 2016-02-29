@@ -49,6 +49,12 @@ public class PointsController extends Controller implements IPointsController, O
 	
 	}
 	
+	/**
+	 * This method is in charge of finishing the game. Once the server declares
+	 * there's a winner, this method displays the winner Modal, stops the poller, and
+	 * takes the player back to the lobby.
+	 * @param model
+	 */
 	private void finishGame(GameModel model) {
 		int winner = model.getWinner();
 		String name = model.getPlayers()[model.getLocalIndex(winner)].getName();
@@ -65,11 +71,13 @@ public class PointsController extends Controller implements IPointsController, O
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
 		
+		//This calls the method when the server has declared that there's a winner.
 		int winner = model.getWinner();
 		if(winner != -1) {
 			finishGame(model);
 		}
 		
+		//This calls the method to keep the victory points display updated. 
 		int playerId = facade.getPlayerId();
 		int points = model.getLocalPlayer(playerId).getVictoryPoints();
 		initFromModel(points);

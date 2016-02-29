@@ -231,48 +231,56 @@ public class ResourceList {
 	 * @param quantity = How many cards should be added 
 	 */
 	public void addResource(ResourceType resourceType, int quantity) {
-		switch (resourceType) {
-		case BRICK:
-			setBrick(brick + quantity);
-			break;
-		case ORE:
-			setOre(ore + quantity);
-			break;
-		case SHEEP:
-			setSheep(sheep + quantity);
-			break;
-		case WHEAT:
-			setWheat(wheat + quantity);
-			break;
-		case WOOD:
-			setWood(wood + quantity);
-			break;
-		default:
-			break;
+		try
+		{
+			switch (resourceType) {
+			case BRICK:
+				setBrick(brick + quantity);
+				break;
+			case ORE:
+				setOre(ore + quantity);
+				break;
+			case SHEEP:
+				setSheep(sheep + quantity);
+				break;
+			case WHEAT:
+				setWheat(wheat + quantity);
+				break;
+			case WOOD:
+				setWood(wood + quantity);
+				break;
+			default:
+				break;
+			}
+		} catch (IllegalArgumentException ex) {
+			ex.printStackTrace();
 		}
 	}
 	
 	public void removeResource(ResourceType resourceType, int quantity){
-		//TODO: Data integrity
-		switch (resourceType) {
-		case BRICK:
-			brick -= quantity;
-			break;
-		case ORE:
-			ore -= quantity;
-			break;
-		case SHEEP:
-			sheep -= quantity;
-			break;
-		case WHEAT:
-			wheat -= quantity;
-			break;
-		case WOOD:
-			wood -= quantity;
-			break;
-		default:
-			break;
-		}
+	    try {
+			switch (resourceType) {
+			case BRICK:
+				setBrick(brick - quantity);
+				break;
+			case ORE:
+				setOre(ore - quantity);
+				break;
+			case SHEEP:
+				setSheep(sheep - quantity);
+				break;
+			case WHEAT:
+				setWheat(wheat - quantity);
+				break;
+			case WOOD:
+				setWood(wood - quantity);
+				break;
+			default:
+				break;
+			}
+	    } catch (IllegalArgumentException ex) {
+	    	ex.printStackTrace();
+	    }
 	}
 	
 	/**

@@ -76,6 +76,9 @@ public class Facade {
 	public DevCardList getDevCards(){
 		return game.getModel().getLocalPlayer(playerId).getOldDevCards();
 	}
+	public void setPlayerId(int playerId){
+		this.playerId = playerId;
+	}
 	/**
 	 * Allows a user to log into the server.
 	 * @param username, password
@@ -445,6 +448,8 @@ public class Facade {
 	 */
 	public boolean canBuildSettlement(VertexLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
+		int index = game.getModel().getLocalIndex(playerId);
+		int turn = game.getModel().getTurnTracker().getCurrentTurn();
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;

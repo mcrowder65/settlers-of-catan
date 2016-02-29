@@ -189,10 +189,6 @@ public class FacadeCanDoTestA {
 		canRoll = facade.canRollNumber();
 		assertTrue(canRoll == false);
 		
-		canRoll = true;
-		turnTracker.setStatus("Rollin");
-		canRoll = facade.canRollNumber();
-		assertTrue(canRoll == false);
 		
 	}
 	
@@ -603,6 +599,7 @@ public class FacadeCanDoTestA {
 		turnTracker.setStatus("Playing");
 		DevCardList devCards = new DevCardList(0,0,0,0,0);
 		player.setOldDevCards(devCards);
+		player.setRoads(5);
 		
 		GameMap map = new GameMap();
 		gameModel.setMap(map);
@@ -651,37 +648,37 @@ public class FacadeCanDoTestA {
 		//0 of any resource
 		location = new EdgeLocation(hex14Loc, EdgeDirection.SouthEast);
 		road = new EdgeValue(0,location);
-		boolean canBuild = facade.canBuildRoad(location);
+		boolean canBuild = player.canBuildRoad();
 		assertTrue(canBuild == false);
 		
 		//1 brick 0 of everything else
 		resources = new ResourceList(1,0,0,0,0);
 		player.setResources(resources);
-		canBuild = facade.canBuildRoad(location);
+		canBuild = player.canBuildRoad();
 		assertTrue(canBuild == false);
 		
 		//0 brick 1 of everything else
 		resources = new ResourceList(0,1,1,1,1);
 		player.setResources(resources);
-		canBuild = facade.canBuildRoad(location);
+		canBuild = player.canBuildRoad();
 		assertTrue(canBuild == false);
 		
 		//1 brick 1 of everything else
 		resources = new ResourceList(1,1,1,1,1);
 		player.setResources(resources);
-		canBuild = facade.canBuildRoad(location);
+		canBuild = player.canBuildRoad();
 		assertTrue(canBuild == true);
 		
 		//1 brick 1 wood 0 of everything else
 		resources = new ResourceList(1,0,0,0,1);
 		player.setResources(resources);
-		canBuild = facade.canBuildRoad(location);
+		canBuild = player.canBuildRoad();
 		assertTrue(canBuild == true);
 		
 		//10 of everything
 		resources = new ResourceList(10,10,10,10,10);
 		player.setResources(resources);
-		canBuild = facade.canBuildRoad(location);
+		canBuild = player.canBuildRoad();
 		assertTrue(canBuild == true);
 		
 	}
@@ -696,6 +693,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setSettlements(5);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -792,6 +790,8 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setRoads(6);
+		player.setSettlements(5);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -920,6 +920,8 @@ public class FacadeCanDoTestA {
 		turnTracker.setStatus("Rolling");
 		DevCardList devCards = new DevCardList(0,0,0,0,0);
 		player.setOldDevCards(devCards);
+		player.setRoads(8);
+		player.setSettlements(5);
 		
 		GameMap map = new GameMap();
 		gameModel.setMap(map);
@@ -1019,6 +1021,9 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setSettlements(5);
+		player.setRoads(5);
+		player.setCities(5);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1118,10 +1123,13 @@ public class FacadeCanDoTestA {
 		
 		Player player2 = new Player();
 		player2.setPlayerIndex(2);
+		player2.setPlayerID(2);
 		player2.setOldDevCards(devCards);
 		player2.setResources(resources);
-		gameModel.setLocalPlayer(player2);
+		player2.setSettlements(5);
+		gameModel.setLocalPlayerTest(player2);
 		turnTracker.setCurrentTurn(2);
+		facade.setPlayerId(2);
 		
 		canBuild = true;
 		//Opponent tries to lay a settlement on top of yours
@@ -1188,6 +1196,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setSettlements(5);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1324,6 +1333,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(5);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1377,6 +1387,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(4);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1474,6 +1485,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(3);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1755,6 +1767,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(4);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -1948,6 +1961,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(4);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -2049,6 +2063,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(10);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -2164,6 +2179,7 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setCities(4);
 		player.setResources(resources);
 		gameModel.setLocalPlayer(player);
 		
@@ -2286,14 +2302,20 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerIndex(0);
+		player.setPlayerID(0);
 		player2.setPlayerIndex(1);
+		player2.setPlayerID(1);
 		player3.setPlayerIndex(2);
+		player3.setPlayerID(2);
 		player4.setPlayerIndex(3);
+		player4.setPlayerID(3);
 		player.setResources(resources);
 		player2.setResources(resources);
 		player3.setResources(resources);
 		player4.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
+
+		facade.setPlayerId(0);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -2304,6 +2326,18 @@ public class FacadeCanDoTestA {
 		player2.setOldDevCards(devCards);
 		player3.setOldDevCards(devCards);
 		player4.setOldDevCards(devCards);
+		player.setCities(4);
+		player2.setCities(4);
+		player3.setCities(4);
+		player4.setCities(4);
+		player.setSettlements(4);
+		player2.setSettlements(4);
+		player3.setSettlements(4);
+		player4.setSettlements(4);
+		player.setRoads(4);
+		player2.setRoads(4);
+		player3.setRoads(4);
+		player4.setRoads(4);
 		
 		
 		GameMap map = new GameMap();
@@ -2366,8 +2400,9 @@ public class FacadeCanDoTestA {
 		assertTrue(canLaySettlement == true);
 
 		//canLaySettlement Player3
-		gameModel.setLocalPlayer(player3);
+		gameModel.setLocalPlayerTest(player3);
 		turnTracker.setCurrentTurn(2);
+		facade.setPlayerId(2);
 		location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		settlement = new VertexObject(2,location);
 		canLaySettlement = map.canBuildSettlement(settlement);
@@ -2375,7 +2410,8 @@ public class FacadeCanDoTestA {
 		
 		//build settlement Player1
 		turnTracker.setCurrentTurn(0);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
+		facade.setPlayerId(0);
 		location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		settlement = new VertexObject(0,location);
 		canLaySettlement = facade.canBuildSettlement(location);
@@ -2389,7 +2425,9 @@ public class FacadeCanDoTestA {
 		
 		//build player4 road1
 		turnTracker.setCurrentTurn(3);
-		gameModel.setLocalPlayer(player4);
+		gameModel.setLocalPlayerTest(player4);
+		facade.setPlayerId(3);
+		//gameModel.setLocalPlayer()
 		
 		
 		roadLocation = new EdgeLocation(hex12Loc, EdgeDirection.SouthEast);

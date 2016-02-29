@@ -80,8 +80,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		boolean canDiscard = facade.canDiscardCards();
 		assertTrue(canDiscard == true);
@@ -121,8 +123,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
+		
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(1);
@@ -153,8 +158,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -202,8 +209,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -226,8 +235,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(1);
@@ -337,8 +348,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -415,8 +428,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -499,7 +514,9 @@ public class FacadeCanDoTestA {
 		turnTracker.setCurrentTurn(1);
 		Player player1 = new Player();
 		player1.setPlayerID(1);
-		gameModel.setLocalPlayer(player1);
+		facade.setPlayerId(1);
+		player.setPlayerIndex(1);
+		gameModel.setLocalPlayerTest(player1);
 	    canBuild = facade.canBuildRoad(location);
 	    assertTrue(canBuild == false);
 	    
@@ -521,8 +538,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -590,8 +609,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -693,9 +714,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setSettlements(5);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(1);
@@ -790,10 +813,12 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setRoads(6);
 		player.setSettlements(5);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -911,8 +936,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1021,11 +1048,13 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setSettlements(5);
 		player.setRoads(5);
 		player.setCities(5);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1196,9 +1225,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setPlayerIndex(0);
 		player.setSettlements(5);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
+		facade.setPlayerId(0);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1292,8 +1323,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		//testing with player 1
 		TurnTracker turnTracker = new TurnTracker();
@@ -1333,9 +1366,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setCities(5);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		//testing with status as rolling
 		TurnTracker turnTracker = new TurnTracker();
@@ -1387,9 +1422,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		player.setPlayerIndex(0);
 		player.setCities(4);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
+		facade.setPlayerId(0);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(1);
@@ -1486,8 +1523,11 @@ public class FacadeCanDoTestA {
 		
 		player.setPlayerID(0);
 		player.setCities(3);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
+
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1610,8 +1650,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		gameModel.setDeck(new DevCardList(0,0,0,0,1));
 		
 		boolean result;
@@ -1653,8 +1695,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		gameModel.setDeck(new DevCardList(0,0,0,0,1));
 		
 		boolean result;
@@ -1685,8 +1729,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		gameModel.setDeck(new DevCardList(0,0,0,0,1));
 		
 		boolean result;
@@ -1730,8 +1776,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		gameModel.setDeck(new DevCardList(0,0,0,0,1));
 		
 		boolean result;
@@ -1767,9 +1815,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setCities(4);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1873,8 +1923,10 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -1961,9 +2013,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setCities(4);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -2063,9 +2117,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setCities(10);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);
@@ -2179,9 +2235,11 @@ public class FacadeCanDoTestA {
 		game.updateModel(gameModel);
 		
 		player.setPlayerID(0);
+		facade.setPlayerId(0);
+		player.setPlayerIndex(0);
 		player.setCities(4);
 		player.setResources(resources);
-		gameModel.setLocalPlayer(player);
+		gameModel.setLocalPlayerTest(player);
 		
 		TurnTracker turnTracker = new TurnTracker();
 		turnTracker.setCurrentTurn(0);

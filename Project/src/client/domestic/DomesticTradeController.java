@@ -114,22 +114,28 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		if(send.containsKey(resource)){
-			send.put(resource, send.get(resource) - 1);
+		if(send.containsKey(resource)) {
+			send.put(resource, send.get(resource) - 1); //decrease by one
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true); //technically a else statement
-			if(send.get(resource) == 0)
+			if(send.get(resource) == 0)//don't let them receive less than 0
+				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false); 
+			
+		}
+		else if(receive.containsKey(resource)) {  
+			receive.put(resource, receive.get(resource) - 1); //decrease by one
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true); //technically a else statement
+			if(receive.get(resource) == 0) //don't let them receive less than 0
 				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 			
 		}
-		else if(receive.containsKey(resource)){
-			receive.put(resource, receive.get(resource) - 1);
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true); //technically a else statement
-			if(receive.get(resource) == 0)
-				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
-			
-		}
-		checkState();
+		checkState(); //check if trade is ready to be sent
 	}
+	/**
+	 * checks if the user can send the current resource 
+	 * also sets the 
+	 * @param resource
+	 * @return boolean if they can send it
+	 */
 	public boolean canSendResource(ResourceType resource){
 		boolean can = true;
 		if(resource == ResourceType.BRICK){
@@ -156,10 +162,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if(sheep == 0){
 				can = false;
 			}
-		}
+		} 
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, can, false);
 		return can;
 	}
+	/**
+	 * checks if the user has reached the amount total they can send of a certain resource.
+	 * @param resource - certain resource
+	 * @param amount - the amount they have sent already
+	 * @return boolean if they can send
+	 */
 	public boolean canIncreaseResource(ResourceType resource, int amount){
 		boolean can = true;
 		if(resource == ResourceType.BRICK){
@@ -194,16 +206,21 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		if(send.containsKey(resource)){
+		if(send.containsKey(resource)){ //increases by one then checks if they can increase the next time
 			send.put(resource, send.get(resource) + 1);
 			canIncreaseResource(resource, send.get(resource));
 		}
-		else if(receive.containsKey(resource)){
+		else if(receive.containsKey(resource)){ //you can always increase receive amount.
 			receive.put(resource, receive.get(resource) + 1);
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
 		}
 		checkState();
 	}
+	/**
+	 * makes the trade offer in the form the server wants it.
+	 * Uses the global variable HashMaps send and receive.
+	 * @return the TradeOffer the server wants
+	 */
 	public TradeOffer constructTradeOffer(){
 		int totalBricks = 0;
 		int totalOre = 0;
@@ -281,6 +298,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if(send.containsKey(resource)) send.remove(resource);
 		checkState();
 	}
+	/**
+	 * sets everything back to so nothing gets reused when trying to send a trade again
+	 */
 	public void clearTrade(){
 		for(ResourceType i : send.keySet())
 			getTradeOverlay().setResourceAmount(i, "0");
@@ -303,6 +323,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		getAcceptOverlay().closeModal();
 		
 	}
+	/**
+	 * This checks the total sending resources and total receiving resources
+	 * to see if the user is done choosing the resources they want in the trade.
+	 * this function is primarily used in the checkState() function
+	 * @return boolean if the they're done selecting resources.
+	 */
 	public boolean doneSelectingResources(){
 		int sendAmount = 0;
 		for(ResourceType rT : send.keySet()){
@@ -314,6 +340,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			receiveAmount += receive.get(rT);
 		return sendAmount > 0 && receiveAmount > 0 ? true : false;
 	}
+	/**
+	 * Checks if the receiver is set and if the resources are done being selected
+	 * If so, it lets the user send the trade.
+	 * Called in the checkState() function.
+	 */
 	public void checkIfReadyToTrade(){
 		getTradeOverlay().setTradeEnabled(false);
 		if(receiver != -1 && doneSelectingResources()){
@@ -321,6 +352,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setStateMessage("Trade!");
 		}
 	}
+	/**
+	 * Checks if the user can send the trade. This function is called pretty much everytime something about
+	 * a trade is changed.
+	 */
 	public void checkState(){
 		if(!doneSelectingResources())
 			getTradeOverlay().setStateMessage("select the resources you want to trade");
@@ -328,8 +363,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeOverlay().setStateMessage("choose with whom you want to trade");
 		checkIfReadyToTrade();
 	}
+	/**
+	 * This function dissects a TradeOffer into the getAcceptOverlay() view so
+	 * the user looking at it sees the correct offer
+	 * @param offer a TradeOffer which the function dissects
+	 */
 	public void getResources(ResourceList offer){
 		//BRICK, SHEEP, WHEAT, ORE, WOOD
+		//if it's positive, then put it in the addGetResource
+		//if it's negative, then put it in the addGiveResource
 		if(offer.getBrick() > 0)
 			getAcceptOverlay().addGetResource(ResourceType.BRICK, offer.getBrick());
 		if(offer.getBrick() < 0)
@@ -360,31 +402,26 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		GameModel gameModel = (GameModel)arg;
 		currState = currState.identifyState(gameModel.getTurnTracker());
 		
-		if (currState instanceof PlayingState)
+		if (currState instanceof PlayingState) //only let the person offer a trade if it's his/her turn
 			getTradeView().enableDomesticTrade(true);
 		else
 			getTradeView().enableDomesticTrade(false);
 		
-		if(getWaitOverlay().isModalShowing()){
-			if(gameModel.getTradeOffer() == null)
-				getWaitOverlay().closeModal();
+		if(getWaitOverlay().isModalShowing()){ //   this disables the wait offer - once a trade is accepted or 
+			if(gameModel.getTradeOffer() == null)// rejected then the poller gets a null trade offer, so then
+				getWaitOverlay().closeModal();//    it knows to close it.
 		}
 		else if(!getAcceptOverlay().isModalShowing()){
-			if(gameModel.getTradeOffer() != null){
+			
+			if(gameModel.getTradeOffer() != null){ 
+				//if there's a trade offer, then show it if you're the receiver.
 				if(gameModel.getTradeOffer().getReciever() == currState.getPlayerIndex()){
 					if(!facade.canAcceptTrade(gameModel.getTradeOffer())){
-						getAcceptOverlay().setAcceptEnabled(false);
-						TradeOffer tradeOffer = gameModel.getTradeOffer();
-						ResourceList offer = tradeOffer.getOffer();
-						getResources(offer);
-						getAcceptOverlay().showModal();
-						return; 
+						//if the user can't accept the trade offer, then disable the accept button
+						showTradeModal(false, gameModel);
 					}
-					if(currState.getPlayerIndex() == gameModel.getTradeOffer().getReciever()){
-						TradeOffer tradeOffer = gameModel.getTradeOffer();
-						ResourceList offer = tradeOffer.getOffer();
-						getResources(offer);
-						getAcceptOverlay().showModal();
+					else if(currState.getPlayerIndex() == gameModel.getTradeOffer().getReciever()){
+						showTradeModal(true, gameModel);
 					}
 				}
 			}
@@ -393,6 +430,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		
 	}
+	/**
+	 * displays trade modal
+	 * @param canAccept boolean that says whether or not the user can accept the trade being offered.
+	 * @param gameModel just the game model to be passed.
+	 */
+	public void showTradeModal(boolean canAccept, GameModel gameModel){
+		getAcceptOverlay().setAcceptEnabled(canAccept);
+		TradeOffer tradeOffer = gameModel.getTradeOffer();
+		ResourceList offer = tradeOffer.getOffer();
+		getResources(offer);
+		getAcceptOverlay().showModal();
+	}
+	/**
+	 * Simple function to return the current maps... used for debugging.
+	 * @return String of the maps.  "System.out.println(outputMaps());"
+	 */
 	public String outputMaps(){
 		StringBuilder string = new StringBuilder("*************************************************");
 		

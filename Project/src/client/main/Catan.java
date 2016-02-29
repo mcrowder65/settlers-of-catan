@@ -25,10 +25,6 @@ public class Catan extends JFrame
 	
 	public Catan(IJoinGameController joinController, Facade facade)
 	{
-		//TODO make your code pretty!
-		//TODO general note - meny, make sure to get rid of those hard coded cheat codes
-		//TODO can we cancel roads or settlements on the setup?
-		//TODO resources are not given out correctly on setup stages, is that a server bug?
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

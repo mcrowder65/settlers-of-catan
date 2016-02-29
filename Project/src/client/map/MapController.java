@@ -204,9 +204,6 @@ public class MapController extends Controller implements IMapController, Observe
 		if (movedRobberLocation == null) 
 			System.out.println("WARNING! movedRobberLocation in robPlayer was not set.");
 		else {
-			
-			
-		
 			if (isPlayingSoldier)
 				currState.playSoldierCard(movedRobberLocation, victim);
 			else

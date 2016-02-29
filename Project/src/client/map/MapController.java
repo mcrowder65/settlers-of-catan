@@ -67,17 +67,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return currState.canPlaceRobber(hexLoc);
 	}
-	/*
-	public boolean isRoadInModel(EdgeLocation edgeLoc){
-		GameMap map = currState.fetchModel().getMap();
-		EdgeValue temp = new EdgeValue(currState.getPlayerId(), edgeLoc);
-		EdgeValue[] roads = map.getRoads();
-		for(int i = 0; i < roads.length; i++){
-			if(roads[i].getLocation().equals(temp.getLocation()))
-				return true;
-		}
-		return false;
-	}*/
+
 	public void placeRoad(EdgeLocation edgeLoc) {
 		synchronized(DataUtils.modelLock) {
 			
@@ -137,22 +127,9 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRoadVisual(EdgeLocation edgeLoc, CatanColor color) {
 		getView().placeRoad(edgeLoc, color);
 	}
-	/*
-	public boolean isSettlementInModel(VertexLocation vertLoc){
-		GameMap map = currState.fetchModel().getMap();
-		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
-		VertexObject[] settlements = map.getSettlements();
-		for(int i = 0; i < settlements.length; i++){
-			if(settlements[i].getLocation().equals(tempVL))
-				return true;
-		}
-		
-		return false;
-	}*/
+	
 	public void placeSettlement(VertexLocation vertLoc) {
-		/*if(isSettlementInModel(vertLoc))
-			getView().placeSettlement(vertLoc, color);
-		else*/
+		
 		synchronized(DataUtils.modelLock) {
 			boolean success = currState.buildSettlement(vertLoc);
 			if (success) {
@@ -176,21 +153,9 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeSettlementVisual(VertexLocation vertLoc, CatanColor color) {
 		getView().placeSettlement(vertLoc, color);
 	}
-	/*
-	public boolean isCityInModel(VertexLocation vertLoc){
-		GameMap map = currState.fetchModel().getMap();
-		VertexLocation tempVL = new VertexLocation(vertLoc.getHexLoc(), vertLoc.getDir());
-		VertexObject[] cities = map.getCities();
-		for(int i = 0; i < cities.length; i++){
-			if(cities[i].getLocation().equals(tempVL))
-				return true;
-		}
-		return false;
-	}*/
+	
 	public void placeCity(VertexLocation vertLoc) {
-		/*if(isCityInModel(vertLoc))
-			getView().placeCity(vertLoc, color);
-		else*/
+		
 		boolean success = currState.buildCity(vertLoc);
 		if (success)
 			placeCityVisual(vertLoc, currState.getPlayerColor());
@@ -396,7 +361,6 @@ public class MapController extends Controller implements IMapController, Observe
 		    currState instanceof SecondRoundState) {
 				
 				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
-				//getView().startDrop(PieceType.SETTLEMENT, model.getLocalPlayer(currState.getPlayerId()).getColor(), true);
 				
 			}
 		

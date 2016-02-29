@@ -19,6 +19,11 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+/**
+ * The abstract class of states the player & game is in.
+ * By default, all non-overrided can-dos return false and actions throw an error.
+ *
+ */
 public abstract class GameState {
 
 	protected Facade facade; 

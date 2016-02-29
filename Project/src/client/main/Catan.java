@@ -63,7 +63,15 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				HTTPProxy proxy = new HTTPProxy(args[0], Integer.parseInt(args[1]));
+				String host = "localhost";
+				int port = 8081;
+				if (args.length > 0) {
+					host = args[0];
+					if (args.length > 1) {
+						port = Integer.parseInt(args[1]);
+					}
+				}
+				HTTPProxy proxy = new HTTPProxy(host, port);
 				GameManager gameManager = new GameManager(proxy,1);
 				
 				

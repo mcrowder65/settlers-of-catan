@@ -87,6 +87,12 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 	}
 	
+	
+	/**
+	 * This method is in charge of populating the Resources and making sure that 
+	 * they stay updated with every server update.
+	 * @param model
+	 */
 	private void populateResources(GameModel model) {
 		Player player = model.getLocalPlayer(facade.getPlayerId());
 		ResourceList resource = player.getResources();
@@ -131,7 +137,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		String state = model.getTurnTracker().getStatus();
 		TurnTracker turn = model.getTurnTracker();
 		this.currState = currState.identifyState(turn);
-		
 		
 		
 		this.populateResources(model);

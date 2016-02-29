@@ -141,8 +141,7 @@ public class MapController extends Controller implements IMapController, Observe
 					if (currState instanceof FirstRoundState || //finishes turn if you just placed a settlement 
 						currState instanceof SecondRoundState) {//in first or second round.
 							currState.finishTurn();
-						}
-				
+						}	
 			}
 			else
 				System.out.println("WARNING! placeSettlement in MapController failed.");
@@ -268,12 +267,22 @@ public class MapController extends Controller implements IMapController, Observe
 		placeWater();
 		placePorts(map.getPorts());
 	}
+	/**
+	 * gives the edge direction based on a String direction passed in
+	 * @param direction String
+	 * @return EdgeDirection
+	 */
 	public EdgeDirection getEdgeDirection(String direction){
 		return direction.equals("NorthWest") ? EdgeDirection.NorthWest : direction.equals("North") ? EdgeDirection.North : 
 			direction.equals("NorthEast") ? EdgeDirection.NorthEast : direction.equals("SouthEast") ? EdgeDirection.SouthEast : 
 				direction.equals("South") ? EdgeDirection.South : direction.equals("SouthWest") ? EdgeDirection.SouthWest :
 				null;
 	}
+	/**
+	 * Gives the port type based on a string resource passed in
+	 * @param resource String
+	 * @return PortType
+	 */
 	public PortType getPortType(String resource){
 		return resource.equals("WOOD") ? PortType.WOOD : resource.equals("BRICK") ? PortType.BRICK : 
 				resource.equals("SHEEP") ? PortType.SHEEP : resource.equals("WHEAT") ? PortType.WHEAT : 
@@ -307,13 +316,12 @@ public class MapController extends Controller implements IMapController, Observe
 		if ( (currState instanceof FirstRoundState || currState instanceof SecondRoundState) 
 				&&  !getView().isOverlayShowing()) {
 			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
-			
+			//FIRST TWO ROUNDS
 			
 		} else if (currState instanceof RobbingState 
 				&& !getView().isOverlayShowing() 
 				&& !getRobView().isModalShowing() 
 				&& !getRollResultView().isModalShowing()) {
-			
 			startRobber(); 
 		}
 		
@@ -323,7 +331,11 @@ public class MapController extends Controller implements IMapController, Observe
 		return rollResultView;
 	}
 
-
+	/**
+	 * sets the cities in the map based on the current players.
+	 * @param cities -VertexObject[]
+	 * @param players - Player[] 
+	 */
 	public void setCities(VertexObject[] cities, Player[] players){
 		for(int i = 0; i < cities.length; i++){
 			VertexObject city = cities[i];
@@ -334,6 +346,11 @@ public class MapController extends Controller implements IMapController, Observe
 			placeCityVisual(cities[i].getLocation(), color);
 		}
 	}
+	/**
+	 * Sets the settlements on the current map
+	 * @param settlements - VertexObject[]
+	 * @param players - Player[]
+	 */
 	public void setSettlements(VertexObject[] settlements, Player[] players){
 		for(int i = 0; i < settlements.length; i++){
 			VertexObject settlement = settlements[i];
@@ -344,7 +361,11 @@ public class MapController extends Controller implements IMapController, Observe
 			placeSettlementVisual(settlements[i].getLocation(), color);
 		}
 	}
-	
+	/**
+	 * Sets the roads on the map.
+	 * @param roads EdgeValue[]
+	 * @param players Player[]
+	 */
 	public void setRoads(EdgeValue[] roads, Player[] players){
 		for(int i = 0; i < roads.length; i++){
 			EdgeValue road = roads[i];

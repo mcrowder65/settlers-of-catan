@@ -196,6 +196,11 @@ public class GameModel {
 			players = new Player[4];
 		players[0] = player;
 	}
+	public void setLocalPlayerTest(Player player) {
+		if (players == null)
+			players = new Player[4];
+		players[player.getPlayerID()] = player;
+	}
 	public int getLocalIndex(int playerId) {
 		for (int n = 0; n < players.length; n++) {
 			if (players[n] != null && players[n].getPlayerID() == playerId) 

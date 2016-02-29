@@ -25,11 +25,8 @@ public class Catan extends JFrame
 	
 	public Catan(IJoinGameController joinController, Facade facade)
 	{
-		//TODO make sure you make your junit test cases work
 		//TODO make your code pretty!
-		//TODO general note - make sure we configure the ant client for ours..
 		//TODO general note - meny, make sure to get rid of those hard coded cheat codes
-		//TODO general note - make sure you prevent against placing roads in illegal spots in first round
 		//TODO can we cancel roads or settlements on the setup?
 		//TODO resources are not given out correctly on setup stages, is that a server bug?
 		client.base.OverlayView.setWindow(this);

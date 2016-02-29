@@ -44,7 +44,7 @@ public class HasMunicipalityTest {
 		//Doesn't have anything
 		assertFalse(map.hasMunicipality(new VertexLocation(new HexLocation(1,1),VertexDirection.East)));
 		
-		assertFalse(map.hasMunicipality(new VertexLocation(new HexLocation(1,-1),VertexDirection.SouthWest)));
+		assertFalse(map.hasMunicipality(new VertexLocation(new HexLocation(-1,-1),VertexDirection.SouthWest)));
 		
 		
 		//Has settlement

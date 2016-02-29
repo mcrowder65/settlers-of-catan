@@ -33,7 +33,7 @@ public class HasSettlementTest {
 		
 		assertFalse(map.hasSettlement(map.vertexObjectFactory(2, 2, 0, VertexDirection.East)));
 		
-		assertFalse(map.hasSettlement(map.vertexObjectFactory(3, 1, 0, VertexDirection.East)));
+		assertFalse(map.hasSettlement(map.vertexObjectFactory(3, -2, -1, VertexDirection.East)));
 		
 		
 		//Player does have settlement

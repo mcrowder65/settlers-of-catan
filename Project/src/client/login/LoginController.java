@@ -50,7 +50,6 @@ public class LoginController extends Controller implements ILoginController {
 	
 	/**
 	 * Sets the action to be executed when the user logs in
-	 * 
 	 * @param value The action to be executed when the user logs in
 	 */
 	public void setLoginAction(IAction value) {
@@ -68,6 +67,9 @@ public class LoginController extends Controller implements ILoginController {
 		return loginAction;
 	}
 
+	/**
+	 * pops up the modal for the log in
+	 */
 	@Override
 	public void start() {
 		
@@ -77,21 +79,10 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
-		
-		//System.out.println("in signIn");
-
+		//gets the username and password from the view
 		String userName = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
 		boolean success = facade.login(userName,password);
-		
-		/*
-		if(success == true){
-			System.out.println("Worked");
-		}
-		else{
-			System.out.println("Failed");
-		}
-		*/
 		
 		// If log in succeeded
 		if(success == true){
@@ -101,7 +92,10 @@ public class LoginController extends Controller implements ILoginController {
 			showLoginFail();
 		}
 	}
-
+	
+	/**
+	 * registers the user on the server
+	 */
 	@Override
 	public void register() {
 		
@@ -110,9 +104,11 @@ public class LoginController extends Controller implements ILoginController {
 			return;	
 		}
 		
+		//gets the username and password from the view
 		String username = getLoginView().getRegisterUsername();
 		String password = getLoginView().getRegisterPassword();
 		
+		//sends the username and password to the facade which then goes to the server
 		boolean success = false;
 	    success = facade.register(username,password);
 		if(!success) {
@@ -125,17 +121,23 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		} else {
+			//if register failed
 			showRegisterFail();
 			return;
 		}
 	
 	}
-	
+	/**
+	 * message to show if the login failed
+	 */
 	private void showLoginFail() {
 		messageView.setTitle("Error!");
 		messageView.setMessage("Sign in failed.");
 		messageView.showModal();
 	}
+	/**
+	 * message to show if the registering failed
+	 */
 	private void showRegisterFail() {
 		messageView.setTitle("Warning!");
 		messageView.setMessage("Invalid username or password.");

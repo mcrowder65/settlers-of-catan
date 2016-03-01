@@ -30,7 +30,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private Timer timer;
 	private PollingTask pollingTask;
 	private int interval;
-	private GameInfo[] currentGames;
+	private GameInfo[] currentGames; //holds all the games
 	private boolean isFinished = false;
 	/**
 	 * JoinGameController constructor
@@ -54,7 +54,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		interval = facade.getPollingInterval();
 		player = new PlayerInfo();
 	}
-	
+	/**
+	 * uses the poller to update the game info on the join screen
+	 * @author Brennen
+	 *
+	 */
 	class PollingTask extends TimerTask {
 		@Override
 		public void run() {
@@ -105,6 +109,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		return selectColorView;
 	}
+	/**
+	 * brings up a view to select the colors
+	 * @param selectColorView
+	 */
 	public void setSelectColorView(ISelectColorView selectColorView) {
 		
 		this.selectColorView = selectColorView;
@@ -119,21 +127,28 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		this.messageView = messageView;
 	}
 
+	/**
+	 * starts the joining a game process
+	 */
 	@Override
 	public void start() {
 		isFinished = false;
 		player.setId(facade.getPlayerId());
-		GameInfo[] info = facade.listGames();
+		GameInfo[] info = facade.listGames(); //gets the list of games from the server object
 		currentGames = info;
-		getJoinGameView().setGames(currentGames,player);
+		getJoinGameView().setGames(currentGames,player); //updates the view with the games that it recieved
 		getJoinGameView().showModal();
 		
-		
+		//starts up the poller
 		timer = new Timer();
 		pollingTask = new PollingTask();
 		timer.schedule(pollingTask, 0, interval * 1000);
 	}
 
+	/**
+	 * places the games that were retrieved from the server on the view
+	 * @param info
+	 */
 	private void updateGames(GameInfo[] info) {
 		if (isGamesDifferent(info) && !isFinished) {
 			currentGames = info;

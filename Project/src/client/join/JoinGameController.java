@@ -77,7 +77,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	/**
 	 * Returns the action to be executed when the user joins a game
-	 * 
 	 * @return The action to be executed when the user joins a game
 	 */
 	public IAction getJoinAction() {
@@ -87,7 +86,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	/**
 	 * Sets the action to be executed when the user joins a game
-	 * 
 	 * @param value The action to be executed when the user joins a game
 	 */
 	public void setJoinAction(IAction value) {	

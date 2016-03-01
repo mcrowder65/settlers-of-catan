@@ -14,20 +14,35 @@ import client.data.RobPlayerInfo;
 import shared.communication.*;
 import shared.communication.response.*;
 import shared.definitions.*;
-
+/**
+ * This class bridges the gap between all of the controllers/gui and the server/local model
+ * @author Brennen
+ *
+ */
 public class Facade {
 
 	private GameManager game;
-	private GameModel tempModel = null;
+	private GameModel tempModel = null; //holds a local model - used for roadbuilding card
 	private IProxy proxy;
 	private int playerId;
 
+	/**
+	 * constructor for the facade
+	 * @param proxy
+	 * @param pollingInterval
+	 * @param game
+	 */
 	public Facade(IProxy proxy, int pollingInterval, GameManager game)
 	{
 		this.proxy = proxy;
 		this.game = game;
 	
 	}
+	/**
+	 * a second constructor for the facade
+	 * @param proxy
+	 * @param pollingInterval
+	 */
 	public Facade(IProxy proxy, int pollingInterval)
 	{
 		this.proxy = proxy;
@@ -41,7 +56,9 @@ public class Facade {
 	public Facade (GameManager gameMan) {
 		this.game = gameMan;
 	}
-	
+	/**
+	 * sets up the temporary model
+	 */
 	public void setTempModel(){
 		tempModel= game.getModel();
 	}
@@ -55,6 +72,9 @@ public class Facade {
 	public CatanColor getPlayerColor() {
 		return game.getModel().getLocalPlayer(playerId).getColor();
 	}
+	/**
+	 * sets the temp to null
+	 */
 	public void NullifyTemp(){
 		this.tempModel = null;
 	}
@@ -109,7 +129,10 @@ public class Facade {
 		ListGamesResponse response = proxy.listGames();
 		return response.getGames();
 	}
-
+	/**
+	 * gest a list of the AI
+	 * @return
+	 */
 	public List<AIType> listAI() {
 		ListAIResponse response = proxy.listAI();
 		return response.getAITypes();
@@ -164,7 +187,12 @@ public class Facade {
 	public int roll() throws IllegalArgumentException{
 		return new Random().nextInt((6 - 1) + 1) + 1;
 	}
-	
+	/**
+	 * this method adds an AI to the game
+	 * @param aiType
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public boolean addAI(String aiType) throws IllegalArgumentException {
 		Response response = proxy.addAI(aiType);
 		return response.isSuccess();
@@ -329,6 +357,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canDiscardCards() throws IllegalArgumentException{
+		//checks to see if the numer of cards are greater than 7
 		boolean canDiscard = game.getModel().getLocalPlayer(playerId).getNumOfCards() > 7;
 		return canDiscard;
 	}
@@ -338,6 +367,7 @@ public class Facade {
 	 * @return True if the dice can be rolled
 	 */
 	public boolean canRollNumber() throws IllegalArgumentException{
+		//checks to make sure it is the players correct turn
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -346,6 +376,7 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is correct for the rolling state
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(status.equals( "Rolling")){
 			return true;
@@ -359,44 +390,43 @@ public class Facade {
 	 * @return True if the road can be placed in the location
 	 */
 	public boolean canBuildRoad(EdgeLocation location) throws IllegalArgumentException {
+		//checks to make sure the location passed in is not null
 		if(location == null){
 			return false;
 		}
+		//checks to make sure its the players correct turn
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
 		}
 		if(isTurn == false){
-			return false;
+			return false; //if incorrect turn
 		}
+		//checks to make sure the player has the proper status to build a road
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
-		/*if(!status.equals("FirstRound") && !status.equals("SecondRound")){
-			boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildRoad();
-			if(enoughResources == false){
-				return false;
-			}
-		}*/
-		int owner = game.getModel().getLocalIndex(playerId);
+		int owner = game.getModel().getLocalIndex(playerId); //gets the local Player index ie owner of the road
 		EdgeValue value = new EdgeValue(owner,location);
 		boolean hasRoad = false;
 		boolean canLayOnMap = false;
+		//if the player is trying to lay a road during the first two rounds
 		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
-			hasRoad = game.getModel().getMap().hasRoadAllPlayers(location);
+			hasRoad = game.getModel().getMap().hasRoadAllPlayers(location); //checks to see if the location already has a road
 			HexLocation loc = location.getHexLoc();
 			boolean isLand = game.getModel().getMap().isLand(loc);
 			EdgeDirection direction = location.getDir();
 			HexLocation locOpp = game.getModel().getMap().getOppositeHex(loc,direction);
+			//checking to see if the location is land or water
 			if(isLand == false){
 				isLand = game.getModel().getMap().isLand(locOpp);
 			}
 			if(isLand == false || hasRoad == true){
 				return false;
 			}
-			boolean canLayThisRound = game.getModel().getMap().canLayRoadFirstRounds(value);
+			boolean canLayThisRound = game.getModel().getMap().canLayRoadFirstRounds(value);//asking the map to make sure the location is free and if the player can lay the road      
 			if(canLayThisRound == false){
 				return false;
 			}
@@ -405,31 +435,35 @@ public class Facade {
 			}
 		}
 		else{
+			//this is used if the player is playing a road without using a roadBuilder card
 			if(this.tempModel == null){
 				HexLocation loc = location.getHexLoc();
 				boolean isLand = game.getModel().getMap().isLand(loc);
 				EdgeDirection direction = location.getDir();
 				HexLocation locOpp = game.getModel().getMap().getOppositeHex(loc,direction);
+				//checks to make sure that the location is actually land
 				if(isLand == false){
 					isLand = game.getModel().getMap().isLand(locOpp);
 				}
 				if(isLand == false){
 					return false;
 				}
-				canLayOnMap = game.getModel().getMap().canLayRoad(value);
+				canLayOnMap = game.getModel().getMap().canLayRoad(value);//asking the map to make sure the location is free and if the player can lay the road      
 			}
 			else{
+				//this is used to see if the player can place a road using the road builder card
 				HexLocation loc = location.getHexLoc();
 				boolean isLand = game.getModel().getMap().isLand(loc);
 				EdgeDirection direction = location.getDir();
 				HexLocation locOpp = game.getModel().getMap().getOppositeHex(loc,direction);
+				//checks to make sure that the location is actually land
 				if(isLand == false){
 					isLand = game.getModel().getMap().isLand(locOpp);
 				}
 				if(isLand == false){
 					return false;
 				}
-				canLayOnMap = this.tempModel.getMap().canLayRoad(value);
+				canLayOnMap = this.tempModel.getMap().canLayRoad(value);//asking the map to make sure the location is free and if the player can lay the road      
 			}
 		}
 		
@@ -448,8 +482,7 @@ public class Facade {
 	 */
 	public boolean canBuildSettlement(VertexLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
-		int index = game.getModel().getLocalIndex(playerId);
-		int turn = game.getModel().getTurnTracker().getCurrentTurn();
+		//checks to make sure its the players turn
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
@@ -457,10 +490,12 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing") && !status.equals( "FirstRound") && !status.equals( "SecondRound")){
 			return false;
 		}
+		//checks to see if the player has enough resources to lay a settlement - only used outside of the first 2 rounds
 		if(!status.equals("FirstRound") && !status.equals("SecondRound")){
 			boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildSettlement();
 			if(enoughResources == false){
@@ -472,8 +507,9 @@ public class Facade {
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = false;
 		boolean canLay = false;
+		//used if the player is laying a settlement during the first two rounds
 		if(status.equals( "FirstRound") || status.equals( "SecondRound")){
-			boolean canLaySet = game.getModel().getMap().canBuildSettlementFirstRound(vertex);
+			boolean canLaySet = game.getModel().getMap().canBuildSettlementFirstRound(vertex); //asking the map if the player can build a settlement in that location
 			if(canLaySet == false){
 				return false;
 			}
@@ -482,15 +518,14 @@ public class Facade {
 			}
 		}
 		else{
+			//used if the player is laying a settlement outside the first two rounds
 			canLayOnMap = game.getModel().getMap().canBuildSettlement(vertex);
 			if(canLayOnMap == false){
 				return false;
 			}
 		}
 		
-	
 		return true;
-
 	}
 
 	/**
@@ -500,6 +535,7 @@ public class Facade {
 	 */
 	public boolean canBuildCity(VertexLocation location) throws IllegalArgumentException {
 		boolean isTurn = false;
+		//checks to make sure its the players turn
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
@@ -507,14 +543,17 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
 		}
+		//checks to make sure the player has enough resources to build a city
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuildCity();
 		if(enoughResources == false){
 			return false;
 		}
+		//asks the map if the player can build a city and a certain location
 		int owner = game.getModel().getLocalIndex(playerId);
 		VertexObject vertex = new VertexObject(owner,location);
 		boolean canLayOnMap = game.getModel().getMap().canBuildCity(vertex);
@@ -531,6 +570,7 @@ public class Facade {
 	 */
 	public boolean canOfferTrade() throws IllegalArgumentException {
 		boolean isTurn = false;
+		//checks to make sure its the players turn
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			isTurn = true;
@@ -538,10 +578,12 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is playing
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
 		}
+		//checks to make sure the player has enough resources to do the trade
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canOfferTrade();
 
 		return enoughResources;
@@ -554,6 +596,7 @@ public class Facade {
 	 * @return True if the user can offer the trade
 	 */
 	public boolean canMaritimeTrade() throws IllegalArgumentException {
+		//checks to make sure its the player's turn
 		boolean isTurn = false;
 		int playerIndex = game.getModel().getLocalIndex(playerId);
 		if(playerIndex == game.getModel().getTurnTracker().getCurrentTurn())
@@ -563,10 +606,12 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
 		}
+		//checks to make sure the player has a port
 		boolean hasPort = game.getModel().getMap().hasPort(playerIndex);
 
 		//bank is not empty
@@ -590,6 +635,7 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canFinishTurn() throws IllegalArgumentException{
+		//checks to make sure its the players turn
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -598,6 +644,7 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the status is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(status.equals( "Rolling")){
 			return false;
@@ -610,6 +657,7 @@ public class Facade {
 	 * @return True if the player can buy a Development card
 	 */
 	public boolean canBuyDevCard() throws IllegalArgumentException{
+		//checks to make sure its the player's turn
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -618,10 +666,12 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//checks to make sure the staus is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
 		}
+		//checks to make sure the player has enough resources
 		boolean enoughResources = game.getModel().getLocalPlayer(playerId).canBuyDevCard();
 		if(enoughResources == false){
 			return false;
@@ -643,10 +693,11 @@ public class Facade {
 	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
-		return localPlayer.canPlayYearOfPlentyCard();
+		return localPlayer.canPlayYearOfPlentyCard(); 
 	}
 	
 	public boolean canUseRoadBuilderPlacement(EdgeLocation location){
+		//checks to make sure its the players turn
 		boolean isTurn = false;
 		if(game.getModel().getLocalIndex(playerId) == game.getModel().getTurnTracker().getCurrentTurn())
 		{
@@ -655,6 +706,7 @@ public class Facade {
 		if(isTurn == false){
 			return false;
 		}
+		//making sure the status is correct
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
@@ -663,22 +715,30 @@ public class Facade {
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
 		boolean canLayOnMap = false;
-		canLayOnMap = game.getModel().getMap().canLayRoad(value);
+		canLayOnMap = game.getModel().getMap().canLayRoad(value); //seeing if the road can be laid on the map
 		if(canLayOnMap == false){
 			return false;
 		}
 		return true;
 	}
-	
+	/**
+	 * places the road on the tempModel 
+	 * used in the roadBuilder card 
+	 * @param location
+	 * @return
+	 */
 	public boolean placeRoadBuilder(EdgeLocation location){
 		int owner = game.getModel().getLocalIndex(playerId);
 		EdgeValue value = new EdgeValue(owner,location);
-		//game.getModel().getMap().buildRoad(value);
 		this.setTempModel();
-		this.tempModel.getMap().buildRoad(value);
+		this.tempModel.getMap().buildRoad(value); //builds the road on the temp model
 		return true;
 	}
 	
+	/**
+	 * deletes a road from the map
+	 * @param location
+	 */
 	public void deleteRoad(EdgeLocation location){
 		game.getModel().getMap().deleteRoad(location);
 	}
@@ -699,11 +759,9 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseSoldier() throws IllegalArgumentException{
-		
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
 		return localPlayer.canPlaySoldierCard();
-
 	}
 
 	/**
@@ -712,7 +770,6 @@ public class Facade {
 	 * @return True if the player can
 	 */
 	public boolean canUseMonopoly() throws IllegalArgumentException{
-		
 		GameModel model = game.getModel();
 		Player localPlayer = model.getLocalPlayer(playerId);
 		return localPlayer.canPlayMonopolyCard();
@@ -735,12 +792,10 @@ public class Facade {
 	 */
 	public boolean canPlaceRobber(HexLocation location) throws IllegalArgumentException{
 		GameModel model = game.getModel();
-		
-		boolean mapCheck = model.getMap().canLayRobber(location);
+		boolean mapCheck = model.getMap().canLayRobber(location); //checks the map to see if the robber can be placed there
 		if(mapCheck == false){
 			return false;
 		}
-
 		return true;
 	}
 
@@ -761,8 +816,7 @@ public class Facade {
 		return canAccept;
 	}
 
-
-
+	
 	public GameModel fetchModel() {
 		GetModelResponse response = proxy.getModel();
 		return response.getModel();
@@ -793,47 +847,51 @@ public class Facade {
 		return game.getModel().getPlayers()[playerIndex].getResources();
 	}
 
-	
+	/**
+	 * checks to see if the player can buy a road
+	 * @return
+	 */
 	public boolean canBuyRoad() {
+		//checks to make sure its the players turn
 		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			return false;
 		}
-		return game.getModel().getLocalPlayer(playerId).canBuildRoad();
+		return game.getModel().getLocalPlayer(playerId).canBuildRoad(); //checks to see if the player has the necessary resources
 	}
 	
+	/**
+	 * checks to see if a player can buy a settlement
+	 * @return
+	 */
 	public boolean canBuySettlement() {
+		//making sure its the players turn
 		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			return false;
 		}
-		String status = game.getModel().getTurnTracker().getStatus();
+		String status = game.getModel().getTurnTracker().getStatus(); //making sure its the correct status
 		if(!status.equals( "Playing")){
 			return false;
 		}
-		return game.getModel().getLocalPlayer(playerId).canBuildSettlement();
-		
+		return game.getModel().getLocalPlayer(playerId).canBuildSettlement(); //checks to see if the player has the necessary resources
 	}
-	
+	/**
+	 * checks to see if a player can buy a city
+	 * @return
+	 */
 	public boolean canBuyCity() {
+		//makes sure its the player's turn
 		if(game.getModel().getLocalIndex(playerId) != game.getModel().getTurnTracker().getCurrentTurn())
 		{
 			return false;
 		}
+		//makes sure the status is correct 
 		String status = game.getModel().getTurnTracker().getStatus();
 		if(!status.equals( "Playing")){
 			return false;
 		}
-		return game.getModel().getLocalPlayer(playerId).canBuildCity();
+		return game.getModel().getLocalPlayer(playerId).canBuildCity(); //checks to see if the player has the necessary resources
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
 
 }

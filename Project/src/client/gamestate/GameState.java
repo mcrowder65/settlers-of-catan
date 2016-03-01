@@ -392,30 +392,63 @@ public abstract class GameState {
 	public int getPlayerId() {
 		return facade.getPlayerId();
 	}
+	/**
+	 * gets playerIndex from the facade
+	 * @return
+	 */
 	public int getPlayerIndex() {
 		return facade.getPlayerIndex();
 	}
+	/**
+	 * gets the player's color from the facade
+	 * @return
+	 */
 	public CatanColor getPlayerColor() {
 		return facade.getPlayerColor();
 	}
+	/**
+	 * gets the model from the facade
+	 * @return
+	 */
 	public GameModel fetchModel() {
 		return facade.fetchModel();
 	}
+	/**
+	 * gets all the players that can be robbed from the facade
+	 * @param hexLoc
+	 * @return
+	 */
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation hexLoc) {
 		return facade.getRobbablePlayers(hexLoc, getPlayerIndex());
 	}
+	/**
+	 * gets a players resource given their index
+	 * @return
+	 */
 	public ResourceList getPlayerResources() {
 		return facade.getResources(getPlayerIndex());
 	}
 	
+	/**
+	 * method is overridden in the subclasses
+	 * @return
+	 */
 	public boolean canBuyRoad() {
 		return false;
 	}
 	
+	/**
+	 * method is overriden in the subclasses
+	 * @return
+	 */
 	public boolean canBuySettlement() {
 		return false;
 	}
 	
+	/**
+	 * method is overriden in the subclasses
+	 * @return
+	 */
 	public boolean canBuyCity() {
 		return false;
 	}

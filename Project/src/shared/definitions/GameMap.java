@@ -769,6 +769,13 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.South);
 			road = new EdgeValue(owner, newLocation);
@@ -782,6 +789,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -806,6 +819,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.South;
@@ -821,6 +840,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -845,6 +870,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthWest;
@@ -860,6 +891,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -884,6 +921,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.North;
@@ -899,6 +942,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -924,6 +973,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 				
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.North);
@@ -938,6 +993,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -962,6 +1023,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.North;
@@ -977,6 +1044,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1001,6 +1074,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthWest;
@@ -1016,6 +1095,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1040,6 +1125,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthEast;
@@ -1055,6 +1146,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1079,6 +1176,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.NorthEast);
 			road = new EdgeValue(owner, newLocation);
@@ -1092,6 +1195,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1116,6 +1225,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthEast;
@@ -1131,6 +1246,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1156,6 +1277,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.NorthEast);
@@ -1172,6 +1299,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1196,6 +1329,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.North);
@@ -1204,7 +1343,7 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthEast);
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
 				VertexObject settle = new VertexObject(owner,loc);
 				boolean check = hasMunicipality(loc);
 				if(check == false){
@@ -1212,6 +1351,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1236,6 +1381,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.SouthEast);
 			road = new EdgeValue(owner, newLocation);
@@ -1249,6 +1400,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1273,6 +1430,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthEast;
@@ -1288,6 +1451,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1312,6 +1481,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
@@ -1328,6 +1503,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1352,6 +1533,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, direction);
@@ -1368,6 +1555,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1392,6 +1585,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.South);
 			road = new EdgeValue(owner, newLocation);
@@ -1405,6 +1604,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1429,6 +1634,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.South;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1443,6 +1654,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1467,6 +1684,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.NorthEast;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1485,17 +1708,13 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
-			
-			/*
-			opp = getOppositeHex(hex, direction);
-			oppDir = direction.getOppositeDirection();
-			newLocation = new EdgeLocation(opp,oppDir);
-			road = new EdgeValue(owner, newLocation);
-			alreadyHasRoad = this.hasRoadPersonal(road);
-			if(alreadyHasRoad == true){
-				return true;
-			}*/
 			
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.North;
@@ -1515,6 +1734,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.SouthWest;
@@ -1530,6 +1755,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1554,6 +1785,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.SouthEast);
 			road = new EdgeValue(owner, newLocation);
@@ -1567,6 +1804,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1590,6 +1833,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthEast;
@@ -1605,6 +1854,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1629,6 +1884,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.SouthWest;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1643,6 +1904,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -1667,6 +1934,12 @@ public class GameMap {
 				if(check==true){
 					return true;
 				}
+				else{
+					check = hasCity(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.NorthEast;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1681,6 +1954,12 @@ public class GameMap {
 				}
 				else{
 					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				else{
+					check = hasCity(settle);
 				}
 				if(check==true){
 					return true;
@@ -2485,6 +2764,269 @@ public class GameMap {
 			}
 		}
 		
+		return false;
+	}
+	
+	public boolean hasCity(VertexObject settlement) throws IllegalArgumentException {
+		int owner = settlement.getOwner();
+		HexLocation coordinates = settlement.getLocation().getHexLoc();
+		VertexDirection direction = settlement.getLocation().getDir();
+		if(direction == VertexDirection.West){
+			VertexDirection direction2 = VertexDirection.SouthEast;
+			VertexDirection direction3 = VertexDirection.NorthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthWest);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthWest);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.NorthWest){
+			VertexDirection direction2 = VertexDirection.East;
+			VertexDirection direction3 = VertexDirection.SouthWest;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthWest);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.North);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.NorthEast){
+			VertexDirection direction2 = VertexDirection.West;
+			VertexDirection direction3 = VertexDirection.SouthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.North);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(direction == VertexDirection.East){
+			VertexDirection direction2 = VertexDirection.SouthWest;
+			VertexDirection direction3 = VertexDirection.NorthWest;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.NorthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthEast);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(direction == VertexDirection.SouthEast){
+			VertexDirection direction2 = VertexDirection.West;
+			VertexDirection direction3 = VertexDirection.NorthEast;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.SouthEast);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.South);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(direction == VertexDirection.SouthWest){
+			VertexDirection direction2 = VertexDirection.NorthWest;
+			VertexDirection direction3 = VertexDirection.East;
+			HexLocation loc1 = getOppositeHex(coordinates,EdgeDirection.South);
+			HexLocation loc2 = getOppositeHex(coordinates,EdgeDirection.SouthWest);
+			if(allCities.size() > 0){
+				for(int i =0; i<allCities.size(); i++){
+					int xTemp = allCities.get(i).getLocation().getHexLoc().getX();
+					int yTemp = allCities.get(i).getLocation().getHexLoc().getY();
+					VertexDirection directionTemp = allCities.get(i).getLocation().getDir();
+					int ownerTemp = allCities.get(i).getOwner();
+		
+					if((coordinates.getX()) == xTemp && (coordinates.getY() == yTemp)){
+						if(direction == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc1.getX()) == xTemp && (loc1.getY() == yTemp)){
+						if(direction2 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+					if((loc2.getX()) == xTemp && (loc2.getY() == yTemp)){
+						if(direction3 == directionTemp){
+							if(owner == ownerTemp)
+							{
+		
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		return false;
 	}
 	

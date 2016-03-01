@@ -753,13 +753,35 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.South);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthWest);
@@ -768,7 +790,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.South;
@@ -776,7 +809,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.South);
@@ -785,7 +829,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthWest;
@@ -793,16 +848,38 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.SouthWest);
-			oppDir = EdgeDirection.NorthEast;
+			oppDir = EdgeDirection.SouthEast;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.North;
@@ -810,42 +887,19 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
-			
-			/*HexLocation oppositeHex = this.getOppositeHex(hex, direction);
-			
-			newLocation = new EdgeLocation(oppositeHex,EdgeDirection.SouthEast);
-			road = new EdgeValue(owner, newLocation);
-			alreadyHasRoad = this.hasRoadPersonal(road);
-			if(alreadyHasRoad == true){
-				return true;
-			}
-			
-			opp = getOppositeHex(oppositeHex, EdgeDirection.SouthEast);
-			oppDir = EdgeDirection.SouthEast.getOppositeDirection();
-			newLocation = new EdgeLocation(opp,oppDir);
-			road = new EdgeValue(owner, newLocation);
-			alreadyHasRoad = this.hasRoadPersonal(road);
-			if(alreadyHasRoad == true){
-				return true;
-			}
-			
-			newLocation = new EdgeLocation(oppositeHex,EdgeDirection.North);
-			road = new EdgeValue(owner, newLocation);
-			alreadyHasRoad = this.hasRoadPersonal(road);
-			if(alreadyHasRoad == true){
-				return true;
-			}
-			
-			opp = getOppositeHex(oppositeHex, EdgeDirection.North);
-			oppDir = EdgeDirection.North.getOppositeDirection();
-			newLocation = new EdgeLocation(opp,oppDir);
-			road = new EdgeValue(owner, newLocation);
-			alreadyHasRoad = this.hasRoadPersonal(road);
-			if(alreadyHasRoad == true){
-				return true;
-			}*/
 			
 			
 		}
@@ -854,13 +908,36 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
+				
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.North);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.SouthWest);
@@ -869,7 +946,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.North;
@@ -877,7 +965,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.North);
@@ -886,7 +985,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthWest;
@@ -894,24 +1004,51 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.NorthWest);
+			/*
 			oppDir = EdgeDirection.North.getOppositeDirection();
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
-			}
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+			}*/
 			
 			oppDir = EdgeDirection.South;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthEast;
@@ -919,44 +1056,19 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
-			
-			
-			/*HexLocation oppositeHex = this.getOppositeHex(hex, direction);
-			
-			
-				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.NorthEast);
-				road = new EdgeValue(owner, newLocation);
-				alreadyHasRoad = this.hasRoadPersonal(road);
-				if(alreadyHasRoad == true){
-					return true;
-				}
-				
-				opp = getOppositeHex(hex, EdgeDirection.NorthEast);
-				oppDir = EdgeDirection.NorthEast.getOppositeDirection();
-				newLocation = new EdgeLocation(opp,oppDir);
-				road = new EdgeValue(owner, newLocation);
-				alreadyHasRoad = this.hasRoadPersonal(road);
-				if(alreadyHasRoad == true){
-					return true;
-				}
-				
-				newLocation = new EdgeLocation(oppositeHex,EdgeDirection.South);
-				road = new EdgeValue(owner, newLocation);
-				alreadyHasRoad = this.hasRoadPersonal(road);
-				if(alreadyHasRoad == true){
-					return true;
-				}
-				
-				opp = getOppositeHex(hex, EdgeDirection.South);
-				oppDir = EdgeDirection.South.getOppositeDirection();
-				newLocation = new EdgeLocation(opp,oppDir);
-				road = new EdgeValue(owner, newLocation);
-				alreadyHasRoad = this.hasRoadPersonal(road);
-				if(alreadyHasRoad == true){
-					return true;
-				}*/
 			
 		}
 		else if(direction == EdgeDirection.North){
@@ -964,13 +1076,35 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.NorthEast);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthWest);
@@ -979,7 +1113,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.NorthEast;
@@ -987,7 +1132,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			
@@ -997,7 +1153,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.NorthEast);
@@ -1006,9 +1173,21 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
+			/*
 			opp = getOppositeHex(hex, EdgeDirection.North);
 			oppDir = EdgeDirection.South;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1016,7 +1195,7 @@ public class GameMap {
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
 				return true;
-			}
+			}*/
 			
 			opp = getOppositeHex(hex, EdgeDirection.North);
 			oppDir = EdgeDirection.SouthWest;
@@ -1024,7 +1203,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.North);
@@ -1033,7 +1223,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			/*HexLocation oppositeHex = this.getOppositeHex(hex, direction);
@@ -1091,13 +1292,35 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.SouthEast);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.North);
@@ -1106,7 +1329,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthEast;
@@ -1114,7 +1348,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
@@ -1123,7 +1368,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
@@ -1132,9 +1388,21 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
+			/*
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.SouthWest;
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1142,7 +1410,7 @@ public class GameMap {
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
 				return true;
-			}
+			}*/
 			
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.South;
@@ -1150,7 +1418,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, direction);
@@ -1159,7 +1438,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			/*
@@ -1201,13 +1491,35 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.South);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.NorthEast);
@@ -1216,14 +1528,36 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.South;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.South);
@@ -1232,16 +1566,39 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.NorthEast;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
+			/*
 			opp = getOppositeHex(hex, direction);
 			oppDir = direction.getOppositeDirection();
 			newLocation = new EdgeLocation(opp,oppDir);
@@ -1249,14 +1606,26 @@ public class GameMap {
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
 				return true;
-			}
+			}*/
+			
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.North;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			opp = getOppositeHex(hex, direction);
 			oppDir = EdgeDirection.SouthWest;
@@ -1264,8 +1633,20 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
+			
 			/*
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);
 			
@@ -1305,13 +1686,35 @@ public class GameMap {
 			EdgeValue road = new EdgeValue(owner, newLocation);
 			Boolean alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			newLocation = new EdgeLocation(hex,EdgeDirection.SouthEast);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(hex,VertexDirection.SouthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			HexLocation opp = getOppositeHex(hex, EdgeDirection.SouthWest);
 			EdgeDirection oppDir = EdgeDirection.SouthWest.getOppositeDirection();
@@ -1319,7 +1722,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			oppDir = EdgeDirection.SouthEast;
@@ -1327,7 +1741,18 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.East);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			
 			opp = getOppositeHex(hex, EdgeDirection.SouthEast);
@@ -1336,37 +1761,82 @@ public class GameMap {
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.SouthWest;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.West);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
-			
+		
 			opp = getOppositeHex(hex, direction);
+			/*
 			oppDir = direction.getOppositeDirection();
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
 				return true;
-			}
+			}*/
 			oppDir = EdgeDirection.NorthWest;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthWest);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			oppDir = EdgeDirection.NorthEast;
 			newLocation = new EdgeLocation(opp,oppDir);
 			road = new EdgeValue(owner, newLocation);
 			alreadyHasRoad = this.hasRoadPersonal(road);
 			if(alreadyHasRoad == true){
-				return true;
+				VertexLocation loc = new VertexLocation(opp,VertexDirection.NorthEast);
+				VertexObject settle = new VertexObject(owner,loc);
+				boolean check = hasMunicipality(loc);
+				if(check == false){
+					return true;
+				}
+				else{
+					check = hasSettlement(settle);
+				}
+				if(check==true){
+					return true;
+				}
 			}
 			/*
 			HexLocation oppositeHex = this.getOppositeHex(hex, direction);

@@ -56,7 +56,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			}
 		}
 	}
-	
+	/**
+	 * This method initializes the turn tracker controller to the players and colors 
+	 * @param model
+	 */
 	private void startInit(GameModel model){
 		//This should only happen once, at the beginning of the first
 		//round. Once this method is completed, the boolean is set up to true
@@ -66,19 +69,20 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			getView().initializePlayer(player.getPlayerIndex(), player.getName(), player.getColor());
 			
 		}
-		//Player player = model.getLocalPlayer(facade.getPlayerId());
-		//getView().initializePlayer(player.getPlayerIndex(), player.getName(), player.getColor());
 		
 		setUpDone = true;
 	}
 
+	/**
+	 * This method keeps the victory points, and awards (largest army and longest road) updated.
+	 * It runs every time there's an update on the server. 
+	 * @param model
+	 */
 	private void initFromModel(GameModel model) {
 		getView().setLocalPlayerColor(model.getLocalPlayer(facade.getPlayerId()).getColor());
 		
 		for(Player player : model.getPlayers()) {
-			//Player player = model.getLocalPlayer();
-			
-			
+
 			int playerIndex = player.getPlayerIndex();
 			int points = player.getVictoryPoints();
 			
@@ -97,10 +101,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			getView().updatePlayer(playerIndex, points, highlight, largestArmy, longestRoad);
 		
 		}
-			
-		
-		
-
 	}
 
 	@Override
@@ -111,6 +111,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			getView().updateGameState(currState.getGameStatePanelText(), currState.isGameStatePanelEnabled()); 
 		}
 		
+		//If statement is for initialization, and else for the constant update of the turn tracker.  
 		if(setUpDone == false) {
 			startInit(model);
 		}

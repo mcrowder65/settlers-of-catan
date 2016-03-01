@@ -67,7 +67,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().hideGiveOptions();
 		if(currState.getPlayerId() != -1)
 			getTradeOverlay().showGiveOptions(giveableResources);
-		//ResourceList resourceList = 
 	}
 
 	@Override
@@ -103,7 +102,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				getTradeOverlay().selectGiveOption(resource, 3);
 				ratio = 3;
 			}
-			
 		}//CHECK IF THEY HAVE A 3 TO 1 RATIO FIRST
 		for(Port i : playerPorts){
 			if(i.getResource().equals(resource)){
@@ -112,8 +110,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			}
 		}//NOW CHECK IF THEY HAVE A SPECIFIC RESOURCE SO THEN IT OVERWRITES THE 3 TO 1
 		getTradeOverlay().showGetOptions(types);
-		
-		
 		give = resource;
 	}
 

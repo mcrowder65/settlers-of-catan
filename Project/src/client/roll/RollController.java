@@ -46,11 +46,14 @@ public class RollController extends Controller implements IRollController,Observ
 	}
 
 	
-
+	/**
+	 * rolls the dice and sets the results in the view
+	 * 
+	 */
 	@Override
 	public void rollDice() {
-		int result = currState.rollNumber();
-		this.getResultView().setRollValue(result);
+		int result = currState.rollNumber(); //calls the current state which will call the facade to roll the number
+		this.getResultView().setRollValue(result); //sets the results in the modal
 		getResultView().showModal();
 	}
 

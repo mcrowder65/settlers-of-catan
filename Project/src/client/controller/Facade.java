@@ -73,7 +73,7 @@ public class Facade {
 		return game.getModel().getLocalPlayer(playerId).getColor();
 	}
 	/**
-	 * sets the temp to null
+	 * sets the tempModel to null
 	 */
 	public void NullifyTemp(){
 		this.tempModel = null;
@@ -96,6 +96,10 @@ public class Facade {
 	public DevCardList getDevCards(){
 		return game.getModel().getLocalPlayer(playerId).getOldDevCards();
 	}
+	/**
+	 * sets the local player id
+	 * @param playerId
+	 */
 	public void setPlayerId(int playerId){
 		this.playerId = playerId;
 	}
@@ -280,7 +284,13 @@ public class Facade {
 		return response.isSuccess();
 
 	}
-
+	/**
+	 * this method allows the user to play a roadBuilding card
+	 * @param spot1
+	 * @param spot2
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public boolean playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IllegalArgumentException{
 		GetModelResponse response = proxy.Road_Building(game.getModel().getLocalIndex(playerId),spot1, spot2);
 		return response.isSuccess();
@@ -307,6 +317,11 @@ public class Facade {
 		return response.isSuccess();
 	}
 
+	/**
+	 * THis method allows the user to play a monument card
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public boolean playMonument() throws IllegalArgumentException{
 		GetModelResponse response = proxy.Monument(game.getModel().getLocalIndex(playerId));
 		return response.isSuccess();
@@ -321,7 +336,6 @@ public class Facade {
 	public boolean placeRobber(int victimIndex, HexLocation location) throws IllegalArgumentException{
 		GetModelResponse response = proxy.robPlayer(game.getModel().getLocalIndex(playerId),victimIndex, location);
 		return response.isSuccess();
-
 	}
 
 	/**
@@ -349,7 +363,6 @@ public class Facade {
 		return response.isSuccess();
 
 	}
-	//*************************************************************************
 	//************************canDo's******************************************
 	/**
 	 * This method determines if the Player can discard cards

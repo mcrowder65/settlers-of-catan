@@ -165,6 +165,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelCreateNewGame() {
+		getNewGameView().setTitle("");
 		getNewGameView().closeModal();
 	}
 
@@ -190,6 +191,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 		else
 		   showCreateGameFail();
+       getNewGameView().setTitle("");
 	}
 	@Override
 	public void startJoinGame(GameInfo game) {
@@ -209,7 +211,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
-	
 		getJoinGameView().closeModal();
 	}
 

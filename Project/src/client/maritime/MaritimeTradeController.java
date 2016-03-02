@@ -62,8 +62,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 		getTradeOverlay().showModal();
 		ResourceType[] giveableResources = currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts());
-		if(giveableResources.length == 0)
-			getTradeOverlay().setTradeEnabled(false);
+		getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().hideGiveOptions();
 		if(currState.getPlayerId() != -1)
 			getTradeOverlay().showGiveOptions(giveableResources);
@@ -83,6 +82,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void cancelTrade() {
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().hideGiveOptions();
+		getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().closeModal();
 	}
 
@@ -90,6 +90,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 		getTradeOverlay().selectGetOption(resource, 1);
 		get = resource;
+		getTradeOverlay().setTradeEnabled(true);
 	}
 	private int ratio = 0;
 	@Override
@@ -111,17 +112,20 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		}//NOW CHECK IF THEY HAVE A SPECIFIC RESOURCE SO THEN IT OVERWRITES THE 3 TO 1
 		getTradeOverlay().showGetOptions(types);
 		give = resource;
+		
 	}
 
 	@Override
-	public void unsetGetValue() {		
+	public void unsetGetValue() {
 		getTradeOverlay().showGetOptions(types);
+		getTradeOverlay().setTradeEnabled(false);
 	}
 
 	@Override
 	public void unsetGiveValue() {
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().showGiveOptions(currState.getPlayerResources().getGiveableResources((ArrayList<Port>) currState.getPersonalPorts())); 
+		getTradeOverlay().setTradeEnabled(false);
 	}
 
 	@Override

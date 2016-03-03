@@ -10,6 +10,7 @@ import java.util.Random;
 import client.communication.IProxy;
 import client.data.GameInfo;
 import client.data.GameManager;
+import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import shared.communication.*;
 import shared.communication.response.*;
@@ -362,7 +363,45 @@ public class Facade {
 		return response.isSuccess();
 
 	}
+	public PlayerInfo[] getPlayers(int gameID){
+		PlayerInfo[] array = null;
+		ListGamesResponse response = proxy.listGames();
+		GameInfo[] games = response.getGames();
+		for(int i = 0; i < games.length; i++){
+			if(games[i].getId() == gameID){
+				array = new PlayerInfo[games[i].getPlayers().size()];
+				for(int x = 0; x < array.length; x++){
+					array[x] = games[i].getPlayers().get(x);
+				}
+			}
+		}
+		
+		return array;
+	}
 	//************************canDo's******************************************
+	/**
+	 * This method determines if the player can join the selected game
+	 * 
+	 */
+	public boolean canJoinGame(int gameID, CatanColor color){
+		if(gameID < 0) return false;
+		if(color == null) return false;
+		ListGamesResponse response = proxy.listGames();
+		GameInfo[] games = response.getGames();
+		for(int i = 0; i < games.length; i++){
+			GameInfo game = games[i];
+			List<PlayerInfo> players = game.getPlayers();
+			if(game.getId() == gameID){
+				for(int x = 0; x < players.size(); x++){
+					PlayerInfo player = players.get(x);
+					if(player.getColor().equals(color)){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 	/**
 	 * This method determines if the Player can discard cards
 	 * @param playerIndex

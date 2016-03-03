@@ -37,7 +37,6 @@ public interface IProxy {
 	 *  if successful
 	 */
 	public ListGamesResponse listGames();
-
 	/**
 	 * Creates a new game.
 	 * @param name
@@ -57,7 +56,6 @@ public interface IProxy {
 	 *  Returns the server's response.
 	 */
 	public Response joinGame(int id, CatanColor color)throws IllegalArgumentException ;
-
 	/**
 	 * Loads a game on the server. Used for testing purposes.
 	 * @param name

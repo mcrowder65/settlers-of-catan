@@ -203,10 +203,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		currentSelectedGameId = game.getId();
 		
 		
-		
+		PlayerInfo[] players = facade.getPlayers(currentSelectedGameId);
 		getSelectColorView().resetAll();
 		//Disable colors that are already in game (unless you're rejoining)
-		for (PlayerInfo p : game.getPlayers()) {
+		if(players == null){
+			System.out.println("ERROR HERE... ASK MATT TO FIX IT!");
+			return;
+		}
+		for (PlayerInfo p : players) {
 			if (p.getId() != player.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
@@ -221,8 +225,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-
-	  boolean success= 	facade.joinGame(currentSelectedGameId, color);
+		if(!facade.canJoinGame(currentSelectedGameId, color)){
+			showJoinGameFail();
+			return;
+		}
+	  boolean success = facade.joinGame(currentSelectedGameId, color);
 	  synchronized(listGameLock) {	
 		// If join succeeded
 		  if (success) {

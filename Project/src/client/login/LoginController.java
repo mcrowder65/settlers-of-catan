@@ -113,7 +113,7 @@ public class LoginController extends Controller implements ILoginController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		if(!encoded.equals(password)){
+		if(!encoded.equals(username)){
 			showRegisterFail();
 			return;
 		}

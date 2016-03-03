@@ -107,7 +107,10 @@ public class LoginController extends Controller implements ILoginController {
 		//gets the username and password from the view
 		String username = getLoginView().getRegisterUsername();
 		String password = getLoginView().getRegisterPassword();
-		
+		if(!password.equals(getLoginView().getRegisterPasswordRepeat())){
+			showRegisterFail();
+			return;
+		}
 		//sends the username and password to the facade which then goes to the server
 		boolean success = false;
 	    success = facade.register(username,password);

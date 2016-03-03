@@ -20,7 +20,6 @@ import shared.definitions.*;
  *
  */
 public class Facade {
-
 	private GameManager game;
 	private GameModel tempModel = null; //holds a local model - used for roadbuilding card
 	private IProxy proxy;
@@ -906,5 +905,12 @@ public class Facade {
 		}
 		return game.getModel().getLocalPlayer(playerId).canBuildCity(); //checks to see if the player has the necessary resources
 	}
+	private boolean mapSet = false;
 
+	public boolean isMapSet() {
+		return mapSet;
+	}
+	public void setMapSet(boolean mapSet) {
+		this.mapSet = mapSet;
+	}
 }

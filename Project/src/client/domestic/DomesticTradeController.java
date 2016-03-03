@@ -15,6 +15,7 @@ import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.gamestate.PlayingState;
 import client.misc.*;
+import client.utils.DataUtils;
 
 
 /**
@@ -399,6 +400,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	@Override
 	public void update(Observable o, Object arg) {
+		if(!facade.isMapSet())
+			return;
 		GameModel gameModel = (GameModel)arg;
 		currState = currState.identifyState(gameModel.getTurnTracker());
 		

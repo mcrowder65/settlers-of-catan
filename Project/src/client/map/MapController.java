@@ -26,12 +26,12 @@ public class MapController extends Controller implements IMapController, Observe
 	private int roadBuildingPassNum = -1;
 	private EdgeLocation roadBuildingFirstPassLocation = null;
 	private boolean disableUpdates = false;
-	
+	private Facade facade;
 
 	public MapController(IMapView view, IRobView robView,IRollResultView rollResultView, Facade facade) {
 
 		super(view);
-
+		this.facade = facade;
 		setRobView(robView);
 
 		this.rollResultView = rollResultView;
@@ -263,6 +263,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	public void initMap(GameMap map){
 		firstTime = false;
+		facade.setMapSet(true);
 		placeHexes(map.getHexes());
 		placeWater();
 		placePorts(map.getPorts());
@@ -383,7 +384,6 @@ public class MapController extends Controller implements IMapController, Observe
 		synchronized(DataUtils.modelLock) {
 			model = currState.fetchModel();
 		}
-		
 		currState = currState.identifyState(model.getTurnTracker());
 		if (currState instanceof FirstRoundState ||
 		    currState instanceof SecondRoundState) {

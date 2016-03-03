@@ -171,6 +171,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
+		if(getNewGameView().getTitle().equals("")){
+			showCreateGameFail("Game title cannot be empty");
+			return;
+		}
+			
        int gameId =	facade.createGame(
 			getNewGameView().getTitle(), 
 			getNewGameView().getRandomlyPlaceHexes(), 
@@ -190,7 +195,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 		}
 		else
-		   showCreateGameFail();
+		   showCreateGameFail("Create game failed.");
        getNewGameView().setTitle("");
 	}
 	@Override
@@ -232,9 +237,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	  }
 	
 	}
-	private void showCreateGameFail() {
+	private void showCreateGameFail(String error) {
 		messageView.setTitle("Error!");
-		messageView.setMessage("Create game failed.");
+		messageView.setMessage(error);
 		messageView.showModal();
 	}
 	private void showJoinGameFail() {

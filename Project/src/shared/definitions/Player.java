@@ -788,6 +788,12 @@ public class Player {
 		return false;
 	}
 	
+	public boolean hasDevCards() {
+		if(this.oldDevCards.isEmpty() && this.newDevCards.isEmpty()) {
+			return false;
+		}
+		else return true;
+	}
 	
 	@Override
 	public int hashCode() throws IllegalArgumentException{

@@ -107,6 +107,16 @@ public class LoginController extends Controller implements ILoginController {
 		//gets the username and password from the view
 		String username = getLoginView().getRegisterUsername();
 		String password = getLoginView().getRegisterPassword();
+		String encoded = null;
+		try {
+			encoded = URLEncoder.encode(username, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		if(!encoded.equals(username)){
+			showRegisterFail();
+			return;
+		}
 		if(!password.equals(getLoginView().getRegisterPasswordRepeat())){
 			showRegisterFail();
 			return;

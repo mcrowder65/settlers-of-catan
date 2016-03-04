@@ -172,32 +172,34 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		if(getNewGameView().getTitle().equals("")){
-			showCreateGameFail("Game title cannot be empty");
-			return;
-		}
-			
-       int gameId =	facade.createGame(
-			getNewGameView().getTitle(), 
-			getNewGameView().getRandomlyPlaceHexes(), 
-			getNewGameView().getRandomlyPlaceNumbers(), 
-			getNewGameView().getUseRandomPorts());
-       
-		
-       if (gameId > -1) {
-			getNewGameView().closeModal();
-			
-			//The color doesn't matter because we're going to re-join and pick a new one anyway
-			facade.joinGame(gameId, CatanColor.red);
-			
-			synchronized(listGameLock) {
-				GameInfo[] info = facade.listGames();
-				updateGames(info);
+		synchronized(listGameLock) {
+			if(getNewGameView().getTitle().equals("")){
+				showCreateGameFail("Game title cannot be empty");
+				return;
 			}
-		}
-		else
-		   showCreateGameFail("Create game failed.");
-       getNewGameView().setTitle("");
+				
+	       int gameId =	facade.createGame(
+				getNewGameView().getTitle(), 
+				getNewGameView().getRandomlyPlaceHexes(), 
+				getNewGameView().getRandomlyPlaceNumbers(), 
+				getNewGameView().getUseRandomPorts());
+	       
+			
+	       if (gameId > -1) {
+				getNewGameView().closeModal();
+				
+				//The color doesn't matter because we're going to re-join and pick a new one anyway
+				facade.joinGame(gameId, CatanColor.red);
+				
+				
+					GameInfo[] info = facade.listGames();
+					updateGames(info);
+				
+			}
+			else
+			   showCreateGameFail("Create game failed.");
+	       getNewGameView().setTitle("");
+       }
 	}
 	@Override
 	public void startJoinGame(GameInfo game) {
@@ -230,8 +232,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			showJoinGameFail("That color was likely already chosen.");
 			return;
 		}
-	  boolean success = facade.joinGame(currentSelectedGameId, color);
-	  synchronized(listGameLock) {	
+		synchronized(listGameLock) {	
+	       boolean success = facade.joinGame(currentSelectedGameId, color);
+	  
 		// If join succeeded
 		  if (success) {
 			getSelectColorView().closeModal();

@@ -386,7 +386,7 @@ public class Facade {
 	 * This method determines if the player can join the selected game
 	 * 
 	 */
-	public boolean canJoinGame(int gameID, CatanColor color){
+	public boolean canJoinGame(int gameID, CatanColor color, int playerID){
 		if(gameID < 0) return false;
 		if(color == null) return false;
 		ListGamesResponse response = proxy.listGames();
@@ -397,7 +397,7 @@ public class Facade {
 			if(game.getId() == gameID){
 				for(int x = 0; x < players.size(); x++){
 					PlayerInfo player = players.get(x);
-					if(player.getColor().equals(color)){
+					if(player.getColor().equals(color) && playerID != player.getId()){
 						return false;
 					}
 				}

@@ -226,7 +226,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		if(!facade.canJoinGame(currentSelectedGameId, color)){
+		if(!facade.canJoinGame(currentSelectedGameId, color, player.getId())){
 			showJoinGameFail("That color was likely already chosen.");
 			return;
 		}

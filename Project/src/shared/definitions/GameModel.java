@@ -208,6 +208,30 @@ public class GameModel {
 		}
 		return -1;
 	}
+	public int getNumRoadsForPlayer(int playerIndex) {
+		int count = 0;
+		for (EdgeValue o : map.getRoads()) {
+			if (o.getOwner() == playerIndex)
+				count++;
+		}
+		return count;
+	}
+	public int getNumSettlementsForPlayer(int playerIndex) {
+		int count = 0;
+		for (VertexObject o : map.getSettlements()) {
+			if (o.getOwner() == playerIndex)
+				count++;
+		}
+		return count;
+	}
+	public int getNumCitiesForPlayer(int playerIndex) {
+		int count = 0;
+		for (VertexObject o : map.getCities()) {
+			if (o.getOwner() == playerIndex)
+				count++;
+		}
+		return count;
+	}
 	
 
 	

@@ -430,6 +430,24 @@ public abstract class GameState {
 	}
 	
 	/**
+	 * gets a player's current roads
+	 */
+	public int getPlayerRoads() {
+		return facade.getPlayerRoads();
+	}
+	/**
+	 * gets a player's current roads
+	 */
+	public int getPlayerSettlements() {
+		return facade.getPlayerSettlements();
+	}
+	/**
+	 * gets a player's current roads
+	 */
+	public int getPlayerCities() {
+		return facade.getPlayerCities();
+	}
+	/**
 	 * method is overridden in the subclasses
 	 * @return
 	 */

@@ -955,4 +955,13 @@ public class Facade {
 	public void setMapSet(boolean mapSet) {
 		this.mapSet = mapSet;
 	}
+	public int getPlayerRoads() {
+		return game.getModel().getNumRoadsForPlayer(getPlayerIndex());
+	}
+	public int getPlayerSettlements() {
+		return game.getModel().getNumSettlementsForPlayer(getPlayerIndex());
+	}
+	public int getPlayerCities() {
+		return game.getModel().getNumCitiesForPlayer(getPlayerIndex());
+	}
 }

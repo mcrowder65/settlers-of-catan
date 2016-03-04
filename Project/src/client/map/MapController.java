@@ -388,7 +388,10 @@ public class MapController extends Controller implements IMapController, Observe
 		if (currState instanceof FirstRoundState ||
 		    currState instanceof SecondRoundState) {
 				
-				getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+				if (currState.getPlayerRoads() == currState.getPlayerSettlements())
+					getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+				else
+					getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);
 				
 			}
 		

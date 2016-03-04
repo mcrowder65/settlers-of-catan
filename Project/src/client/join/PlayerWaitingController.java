@@ -20,7 +20,6 @@ import shared.definitions.GameModel;
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
 
 	private Facade facade;
-	private PlayerInfo[] players = new PlayerInfo[4];
 	private IAction allPlayersEnteredAction;
 	private int localCount = 0;
 	
@@ -82,6 +81,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			
 			if (playersLite.length != localCount) {
 				localCount = playersLite.length;
+				
 				getView().closeModal();
 				getView().setPlayers(playersLite);
 				getView().showModal();

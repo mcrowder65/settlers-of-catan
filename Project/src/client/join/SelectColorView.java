@@ -329,7 +329,15 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	@Override
 	public void setColorEnabled(CatanColor color, boolean enable) {
 
+	
 		getButtonForColor(color).setEnabled(enable);
+		if (enable) {
+			getButtonForColor(color).setBackground(color.getJavaColor());
+			getButtonForColor(color).setForeground(Color.black);
+		} else {
+			getButtonForColor(color).setBackground(Color.LIGHT_GRAY);
+			getButtonForColor(color).setForeground(Color.white);
+		}
 	}
 
 	@Override
@@ -393,6 +401,6 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 			return null;
 		}
 	}
-	
+
 }
 

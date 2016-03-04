@@ -9,6 +9,7 @@ import client.data.GameManager;
 import client.gamestate.GameState;
 import client.gamestate.IsNotTurnState;
 import client.gamestate.RollingState;
+import client.utils.DataUtils;
 import shared.definitions.GameModel;
 
 
@@ -19,6 +20,7 @@ public class RollController extends Controller implements IRollController,Observ
 
 	private IRollResultView resultView;
 	private GameState currState;
+	private int count = 0;
 	/**
 	 * RollController constructor
 	 * 
@@ -55,6 +57,7 @@ public class RollController extends Controller implements IRollController,Observ
 		int result = currState.rollNumber(); //calls the current state which will call the facade to roll the number
 		this.getResultView().setRollValue(result); //sets the results in the modal
 		getResultView().showModal();
+		count = 0;
 	}
 
 	@Override
@@ -66,6 +69,17 @@ public class RollController extends Controller implements IRollController,Observ
 	
 			getRollView().showModal();
 		}
+		else if((currState instanceof RollingState) && getRollView().isModalShowing()){
+			count++;
+			if(count >=4){
+				synchronized(DataUtils.modelLock) {
+					getRollView().closeModal();
+					rollDice();
+				}
+				
+			}
+		}
+	
 
 	}
 

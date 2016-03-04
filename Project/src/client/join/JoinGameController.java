@@ -227,7 +227,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
 		if(!facade.canJoinGame(currentSelectedGameId, color)){
-			showJoinGameFail();
+			showJoinGameFail("That color was likely already chosen.");
 			return;
 		}
 	  boolean success = facade.joinGame(currentSelectedGameId, color);
@@ -240,18 +240,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			timer.cancel();
 			facade.startPoller();
 			joinAction.execute();
-			/*if(facade.fetchModel().getWinner() != -1){
-				try {
-					TimeUnit.SECONDS.sleep(15);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}*/
-			
-		  } 
-		  else 
-			  showJoinGameFail();
+		  } else 
+			  showJoinGameFail("Join game failed.");
 	  }
 	
 	}
@@ -260,9 +250,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		messageView.setMessage(error);
 		messageView.showModal();
 	}
-	private void showJoinGameFail() {
+	private void showJoinGameFail(String error) {
+		getJoinGameView().closeModal();
 		messageView.setTitle("Error!");
-		messageView.setMessage("Join game failed.");
+		messageView.setMessage(error);
 		messageView.showModal();
 	}
 	private boolean isGamesDifferent(GameInfo[] newGames) {

@@ -63,8 +63,11 @@ public class PointsController extends Controller implements IPointsController, O
 		if(winner == facade.getPlayerId()) isLocalPlayer = true;
 		
 		finishedView.setWinner(name, isLocalPlayer);
-		facade.stopPoller();
-		finishedView.showModal();
+		//facade.stopPoller();
+		if(!finishedView.isModalShowing()){
+			finishedView.showModal();
+		}
+		
 	}
 
 	@Override

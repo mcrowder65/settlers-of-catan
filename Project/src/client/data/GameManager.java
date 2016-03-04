@@ -64,6 +64,10 @@ public class GameManager extends Observable implements Observer{
 		this.model = model;
 	}
 	
+	public void updates(){
+		this.notifyObservers(model);
+	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {

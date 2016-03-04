@@ -29,5 +29,7 @@ public interface ISelectColorView extends IOverlayView
 	CatanColor getSelectedColor();
 
 	void resetAll();
+
+	
 }
 

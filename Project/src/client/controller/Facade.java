@@ -56,6 +56,9 @@ public class Facade {
 	public Facade (GameManager gameMan) {
 		this.game = gameMan;
 	}
+	public void updateNotify(){
+		game.updates();
+	}
 	/**
 	 * sets up the temporary model
 	 */

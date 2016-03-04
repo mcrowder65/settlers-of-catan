@@ -5,6 +5,7 @@ import shared.definitions.CatanColor;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import client.base.*;
 import client.communication.HTTPProxy;
@@ -239,7 +240,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			timer.cancel();
 			facade.startPoller();
 			joinAction.execute();
-		  } else 
+			/*if(facade.fetchModel().getWinner() != -1){
+				try {
+					TimeUnit.SECONDS.sleep(15);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}*/
+			
+		  } 
+		  else 
 			  showJoinGameFail();
 	  }
 	

@@ -160,7 +160,6 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().close();
 		
 		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
-		Map<String, List<String>> mymap = conn.getHeaderFields();
 		
 		String result = null;
 		 if (conn.getResponseCode() < 400) {

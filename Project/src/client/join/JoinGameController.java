@@ -57,8 +57,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 	/**
 	 * uses the poller to update the game info on the join screen
-	 * @author Brennen
-	 *
 	 */
 	class PollingTask extends TimerTask {
 		@Override
@@ -210,7 +208,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().resetAll();
 		//Disable colors that are already in game (unless you're rejoining)
 		if(players == null){
-			System.out.println("ERROR HERE... ASK MATT TO FIX IT!");
 			return;
 		}
 		for (PlayerInfo p : players) {

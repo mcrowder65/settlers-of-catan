@@ -37,7 +37,7 @@ public abstract class GameState {
 	}
 	
 	/**
-	 * sets and returns the proper gameState as indicated by thye turnTracker
+	 * sets and returns the proper gameState as indicated by the turnTracker
 	 * @param turnTracker
 	 * @return
 	 */

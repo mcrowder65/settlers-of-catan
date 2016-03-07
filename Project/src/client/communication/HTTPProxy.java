@@ -305,8 +305,6 @@ public class HTTPProxy implements IProxy{
 	public GetModelResponse executeCommands(List<String> commands) throws IllegalArgumentException {
 		return null;
 	}
-//	SendChatCommand command = new SendChatCommand(playerIndex, content);
-//	return sendCommand(command);
 	@Override
 	public GetModelResponse rollNumber(int playerIndex, int number) throws IllegalArgumentException {
 		RollNumberCommand command = new RollNumberCommand(playerIndex, number);

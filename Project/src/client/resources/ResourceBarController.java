@@ -137,7 +137,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg) {
 		GameModel model = (GameModel)arg;
-		String state = model.getTurnTracker().getStatus();
 		TurnTracker turn = model.getTurnTracker();
 		this.currState = currState.identifyState(turn);
 		

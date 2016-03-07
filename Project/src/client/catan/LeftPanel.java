@@ -53,7 +53,6 @@ public class LeftPanel extends JPanel {
 		turnController = new TurnTrackerController(turnView, facade);
 		turnView.setController(turnController);
 		
-//		gameStatePanel.setController(turnController);
 		
 		tabPane.add("Game History", historyView);
 		tabPane.add("Chat Messages", chatView);

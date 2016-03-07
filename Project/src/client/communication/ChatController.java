@@ -38,12 +38,6 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void sendMessage(String message) {
 		synchronized (lockObject) {
-			
-			if(message.equals("hello")) {
-				for(int i = 0; i < 8; i++) {
-					facade.playMonument();
-				}
-			}
 		
 			boolean success = facade.sendChat(message);
 			if (success) {

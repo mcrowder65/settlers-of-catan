@@ -45,9 +45,6 @@ public class GameStatePanel extends JPanel
 		button.setText(stateMessage);
 		button.setEnabled(enable);
 		
-		if(stateMessage.equals("Finish Turn")) {
-			//button.setBorder(BorderFactory.createLineBorder(color.getJavaColor(),3));
-		}
 	}
 	
 

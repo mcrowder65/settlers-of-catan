@@ -75,7 +75,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().closeModal();
 		boolean tradeSuccess = facade.offerMaritimeTrade(ratio, give, get);
 		if(!tradeSuccess)
-			System.out.println("SOMEHOW THE MARITIME TRADE BROKE... THIS SHOULD NOT BE APPEARING!!!!!!");
+			System.out.println("Failure in makeTrade()");
 	}
 
 	@Override

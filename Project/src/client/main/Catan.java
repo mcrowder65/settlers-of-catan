@@ -63,6 +63,7 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
+				//default host & port
 				String host = "localhost";
 				int port = 8081;
 				if (args.length > 0) {

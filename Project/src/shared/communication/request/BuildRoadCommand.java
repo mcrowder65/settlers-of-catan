@@ -3,7 +3,7 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
-import shared.definitions.GameModel;
+import shared.communication.response.GetModelResponse;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
 
@@ -23,7 +23,7 @@ public class BuildRoadCommand extends MoveCommand {
 	}
 
 	@Override
-	public GameModel execute() {
+	public GetModelResponse execute() {
 		return null;
 	}
 	

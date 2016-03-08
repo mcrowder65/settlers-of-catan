@@ -2,7 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import shared.definitions.GameModel;
+import shared.communication.response.GetModelResponse;
 
 public class MonumentCommand extends MoveCommand {
 
@@ -17,7 +17,7 @@ public class MonumentCommand extends MoveCommand {
 	}
 
 	@Override
-	public GameModel execute() {
+	public GetModelResponse execute() {
 		return null;
 	}
 

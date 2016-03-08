@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 
 import server.facade.IMovesFacade;
+import shared.communication.response.GetModelResponse;
 
 public class AcceptTradeHandler implements HttpHandler {
 
@@ -19,8 +20,8 @@ public class AcceptTradeHandler implements HttpHandler {
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		facade.acceptTrade(exchange);
-
+		GetModelResponse response = facade.acceptTrade(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 
 }

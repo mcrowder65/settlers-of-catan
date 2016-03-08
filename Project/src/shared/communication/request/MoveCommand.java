@@ -2,7 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import shared.definitions.GameModel;
+import shared.communication.response.GetModelResponse;
 
 public abstract class MoveCommand extends Request {
 
@@ -19,7 +19,7 @@ public abstract class MoveCommand extends Request {
 		
 	}
 	
-	public abstract GameModel execute();
+	public abstract GetModelResponse execute();
 
 	public String getMoveType() {
 		return type;

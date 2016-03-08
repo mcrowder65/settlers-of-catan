@@ -20,7 +20,7 @@ public class AddAIHandler implements HttpHandler {
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		
+		facade.addAi(exchange);
 	}
 
 }

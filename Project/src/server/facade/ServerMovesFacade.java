@@ -2,6 +2,7 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import shared.communication.request.AcceptTradeCommand;
 import shared.communication.response.GetModelResponse;
 
 public class ServerMovesFacade implements IMovesFacade {
@@ -44,8 +45,8 @@ public class ServerMovesFacade implements IMovesFacade {
 
 	@Override
 	public GetModelResponse acceptTrade(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		AcceptTradeCommand command = new AcceptTradeCommand(exchange);
+		return command.execute();
 	}
 
 	@Override

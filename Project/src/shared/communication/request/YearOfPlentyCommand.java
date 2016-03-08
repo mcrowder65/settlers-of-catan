@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
@@ -21,6 +24,16 @@ public class YearOfPlentyCommand extends MoveCommand {
 		this.resource1 = MirrorResourceType.getResource(resource1);
 		this.resource2 = MirrorResourceType.getResource(resource2);
 		this.type = "Year_of_Plenty";
+	}
+	
+	public YearOfPlentyCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 	public ResourceType getResource1() {

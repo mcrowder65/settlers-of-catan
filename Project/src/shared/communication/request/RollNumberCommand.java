@@ -1,5 +1,9 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
+
 public class RollNumberCommand extends MoveCommand {
 
 	private int number;
@@ -9,6 +13,16 @@ public class RollNumberCommand extends MoveCommand {
 			throw new IllegalArgumentException("number must be between 2 - 12");
 		this.number = number;
 		type = "rollNumber";
+	}
+	
+	public RollNumberCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 	public int getNumber() {

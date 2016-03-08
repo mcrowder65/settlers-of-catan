@@ -1,6 +1,9 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import client.utils.Translator;
+import shared.definitions.GameModel;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
 
@@ -14,6 +17,16 @@ public class BuildRoadCommand extends MoveCommand {
 		this.roadLocation = new MirrorEdgeLocation(roadLocation);
 		this.type = "buildRoad";
 	}
+	public BuildRoadCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
+	}
+	
 	public boolean isFree() {
 		return free;
 	}

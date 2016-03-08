@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
@@ -23,6 +26,16 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.inputResource = MirrorResourceType.getResource(input);
 		this.outputResource = MirrorResourceType.getResource(output);
 		this.type = "maritimeTrade";
+	}
+	
+	public MaritimeTradeCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 

@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.definitions.ResourceList;
 
 public class DiscardCardsCommand extends MoveCommand {
@@ -10,7 +13,15 @@ public class DiscardCardsCommand extends MoveCommand {
 		this.discardedCards = discardedCards;
 		this.type = "discardCards";
 	}
+	public DiscardCardsCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
 
+	@Override
+	public GameModel execute() {
+		return null;
+	}
 
 	ResourceList discardedCards;
 	

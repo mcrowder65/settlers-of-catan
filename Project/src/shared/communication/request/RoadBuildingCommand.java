@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
 
@@ -28,5 +31,15 @@ public class RoadBuildingCommand extends MoveCommand {
 		this.type = "Road_Building";
 	}
 
+	
+	public RoadBuildingCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
+	}
 
 }

@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
@@ -16,6 +19,16 @@ public class MonopolyCommand extends MoveCommand {
 		this.type = "Monopoly";
 	}
 
+	public MonopolyCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
+	}
+	
 	public ResourceType getResource() {
 		return MirrorResourceType.getOriginal(resource);
 	}

@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
@@ -13,6 +16,16 @@ public class BuildCityCommand extends MoveCommand {
 
 		this.vertexLocation = new MirrorVertexLocation(vertexLocation);
 		this.type = "buildCity";
+	}
+	
+	public BuildCityCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 

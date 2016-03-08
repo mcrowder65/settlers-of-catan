@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.definitions.ResourceList;
 
 public class OfferTradeCommand extends MoveCommand {
@@ -24,6 +27,16 @@ public class OfferTradeCommand extends MoveCommand {
 		this.receiver = receiver;
 		this.offer = offer;
 		this.type = "offerTrade";
+	}
+	
+	public OfferTradeCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 }

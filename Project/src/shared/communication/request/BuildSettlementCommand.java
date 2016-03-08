@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 
@@ -22,7 +25,15 @@ public class BuildSettlementCommand extends MoveCommand {
 		
 		this.type = "buildSettlement";
 	}
+	public BuildSettlementCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
 
+	@Override
+	public GameModel execute() {
+		return null;
+	}
 
 	public boolean isFree() {
 		return free;

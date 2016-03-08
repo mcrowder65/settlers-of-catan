@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.locations.HexLocation;
 
 public class SoldierCommand extends MoveCommand {
@@ -16,6 +19,16 @@ public class SoldierCommand extends MoveCommand {
 		this.location = location;
 		this.victimIndex = victimIndex;
 		this.type = "Soldier";
+	}
+	
+	public SoldierCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
 	}
 
 	public HexLocation getLocation() {

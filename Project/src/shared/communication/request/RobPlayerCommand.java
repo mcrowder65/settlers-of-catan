@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
@@ -19,6 +22,16 @@ public class RobPlayerCommand extends MoveCommand {
 		this.type = "robPlayer";
 	}
 
+	public RobPlayerCommand(HttpExchange exchange) {
+		super(exchange);
+		
+	}
+
+	@Override
+	public GameModel execute() {
+		return null;
+	}
+	
 	public HexLocation getLocation() {
 		return location;
 	}

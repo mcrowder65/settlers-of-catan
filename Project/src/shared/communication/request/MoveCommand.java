@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import shared.definitions.GameModel;
 
 public abstract class MoveCommand extends Request {
 
@@ -12,6 +15,12 @@ public abstract class MoveCommand extends Request {
 		this.playerIndex = playerIndex;
 	}
 	
+	protected MoveCommand(HttpExchange exchange) {
+		
+	}
+	
+	public abstract GameModel execute();
+
 	public String getMoveType() {
 		return type;
 	}

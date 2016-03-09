@@ -4,6 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
+/**
+ * This class executes the Discard Cards command
+ * @author Manuel
+ *
+ */
 
 public class DiscardCardsCommand extends MoveCommand {
 	public DiscardCardsCommand(int playerIndex, ResourceList discardedCards) throws IllegalArgumentException {
@@ -18,6 +23,9 @@ public class DiscardCardsCommand extends MoveCommand {
 		
 	}
 
+	/**
+	 * Executes the logic for the discard cards command
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

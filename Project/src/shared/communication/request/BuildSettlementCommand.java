@@ -5,9 +5,15 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
+/**
+ * This class executes the build settlement command
+ * @author Manuel
+ *
+ */
 
 public class BuildSettlementCommand extends MoveCommand {
 
+	
 	
 	boolean free;
 	MirrorVertexLocation vertexLocation;
@@ -30,6 +36,9 @@ public class BuildSettlementCommand extends MoveCommand {
 		
 	}
 
+	/**
+	 * Executes the logic for the build settlement command
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

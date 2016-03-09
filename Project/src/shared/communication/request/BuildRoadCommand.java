@@ -7,6 +7,12 @@ import shared.communication.response.GetModelResponse;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
 
+/**
+ * This class executes the build road command
+ * @author Manuel
+ *
+ */
+
 public class BuildRoadCommand extends MoveCommand {
 
 	public BuildRoadCommand(int playerIndex, boolean free, EdgeLocation roadLocation) throws IllegalArgumentException {
@@ -22,6 +28,9 @@ public class BuildRoadCommand extends MoveCommand {
 		
 	}
 
+	/**
+	 * Executes the logic for the build road command
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

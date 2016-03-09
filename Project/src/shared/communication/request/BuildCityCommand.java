@@ -7,6 +7,12 @@ import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 
+/**
+ * This class executes the build city command
+ * @author Manuel
+ *
+ */
+
 public class BuildCityCommand extends MoveCommand {
 	
 	public BuildCityCommand(int playerIndex, VertexLocation vertexLocation) throws IllegalArgumentException {
@@ -23,6 +29,9 @@ public class BuildCityCommand extends MoveCommand {
 		
 	}
 
+	/**
+	 * Executes the logic to process the build city command
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

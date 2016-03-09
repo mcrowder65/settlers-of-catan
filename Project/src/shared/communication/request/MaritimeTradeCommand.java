@@ -5,13 +5,23 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
-
+/**
+ * Maritime trade command, extends MoveCommand
+ * @author mcrowder65
+ */
 public class MaritimeTradeCommand extends MoveCommand {
 
 	int ratio;
 	MirrorResourceType inputResource;
 	MirrorResourceType outputResource;
-	
+	/**
+	 * Constructor
+	 * @param playerIndex index of player
+	 * @param ratio ratio of resource
+	 * @param input going in
+	 * @param output going out
+	 * @throws IllegalArgumentException
+	 */
 	public MaritimeTradeCommand(int playerIndex, int ratio, ResourceType input, ResourceType output)
 			throws IllegalArgumentException {
 		super(playerIndex);
@@ -32,7 +42,9 @@ public class MaritimeTradeCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * This executes the MaritimeTrade.
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

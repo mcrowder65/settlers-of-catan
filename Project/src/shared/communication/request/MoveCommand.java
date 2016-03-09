@@ -3,7 +3,11 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
-
+/**
+ * This executes a move, extends request. Abunch of other
+ * classes extend this abstract class.
+ * @author mcrowder65
+ */
 public abstract class MoveCommand extends Request {
 
 	private int playerIndex;
@@ -18,6 +22,7 @@ public abstract class MoveCommand extends Request {
 	protected MoveCommand(HttpExchange exchange) {
 		
 	}
+	
 	
 	public abstract GetModelResponse execute();
 

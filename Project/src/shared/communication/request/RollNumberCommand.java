@@ -3,7 +3,11 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
-
+/**
+ * This is the class the executes a roll number.
+ * @author mcrowder65
+ *
+ */
 public class RollNumberCommand extends MoveCommand {
 
 	private int number;
@@ -19,7 +23,9 @@ public class RollNumberCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * The function which executes rolling a number
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

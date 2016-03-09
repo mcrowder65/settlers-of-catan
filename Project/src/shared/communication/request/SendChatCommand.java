@@ -3,7 +3,11 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
-
+/**
+ * This sends a chat, extends MoveCommand
+ * @author mcrowder65
+ *
+ */
 public class SendChatCommand extends MoveCommand {
 
 	private String content;
@@ -18,7 +22,9 @@ public class SendChatCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * This executes the send chat command.
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

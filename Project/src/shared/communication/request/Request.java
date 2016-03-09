@@ -1,7 +1,11 @@
 package shared.communication.request;
 
 import client.utils.Translator;
-
+/**
+ * Request class.
+ * @author mcrowder65
+ *
+ */
 public abstract class Request {
 
 	@Override

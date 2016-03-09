@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import shared.communication.response.CreateGameResponse;
+
 public class CreateGameRequest extends Request {
 
 	String name;
@@ -13,5 +15,9 @@ public class CreateGameRequest extends Request {
 		this.randomNumbers = randomNumbers;
 		this.randomTiles = randomTiles;
 		this.randomPorts = randomPorts;
+	}
+	
+	public CreateGameResponse createGame() {
+		return new CreateGameResponse(0, null);
 	}
 }

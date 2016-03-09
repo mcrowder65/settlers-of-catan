@@ -4,7 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
 import shared.locations.HexLocation;
-
+/**
+ * This class executes the soldier moves. Extends MoveCommand
+ * @author mcrowder65
+ *
+ */
 public class SoldierCommand extends MoveCommand {
 
 	private HexLocation location;
@@ -25,7 +29,9 @@ public class SoldierCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * Executes the Soldier - returns a GetModelResponse
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

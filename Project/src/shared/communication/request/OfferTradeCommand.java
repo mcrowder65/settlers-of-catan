@@ -4,7 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
-
+/**
+ * This offers a trade, extends the MoveCommand class
+ * @author mcrowder65
+ *
+ */
 public class OfferTradeCommand extends MoveCommand {
 	
 	private int receiver;

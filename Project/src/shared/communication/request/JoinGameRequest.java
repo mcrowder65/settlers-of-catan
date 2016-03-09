@@ -1,5 +1,6 @@
 package shared.communication.request;
 
+import shared.communication.response.Response;
 import shared.definitions.CatanColor;
 
 public class JoinGameRequest extends Request {
@@ -10,5 +11,9 @@ public class JoinGameRequest extends Request {
 		this.id = id;
 		this.color = color;
 		
+	}
+	
+	public Response joinGame() {
+		return new Response();
 	}
 }

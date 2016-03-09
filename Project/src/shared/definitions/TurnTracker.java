@@ -27,12 +27,13 @@ public class TurnTracker {
 	/**
 	 * Constructor for TurnTracker
 	 * Sets all attributes
+	 * 
 	 * @param currentTurn
 	 * @param status
 	 * @param longestRoad
 	 * @param largestArmy
-	 * @throws IllegalArgumentException
-	 * Throws this exception if any arguments are invalid (currentTurn < 0 || > 3, status is not recognized, etc)
+	 * @throws IllegalArgumentException Throws this exception if any arguments are invalid (currentTurn < 0 || > 3, status is not recognized, etc)
+	 * 
 	 */
 	public TurnTracker(int currentTurn, String status, int longestRoad,
 			int largestArmy)  throws IllegalArgumentException {
@@ -103,7 +104,7 @@ public class TurnTracker {
 	 * sets the player who has the longestRoad
 	 * @param longestRoad
 	 * @throws IllegalArgumentException
-	 * Throws if the longestRoad value is invalid (i.e. < 0 || > 3)
+	 * Throws if the longestRoad value is invalid
 	 */
 	public void setLongestRoad(int longestRoad) throws IllegalArgumentException {
 		this.longestRoad = longestRoad;
@@ -113,7 +114,7 @@ public class TurnTracker {
 	 * Sets the player who has the largestArmy
 	 * @param largestArmy
 	 * @throws IllegalArgumentException
-	 * Throws if the largestArmy value is invalid (i.e. < 0 || > 3)
+	 * Throws if the largestArmy value is invalid
 	 */
 	public void setlargestArmy(int largestArmy) throws IllegalArgumentException  {
 		this.largestArmy = largestArmy;

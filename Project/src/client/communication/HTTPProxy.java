@@ -66,9 +66,9 @@ public class HTTPProxy implements IProxy{
 	 * The host name of the server.
 	 * @param port
 	 * The port to send HTTP requests on.
-	 * @throws IllegalArgumentException
-	 * Throws this exception if the server cannot be reached,
-	 * or playerIndex is invalid.
+	 * @throws IllegalArgumentException Throws this exception if the server cannot be reached, or playerIndex is invalid.
+	 * 
+	 * 
 	 */
 	public HTTPProxy(String host, int port) throws IllegalArgumentException {
 		if (port <= 0 || port > 65535) throw new IllegalArgumentException("port must be non-negative and less than 65535");

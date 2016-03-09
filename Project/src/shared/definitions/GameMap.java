@@ -681,7 +681,7 @@ public class GameMap {
 	/**
 	 * Determines if the player has a road built in a location
 	 * personalRaod contains the location where the road is to be built and the player index of the player that wants to build it
-	 * @param personalRoad
+	 * @param value
 	 * @return true or false
 	 */
 	public Boolean hasRoadPersonal(EdgeValue value) throws IllegalArgumentException {
@@ -3409,7 +3409,7 @@ public class GameMap {
 	}
 	/**
 	 * Adds a settlement to settlements 
-	 * @param settlementToBuild
+	 * @param location
 	 */
 	public boolean laySettlement(VertexObject location){
 		int x = location.getLocation().getHexLoc().getX(); 

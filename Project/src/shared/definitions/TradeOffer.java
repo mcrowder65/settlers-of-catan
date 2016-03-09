@@ -21,8 +21,8 @@ public class TradeOffer {
 	 * The index of the receiver
 	 * @param offer
 	 * The resources to trade
-	 * @throws IllegalArgumentException
-	 * Throws if the arguments are invalid (sender or receiver < 0 || > 3, offer is null)
+	 * @throws IllegalArgumentException Throws if the arguments are invalid (sender or receiver < 0 || > 3, offer is null)
+	 * 
 	 */
 	public TradeOffer(int sender, int receiver, ResourceList offer) throws IllegalArgumentException {
 		

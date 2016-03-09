@@ -20,7 +20,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 /**
- * The abstract class of states the player & game is in.
+ * The abstract class of states the player and game is in.
  * By default, all non-overrided can-dos return false and actions throw an error.
  *
  */
@@ -192,8 +192,8 @@ public abstract class GameState {
 	 * discards cards on server - overridden by subclasses
 	 * @param list
 	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IllegalStateException
+	 * @throws IllegalArgumentException description
+	 * @throws IllegalStateException description
 	 */
 	public boolean discardCards(ResourceList list) throws IllegalArgumentException, IllegalStateException{
 		throw new IllegalStateException(); //throws and exception if wrong state

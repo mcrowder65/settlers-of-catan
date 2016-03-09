@@ -73,9 +73,9 @@ public class Poller extends Observable {
 	 * @param interval
 	 * The periodic interval (in seconds)
 	 * that the poller will poll the proxy.
-	 * @throws IllegalArgumentException
-	 * Throws this exception if GameManager is null,
-	 * or interval is invalid (i.e. <= 0)
+	 * @throws IllegalArgumentException Throws this exception if GameManager is null, or interval is invalid (i.e. <= 0)
+	 * 
+	 * 
 	 */
 	public Poller(IProxy proxy, int interval) throws IllegalArgumentException {
 		setProxy(proxy);
@@ -102,8 +102,8 @@ public class Poller extends Observable {
 	 * Sets the new timer interval.
 	 * @param interval
 	 * The new interval (in seconds) which to poll at.
-	 * @throws IllegalArgumentException
-	 * Throws this error if interval is an invalid value (i.e. <= 0)
+	 * @throws IllegalArgumentException Throws this error if interval is an invalid value (i.e. <= 0)
+	 * 
 	 */
 	public void setInterval(int interval) throws IllegalArgumentException {
 			if (interval <= 0) throw new IllegalArgumentException("Interval cannot be less than or equal to 0");

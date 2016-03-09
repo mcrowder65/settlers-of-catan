@@ -407,7 +407,6 @@ public class Facade {
 	}
 	/**
 	 * This method determines if the Player can discard cards
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canDiscardCards() throws IllegalArgumentException{
@@ -619,7 +618,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the user can offer a trade
-	 * @param offer
 	 * @return True if the user can offer the trade
 	 */
 	public boolean canOfferTrade() throws IllegalArgumentException {
@@ -646,7 +644,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the user can offer a Maritime trade
-	 * @param offer
 	 * @return True if the user can offer the trade
 	 */
 	public boolean canMaritimeTrade() throws IllegalArgumentException {
@@ -685,7 +682,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the player can finish the turn
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canFinishTurn() throws IllegalArgumentException{
@@ -741,7 +737,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the player can use the Year of Plenty Dev Card
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canUseYearOfPlenty() throws IllegalArgumentException{
@@ -799,7 +794,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the player can use the Road Builder Dev card
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canUseRoadBuilder() throws IllegalArgumentException{
@@ -809,7 +803,6 @@ public class Facade {
 	}
 	/**
 	 * This method determines if the player can use the Soldier Dev card
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canUseSoldier() throws IllegalArgumentException{
@@ -820,7 +813,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the player can use the Monopoly Dev Card
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canUseMonopoly() throws IllegalArgumentException{
@@ -831,7 +823,6 @@ public class Facade {
 
 	/**
 	 * This method determines if the player can use the Monument Dev card
-	 * @param playerIndex
 	 * @return True if the player can
 	 */
 	public boolean canUseMonument() throws IllegalArgumentException{

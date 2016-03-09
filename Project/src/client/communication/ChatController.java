@@ -37,7 +37,7 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	/**
 	 * sends the message to the facade
-	 * @param String
+	 * @param message
 	 */
 	@Override
 	public void sendMessage(String message) {

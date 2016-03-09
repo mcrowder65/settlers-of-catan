@@ -5,7 +5,11 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
-
+/**
+ * This class is the Monopoly command. It extends MoveCommand
+ * @author mcrowder65
+ *
+ */
 public class MonopolyCommand extends MoveCommand {
 
 	MirrorResourceType resource;
@@ -23,7 +27,9 @@ public class MonopolyCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * this executes the Monopoly command. returns GetModelResponse
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

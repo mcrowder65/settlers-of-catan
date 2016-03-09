@@ -1,4 +1,7 @@
 package shared.communication.request;
+
+import shared.communication.response.Response;
+
 /**
  * This class requests a login, extends Request
  * @author baller
@@ -22,4 +25,7 @@ public class LoginRequest extends Request {
     	  
      }
    
+     public Response login() {
+    	 return new Response();
+     }
 }

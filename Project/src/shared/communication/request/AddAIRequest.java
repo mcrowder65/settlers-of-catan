@@ -1,5 +1,6 @@
 package shared.communication.request;
 
+import shared.communication.response.Response;
 import shared.definitions.AIType;
 
 public class AddAIRequest extends Request {
@@ -9,5 +10,9 @@ public class AddAIRequest extends Request {
 		if (AIType == null)
 			throw new IllegalArgumentException("aitype cannot be null");
 		this.AIType = AIType;
+	}
+	
+	public Response addAI() {
+		return new Response();
 	}
 }

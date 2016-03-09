@@ -5,7 +5,8 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 
 /**
- * This class executes the Buy Dev Card Command
+ * This class executes the Buy Dev Card Command,
+ * extends MoveCommand
  * @author Manuel
  *
  */

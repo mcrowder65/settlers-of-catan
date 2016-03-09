@@ -5,7 +5,8 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 
 /**
- * This class executes the accept trade command
+ * This class executes the accept trade command,
+ * extends MoveCommand
  * @author Manuel
  *
  */

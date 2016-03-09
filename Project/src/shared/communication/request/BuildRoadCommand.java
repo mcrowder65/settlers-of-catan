@@ -8,7 +8,8 @@ import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
 
 /**
- * This class executes the build road command
+ * This class executes the build road command,
+ * extends MoveCommand
  * @author Manuel
  *
  */

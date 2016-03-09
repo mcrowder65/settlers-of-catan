@@ -8,7 +8,8 @@ import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 
 /**
- * This class executes the build city command
+ * This class executes the build city command,
+ * extends MoveCommand
  * @author Manuel
  *
  */

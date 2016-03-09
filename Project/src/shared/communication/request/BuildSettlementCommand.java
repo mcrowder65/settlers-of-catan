@@ -6,7 +6,9 @@ import shared.communication.response.GetModelResponse;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
 /**
- * This class executes the build settlement command
+ * This class executes the build settlement command,
+ * extends MoveCommand
+ * 
  * @author Manuel
  *
  */

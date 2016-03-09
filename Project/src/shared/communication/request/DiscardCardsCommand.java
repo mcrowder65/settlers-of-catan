@@ -5,7 +5,8 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
 /**
- * This class executes the Discard Cards command
+ * This class executes the Discard Cards command,
+ * extends MoveCommand
  * @author Manuel
  *
  */

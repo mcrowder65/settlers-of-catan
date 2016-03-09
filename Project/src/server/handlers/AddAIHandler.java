@@ -17,7 +17,7 @@ public class AddAIHandler implements HttpHandler {
 	IInnerGameFacade facade;
 	
 	/**
-	 * the specific handler function for adding AI's
+	 * Constructor
 	 * @param facade - IInnerGameFacade facade
 	 */
 	public AddAIHandler(IInnerGameFacade facade) {

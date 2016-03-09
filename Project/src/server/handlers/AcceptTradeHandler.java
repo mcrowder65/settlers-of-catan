@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import server.facade.IMovesFacade;
 import shared.communication.response.GetModelResponse;
 /**
- * This class is an accept trade handler. It handles accepting trades.
+ * accept trade handler. It handles accepting trades.
  * @author mcrowder65
  *
  */
@@ -17,7 +17,7 @@ public class AcceptTradeHandler implements HttpHandler {
 	IMovesFacade facade;
 	
 	/**
-	 * the specific handler for accepting trades.
+	 * Constructor
 	 * @param facade IMovesFacade type
 	 */
 	public AcceptTradeHandler(IMovesFacade facade) {

@@ -5,7 +5,11 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-
+/**
+ * This is the rob player command. Extends MoveCommand
+ * @author mcrowder65
+ *
+ */
 public class RobPlayerCommand extends MoveCommand {
 
 	HexLocation location;
@@ -26,7 +30,9 @@ public class RobPlayerCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * This executes the rob player.
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

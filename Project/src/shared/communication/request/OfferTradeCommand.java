@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
 /**
- * This 
+ * This offers a trade, extends the MoveCommand class
  * @author mcrowder65
  *
  */

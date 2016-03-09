@@ -5,7 +5,11 @@ import com.sun.net.httpserver.HttpExchange;
 import shared.communication.response.GetModelResponse;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
-
+/**
+ * Building a road command
+ * @author mcrowder65
+ *
+ */
 public class RoadBuildingCommand extends MoveCommand {
 
 	MirrorEdgeLocation spot1;
@@ -36,7 +40,9 @@ public class RoadBuildingCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * This executes the road building.  return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

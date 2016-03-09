@@ -6,6 +6,11 @@ import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
+/**
+ * This executes the year of plenty. Extends MoveCommand.
+ * @author mcrowder65
+ *
+ */
 public class YearOfPlentyCommand extends MoveCommand {
 
 	MirrorResourceType resource1;
@@ -30,7 +35,9 @@ public class YearOfPlentyCommand extends MoveCommand {
 		super(exchange);
 		
 	}
-
+	/**
+	 * Function that executes the year of plenty.
+	 */
 	@Override
 	public GetModelResponse execute() {
 		return null;

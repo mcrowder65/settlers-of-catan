@@ -4,6 +4,14 @@ import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;;
 
+/**
+ * Handles the requests from the server that have to do
+ * with the move commands.
+ * @author Manuel
+ *
+ */
+
+
 public interface IMovesFacade {
 
 	GetModelResponse sendChat(HttpExchange exchange);

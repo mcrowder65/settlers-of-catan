@@ -17,7 +17,7 @@ public class AcceptTradeHandler implements HttpHandler {
 	IMovesFacade facade;
 	
 	/**
-	 * the specific handler for accepting trades.
+	 * Constructor
 	 * @param facade IMovesFacade type
 	 */
 	public AcceptTradeHandler(IMovesFacade facade) {

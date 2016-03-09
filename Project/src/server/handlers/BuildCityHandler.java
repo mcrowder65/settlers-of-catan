@@ -16,7 +16,7 @@ public class BuildCityHandler implements HttpHandler {
 	IMovesFacade facade;
 	
 	/**
-	 * the specific handler for building cities.
+	 * Constructor
 	 * @param facade
 	 */
 	public BuildCityHandler(IMovesFacade facade) {

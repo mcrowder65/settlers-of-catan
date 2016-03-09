@@ -15,7 +15,7 @@ public class BuildRoadHandler implements HttpHandler {
 	IMovesFacade facade;
 	
 	/**
-	 * The specific handler for building roads.
+	 * Constructor
 	 * @param facade IMovesFacade type
 	 */
 	public BuildRoadHandler(IMovesFacade facade) {

@@ -312,7 +312,6 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	/**
 	* Resizes an image using a Graphics2D object backed by a BufferedImage.
-	* @param srcImg - source image to scale
 	* @param w - desired width
 	* @param h - desired height
 	* @return - the new resized image

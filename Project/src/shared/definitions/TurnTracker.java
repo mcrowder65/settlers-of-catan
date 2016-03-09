@@ -32,7 +32,7 @@ public class TurnTracker {
 	 * @param status
 	 * @param longestRoad
 	 * @param largestArmy
-	 * @throws IllegalArgumentException Throws this exception if any arguments are invalid (currentTurn < 0 || > 3, status is not recognized, etc)
+	 * @throws IllegalArgumentException
 	 * 
 	 */
 	public TurnTracker(int currentTurn, String status, int longestRoad,

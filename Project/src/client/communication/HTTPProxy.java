@@ -60,7 +60,6 @@ public class HTTPProxy implements IProxy{
 	
 	/**
 	 * Constructs a new instance of HTTPProxy.
-	 * @param playerIndex
 	 * The index of the player.
 	 * @param host
 	 * The host name of the server.

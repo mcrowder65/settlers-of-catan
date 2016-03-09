@@ -67,13 +67,12 @@ public class Poller extends Observable {
 	
 	/**
 	 * Creates a new Poller object.
-	 * @param game
 	 * The GameManager that will be used to 
 	 * access the proxy and update the model
 	 * @param interval
 	 * The periodic interval (in seconds)
 	 * that the poller will poll the proxy.
-	 * @throws IllegalArgumentException Throws this exception if GameManager is null, or interval is invalid (i.e. <= 0)
+	 * @throws IllegalArgumentException 
 	 * 
 	 * 
 	 */

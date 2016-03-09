@@ -34,7 +34,7 @@ public class DevCardList {
 	 * @param monopoly
 	 * @param monument
 	 * @param roadBuilding
-	 * @param solider
+	 * @param soldier
 	 * @param yearOfPlenty
 	 */
 	public DevCardList(int monopoly, int monument, int roadBuilding,

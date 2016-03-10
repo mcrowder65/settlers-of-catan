@@ -8,7 +8,8 @@ import shared.definitions.ResourceList;
 import shared.definitions.TradeOffer;
 import shared.locations.*;
 /**
- * class that holds all the attributes of a player
+ * class that holds all the attributes of a player for the server
+ * inherits from the Player
  * @author Brennen
  *
  */

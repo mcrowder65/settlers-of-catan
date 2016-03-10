@@ -49,7 +49,7 @@ public class ServerGameMap extends GameMap {
 		HexLocation location = loc.getHexLoc();
 		HexLocation oppositeHex = getOppositeHex(location,loc.getDir());
 		//checks to see if you are trying to build a road on water
-		if(isLand(location) == false || isLand(oppositeHex) == false){
+		if(isLand(location) == false && isLand(oppositeHex) == false){
 			return false;
 		}
 		//checks to see if there is already a road there
@@ -58,5 +58,83 @@ public class ServerGameMap extends GameMap {
 		}
 		return canLayRoadFirstRounds(road);
 	}
+	/**
+	 * checks to see if you can build a road during normal play - no roadbuilder card
+	 * @param index
+	 * @param loc
+	 * @return
+	 */
+	public boolean canBuildRoadNormal(int index, EdgeLocation loc){
+		EdgeValue road = new EdgeValue(index,loc);
+		HexLocation location = loc.getHexLoc();
+		HexLocation oppositeHex = getOppositeHex(location,loc.getDir());
+		//checks to see if you are trying to build a road on water
+		if(isLand(location) == false && isLand(oppositeHex) == false){
+			return false;
+		}
+		return canLayRoad(road);
+	}
+	
+	/**
+	 * checks to see if the player can lay two roads using his roadBuilder
+	 * @param index
+	 * @param loc1
+	 * @param loc2
+	 * @return
+	 */
+	public boolean canUseRoadBuilder(int index, EdgeLocation loc1, EdgeLocation loc2){
+		EdgeValue road = new EdgeValue(index,loc1);
+		EdgeValue road2 = new EdgeValue(index,loc2);
+		HexLocation location = loc1.getHexLoc();
+		HexLocation oppositeHex = getOppositeHex(location,loc1.getDir());
+		
+		//checking to make sure the first road is on land
+		if(isLand(location)==false && isLand(oppositeHex)==false){
+			return false;
+		}
+		
+		//checking to make sure the second road is on land
+		location = loc2.getHexLoc();
+		oppositeHex = getOppositeHex(location,loc2.getDir());
+		if(isLand(location)==false && isLand(oppositeHex)==false){
+			return false;
+		}
+		
+		//can lay first road
+		boolean canLayFirstRoad = canLayRoad(road);
+		if(canLayFirstRoad == false){
+			return false;
+		}
+		
+		//lay first road
+		buildRoad(road);
+		boolean canLaySecondRoad = canLayRoad(road2);
+		deleteRoad(loc1); //delete the fist road we built
+	
+		return canLaySecondRoad;
+	}
+	
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

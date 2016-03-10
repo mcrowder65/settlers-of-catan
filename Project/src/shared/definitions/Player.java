@@ -199,7 +199,7 @@ public class Player {
 	}
 
 	/**
-	 * retrieves wether or not the player used any dev cards
+	 * retrieves whether or not the player used any dev cards
 	 * @return playerDevCard
 	 */
 	public Boolean getPlayedDevCard() throws IllegalArgumentException{
@@ -400,6 +400,12 @@ public class Player {
 
 	public void removeSettlement() throws IllegalArgumentException{
 		settlements = settlements -1;
+	}
+	public void removeRoad() throws IllegalArgumentException{
+		roads = roads -1;
+	}
+	public void removeCity() throws IllegalArgumentException{
+		cities = cities -1;
 	}
 	
 	public int getNumOfCards(){
@@ -636,7 +642,7 @@ public class Player {
 	}
 	public void playRoadBuilderCard(){
 		int roadBuilder = oldDevCards.getRoadBuilding();
-		oldDevCards.setYearOfPlenty(roadBuilder--);
+		oldDevCards.setRoadBuilding(roadBuilder--);
 	}
 	
 	

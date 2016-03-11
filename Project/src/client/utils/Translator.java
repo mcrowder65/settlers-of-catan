@@ -195,22 +195,15 @@ public class Translator {
 		}	
 	}
 	
-	/**
-	 * This method takes in a cookie, and parses it to get the game id
-	 * @param String-cookie
-	 * @return The game id
-	 */
 	public static int getGameId(String cookie) {
 		
-		int index = cookie.lastIndexOf(".game=");
-		return Integer.parseInt(cookie.substring(index+6));
+		//StringBuilder sb = sb.substring("", "");
+		
+		
+		
+		return 0;//Integer.parseInt(sb.toString());
 	}
 	
-	/**
-	 * This method takes in a cookie, and parses it to get the player id
-	 * @param String- cookie
-	 * @return The player id
-	 */
 	public static int getPlayerId(String cookie) {
 		
 		try {

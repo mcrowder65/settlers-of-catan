@@ -59,16 +59,6 @@ public class ServerPlayer extends Player {
 		removeCity();
 	}
 	
-	public boolean resourcesToBuildRoad(){
-		int brick = getResources().getBrick();
-		int wood = getResources().getWood();
-		int roads = getRoads();
-		if(brick >0 && wood>0 && roads>0){
-			return true;
-		}
-		return false;
-	}
-	
 	public void addBrick(){
 		ResourceList allResources = getResources();
 		int brick = allResources.getBrick();

@@ -31,7 +31,7 @@ public class Game {
 		return _instance.arrayGames.size() - 1;
 	}
 	
-	public ServerGameModel getGameId(int index) {
+	public ServerGameModel getGameModel(int index) {
 		return _instance.arrayGames.get(index);
 	}
 	

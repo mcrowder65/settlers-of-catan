@@ -3,6 +3,11 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
+import server.Game;
+import server.util.ServerGameMap;
+import server.util.ServerGameModel;
+import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorEdgeLocation;
@@ -34,7 +39,51 @@ public class BuildRoadCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
+		
+		int playerIndex=0;
+		int playerId = 0;
+		int index =0;
+		
+		EdgeLocation loc = null;
+		Game game = Game.instance();
+		ServerGameModel model = game.getGameModel(index);
+		ServerGameMap map = model.getServerMap();
+		ServerTurnTracker turnTracker = model.getServerTurnTracker();
+		ServerPlayer player = model.getLocalServerPlayer(playerId);
+		
+		//making sure its the players turn
+		if(checkTurn(turnTracker,playerIndex) == false){
+			return null; //Need to throw some error here
+		}
+		
+		String status = turnTracker.getStatus();
+		//making sure its the right status
+		if(checkStatus(status) == false){
+			return null; //Need to throw some error here
+		}
+		
+		if(status.equals("FirstRound") || status.equals("SecondRound")){
+			map.canBuildRoadSetup(index,loc);
+		}
+		if(status.equals("Playing")){
+			boolean enoughResources = player.resourcesToBuildRoad();
+		}
+		
 		return null;
+	}
+	
+	public boolean checkTurn(ServerTurnTracker turnTracker, int playerIndex){
+		if(turnTracker.getCurrentTurn() == playerIndex){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkStatus(String status){
+		if (status.equals("Playing") || status.equals("FirstRound") || status.equals("SecondRound")){
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isFree() {

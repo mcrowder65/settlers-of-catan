@@ -195,6 +195,11 @@ public class Translator {
 		}	
 	}
 	
+	/**
+	 * This method takes in a cookie, and parses it to get the game id
+	 * @param String-cookie
+	 * @return The game id
+	 */
 	public static int getGameId(String cookie) {
 		
 		int index = cookie.lastIndexOf(".game=");
@@ -202,9 +207,9 @@ public class Translator {
 	}
 	
 	/**
-	 * 
-	 * @param cookie
-	 * @return
+	 * This method takes in a cookie, and parses it to get the player id
+	 * @param String- cookie
+	 * @return The player id
 	 */
 	public static int getPlayerId(String cookie) {
 		

@@ -101,7 +101,7 @@ public class Poller extends Observable {
 	 * Sets the new timer interval.
 	 * @param interval
 	 * The new interval (in seconds) which to poll at.
-	 * @throws IllegalArgumentException Throws this error if interval is an invalid value (i.e. <= 0)
+	 * @throws IllegalArgumentException
 	 * 
 	 */
 	public void setInterval(int interval) throws IllegalArgumentException {

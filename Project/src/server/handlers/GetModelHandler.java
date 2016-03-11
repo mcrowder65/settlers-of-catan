@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 import server.facade.IInnerGameFacade;
 import server.facade.IMovesFacade;
 import server.facade.IUserFacade;
+import shared.communication.response.GetModelResponse;
 /**
  * get model handler. It handles getting the model.
  * @author mcrowder65
@@ -30,7 +31,8 @@ public class GetModelHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
-
+		GetModelResponse response = facade.getModel(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 
 }

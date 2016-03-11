@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.IMovesFacade;
+import shared.communication.response.GetModelResponse;
 /**
  * Handler for any roadBuilding requests made by the user
  * @author Brennen
@@ -28,6 +29,8 @@ public class RoadBuildingHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
+		GetModelResponse response = facade.roadBuilding(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 	
 

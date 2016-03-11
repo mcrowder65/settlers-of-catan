@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import server.facade.IMovesFacade;
+import shared.communication.response.GetModelResponse;
 /**
  * finish turn handler. It handles accepting trades
  * @author mcrowder65
@@ -29,7 +30,8 @@ public class FinishTurnHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
-
+		GetModelResponse response = facade.finishTurn(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 
 }

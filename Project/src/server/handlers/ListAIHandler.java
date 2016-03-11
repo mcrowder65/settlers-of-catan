@@ -31,7 +31,6 @@ public class ListAIHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		ListAIResponse response = facade.listAiTypes(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 	}

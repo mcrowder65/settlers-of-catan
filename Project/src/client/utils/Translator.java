@@ -197,13 +197,15 @@ public class Translator {
 	
 	public static int getGameId(String cookie) {
 		
-		//StringBuilder sb = sb.substring("", "");
-		
-		
-		
-		return 0;//Integer.parseInt(sb.toString());
+		int index = cookie.lastIndexOf(".game=");
+		return Integer.parseInt(cookie.substring(index+6));
 	}
 	
+	/**
+	 * 
+	 * @param cookie
+	 * @return
+	 */
 	public static int getPlayerId(String cookie) {
 		
 		try {

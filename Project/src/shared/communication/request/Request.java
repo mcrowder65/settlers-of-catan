@@ -24,10 +24,11 @@ public abstract class Request {
 	protected int gameID;
 	protected int playerID;
 	protected void setCookies(Headers headers){
-
-		String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
-		playerID = Translator.getPlayerId(cookie);
-		gameID = Translator.getGameId(cookie);
+		if(!headers.get("Cookie").isEmpty()){
+			String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
+			playerID = Translator.getPlayerId(cookie);
+			gameID = Translator.getGameId(cookie);
+		}
 	}
 
 }

@@ -739,7 +739,12 @@ public class GameMap {
 		HexLocation oppositeHex = new HexLocation(xCoord, yCoord);
 		return oppositeHex;
 	}
-	
+	/**
+	 * determines if a player can lay a road at a certain location
+	 * @param value
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public Boolean canLayRoad(EdgeValue value) throws IllegalArgumentException{
 		int owner = value.getOwner();
 		EdgeLocation location = value.getLocation();
@@ -4881,7 +4886,12 @@ public class GameMap {
 		}
 		return false;
 	}
-	
+	/**
+	 * Determines if a player can build a settlement at a location
+	 * @param settlement
+	 * @return boolean
+	 * @throws IllegalArgumentException
+	 */
 	public boolean canBuildSettlement(VertexObject settlement) throws IllegalArgumentException{
 		
 		int owner = settlement.getOwner();
@@ -5251,10 +5261,21 @@ public class GameMap {
 		}
 		return false;
 	}
+	/**
+	 * determines if a player can build a city at a location
+	 * @param city
+	 * @return boolean
+	 * @throws IllegalArgumentException
+	 */
 	public boolean canBuildCity(VertexObject city) throws IllegalArgumentException{
 		return hasSettlement(city);
 	}
-	
+	/**
+	 * determines if a player can lay robber
+	 * @param robberLocation
+	 * @return boolean
+	 * @throws IllegalArgumentException
+	 */
 	public boolean canLayRobber(HexLocation robberLocation) throws IllegalArgumentException{
 		Boolean isHexLand = this.isLand(robberLocation);
 		if(isHexLand == false){

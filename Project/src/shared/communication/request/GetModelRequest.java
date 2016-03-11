@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import shared.communication.response.GetModelResponse;
 
 public class GetModelRequest extends Request {
@@ -15,5 +17,8 @@ public class GetModelRequest extends Request {
 	
 	public GetModelResponse getModel() {
 		return new GetModelResponse(0, null);
+	}
+	public GetModelRequest(HttpExchange exchange){
+		super(exchange);
 	}
 }

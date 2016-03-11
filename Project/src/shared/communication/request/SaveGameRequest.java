@@ -1,4 +1,7 @@
 package shared.communication.request;
+
+import com.sun.net.httpserver.HttpExchange;
+
 /**
  * this is a request which saves a game, extends Request
  * @author mcrowder65
@@ -21,5 +24,8 @@ public class SaveGameRequest extends Request {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public SaveGameRequest(HttpExchange exchange){
+		super(exchange);
 	}
 }

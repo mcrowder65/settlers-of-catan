@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import shared.communication.response.Response;
 
 /**
@@ -27,5 +29,8 @@ public class LoginRequest extends Request {
    
      public Response login() {
     	 return new Response();
+     }
+     public LoginRequest(HttpExchange exchange){
+    	 super(exchange);
      }
 }

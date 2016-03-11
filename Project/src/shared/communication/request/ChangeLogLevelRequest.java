@@ -10,4 +10,5 @@ public class ChangeLogLevelRequest extends Request {
 			throw new IllegalArgumentException("logLevel cannot be null");
 		this.logLevel = logLevel;
 	}
+
 }

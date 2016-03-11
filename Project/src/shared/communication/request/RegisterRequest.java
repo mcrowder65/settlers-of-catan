@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import shared.communication.response.Response;
 
 /**
@@ -27,5 +29,7 @@ public class RegisterRequest extends Request {
     public Response register() {
     	return new Response();
     }
-   
+    public RegisterRequest(HttpExchange exchange){
+    	super(exchange);
+    }
 }

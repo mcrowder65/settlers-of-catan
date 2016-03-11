@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import shared.communication.response.CreateGameResponse;
 
 public class CreateGameRequest extends Request {
@@ -19,5 +21,8 @@ public class CreateGameRequest extends Request {
 	
 	public CreateGameResponse createGame() {
 		return new CreateGameResponse(0, null);
+	}
+	public CreateGameRequest(HttpExchange exchange){
+		super(exchange);
 	}
 }

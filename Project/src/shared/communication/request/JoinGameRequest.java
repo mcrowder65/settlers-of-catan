@@ -1,5 +1,7 @@
 package shared.communication.request;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import shared.communication.response.Response;
 import shared.definitions.CatanColor;
 
@@ -15,5 +17,8 @@ public class JoinGameRequest extends Request {
 	
 	public Response joinGame() {
 		return new Response();
+	}
+	public JoinGameRequest(HttpExchange exchange){
+		super(exchange);
 	}
 }

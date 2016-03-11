@@ -24,23 +24,11 @@ public abstract class Request {
 	protected int gameID;
 	protected int playerID;
 	protected void setCookies(Headers headers){
-		//response.setResponseCookie(conn.getHeaderField("Set-cookie"));
-		String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
-		playerID = Translator.getPlayerId(cookie);
-		gameID = Translator.getGameId(cookie);
+		if(!headers.get("Cookie").isEmpty()){
+			String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
+			playerID = Translator.getPlayerId(cookie);
+			gameID = Translator.getGameId(cookie);
+		}
 	}
-//	public String parseCookie(String cookie) {
-//		StringBuilder smallerCookie = new StringBuilder(cookie.substring(11, cookie.length()));
-//		String encodedCookie = smallerCookie.substring(0, smallerCookie.length()-8);
-//		return encodedCookie;
-//	}
-//	public void setCookies(HttpURLConnection conn){
-//		if(this.userCookie != null) {
-//			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie);
-//		}
-//		if(this.gameCookie != null && this.userCookie != null){
-//			conn.setRequestProperty("Cookie", "catan.user=" + this.userCookie + 
-//					"; catan.game=" + this.gameCookie);
-//		}
-//	}
+
 }

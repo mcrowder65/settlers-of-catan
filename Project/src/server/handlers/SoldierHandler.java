@@ -28,7 +28,6 @@ public class SoldierHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		GetModelResponse response = facade.soldier(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 	}

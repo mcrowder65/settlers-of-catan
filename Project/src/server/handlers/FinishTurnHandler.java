@@ -29,7 +29,6 @@ public class FinishTurnHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		GetModelResponse response = facade.finishTurn(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 	}

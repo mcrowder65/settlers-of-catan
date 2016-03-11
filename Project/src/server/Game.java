@@ -1,17 +1,20 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
 
 public class Game {
 	
-	public ArrayList<ServerGameModel> arrayGames;
+	private ArrayList<ServerGameModel> arrayGames;
+	private HashMap<String, String> usernameToPassword = new HashMap<String, String>();
 	
 	private static Game _instance;
 	
 	
-	public Game() {
+	private Game() {
 		
 	}
 	
@@ -31,8 +34,12 @@ public class Game {
 		return _instance.arrayGames.size() - 1;
 	}
 	
-	public ServerGameModel getGameModel(int index) {
+	public ServerGameModel getGameId(int index) {
 		return _instance.arrayGames.get(index);
 	}
 	
+	public boolean verifyPassword(String username, String password) {
+		return usernameToPassword.containsKey(username) &&
+				usernameToPassword.get(username).equals(password);
+	}
 }

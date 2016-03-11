@@ -8,7 +8,7 @@ public class ServerUserFacade implements IUserFacade {
 
 	@Override
 	public Response login(HttpExchange exchange) {
-		// TODO Auto-generated method stub
+		//LoginRequest request = new LoginRequest()
 		return null;
 	}
 

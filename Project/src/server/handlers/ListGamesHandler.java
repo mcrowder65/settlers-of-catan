@@ -32,7 +32,6 @@ public class ListGamesHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		ListGamesResponse response = facade.listGames(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 	}

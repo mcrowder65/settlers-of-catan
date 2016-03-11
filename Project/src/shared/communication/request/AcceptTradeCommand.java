@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.response.GetModelResponse;
 
 /**
@@ -30,6 +31,7 @@ public class AcceptTradeCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
+		
 		return null;
 	}
 

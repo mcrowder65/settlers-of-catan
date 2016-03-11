@@ -1,5 +1,8 @@
 package client.main;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.swing.*;
 
 import client.catan.*;
@@ -18,37 +21,37 @@ import client.base.*;
 @SuppressWarnings("serial")
 public class Catan extends JFrame
 {
-	
+
 	private CatanPanel catanPanel;
-	
-    
-	
+
+
+
 	public Catan(IJoinGameController joinController, Facade facade)
 	{
 		client.base.OverlayView.setWindow(this);
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+
 		catanPanel = new CatanPanel(joinController, facade);
 		this.setContentPane(catanPanel);
-		
+
 		display();
 	}
-	
+
 	private void display()
 	{
 		pack();
 		setVisible(true);
 	}
-	
+
 	public IMapController getMapController() {
 		return catanPanel.getMapController();
 	}
-	
+
 	//
 	// Main
 	//
-	
+
 	public static void main(final String[] args)
 	{
 		try
@@ -59,10 +62,11 @@ public class Catan extends JFrame
 		{
 			e.printStackTrace();
 		}
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
+
 				//default host & port
 				String host = "localhost";
 				int port = 8081;
@@ -74,32 +78,32 @@ public class Catan extends JFrame
 				}
 				HTTPProxy proxy = new HTTPProxy(host, port);
 				GameManager gameManager = new GameManager(proxy,1);
-				
-				
-				
-				
+
+
+
+
 				Facade facade = new Facade(proxy, 1, gameManager);
-				
-				
-				
+
+
+
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
 				SelectColorView selectColorView = new SelectColorView();
 				MessageView joinMessageView = new MessageView();
 				final JoinGameController joinController = new JoinGameController(
-																				 joinView,
-																				 newGameView,
-																				 selectColorView,
-																				 joinMessageView,
-																				 facade);
-				
-				
+						joinView,
+						newGameView,
+						selectColorView,
+						joinMessageView,
+						facade);
+
+
 				Catan catan = new Catan(joinController, facade);
-				
+
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
-																									playerWaitingView,
-																									facade);
+						playerWaitingView,
+						facade);
 				playerWaitingView.setController(playerWaitingController);
 				playerWaitingController.setAllPlayersEnteredAction(new IAction() {
 					@Override
@@ -107,11 +111,11 @@ public class Catan extends JFrame
 					{
 						catan.catanPanel.enterGame();
 					}
-					
+
 				});
-				
-				
-			
+
+
+
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()
@@ -119,18 +123,18 @@ public class Catan extends JFrame
 						playerWaitingController.start();
 					}
 				});
-			
+
 				joinView.setController(joinController);
 				newGameView.setController(joinController);
 				selectColorView.setController(joinController);
 				joinMessageView.setController(joinController);
-				
+
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(
-																	  loginView,
-																	  loginMessageView,
-																	  facade);
+						loginView,
+						loginMessageView,
+						facade);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()
@@ -140,11 +144,11 @@ public class Catan extends JFrame
 				});
 				loginView.setController(loginController);
 				loginView.setController(loginController);
-				
+
 				loginController.start();
 			}
 		});
 	}
-	
+
 }
 

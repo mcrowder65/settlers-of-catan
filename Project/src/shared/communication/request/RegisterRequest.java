@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.response.Response;
 
 /**
@@ -27,9 +28,23 @@ public class RegisterRequest extends Request {
     }
     
     public Response register() {
-    	return new Response();
+    	Response response = new Response();
+    	boolean userExists = Game.instance().userExists(username);
+    	if (userExists) {
+    		response.setErrorMessage("This user already exists");
+    		response.setSuccess(false);
+    		return response;
+    	}
+    	Game.instance().addUser(username, password);
+    	
+    	response.setErrorMessage("Success");
+    	response.setSuccess(true);
+    	
+    	return response;
     }
     public RegisterRequest(HttpExchange exchange){
     	super(exchange);
+    	
+    	
     }
 }

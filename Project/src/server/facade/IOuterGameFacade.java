@@ -10,7 +10,6 @@ import shared.communication.response.*;
  * @author Manuel
  *
  */
-
 public interface IOuterGameFacade {
 
 	ListGamesResponse listGames(HttpExchange exchange);

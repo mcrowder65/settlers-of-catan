@@ -2,6 +2,7 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import shared.communication.request.RegisterRequest;
 import shared.communication.response.Response;
 
 public class ServerUserFacade implements IUserFacade {
@@ -14,8 +15,10 @@ public class ServerUserFacade implements IUserFacade {
 
 	@Override
 	public Response register(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+
+		
+		RegisterRequest request = new RegisterRequest(exchange);
+		return request.register();
 	}
 
 }

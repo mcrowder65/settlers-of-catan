@@ -42,4 +42,10 @@ public class Game {
 		return usernameToPassword.containsKey(username) &&
 				usernameToPassword.get(username).equals(password);
 	}
+	public boolean userExists(String username) {
+		return usernameToPassword.containsKey(username);
+	}
+	public void addUser(String username, String password) {
+		usernameToPassword.put(username, password);
+	}
 }

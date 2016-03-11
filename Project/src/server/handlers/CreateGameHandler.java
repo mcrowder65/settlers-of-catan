@@ -33,7 +33,6 @@ public class CreateGameHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		CreateGameResponse response = facade.createGame(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 	}

@@ -28,7 +28,6 @@ public class SendChatHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
 		GetModelResponse response = facade.sendChat(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
 

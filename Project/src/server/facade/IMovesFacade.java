@@ -10,8 +10,6 @@ import shared.communication.response.GetModelResponse;;
  * @author Manuel
  *
  */
-
-
 public interface IMovesFacade {
 
 	GetModelResponse sendChat(HttpExchange exchange);

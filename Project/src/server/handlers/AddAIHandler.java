@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 import server.facade.IInnerGameFacade;
 import server.facade.IMovesFacade;
 import server.facade.IUserFacade;
+import shared.communication.response.GetModelResponse;
 /**
  * Handles adding an AI
  * @author mcrowder65
@@ -29,7 +30,8 @@ public class AddAIHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		facade.addAi(exchange);
+		GetModelResponse response = (GetModelResponse) facade.addAi(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 
 }

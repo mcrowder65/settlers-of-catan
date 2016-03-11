@@ -8,6 +8,8 @@ import server.facade.IInnerGameFacade;
 import server.facade.IMovesFacade;
 import server.facade.IOuterGameFacade;
 import server.facade.IUserFacade;
+import shared.communication.response.GetModelResponse;
+import shared.communication.response.ListGamesResponse;
 /**
  * list games handler. It handles accepting trades.
  * @author mcrowder65
@@ -31,7 +33,8 @@ public class ListGamesHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
-
+		ListGamesResponse response = facade.listGames(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 
 }

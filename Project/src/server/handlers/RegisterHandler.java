@@ -32,7 +32,6 @@ public class RegisterHandler implements HttpHandler {
 		// TODO Auto-generated method stub
 		GetModelResponse response = (GetModelResponse) facade.register(exchange);
 		exchange.getResponseBody().write(response.toString().getBytes());
-		System.out.println("register");
 	}
 
 }

@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import server.facade.IMovesFacade;
+import shared.communication.response.GetModelResponse;
 /**
  * Handles a player making a maritimeTrade 
  * @author Brennen
@@ -29,6 +30,8 @@ public class MaritimeTradeHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
+		GetModelResponse response = facade.maritimeTrade(exchange);
+		exchange.getResponseBody().write(response.toString().getBytes());
 	}
 	
 

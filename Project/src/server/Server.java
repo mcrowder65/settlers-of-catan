@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import server.facade.*;
 import server.handlers.*;
+import server.swagger.*;
 
 public class Server {
 
@@ -90,8 +91,8 @@ public class Server {
 		
 		httpServer.setExecutor(null);
 		
-		//httpServer.createContext("/docs/api/data", null );
-		//httpServer.createContext("/docs/api/view", null );
+		httpServer.createContext("/docs/api/data", new JSONAppender("") );
+		httpServer.createContext("/docs/api/view", new BasicFile("") );
 		
 		
 		httpServer.createContext("/user/login", loginHandler);

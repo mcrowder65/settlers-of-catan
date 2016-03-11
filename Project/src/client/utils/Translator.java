@@ -1,5 +1,7 @@
 package client.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -192,4 +194,28 @@ public class Translator {
 				return CatanColor.red;
 		}	
 	}
+	
+	public static int getGameId(String cookie) {
+		
+		//StringBuilder sb = sb.substring("", "");
+		
+		
+		
+		return 0;//Integer.parseInt(sb.toString());
+	}
+	
+	public static int getPlayerId(String cookie) {
+		
+		try {
+			cookie = URLDecoder.decode(cookie, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		int index = cookie.lastIndexOf("ID\":");
+		
+		return Integer.parseInt(cookie.substring(index+4));
+	}
+	
+	
+	
 }

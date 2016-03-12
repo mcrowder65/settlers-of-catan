@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import client.utils.Translator;
 import shared.communication.response.GetModelResponse;
 import shared.locations.EdgeLocation;
+import shared.locations.EdgeValue;
 import shared.locations.MirrorEdgeLocation;
 import server.Game;		
 import server.util.ServerGameMap;		
@@ -64,6 +65,7 @@ public class BuildRoadCommand extends MoveCommand {
 			if(!map.canBuildRoadSetup(playerIndex,loc)){	
 				//return some error
 			}
+			map.buildRoad(new EdgeValue(playerIndex,loc));
 			//return success
 		}		
 		if(status.equals("Playing")){		
@@ -73,6 +75,8 @@ public class BuildRoadCommand extends MoveCommand {
 			if(!map.canBuildRoadNormal(playerIndex,loc)){
 				//return some error
 			}
+			map.buildRoad(new EdgeValue(playerIndex,loc));
+			player.layRoad();
 			//return success
 		}		
 				

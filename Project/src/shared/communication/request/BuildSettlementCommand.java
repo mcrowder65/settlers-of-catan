@@ -79,7 +79,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				//need to return some error
 			}
 			map.buildSettlement(vertex);
-			player.chargeBasicSettlement();
+			player.laySettlement();
 			//need to return successful
 		}
 		

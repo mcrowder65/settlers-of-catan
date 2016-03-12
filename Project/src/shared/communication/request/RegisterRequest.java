@@ -1,9 +1,13 @@
 package shared.communication.request;
 
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import shared.communication.response.Response;
+import sun.misc.IOUtils;
 
 /**
  * This executes a register request, extends Request
@@ -35,16 +39,26 @@ public class RegisterRequest extends Request {
     		response.setSuccess(false);
     		return response;
     	}
-    	Game.instance().addUser(username, password);
+    	int id = Game.instance().addUser(username, password);
     	
     	response.setErrorMessage("Success");
     	response.setSuccess(true);
+    	
+    	response.setCookie("Set-cookie",
+    			URLEncoder.encode("catan.user={" +
+    	           "\"name\":\"" + username + "\", " +
+    			   "\"password\":\"" + password + "\", " + 
+    	           "\"playerID\":" + id + "};Path=/;" ));
+    	
     	
     	return response;
     }
     public RegisterRequest(HttpExchange exchange){
     	super(exchange);
+    	RegisterRequest tmp = (RegisterRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+    	this.username = tmp.username;
+    	this.password = tmp.password;
     	
-    	
+    
     }
 }

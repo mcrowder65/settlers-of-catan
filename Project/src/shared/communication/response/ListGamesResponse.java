@@ -16,8 +16,18 @@ public class ListGamesResponse extends Response {
 			this.games = games;
 		}
 	}
+	public ListGamesResponse(List<GameInfo> games) {
+		this.games = games;
+		this.setSuccess(true);
+		
+	}
 	public GameInfo[] getGames() {
 		return  games.toArray(new GameInfo[games.size()]);
+	}
+	
+	@Override
+	public String toString() {
+		return Translator.objectToJson(games);
 	}
 
 }

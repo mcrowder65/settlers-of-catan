@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
+import server.Game;
 import shared.communication.response.Response;
 
 /**
@@ -28,9 +32,32 @@ public class LoginRequest extends Request {
      }
    
      public Response login() {
-    	 return new Response();
+    	Response response = new Response();
+     	boolean userVerified = Game.instance().verifyPassword(username, password);
+     	if (!userVerified) {
+     		response.setErrorMessage("Wrong username or password");
+     		response.setSuccess(false);
+     		return response;
+     	}
+     	
+     	int id = Game.instance().getUserId(username);
+     	
+     	response.setErrorMessage("Success");
+     	response.setSuccess(true);
+     	
+     	response.setCookie("Set-cookie",
+     			URLEncoder.encode("catan.user={" +
+     	           "\"name\":\"" + username + "\", " +
+     			   "\"password\":\"" + password + "\", " + 
+     	           "\"playerID\":" + id + "};Path=/;" ));
+    	 return response;
      }
      public LoginRequest(HttpExchange exchange){
-    	 super(exchange);
+    	super(exchange);
+    	LoginRequest tmp = (LoginRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+     	this.username = tmp.username;
+     	this.password = tmp.password;
+     	
+     	
      }
 }

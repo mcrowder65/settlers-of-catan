@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.response.ListGamesResponse;
 
 public class ListGamesRequest extends Request {
@@ -11,7 +12,8 @@ public class ListGamesRequest extends Request {
 	}
 	
 	public ListGamesResponse listGames() {
-		return new ListGamesResponse(0,null);
+		ListGamesResponse listResponse = new ListGamesResponse(Game.instance().getGamesList());
+		return listResponse;
 	}
 	public ListGamesRequest(HttpExchange exchange){
 		super(exchange);

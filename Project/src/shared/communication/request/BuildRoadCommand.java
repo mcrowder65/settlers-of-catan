@@ -44,7 +44,7 @@ public class BuildRoadCommand extends MoveCommand {
 		 				
 		 		EdgeLocation loc = null;		
 		 		Game game = Game.instance();		
-		 		ServerGameModel model = game.getGameModel(index);		
+		 		ServerGameModel model = game.getGameId(index);		
 		 		ServerGameMap map = model.getServerMap();		
 		 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 		 		ServerPlayer player = model.getLocalServerPlayer(playerId);		

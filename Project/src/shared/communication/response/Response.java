@@ -1,12 +1,34 @@
 package shared.communication.response;
 
+import java.util.AbstractMap;
+import java.util.Map;
+
 import client.utils.Translator;
 import sun.net.www.protocol.http.HttpURLConnection;
 
 public class Response {
-	protected boolean success;
+	
+	@Override
+	public String toString() {
+		if (success)
+			return "Success";
+		else
+			return errorMessage;
+	}
+	
+	
+	protected transient boolean success;
 	protected String  errorMessage;
+	
+	protected transient AbstractMap.SimpleEntry<String, String> cookie;
 
+	public AbstractMap.SimpleEntry<String, String> getCookie() {
+		return cookie;
+	}
+	public void setCookie(String key, String val) {
+		cookie = new AbstractMap.SimpleEntry<String, String>(key, val);
+	}
+	
 	public boolean isSuccess() {
 		return success;
 	}

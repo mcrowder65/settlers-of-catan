@@ -35,6 +35,9 @@ public class Translator {
 	public static Object makeGenericObject(String json, Object object) throws IllegalArgumentException {
 		return jsonTranslator.makeGenericObject(json,  object);
 	}
+	public static Object makeGenericObject(String json, Class klass) throws IllegalArgumentException {
+		return jsonTranslator.makeGenericObject(json,  klass);
+	}
 	
 	public static List<GameInfo> makeListOfGames(String json){
 		return jsonTranslator.makeListOfGames(json);

@@ -21,14 +21,20 @@ public abstract class Request {
 	public String toString() {
 		return Translator.objectToJson(this);
 	}
-	protected int gameID;
-	protected int playerID;
+    protected transient int gameIDCookie;
+	protected transient int playerIDCookie;
+	protected transient String userCookie;
+	protected transient String passCookie;
 	protected void setCookies(Headers headers){
-		if(!headers.get("Cookie").isEmpty()){
-			String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
-			playerID = Translator.getPlayerId(cookie);
-			gameID = Translator.getGameId(cookie);
+		if(headers.containsKey("Cookie") && !headers.get("Cookie").isEmpty()){
+			//String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
+			//playerID = Translator.getPlayerId(cookie);
+			//gameID = Translator.getGameId(cookie);
 		}
+	}
+	protected static String convertStreamToString(java.io.InputStream is) {
+	    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+	    return s.hasNext() ? s.next() : "";
 	}
 
 }

@@ -24,6 +24,9 @@ public class JsonTranslator {
 	public Object makeGenericObject(String json, Object object){
 		return new Gson().fromJson(json, object.getClass());
 	}
+	public Object makeGenericObject(String json, Class klass) {
+		return new Gson().fromJson(json, klass);
+	}
 	public HashMap<String, String> makeKeyValuePairs(String json) {
 		return (HashMap<String,String>)(new Gson().fromJson(json, HashMap.class));
 	}

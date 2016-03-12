@@ -39,49 +39,69 @@ public class BuildRoadCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		int playerIndex=0;		
-		 		int playerId = 0;		
-		 		int index =0;		
-		 				
-		 		EdgeLocation loc = null;		
-		 		Game game = Game.instance();		
-		 		ServerGameModel model = game.getGameId(index);		
-		 		ServerGameMap map = model.getServerMap();		
-		 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
-		 		ServerPlayer player = model.getLocalServerPlayer(playerId);		
-		 				
-				//making sure its the players turn		
-				if(checkTurn(turnTracker,playerIndex) == false){		
-					return null; //Need to throw some error here		
-				}		
-						
-				String status = turnTracker.getStatus();		
-				//making sure its the right status		
-				if(checkStatus(status) == false){		
-					return null; //Need to throw some error here		
-				}		
-						
-				if(status.equals("FirstRound") || status.equals("SecondRound")){		
-					map.canBuildRoadSetup(index,loc);		
-				}		
-				if(status.equals("Playing")){		
-					boolean enoughResources = player.resourcesToBuildRoad();		
-				}		
-						
-		  		return null;
+ 		int playerId = 0;		
+ 		int index =0;		
+ 				
+ 		EdgeLocation loc = null;		
+ 		Game game = Game.instance();		
+ 		ServerGameModel model = game.getGameId(index);		
+ 		ServerGameMap map = model.getServerMap();		
+ 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+ 		ServerPlayer player = model.getLocalServerPlayer(playerId);		
+ 				
+		//making sure its the players turn		
+		if(checkTurn(turnTracker,playerIndex) == false){		
+			return null; //Need to throw some error here		
+		}		
+				
+		String status = turnTracker.getStatus();		
+		//making sure its the right status		
+		if(checkStatus(status) == false){		
+			return null; //Need to throw some error here		
+		}		
+				
+		if(status.equals("FirstRound") || status.equals("SecondRound")){		
+			if(!map.canBuildRoadSetup(playerIndex,loc)){	
+				//return some error
+			}
+			//return success
+		}		
+		if(status.equals("Playing")){		
+			if(!player.resourcesToBuildRoad()){		
+				//return some error
+			}
+			if(!map.canBuildRoadNormal(playerIndex,loc)){
+				//return some error
+			}
+			//return success
+		}		
+				
+  		return null;
 	}
+	/**
+	 * checks to see if its a players turn
+	 * @param turnTracker
+	 * @param playerIndex
+	 * @return boolean
+	 */
 	public boolean checkTurn(ServerTurnTracker turnTracker, int playerIndex){		
-		 		if(turnTracker.getCurrentTurn() == playerIndex){		
-		 			return true;		
-		 		}		
-		 		return false;		
-		 	}		
-		 			
-		 	public boolean checkStatus(String status){		
-		 		if (status.equals("Playing") || status.equals("FirstRound") || status.equals("SecondRound")){		
-		 			return true;		
-		 		}		
-		 		return false;		
-		 	}
+		if(turnTracker.getCurrentTurn() == playerIndex){		
+		 	return true;		
+		 }		
+		 return false;		
+	}		
+	/**
+	 * checks to make sure the status allows for a road to be built	 			
+	 * @param status
+	 * @return boolean
+	 */
+ 	public boolean checkStatus(String status){		
+ 		if (status.equals("Playing") || status.equals("FirstRound") || status.equals("SecondRound")){		
+ 			return true;		
+ 		}		
+ 		return false;		
+ 	}
+ 	
 	public boolean isFree() {
 		return free;
 	}

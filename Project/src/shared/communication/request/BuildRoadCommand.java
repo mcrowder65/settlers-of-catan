@@ -78,18 +78,7 @@ public class BuildRoadCommand extends MoveCommand {
 				
   		return null;
 	}
-	/**
-	 * checks to see if its a players turn
-	 * @param turnTracker
-	 * @param playerIndex
-	 * @return boolean
-	 */
-	public boolean checkTurn(ServerTurnTracker turnTracker, int playerIndex){		
-		if(turnTracker.getCurrentTurn() == playerIndex){		
-		 	return true;		
-		 }		
-		 return false;		
-	}		
+	
 	/**
 	 * checks to make sure the status allows for a road to be built	 			
 	 * @param status

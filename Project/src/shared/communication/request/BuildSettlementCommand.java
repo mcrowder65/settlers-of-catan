@@ -2,9 +2,16 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
+import server.util.ServerGameMap;
+import server.util.ServerGameModel;
+import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
+import shared.locations.VertexObject;
 /**
  * This class executes the build settlement command,
  * extends MoveCommand
@@ -43,8 +50,43 @@ public class BuildSettlementCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
+		
+		int playerId = 0;
+		int gameIndex = 0;
+		int playerIndex = 0;
+		VertexLocation loc = null;		
+ 		Game game = Game.instance();		
+ 		ServerGameModel model = game.getGameId(gameIndex);		
+ 		ServerGameMap map = model.getServerMap();		
+ 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+ 		ServerPlayer player = model.getLocalServerPlayer(playerId);	
+ 		playerIndex = model.getLocalIndex(playerId);
+ 		String status = turnTracker.getStatus();
+ 		VertexObject vertex = new VertexObject(playerIndex,loc);
+ 		//making sure its the players turn		
+		if(checkTurn(turnTracker,playerIndex) == false){		
+			return null; //Need to throw some error here		
+		}
+		if(status.equals("FirstRound") || status.equals("SecondRound")){
+			if(!map.canBuildSettlementFirstRound(vertex)){
+				//need to return some error here
+			}
+			map.buildSettlement(vertex);
+			//need to return that it was succesful 
+		}
+		if(status.equals("Playing")){
+			if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
+				//need to return some error
+			}
+			map.buildSettlement(vertex);
+			player.chargeBasicSettlement();
+			//need to return successful
+		}
+		
+		//need to return some error
 		return null;
 	}
+	
 
 	public boolean isFree() {
 		return free;

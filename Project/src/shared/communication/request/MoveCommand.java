@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 /**
  * This executes a move, extends request. Abunch of other
@@ -10,7 +11,7 @@ import shared.communication.response.GetModelResponse;
  */
 public abstract class MoveCommand extends Request {
 
-	private int playerIndex;
+	protected int playerIndex;
 	protected String type;
 	protected MoveCommand(int playerIndex) throws IllegalArgumentException {
 		
@@ -32,6 +33,18 @@ public abstract class MoveCommand extends Request {
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
+	/**
+	 * checks to see if its a players turn
+	 * @param turnTracker
+	 * @param playerIndex
+	 * @return boolean
+	 */
+	public boolean checkTurn(ServerTurnTracker turnTracker, int playerIndex){		
+		if(turnTracker.getCurrentTurn() == playerIndex){		
+		 	return true;		
+		 }		
+		 return false;		
+	}		
 	
 	
 }

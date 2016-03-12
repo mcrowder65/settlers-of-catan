@@ -175,14 +175,14 @@ public class ServerPlayer extends Player {
 	
 	
 	public boolean resourcesToBuildRoad(){		
-		 		int brick = getResources().getBrick();		
-		 		int wood = getResources().getWood();		
-		 		int roads = getRoads();		
-		 		if(brick >0 && wood>0 && roads>0){		
-		 			return true;		
-		 		}		
-		 		return false;		
-		 	}
+		int brick = getResources().getBrick();		
+		int wood = getResources().getWood();		
+		int roads = getRoads();		
+		if(brick >0 && wood>0 && roads>0){		
+			return true;		
+		}		
+		return false;		
+	}
 	
 	
 	

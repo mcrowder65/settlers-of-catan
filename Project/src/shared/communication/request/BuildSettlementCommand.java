@@ -72,6 +72,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				//need to return some error here
 			}
 			map.buildSettlement(vertex);
+			player.removeSettlement();
 			//need to return that it was succesful 
 		}
 		if(status.equals("Playing")){

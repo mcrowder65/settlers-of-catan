@@ -66,6 +66,7 @@ public class BuildRoadCommand extends MoveCommand {
 				//return some error
 			}
 			map.buildRoad(new EdgeValue(playerIndex,loc));
+			player.removeRoad();
 			//return success
 		}		
 		if(status.equals("Playing")){		

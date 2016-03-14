@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
+import server.Game;
 import shared.communication.response.CreateGameResponse;
 import shared.communication.response.Response;
 
@@ -29,14 +30,23 @@ public class CreateGameRequest extends Request {
 		CreateGameResponse response = new CreateGameResponse(name, gameIDCookie);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
-		
+		String username = Game.instance().getPersonById(playerIDCookie).getUsername();
+		String password = Game.instance().getPersonById(playerIDCookie).getPassword();
+		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+			           "\"name\":\"" + username + "\", " +
+					   "\"password\":\"" + password + "\", " + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) 
+						+ "; catan.game=\"" + gameIDCookie + "\";");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);
 		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		setVariables(tmp.name, tmp.randomTiles, tmp.randomNumbers, tmp.randomPorts);
-		
 	}
 }

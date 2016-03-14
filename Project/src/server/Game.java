@@ -81,7 +81,14 @@ public class Game {
 		}
 		return false;
 	}
-	
+	public RegisteredPersonInfo getPersonById(int id){
+		for(RegisteredPersonInfo person : registeredUsers){
+			if(person.getId() == id){
+				return person;
+			}
+		}
+		return null;
+	}
 	public int getUserId(String username) {
 		for (RegisteredPersonInfo person : registeredUsers) {
 			if (person.getUsername().equals(username))

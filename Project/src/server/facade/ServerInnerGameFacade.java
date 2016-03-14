@@ -2,9 +2,8 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import shared.communication.response.GetModelResponse;
-import shared.communication.response.ListAIResponse;
-import shared.communication.response.Response;
+import shared.communication.request.*;
+import shared.communication.response.*;
 /**
  * gets repsonse from specific games
  * @author Brennen
@@ -18,8 +17,8 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 	 */
 	@Override
 	public ListAIResponse listAiTypes(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		ListAIRequest request = new ListAIRequest(exchange);
+		return request.listAITypes();
 	}
 
 	/**
@@ -28,8 +27,8 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 	 */
 	@Override
 	public Response addAi(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		AddAIRequest request = new AddAIRequest(exchange);
+		return request.addAI();
 	}
 	
 	/**
@@ -38,8 +37,8 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 	 */
 	@Override
 	public GetModelResponse getModel(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		GetModelRequest request = new GetModelRequest(exchange);
+		return request.getModel();
 	}
 
 }

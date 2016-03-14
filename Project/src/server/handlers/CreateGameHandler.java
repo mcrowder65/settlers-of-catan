@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import client.utils.Translator;
 import server.facade.IInnerGameFacade;
 import server.facade.IMovesFacade;
 import server.facade.IOuterGameFacade;
@@ -35,7 +36,7 @@ public class CreateGameHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		Response response = null;
+		CreateGameResponse response = null;
 		try{
 		   response = facade.createGame(exchange);
 		}catch(Exception ex) {
@@ -46,7 +47,7 @@ public class CreateGameHandler implements HttpHandler {
 			exchange.getResponseHeaders().add(response.getCookie().getKey(), response.getCookie().getValue());
 		exchange.getResponseHeaders().add("Content-type", "application/json");
 		exchange.sendResponseHeaders(response.isSuccess() ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_BAD_REQUEST, 0);
-		exchange.getResponseBody().write(response.toString().getBytes());
+		exchange.getResponseBody().write(Translator.objectToJson(response.getGame()).getBytes());
 		exchange.getResponseBody().close();
 	}
 

@@ -251,7 +251,7 @@ public class HTTPProxy implements IProxy{
 	}
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {
-		HTTPJsonResponse response = sendRequest("/games/create", new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
+		HTTPJsonResponse response = sendRequest("/games/create",  new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
 		return new CreateGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override

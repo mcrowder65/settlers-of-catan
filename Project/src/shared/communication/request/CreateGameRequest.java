@@ -26,11 +26,11 @@ public class CreateGameRequest extends Request {
 		this.randomPorts = randomPorts;
 	}
 	public CreateGameResponse createGame() {
-		CreateGameResponse response = new CreateGameResponse();
+		CreateGameResponse response = new CreateGameResponse(name, gameIDCookie);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
-		response.setGame(name, gameIDCookie);
+		
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){

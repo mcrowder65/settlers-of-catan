@@ -53,7 +53,7 @@ public class MonumentCommand extends MoveCommand {
 			player.playMonument();
 			//need to return a success here
 		}
-		return null;
+		return null; //need to return some error here
 	}
 
 

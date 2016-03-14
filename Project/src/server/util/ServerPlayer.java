@@ -5,6 +5,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
 import shared.locations.*;
 /**
@@ -178,6 +179,30 @@ public class ServerPlayer extends Player {
 		addVictoryPoints();
 	}
 	
+	public void chargeBuyDevCard(){
+		removeOre();
+		removeSheep();
+		removeWheat();
+	}
+	
+	public void buyDevCard(ResourceType resource){
+		chargeBuyDevCard();
+		if(resource == ResourceType.WOOD){
+			addWood();
+		}
+		if(resource == ResourceType.WHEAT){
+			addWheat();
+		}
+		if(resource == ResourceType.SHEEP){
+			addSheep();
+		}
+		if(resource == ResourceType.ORE){
+			addOre();
+		}
+		if(resource == ResourceType.WOOD){
+			addBrick();
+		}
+	}
 	
 	public boolean resourcesToBuildRoad(){		
 		int brick = getResources().getBrick();		

@@ -42,7 +42,6 @@ public class LoginRequest extends Request {
      	}
      	
      	int id = Game.instance().getUserId(username);
-     	
      	response.setErrorMessage("Success");
      	response.setSuccess(true);
      	

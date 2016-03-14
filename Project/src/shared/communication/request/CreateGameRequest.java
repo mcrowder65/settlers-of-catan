@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
 import server.Game;
+import server.util.ServerGameModel;
 import shared.communication.response.CreateGameResponse;
 import shared.communication.response.Response;
 
@@ -30,18 +31,12 @@ public class CreateGameRequest extends Request {
 		CreateGameResponse response = new CreateGameResponse(name, gameIDCookie);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
-		String username = Game.instance().getPersonById(playerIDCookie).getUsername();
-		String password = Game.instance().getPersonById(playerIDCookie).getPassword();
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-			           "\"name\":\"" + username + "\", " +
-					   "\"password\":\"" + password + "\", " + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) 
-						+ "; catan.game=\"" + gameIDCookie + "\";");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		ServerGameModel sgm = new ServerGameModel();
+		
+		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
+		
+			response.setCookie("Set-cookie", "catan.game=\"" + gameIDCookie + "\";");
+		
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){

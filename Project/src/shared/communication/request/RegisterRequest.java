@@ -55,7 +55,6 @@ public class RegisterRequest extends Request {
 			e.printStackTrace();
 		}
     	
-    	
     	return response;
     }
     public RegisterRequest(HttpExchange exchange){

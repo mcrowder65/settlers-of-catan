@@ -83,6 +83,7 @@ public class RobPlayerCommand extends MoveCommand {
 		victim.removeResource(resource);
 		player.addResource(resource);
 		response.setSuccess(true);
+		map.setRobber(location);
 		return response; 
 
 	}

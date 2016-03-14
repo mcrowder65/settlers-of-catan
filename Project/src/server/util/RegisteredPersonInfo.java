@@ -23,4 +23,6 @@ public class RegisteredPersonInfo {
 		this.password = password;
 	}
 	private String password;
+	
+	//
 }

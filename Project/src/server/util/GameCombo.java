@@ -6,5 +6,5 @@ public class GameCombo {
 
 	public ServerGameModel model;
 	public GameInfo info;
-	
+	//
 }

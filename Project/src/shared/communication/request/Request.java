@@ -21,8 +21,8 @@ public abstract class Request {
 	public String toString() {
 		return Translator.objectToJson(this);
 	}
-    protected transient int gameIDCookie;
-	protected transient int playerIDCookie;
+    protected transient int gameIDCookie = -1;
+	protected transient int playerIDCookie = -1;
 	protected transient String userCookie;
 	protected transient String passCookie;
 	protected void setCookies(Headers headers){

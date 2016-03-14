@@ -58,7 +58,7 @@ public class BuyDevCardCommand extends MoveCommand {
 			if(!player.canBuyDevCard()){
 				//need to throw some error here
 			}
-			if(mode.isBankEmpty() == true){
+			if(model.isBankEmpty() == true){
 				//need to return some error here
 			}
 			ResourceType resource = model.generateRandomResource();

@@ -29,31 +29,38 @@ public class MonumentCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int playerIndex=0;		
- 		int playerId = 0;		
- 		int index =0;		
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();	
  					
  		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(index);		
+ 		ServerGameModel model = game.getGameId(gameIndex);		
  		ServerGameMap map = model.getServerMap();		
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getLocalServerPlayer(playerId);		
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+ 		GetModelResponse response = new GetModelResponse();
  				
 		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		
-			return null; //Need to throw some error here		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; //Need to throw some error here		
 		}		
 				
 		String status = turnTracker.getStatus();		
 		//making sure its the right status		
 		if(status.equals("Playing")){
 			if(!player.canPlayMonumentCard()){
-				//need to return some error here
+				response.setSuccess(false);
+				response.setErrorMessage("Player cannot play monument");
+				return response;
 			}
 			player.playMonument();
-			//need to return a success here
+			response.setSuccess(true);
+			return response;
 		}
-		return null; //need to return some error here
+		response.setSuccess(false);
+		response.setErrorMessage("Wrong status");
+		return response; //need to return some error here
 	}
 
 

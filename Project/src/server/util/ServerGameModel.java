@@ -2,6 +2,8 @@ package server.util;
 
 import java.util.Random;
 
+import shared.definitions.DevCardList;
+import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
   import shared.definitions.GameModel;		  
  import shared.definitions.Player;
@@ -41,23 +43,25 @@ import shared.definitions.ResourceType;
  		return null;		
  	}
  	
- 	public void buyFromBank(ResourceType resource){
- 		ResourceList bank = getBank();
- 		if(resource == ResourceType.WOOD){
- 			bank.setWood(bank.getWood()-1);
+ 	public void buyFromDeck(DevCardType card){
+ 		DevCardList deck = getDeck();
+ 		if(card == DevCardType.SOLDIER){
+ 			deck.setSoldier(deck.getSoldier()-1);
  		}
- 		if(resource == ResourceType.WHEAT){
- 			bank.setWheat(bank.getWheat()-1);
+ 		if(card == DevCardType.YEAR_OF_PLENTY){
+ 			deck.setYearOfPlenty(deck.getYearOfPlenty()-1);
  		}
- 		if(resource == ResourceType.BRICK){
- 			bank.setBrick(bank.getBrick()-1);
+ 		if(card == DevCardType.MONUMENT){
+ 			deck.setMonument(deck.getMonument()-1);
  		}
- 		if(resource == ResourceType.SHEEP){
- 			bank.setSheep(bank.getSheep()-1);
+ 		if(card == DevCardType.MONOPOLY){
+ 			deck.setMonopoly(deck.getMonopoly()-1);
  		}
- 		if(resource == ResourceType.ORE){
- 			bank.setOre(bank.getOre()-1);
+ 		if(card == DevCardType.ROAD_BUILD){
+ 			deck.setRoadBuilding(deck.getRoadBuilding()-1);
  		}
+ 		
+ 		this.setDeck(deck);
  		
  	}
  	
@@ -78,52 +82,65 @@ import shared.definitions.ResourceType;
  		return false;
  	}
  	
- 	public ResourceType generateRandomResource(){
- 		ResourceList bank = getBank();
+	public boolean isDeckEmpty(){
+ 		DevCardList deck = getDeck();
+ 		int soldier = deck.getSoldier();
+ 		int YOP = deck.getYearOfPlenty();
+ 		int monument = deck.getMonument();
+ 		int roadBuilder = deck.getRoadBuilding();
+ 		int monopoly = deck.getMonopoly();
+ 		if(soldier == 0 && YOP ==0 && monument ==0 && roadBuilder ==0 && monopoly ==0){
+ 			return true;
+ 		}
+ 		return false;
+ 	}
+ 	
+ 	public DevCardType generateRandomDevCard(){
+ 		DevCardList deck = getDeck();
  		int randomNum = new Random().nextInt((5 - 1) + 1) + 1;
  		if(randomNum == 1){
- 			if(bank.getWood() > 0){
- 				return ResourceType.WOOD;
+ 			if(deck.getSoldier() > 0){
+ 				return DevCardType.SOLDIER;
  			}
  			else{
- 				return ResourceType.NONE;
+ 				return DevCardType.NONE;
  			}
  		}
  		if(randomNum == 2){
- 			if(bank.getSheep()>0){
- 				return ResourceType.SHEEP;
+ 			if(deck.getYearOfPlenty()>0){
+ 				return DevCardType.YEAR_OF_PLENTY;
  			}
  			else{
- 				return ResourceType.NONE;
+ 				return DevCardType.NONE;
  			}
  		}
  		if(randomNum == 3){
- 			if(bank.getWheat() >0){
- 				return ResourceType.WHEAT;
+ 			if(deck.getMonopoly() >0){
+ 				return DevCardType.MONOPOLY;
  			}
  			else{
- 				return ResourceType.NONE;
+ 				return DevCardType.NONE;
  			}
  		}
  		if(randomNum == 4){
- 			if(bank.getOre() > 0){
- 				return ResourceType.ORE;
+ 			if(deck.getRoadBuilding() > 0){
+ 				return DevCardType.ROAD_BUILD;
  			}
  			else{
- 				return ResourceType.NONE;
+ 				return DevCardType.NONE;
  			}
  		}
  		if(randomNum == 5){
- 			if(bank.getBrick() >0){
- 				return ResourceType.BRICK;
+ 			if(deck.getMonument() >0){
+ 				return DevCardType.MONUMENT;
  			}
  			else{
- 				return ResourceType.NONE;
+ 				return DevCardType.NONE;
  			}
  			
  		}
  		
- 		return ResourceType.BRICK;
+ 		return DevCardType.ROAD_BUILD;
  	}
   			  	
  } 

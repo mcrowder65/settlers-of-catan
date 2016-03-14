@@ -8,6 +8,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 
@@ -37,39 +38,47 @@ public class BuyDevCardCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		
-		int playerIndex=0;		
- 		int playerId = 0;		
- 		int index =0;		
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();		
  				
  		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(index);		
+ 		ServerGameModel model = game.getGameId(gameIndex);		
  		ServerGameMap map = model.getServerMap();		
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getLocalServerPlayer(playerId);		
- 				
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];	
+ 		GetModelResponse response = new GetModelResponse();
 		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		
-			return null; //Need to throw some error here		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response;	//Need to throw some error here		
 		}		
 				
 		String status = turnTracker.getStatus();		
 		//making sure its the right status				
 		if(status.equals("Playing")){		
 			if(!player.canBuyDevCard()){
-				//need to throw some error here
+				response.setSuccess(false);
+				response.setErrorMessage("Not enough resources to purchase");
+				return response;	
 			}
-			if(model.isBankEmpty() == true){
-				//need to return some error here
+			if(model.isDeckEmpty() == true){
+				response.setSuccess(false);
+				response.setErrorMessage("Empty Deck");
+				return response;	
 			}
-			ResourceType resource = model.generateRandomResource();
-			while(resource == ResourceType.NONE){
-				resource = model.generateRandomResource();
+			DevCardType card = model.generateRandomDevCard();
+			while(card == DevCardType.NONE){
+				card = model.generateRandomDevCard();
 			}
-			player.buyDevCard(resource);
-			model.buyFromBank(resource);
-			//need to return a success here
+			player.buyDevCard(card);
+			model.buyFromDeck(card);
+			response.setSuccess(true);
+			return response;	
 			
 		}
-		return null;//need to throw some error here
+		response.setSuccess(false);
+		response.setErrorMessage("Wrong status");
+		return response;	
 	}
 }

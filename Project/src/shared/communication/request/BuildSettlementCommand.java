@@ -51,41 +51,52 @@ public class BuildSettlementCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		
-		int playerId = 0;
-		int gameIndex = 0;
-		int playerIndex = 0;
-		VertexLocation loc = null;		
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();	
+		VertexLocation loc = this.getLocation().getOriginal();			
  		Game game = Game.instance();		
  		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
+ 		ServerGameMap map = model.getServerMap();
+ 		GetModelResponse response = new GetModelResponse();
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getLocalServerPlayer(playerId);	
- 		playerIndex = model.getLocalIndex(playerId);
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
  		VertexObject vertex = new VertexObject(playerIndex,loc);
  		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		
-			return null; //Need to throw some error here		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response;		
 		}
 		if(status.equals("FirstRound") || status.equals("SecondRound")){
 			if(!map.canBuildSettlementFirstRound(vertex)){
 				//need to return some error here
+				response.setSuccess(false);
+				response.setErrorMessage("bad location");
+				return response;
 			}
 			map.buildSettlement(vertex);
 			player.removeSettlement();
 			//need to return that it was succesful 
+			response.setSuccess(true);
+			return response;
 		}
 		if(status.equals("Playing")){
 			if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
-				//need to return some error
+				response.setSuccess(false);
+				response.setErrorMessage("Bad Location");
+				return response;
 			}
 			map.buildSettlement(vertex);
 			player.laySettlement();
-			//need to return successful
+			response.setSuccess(true);
+			return response;
 		}
 		
 		//need to return some error
-		return null;
+		response.setSuccess(false);
+		response.setErrorMessage("Wrong status");
+		return response;
 	}
 	
 

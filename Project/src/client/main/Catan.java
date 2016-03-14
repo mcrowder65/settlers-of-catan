@@ -66,16 +66,6 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				String encodedCookie = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D";
-				try {
-
-					encodedCookie = URLDecoder.decode(encodedCookie, "UTF-8");
-					int index = encodedCookie.lastIndexOf("ID\":");
-					System.out.println(encodedCookie.substring(index+4));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
 				//default host & port
 				String host = "localhost";
 				int port = 8081;

@@ -94,6 +94,27 @@ import shared.definitions.ResourceType;
  		}
  		return false;
  	}
+	
+	
+	public ResourceType generateRandomResource(){
+		int randomNum = new Random().nextInt((5 - 1) + 1) + 1;
+		if(randomNum == 1){
+			return ResourceType.WOOD;
+		}
+		if(randomNum == 2){
+			return ResourceType.SHEEP;
+		}
+		if(randomNum == 3){
+			return ResourceType.BRICK;
+		}
+		if(randomNum == 4){
+			return ResourceType.ORE;
+		}
+		if(randomNum == 5){
+			return ResourceType.WHEAT;
+		}
+		return ResourceType.WOOD;
+	}
  	
  	public DevCardType generateRandomDevCard(){
  		DevCardList deck = getDeck();

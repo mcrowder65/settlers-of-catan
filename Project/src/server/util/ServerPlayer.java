@@ -61,6 +61,44 @@ public class ServerPlayer extends Player {
 		removeCity();
 	}
 	
+	public void addResource(ResourceType resource){
+		if(resource == ResourceType.WOOD){
+			addWood();
+		}
+		if(resource == ResourceType.BRICK){
+			addBrick();
+		}
+		if(resource == ResourceType.WHEAT){
+			addWheat();
+		}
+		if(resource == ResourceType.SHEEP){
+			addSheep();
+		}
+		if(resource == ResourceType.ORE){
+			addOre();
+		}
+		
+	}
+	
+	public void removeResource(ResourceType resource){
+		if(resource == ResourceType.WOOD){
+			removeWood();
+		}
+		if(resource == ResourceType.BRICK){
+			removeBrick();
+		}
+		if(resource == ResourceType.WHEAT){
+			removeWheat();
+		}
+		if(resource == ResourceType.SHEEP){
+			removeSheep();
+		}
+		if(resource == ResourceType.ORE){
+			removeOre();
+		}
+		
+	}
+	
 	public void addBrick(){
 		ResourceList allResources = getResources();
 		int brick = allResources.getBrick();

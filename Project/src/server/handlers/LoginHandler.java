@@ -41,7 +41,8 @@ public class LoginHandler implements HttpHandler {
 		
 		if (response.getCookie() != null)
 			exchange.getResponseHeaders().add(response.getCookie().getKey(), response.getCookie().getValue());
-		exchange.sendResponseHeaders(response.isSuccess() ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_NOT_FOUND, 0);
+		exchange.getResponseHeaders().add("Content-type", "application/json");
+		exchange.sendResponseHeaders(response.isSuccess() ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		exchange.getResponseBody().write(response.toString().getBytes());
 		exchange.getResponseBody().close();
 	}

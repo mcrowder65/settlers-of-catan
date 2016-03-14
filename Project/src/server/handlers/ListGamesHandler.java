@@ -10,6 +10,7 @@ import server.facade.IOuterGameFacade;
 import server.facade.IUserFacade;
 import shared.communication.response.GetModelResponse;
 import shared.communication.response.ListGamesResponse;
+import shared.communication.response.Response;
 import sun.net.www.protocol.http.HttpURLConnection;
 /**
  * list games handler. It handles accepting trades.
@@ -33,9 +34,16 @@ public class ListGamesHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		ListGamesResponse response = facade.listGames(exchange);
-
-		exchange.getResponseHeaders().add("Content-Type", "application/json");
+		Response response = null;
+		try{
+		   response = facade.listGames(exchange);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		if (response.getCookie() != null)
+			exchange.getResponseHeaders().add(response.getCookie().getKey(), response.getCookie().getValue());
+		exchange.getResponseHeaders().add("Content-type", "application/json");
 		exchange.sendResponseHeaders(response.isSuccess() ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_NOT_FOUND, 0);
 		exchange.getResponseBody().write(response.toString().getBytes());
 		exchange.getResponseBody().close();

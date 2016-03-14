@@ -16,8 +16,7 @@ public class MockUserFacade implements IUserFacade {
 	 */
 	@Override
 	public Response login(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response(200, "Success");
 	}
 	
 	/**
@@ -26,8 +25,7 @@ public class MockUserFacade implements IUserFacade {
 	 */
 	@Override
 	public Response register(HttpExchange exchange) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response(200, "Success");
 	}
 
 }

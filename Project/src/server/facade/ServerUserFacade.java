@@ -16,8 +16,6 @@ public class ServerUserFacade implements IUserFacade {
 
 	@Override
 	public Response register(HttpExchange exchange) {
-
-		
 		RegisterRequest request = new RegisterRequest(exchange);
 		return request.register();
 	}

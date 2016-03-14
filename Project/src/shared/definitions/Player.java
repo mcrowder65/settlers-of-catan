@@ -286,6 +286,12 @@ public class Player {
 		this.monuments = monuments;
 	}
 
+	public void removeMonument() throws IllegalArgumentException  {
+		this.monuments--;
+	}
+	public void addVictoryPoints() throws IllegalArgumentException  {
+		this.victoryPoints++;
+	}
 	/**
 	 * sets the name of the player
 	 * @param name

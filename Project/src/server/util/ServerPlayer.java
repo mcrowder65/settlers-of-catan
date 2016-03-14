@@ -173,6 +173,11 @@ public class ServerPlayer extends Player {
 		setNewDevCards(newDevCards);
 	}
 	
+	public void playMonument(){
+		removeMonument();
+		addVictoryPoints();
+	}
+	
 	
 	public boolean resourcesToBuildRoad(){		
 		int brick = getResources().getBrick();		

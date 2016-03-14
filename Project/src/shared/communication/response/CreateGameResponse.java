@@ -1,7 +1,10 @@
 package shared.communication.response;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import client.data.GameInfo;
 import client.utils.Translator;
+import shared.communication.request.RegisterRequest;
 
 public class CreateGameResponse extends Response {
 
@@ -15,5 +18,5 @@ public class CreateGameResponse extends Response {
 	public GameInfo getGame() {
 		return game;
 	}
-
+	public CreateGameResponse(){}
 }

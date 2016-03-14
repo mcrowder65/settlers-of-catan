@@ -15,10 +15,6 @@ public class CreateGameRequest extends Request {
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;
-	private String username;
-	private String password;
-	private int playerIDCookie;
-	private int gameIDCookie;
 	public CreateGameRequest(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		setVariables(name, randomTiles, randomNumbers, randomPorts);
 	}
@@ -33,25 +29,14 @@ public class CreateGameRequest extends Request {
 		CreateGameResponse response = new CreateGameResponse();
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
-		
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-			           "\"name\":\"" + username + "\", " +
-					   "\"password\":\"" + password + "\", " + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + "; catan.game=" + gameIDCookie + ";");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
+		response.setGame(name, gameIDCookie);
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);
 		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		setVariables(tmp.name, tmp.randomTiles, tmp.randomNumbers, tmp.randomPorts);
-		username = tmp.userCookie;
-		password = passCookie;
-		playerIDCookie = tmp.playerIDCookie;
-		gameIDCookie = tmp.gameIDCookie;
+		
 	}
 }

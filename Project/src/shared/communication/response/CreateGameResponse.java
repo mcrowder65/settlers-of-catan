@@ -18,5 +18,9 @@ public class CreateGameResponse extends Response {
 	public GameInfo getGame() {
 		return game;
 	}
+	public void setGame(String title, int id){
+		game.setTitle(title);
+		game.setId(id);
+	}
 	public CreateGameResponse(){}
 }

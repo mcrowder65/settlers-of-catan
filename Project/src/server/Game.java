@@ -21,7 +21,7 @@ public class Game {
 		RegisteredPersonInfo temp = new RegisteredPersonInfo();
 		
 		temp.setUsername("matt");
-		temp.setPassword("0000");
+		temp.setPassword("matt");
 		
 		registeredUsers.add(temp);
 		

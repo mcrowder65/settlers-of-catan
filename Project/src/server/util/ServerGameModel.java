@@ -61,22 +61,66 @@ import shared.definitions.ResourceType;
  		
  	}
  	
+ 	/**
+ 	 * returns true if bank is empty
+ 	 * @return
+ 	 */
+ 	public boolean isBankEmpty(){
+ 		ResourceList bank = getBank();
+ 		int brick = bank.getBrick();
+ 		int wood = bank.getWood();
+ 		int ore = bank.getOre();
+ 		int sheep = bank.getSheep();
+ 		int wheat = bank.getWheat();
+ 		if(brick == 0 && wood ==0 && ore ==0 && sheep ==0 && wheat ==0){
+ 			return true;
+ 		}
+ 		return false;
+ 	}
+ 	
  	public ResourceType generateRandomResource(){
+ 		ResourceList bank = getBank();
  		int randomNum = new Random().nextInt((5 - 1) + 1) + 1;
  		if(randomNum == 1){
- 			return ResourceType.WOOD;
+ 			if(bank.getWood() > 0){
+ 				return ResourceType.WOOD;
+ 			}
+ 			else{
+ 				return ResourceType.NONE;
+ 			}
  		}
  		if(randomNum == 2){
- 			return ResourceType.SHEEP;
+ 			if(bank.getSheep()>0){
+ 				return ResourceType.SHEEP;
+ 			}
+ 			else{
+ 				return ResourceType.NONE;
+ 			}
  		}
  		if(randomNum == 3){
- 			return ResourceType.WHEAT;
+ 			if(bank.getWheat() >0){
+ 				return ResourceType.WHEAT;
+ 			}
+ 			else{
+ 				return ResourceType.NONE;
+ 			}
  		}
  		if(randomNum == 4){
- 			return ResourceType.ORE;
+ 			if(bank.getOre() > 0){
+ 				return ResourceType.ORE;
+ 			}
+ 			else{
+ 				return ResourceType.NONE;
+ 			}
  		}
  		if(randomNum == 5){
- 			return ResourceType.BRICK;
+ 			if(bank.getBrick() >0){
+ 				return ResourceType.BRICK;
+ 			}
+ 			else{
+ 				return ResourceType.NONE;
+ 			}
+ 			
  		}
  		
  		return ResourceType.BRICK;

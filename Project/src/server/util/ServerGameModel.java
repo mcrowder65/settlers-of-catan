@@ -5,8 +5,9 @@ import java.util.Random;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
-  import shared.definitions.GameModel;		  
- import shared.definitions.Player;
+  import shared.definitions.GameModel;
+import shared.definitions.MessageLine;
+import shared.definitions.Player;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;		
   		  
@@ -162,6 +163,10 @@ import shared.definitions.ResourceType;
  		}
  		
  		return DevCardType.ROAD_BUILD;
+ 	}
+ 	
+ 	public void addChatMessage(MessageLine line){
+ 		getChat().addMessage(line);
  	}
   			  	
  } 

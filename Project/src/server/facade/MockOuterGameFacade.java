@@ -14,7 +14,11 @@ import shared.communication.response.Response;
  *
  */
 public class MockOuterGameFacade implements IOuterGameFacade {
-	
+	/**
+	 * gets the reponse based on the key
+	 * @param key
+	 * @return
+	 */
 	private String readResponse(String key) {
 		return responses.get(key);
 	}

@@ -3,6 +3,7 @@ package server.util;
 import client.utils.Translator;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
+import shared.definitions.DevCardType;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
@@ -185,22 +186,22 @@ public class ServerPlayer extends Player {
 		removeWheat();
 	}
 	
-	public void buyDevCard(ResourceType resource){
+	public void buyDevCard(DevCardType card){
 		chargeBuyDevCard();
-		if(resource == ResourceType.WOOD){
-			addWood();
+		if(card == DevCardType.SOLDIER){
+			addSoldierCard();
 		}
-		if(resource == ResourceType.WHEAT){
-			addWheat();
+		if(card == DevCardType.YEAR_OF_PLENTY){
+			addYearOfPlenty();
 		}
-		if(resource == ResourceType.SHEEP){
-			addSheep();
+		if(card == DevCardType.MONOPOLY){
+			addMonopoly();
 		}
-		if(resource == ResourceType.ORE){
-			addOre();
+		if(card == DevCardType.ROAD_BUILD){
+			addRoadBuilder();
 		}
-		if(resource == ResourceType.WOOD){
-			addBrick();
+		if(card == DevCardType.MONUMENT){
+			addMonument();
 		}
 	}
 	

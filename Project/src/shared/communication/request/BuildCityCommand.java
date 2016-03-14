@@ -41,38 +41,47 @@ public class BuildCityCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int playerId = 0;
-		int gameIndex = 0;
-		int playerIndex = 0;
-		VertexLocation loc = null;		
- 		Game game = Game.instance();		
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();	
+		VertexLocation loc = this.getLocation().getOriginal();		
+ 		Game game = Game.instance();	
+ 		GetModelResponse response = new GetModelResponse();
  		ServerGameModel model = game.getGameId(gameIndex);		
  		ServerGameMap map = model.getServerMap();		
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getLocalServerPlayer(playerId);	
- 		playerIndex = model.getLocalIndex(playerId);
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
  		VertexObject vertex = new VertexObject(playerIndex,loc);
  		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		
-			return null; //Need to throw some error here		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; //Need to throw some error here		
 		}
 		if(status.equals("Playing")){
 			if(!player.canBuildCity()){
 				//return that there was an error
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
 			}
 			if(!map.canBuildCity(vertex)){
-				//return that there was an error
+				response.setSuccess(false);
+				response.setErrorMessage("Bad Location");
+				return response;
 			}
 			
 			map.layCity(vertex);
 			player.layCity();
 			
 			//return that there was a success
+			response.setSuccess(true);
+			return response;
 			
 		}
-		//return that there was an error
-		return null;
+		response.setSuccess(false);
+		response.setErrorMessage("Unreachable");
+		return response;
 	}
 
 

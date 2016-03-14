@@ -21,4 +21,23 @@ public enum MirrorVertexDirection {
 			return SW;
 		}
 	}
+	
+	public static VertexDirection getOriginal(MirrorVertexDirection vertex) {
+		switch (vertex) {
+		case NW:
+			return VertexDirection.NorthWest;
+		case W:
+			return VertexDirection.West;
+		case NE:
+			return VertexDirection.NorthEast;
+		case SE:
+			return VertexDirection.SouthEast;
+		case E:
+			return VertexDirection.East;
+		case SW:
+			return VertexDirection.SouthWest;
+		default:
+			return VertexDirection.SouthWest;
+		}
+	}
 }

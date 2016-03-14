@@ -39,49 +39,63 @@ public class BuildRoadCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int playerIndex=0;		
- 		int playerId = 0;		
- 		int index =0;		
- 				
- 		EdgeLocation loc = null;		
+		int playerIndex=this.getPlayerIndex();			
+ 		int index =this.gameIDCookie;		
+ 		GetModelResponse response = new GetModelResponse();
+ 		EdgeLocation loc = this.getRoadLocation().getOriginal();		
  		Game game = Game.instance();		
  		ServerGameModel model = game.getGameId(index);		
  		ServerGameMap map = model.getServerMap();		
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getLocalServerPlayer(playerId);		
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];		
  				
 		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){		
-			return null; //Need to throw some error here		
+		if(checkTurn(turnTracker,playerIndex) == false){
+			
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; //Need to throw some error here		
 		}		
 				
 		String status = turnTracker.getStatus();		
 		//making sure its the right status		
-		if(checkStatus(status) == false){		
-			return null; //Need to throw some error here		
+		if(checkStatus(status) == false){
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response; //Need to throw some error here		
 		}		
 				
 		if(status.equals("FirstRound") || status.equals("SecondRound")){		
 			if(!map.canBuildRoadSetup(playerIndex,loc)){	
-				//return some error
+				response.setSuccess(false);
+				response.setErrorMessage("Cannot Build Road at that location");
+				return response; 	
 			}
 			map.buildRoad(new EdgeValue(playerIndex,loc));
 			player.removeRoad();
-			//return success
+			response.setSuccess(true);
+			return response; 	
 		}		
 		if(status.equals("Playing")){		
 			if(!player.resourcesToBuildRoad()){		
-				//return some error
+				response.setSuccess(false);
+				response.setErrorMessage("Not enough resources to build road");
+				return response; 
 			}
 			if(!map.canBuildRoadNormal(playerIndex,loc)){
-				//return some error
+				response.setSuccess(false);
+				response.setErrorMessage("Cannot build road at that location");
+				return response; 	
 			}
 			map.buildRoad(new EdgeValue(playerIndex,loc));
 			player.layRoad();
-			//return success
+			response.setSuccess(true);
+			return response; 	
 		}		
 				
-  		return null;
+		response.setSuccess(false);
+		response.setErrorMessage("Should not reach this point in the code");
+		return response; 	
 	}
 	
 	/**

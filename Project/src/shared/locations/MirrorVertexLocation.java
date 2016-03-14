@@ -57,5 +57,9 @@ public class MirrorVertexLocation
 		this.direction = MirrorVertexDirection.getMirrorEdge(direction);
 	}
 
+    public VertexLocation getOriginal() {
+    	VertexLocation loc = new VertexLocation(new HexLocation(x, y), MirrorVertexDirection.getOriginal(direction));
+    	return loc;
+    }
 }
 

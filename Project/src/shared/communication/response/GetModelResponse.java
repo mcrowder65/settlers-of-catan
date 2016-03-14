@@ -18,6 +18,9 @@ public class GetModelResponse extends Response {
 			}
 		}
 	}
+	public GetModelResponse(){
+		
+	}
 	public boolean isUpdated() {
 		return updated;
 	}

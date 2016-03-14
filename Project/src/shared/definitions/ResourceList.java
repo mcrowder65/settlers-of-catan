@@ -127,6 +127,40 @@ public class ResourceList {
 		this.wood = wood;
 	}
 	
+	public boolean hasResource(ResourceType resource){
+		if(resource == ResourceType.WOOD){
+			if(wood >0){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.BRICK){
+			if(brick >0){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.WHEAT){
+			if(wheat >0){
+				return true;
+			}
+			return false;
+		}
+		
+		if(resource == ResourceType.ORE){
+			if(ore >0){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.SHEEP){
+			if(sheep >0){
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 	/**
 	 * Sets the number of Brick
 	 * @param brick

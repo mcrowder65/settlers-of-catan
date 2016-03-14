@@ -161,6 +161,41 @@ public class ResourceList {
 		}
 		return false;
 	}
+	
+	public boolean hasResourceCertainNumber(ResourceType resource, int ratio){
+		if(resource == ResourceType.WOOD){
+			if(wood >=ratio){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.BRICK){
+			if(brick >=ratio){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.WHEAT){
+			if(wheat >=ratio){
+				return true;
+			}
+			return false;
+		}
+		
+		if(resource == ResourceType.ORE){
+			if(ore >=ratio){
+				return true;
+			}
+			return false;
+		}
+		if(resource == ResourceType.SHEEP){
+			if(sheep >=ratio){
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 	/**
 	 * Sets the number of Brick
 	 * @param brick

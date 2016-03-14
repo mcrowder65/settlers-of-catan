@@ -80,7 +80,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 			return response; //Need to throw some error here		
 		}	
 		
-		if(player.getResources().hasResource(output) == false){
+		if(player.getResources().hasResourceCertainNumber(output,ratio) == false){
 			response.setSuccess(false);
 			response.setErrorMessage("Doesnt have resource");
 			return response;

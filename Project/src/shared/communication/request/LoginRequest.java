@@ -1,5 +1,6 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -45,11 +46,15 @@ public class LoginRequest extends Request {
      	response.setErrorMessage("Success");
      	response.setSuccess(true);
      	
-     	response.setCookie("Set-cookie",
-     			URLEncoder.encode("catan.user={" +
-     	           "\"name\":\"" + username + "\", " +
-     			   "\"password\":\"" + password + "\", " + 
-     	           "\"playerID\":" + id + "};Path=/;" ));
+		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+			           "\"name\":\"" + username + "\", " +
+					   "\"password\":\"" + password + "\", " + 
+			           "\"playerID\":" + id + "}", "UTF-8" ) + ";Path=/;");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
     	 return response;
      }
      public LoginRequest(HttpExchange exchange){

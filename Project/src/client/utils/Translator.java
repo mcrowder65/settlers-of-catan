@@ -223,8 +223,9 @@ public class Translator {
 			e.printStackTrace();
 		}
 		int index = cookie.lastIndexOf("ID\":");
-		
-		return Integer.parseInt(cookie.substring(index+4));
+		int lastIndex = cookie.lastIndexOf("}");
+		String number = cookie.substring(index+4, lastIndex);
+		return Integer.parseInt(number);
 	}
 	
 	

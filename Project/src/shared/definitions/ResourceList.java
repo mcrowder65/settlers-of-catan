@@ -127,6 +127,26 @@ public class ResourceList {
 		this.wood = wood;
 	}
 	
+	public int numResource(ResourceType resource){
+		if(resource == ResourceType.WOOD){
+			return wood;
+		}
+		if(resource == ResourceType.BRICK){
+			return brick;
+		}
+		if(resource == ResourceType.WHEAT){
+			return wheat;
+		}
+		
+		if(resource == ResourceType.ORE){
+			return ore;
+		}
+		if(resource == ResourceType.SHEEP){
+			return sheep;
+		}
+		return 0;
+	}
+	
 	public boolean hasResource(ResourceType resource){
 		if(resource == ResourceType.WOOD){
 			if(wood >0){

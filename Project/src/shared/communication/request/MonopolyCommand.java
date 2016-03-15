@@ -2,9 +2,16 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
+import server.util.ServerGameMap;
+import server.util.ServerGameModel;
+import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
+import shared.locations.VertexLocation;
+import shared.locations.VertexObject;
 /**
  * This class is the Monopoly command. It extends MoveCommand
  * @author mcrowder65
@@ -32,7 +39,45 @@ public class MonopolyCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		return null;
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();		
+ 		Game game = Game.instance();	
+ 		GetModelResponse response = new GetModelResponse();
+ 		ServerGameModel model = game.getGameId(gameIndex);		
+ 		ServerGameMap map = model.getServerMap();		
+ 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+ 		ServerPlayer[] allPlayers = model.getServerPlayers();
+ 		String status = turnTracker.getStatus();
+ 		ResourceType resource = getResource();
+ 		
+ 		//making sure its the players turn		
+		if(checkTurn(turnTracker,playerIndex) == false){		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; //Need to throw some error here		
+		}
+		
+		//check status
+		if(!status.equals("Playing")){
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response;
+		}
+		
+		for(int i=0; i<allPlayers.length; i++){
+			if(i != playerIndex){
+				ServerPlayer player2 = allPlayers[i];
+				if(player2.getResources().hasResource(resource)){
+					int num = player2.getResources().numResource(resource);
+					player.getResources().addResource(resource,num);
+					player2.getResources().removeResource(resource,num);
+				}
+			}
+		}
+		
+		response.setSuccess(true);
+		return response;
 	}
 	
 	public ResourceType getResource() {

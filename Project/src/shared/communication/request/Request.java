@@ -6,6 +6,8 @@ import java.net.URLDecoder;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
+
 import client.utils.Translator;
 /**
  * Request class.
@@ -26,11 +28,16 @@ public abstract class Request {
 	protected transient String userCookie;
 	protected transient String passCookie;
 	protected void setCookies(Headers headers){
-		
-		if(headers.containsKey("Cookie") && !headers.get("Cookie").isEmpty()){
-			//String cookie = headers.get("Cookie").get(0); //TODO this probably aint right
-			//playerID = Translator.getPlayerId(cookie);
-			//gameID = Translator.getGameId(cookie);
+//		System.out.println("***********************************************");
+//		for(String i : headers.keySet()){
+//			System.out.println(i);
+//		}
+		if(headers.containsKey("Cookie")){
+		//	System.out.println("found a cookie!");
+			String cookie = headers.get("Cookie").toString();
+			playerIDCookie = Translator.getPlayerId(cookie);
+			System.out.println("playerIDCookie: " + playerIDCookie);
+			
 		}
 	}
 	protected static String convertStreamToString(java.io.InputStream is) {

@@ -28,12 +28,12 @@ public abstract class Request {
 	protected transient String userCookie;
 	protected transient String passCookie;
 	protected void setCookies(Headers headers){
-		System.out.println("***********************************************");
-		for(String i : headers.keySet()){
-			System.out.println(i);
-		}
+//		System.out.println("***********************************************");
+//		for(String i : headers.keySet()){
+//			System.out.println(i);
+//		}
 		if(headers.containsKey("Cookie")){
-			System.out.println("found a cookie!");
+		//	System.out.println("found a cookie!");
 			String cookie = headers.get("Cookie").toString();
 			playerIDCookie = Translator.getPlayerId(cookie);
 			System.out.println("playerIDCookie: " + playerIDCookie);

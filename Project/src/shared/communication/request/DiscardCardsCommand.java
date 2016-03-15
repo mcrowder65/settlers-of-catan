@@ -65,6 +65,9 @@ public class DiscardCardsCommand extends MoveCommand {
  		}
  		
  		player.discardCards(cards);
+ 		if(model.allPlayersDiscarded() == true){
+ 			turnTracker.setStatus("Robbing");
+ 		}
  		response.setSuccess(true);
 		return response;
 

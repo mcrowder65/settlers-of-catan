@@ -114,6 +114,27 @@ public class ServerGameMap extends GameMap {
 		return canLaySecondRoad;
 	}
 	
+	public List<VertexObject> getMunicipalityOnHex(HexLocation loc){
+		List<VertexObject>municipalities = new ArrayList<VertexObject>();
+		VertexObject[] settlements = getSettlements();
+		VertexObject[] cities = getSettlements();
+		for(int i=0; i<settlements.length; i++){
+			VertexObject settlement = settlements[i];
+			if(settlement.getLocation().getHexLoc().equals(loc) == true){
+				municipalities.add(settlement);
+			}
+		}
+		for(int x=0; x<cities.length; x++){
+			VertexObject city = cities[x];
+			if(city.getLocation().getHexLoc().equals(loc) == true){
+				municipalities.add(city);
+			}
+		}
+		
+		return municipalities;
+		
+	}
+	
 	
 	
 }

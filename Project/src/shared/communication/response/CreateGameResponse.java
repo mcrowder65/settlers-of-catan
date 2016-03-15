@@ -18,12 +18,11 @@ public class CreateGameResponse extends Response {
 	public GameInfo getGame() {
 		return game;
 	}
-	public void setGame(String title, int id){
-		game = new GameInfo();
-		game.setTitle(title);
+	public void setGameId(int id){
 		game.setId(id);
 	}
-	public CreateGameResponse(String name, int gameIDCookie){
-		setGame(name, gameIDCookie);
+	public CreateGameResponse(String title){
+		game = new GameInfo();
+		game.setTitle(title);
 	}
 }

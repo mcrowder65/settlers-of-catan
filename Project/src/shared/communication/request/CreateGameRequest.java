@@ -28,13 +28,13 @@ public class CreateGameRequest extends Request {
 		this.randomPorts = randomPorts;
 	}
 	public CreateGameResponse createGame() {
-		CreateGameResponse response = new CreateGameResponse(name, gameIDCookie);
+		CreateGameResponse response = new CreateGameResponse(name);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		ServerGameModel sgm = new ServerGameModel();
-		
+
 		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
-		
+		response.setGameId(gameIDCookie);
 			response.setCookie("Set-cookie", "catan.game=\"" + gameIDCookie + "\";");
 		
 		return (CreateGameResponse) response;

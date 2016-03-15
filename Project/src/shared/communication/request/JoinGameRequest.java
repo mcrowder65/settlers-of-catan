@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.response.Response;
 import shared.definitions.CatanColor;
 

@@ -58,6 +58,12 @@ public class DiscardCardsCommand extends MoveCommand {
 			return response;
  		}
  		
+ 		if(player.getDiscarded() == true){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Already discarded");
+			return response;
+ 		}
+ 		
  		player.discardCards(cards);
  		response.setSuccess(true);
 		return response;

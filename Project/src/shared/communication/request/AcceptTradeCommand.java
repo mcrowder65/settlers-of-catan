@@ -9,6 +9,7 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
 
 /**
@@ -29,9 +30,9 @@ public class AcceptTradeCommand extends MoveCommand {
 
 	public AcceptTradeCommand(HttpExchange exchange) {
 		super(exchange);
-		
+
 	}
-	
+
 	/**
 	 * Executes the logic to process the AcceptTrade command 
 	 */
@@ -39,110 +40,69 @@ public class AcceptTradeCommand extends MoveCommand {
 	public GetModelResponse execute() {
 		int gameIndex = this.gameIDCookie;
 		int playerIndex = this.getPlayerIndex();		
- 		Game game = Game.instance();	
- 		GetModelResponse response = new GetModelResponse();
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		String status = turnTracker.getStatus();
- 		TradeOffer offer = model.getTradeOffer();
- 		
- 		if(offer.getReciever() != playerIndex){
- 			response.setSuccess(false);
+		Game game = Game.instance();	
+		GetModelResponse response = new GetModelResponse();
+		ServerGameModel model = game.getGameId(gameIndex);		
+		ServerGameMap map = model.getServerMap();		
+		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+		ServerPlayer player = model.getServerPlayers()[playerIndex];
+		String status = turnTracker.getStatus();
+		TradeOffer offer = model.getTradeOffer();
+
+		if(offer.getReciever() != playerIndex){
+			response.setSuccess(false);
 			response.setErrorMessage("Wrong Player");
 			return response;
- 		}
- 		
- 		ResourceList resources = offer.getOffer();
- 		int brick = resources.getBrick();
- 		int wheat = resources.getWheat();
- 		int ore = resources.getOre();
- 		int sheep = resources.getSheep();
- 		int wood = resources.getWood();
- 		if(player.canAcceptTrade(resources) == false){
- 			response.setSuccess(false);
+		}
+
+		ResourceList resources = offer.getOffer();
+		int brick = resources.getBrick();
+		int wheat = resources.getWheat();
+		int ore = resources.getOre();
+		int sheep = resources.getSheep();
+		int wood = resources.getWood();
+		if(player.canAcceptTrade(resources) == false){
+			response.setSuccess(false);
 			response.setErrorMessage("Cannot Accept Trade");
 			return response;
- 		}
- 		
- 		if(willAccept == true){
- 			int sender = offer.getSender();
- 			ServerPlayer sendingPlayer = model.getServerPlayers()[sender];
- 			//if negative take away from the sending and add to the sender
- 			//if resources positive take away from the sender and add them to the sending
- 			//player has the income offer. sending player sends the offer
- 			
- 			if(brick < 0) {
- 				for(int i = 0; i < Math.abs(brick); i++) {
- 					sendingPlayer.removeBrick();
- 					player.addBrick();
- 				}
- 			}
- 			else if(brick > 0) {
- 				for(int i = 0; i < Math.abs(brick); i++) {
- 					player.removeBrick();
- 					sendingPlayer.addBrick();
- 				}
- 			}
- 			
- 			if(wheat < 0) {
- 				for(int i = 0; i < Math.abs(wheat); i++) {
- 					sendingPlayer.removeWheat();
- 					player.addWheat();
- 				}
- 			}
- 			else if(wheat > 0) {
- 				for(int i = 0; i < Math.abs(wheat); i++) {
- 					player.removeWheat();
- 					sendingPlayer.addWheat();
- 				}
- 			}
- 			
- 			if(ore < 0) {
- 				for(int i = 0; i < Math.abs(ore); i++) {
- 					sendingPlayer.removeOre();
- 					player.addOre();
- 				}
- 			}
- 			else if(ore > 0) {
- 				for(int i = 0; i < Math.abs(ore); i++) {
- 					player.removeOre();
- 					sendingPlayer.addOre();
- 				}
- 			}
- 			
- 			if(sheep < 0) {
- 				for(int i = 0; i < Math.abs(sheep); i++) {
- 					sendingPlayer.removeSheep();
- 					player.addSheep();
- 				}
- 			}
- 			else if(sheep > 0) {
- 				for(int i = 0; i < Math.abs(sheep); i++) {
- 					player.removeSheep();
- 					sendingPlayer.addSheep();
- 				}
- 			}
- 			
- 			if(wood < 0) {
- 				for(int i = 0; i < Math.abs(wood); i++) {
- 					sendingPlayer.removeWood();
- 					player.addWood();
- 				}
- 			}
- 			else if (wood > 0) {
- 				for(int i = 0; i < Math.abs(wood); i++) {
- 					player.removeWood();
- 					sendingPlayer.addWood();
- 				}
- 			}
- 			
- 		}
- 		
- 		response.setSuccess(true);
+		}
+
+		if(willAccept == true){
+			int sender = offer.getSender();
+			ServerPlayer sendingPlayer = model.getServerPlayers()[sender];
+			//if negative take away from the sending and add to the sender
+			//if resources positive take away from the sender and add them to the sending
+			//player has the income offer. sending player sends the offer
+			distributeResources(ResourceType.BRICK, brick, player, sendingPlayer);
+			distributeResources(ResourceType.WHEAT, wheat, player, sendingPlayer);
+			distributeResources(ResourceType.ORE, ore, player, sendingPlayer);
+			distributeResources(ResourceType.SHEEP, sheep, player, sendingPlayer);
+			distributeResources(ResourceType.WOOD, wood, player, sendingPlayer);
+		}
+
+		response.setSuccess(true);
 		return response;
 	}
+
+	/**
+	 * This method is in charge of removing and adding the corresponding resources according
+	 * to the offer accepted. 
+	 * @param type
+	 * @param qty
+	 * @param player
+	 * @param sendingPlayer
+	 */
+	public void distributeResources(ResourceType type, int qty, ServerPlayer player, ServerPlayer sendingPlayer) {
+		if(qty < 0) {
+			sendingPlayer.getResources().removeResource(type, Math.abs(qty));
+			player.getResources().addResource(type, qty);
+		}
+		else if(qty > 0) {
+			player.getResources().removeResource(type, qty);
+			sendingPlayer.getResources().addResource(type, qty);
+		}
+	}
+	
 
 	public boolean getWillAccept() {
 		return willAccept;

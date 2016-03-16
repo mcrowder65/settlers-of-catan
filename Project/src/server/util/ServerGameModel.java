@@ -45,6 +45,29 @@ import shared.definitions.ResourceType;
  		return null;		
  	}
  	
+ 	public int getPositive(int resource){
+ 		if(resource>0){
+ 			return 0;
+ 		}
+ 		if(resource<0){
+ 			return Math.abs(resource);
+ 		}
+ 		return 0;
+ 	}
+ 	
+ 	
+ 	public ResourceList normalizeResourceList(ResourceList resource){
+ 		
+ 		int brick = getPositive(resource.getBrick());
+ 		int wheat = getPositive(resource.getWheat());
+ 		int ore = getPositive(resource.getOre());
+ 		int wood = getPositive(resource.getWood());
+ 		int sheep = getPositive(resource.getSheep());
+ 		
+ 		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
+ 		return normalized;
+ 	}
+ 	
  	public void buyFromDeck(DevCardType card){
  		DevCardList deck = getDeck();
  		if(card == DevCardType.SOLDIER){

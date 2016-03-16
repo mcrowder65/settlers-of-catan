@@ -210,6 +210,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(players == null){
 			return;
 		}
+		//if player already joined as another color, make sure they still have that option.
 		for (PlayerInfo p : players) {
 			if (p.getId() != player.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);

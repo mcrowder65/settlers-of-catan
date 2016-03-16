@@ -53,6 +53,26 @@ public class ServerPlayer extends Player {
 		chargeBasicSettlement();
 		removeSettlement();
 	}
+	
+	public boolean canMakeTrade(ResourceList offer){
+		if(offer.getBrick() > getResources().getBrick()){
+			return false;
+		}
+		if(offer.getWheat() > getResources().getWheat()){
+			return false;
+		}
+		if(offer.getOre() > getResources().getOre()){
+			return false;
+		}
+		if(offer.getSheep() > getResources().getSheep()){
+			return false;
+		}
+		if(offer.getWood() > getResources().getWood()){
+			return false;
+		}
+		
+		return true;
+	}
 	/**
 	 * updates a player when they lay a city during normal play
 	 */

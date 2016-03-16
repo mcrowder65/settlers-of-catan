@@ -413,7 +413,6 @@ public class JsonTranslator {
 
 			//This checks for the Desert 
 			if(hexes[i].getResource() == ResourceType.NONE) {
-				System.out.println("here");
 				jHex.add("location", makeJsonHexLocationObject(hexes[i].getLocation()));
 			}
 			else{

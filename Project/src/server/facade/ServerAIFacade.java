@@ -1,11 +1,15 @@
 package server.facade;
 
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 public class ServerAIFacade implements IAIFacade {
 
 	@Override
-	public void rollNumber() {
+	public void rollNumber(int number) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -17,25 +21,73 @@ public class ServerAIFacade implements IAIFacade {
 	}
 
 	@Override
-	public void tryBuildRoads() {
+	public void buildRoad(EdgeLocation location, boolean free) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void tryBuildSettlements() {
+	public void buildSettlement(VertexLocation location, boolean free) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void tryBuildCities() {
+	public void buildCity(VertexLocation location) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void tryBuyDevCards() {
+	public void buyDevCard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void monopoly(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void soldier(int victimIndex, HexLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void monument() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void yearOfPlenty(ResourceType resource1, ResourceType resource2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void robPlayer(int victimIndex, HexLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void acceptTrade(boolean willAccept) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void maritimeTrade(int ratio, ResourceType input, ResourceType output) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -45,5 +97,6 @@ public class ServerAIFacade implements IAIFacade {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

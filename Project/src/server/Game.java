@@ -20,28 +20,10 @@ public class Game {
 	private Game() {
 		RegisteredPersonInfo temp = new RegisteredPersonInfo();
 		
-		temp.setUsername("matt");
-		temp.setPassword("matt");
-		
-		registeredUsers.add(temp);
-		
-		RegisteredPersonInfo temp1 = new RegisteredPersonInfo();
-		temp1.setUsername("brennen");
-		temp1.setPassword("0000");
-		
-		registeredUsers.add(temp1);
-		
-		RegisteredPersonInfo temp2 = new RegisteredPersonInfo();
-		temp2.setUsername("eric");
-		temp2.setPassword("0000");
-		
-		registeredUsers.add(temp2);
-		
-		RegisteredPersonInfo temp3 = new RegisteredPersonInfo();
-		temp3.setUsername("manuel");
-		temp3.setPassword("0000");
-		
-		registeredUsers.add(temp3);
+		addUser("matt", "matt");
+		addUser("brennen", "0000");
+		addUser("eric", "0000");
+		addUser("manuel","0000");
 	}
 	
 	public static Game instance() {

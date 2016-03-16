@@ -9,6 +9,7 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
+import shared.definitions.TradeOffer;
 import shared.locations.VertexLocation;
 import shared.locations.VertexObject;
 /**
@@ -57,14 +58,28 @@ public class OfferTradeCommand extends MoveCommand {
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
- 		//if it's positive, then put it in the addGetResource
- 		//if it's negative, then put it in the addGiveResource
+
+ 		ResourceList normalizedList = model.normalizeResourceList(offer);
+ 		if(player.canMakeTrade(normalizedList) == false){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Not enough resources");
+			return response;
+ 		}
+ 		if(status != "Playing"){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Wrong Status");
+			return response;
+ 		}
  		
+ 		if(checkTurn(turnTracker,playerIndex) == false){		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; 		
+		}
  		
- 		
- 		
-		
-		return null;
+ 		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
+ 		response.setSuccess(true);
+		return response; 
 	}
 
 }

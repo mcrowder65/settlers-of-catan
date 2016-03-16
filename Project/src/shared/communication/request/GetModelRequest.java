@@ -3,6 +3,7 @@ package shared.communication.request;
 import com.sun.net.httpserver.HttpExchange;
 
 import shared.communication.response.GetModelResponse;
+import sun.net.www.protocol.http.HttpURLConnection;
 
 public class GetModelRequest extends Request {
 

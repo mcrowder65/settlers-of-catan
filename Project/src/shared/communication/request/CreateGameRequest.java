@@ -36,19 +36,11 @@ public class CreateGameRequest extends Request {
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		ServerGameModel sgm = new ServerGameModel();
-
 		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
 		response.setGameId(gameIDCookie);
-		response.setCookie("Set-cookie", "catan.game=\"" + gameIDCookie + "\";Path=/;");
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-			           "\"name\":\"" + userCookie + "\", " +
-					   "\"password\":\"" + passCookie + "\", " + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + "; catan.game=" + gameIDCookie + ";");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";Path=/;");
+
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){

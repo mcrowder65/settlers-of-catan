@@ -28,24 +28,13 @@ public abstract class Request {
 	protected transient String userCookie;
 	protected transient String passCookie;
 	protected void setCookies(Headers headers){
-//		System.out.println("***********************************************");
-//		for(String i : headers.keySet()){
-//			System.out.println(i);
-//		}
+
 		if(headers.containsKey("Cookie")){
-			System.out.println("found a cookie!");
-			String cookie = headers.get("Cookie").toString();
-			//System.out.println("cookie: " + cookie);
 			playerIDCookie = Translator.getPlayerId(headers.get("Cookie").toString());
 			
 			userCookie = Translator.getPlayerName(headers.get("Cookie").toString());
 			passCookie = Translator.getPlayerPassword(headers.get("Cookie").toString());
 			gameIDCookie = Translator.getGameId(headers.get("Cookie").toString());
-//			
-//			System.out.println("playerIDCookie: " + playerIDCookie);
-//			System.out.println("userCookie: " + userCookie);
-//			System.out.println("passCookie: " + passCookie);
-//			System.out.println("gameIDCookie: " + gameIDCookie);
 		}
 	}
 	protected static String convertStreamToString(java.io.InputStream is) {

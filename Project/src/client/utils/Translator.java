@@ -206,8 +206,8 @@ public class Translator {
 	public static int getGameId(String cookie) {
 		
 		int index = cookie.lastIndexOf(".game=");
-		
-		return index != -1 ? Integer.parseInt(cookie.substring(index+6)) : -1;
+		int lastIndex = cookie.lastIndexOf("]");
+		return index != -1 ? Integer.parseInt(cookie.substring(index+6, lastIndex)) : -1;
 	}
 	
 	/**

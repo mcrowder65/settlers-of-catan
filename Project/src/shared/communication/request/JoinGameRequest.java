@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.utils.Translator;
 import server.Game;
 import shared.communication.response.Response;
 import shared.definitions.CatanColor;
@@ -29,26 +30,26 @@ public class JoinGameRequest extends Request {
 	}
 	
 	public Response joinGame() {
-
 		Response response = new Response();
 		Game game = Game.instance();
 		ArrayList<GameInfo> games = game.getGamesList();
-		
+		GameInfo requestedGame = games.get(id);
+
+		if(requestedGame.hasPlayer(userCookie)){
+			games.get(id).setPlayer(id, color);
+		}
+		else
+			games.get(id).addPlayer(new PlayerInfo(playerIDCookie, userCookie, color)); 
+
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";Path=/;");
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
-		games.get(id).addPlayer(new PlayerInfo(playerIDCookie, userCookie, color == null ? CatanColor.red : color));
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-			           "\"name\":\"" + userCookie + "\", " +
-					   "\"password\":\"" + passCookie + "\", " + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + "; catan.game=" + gameIDCookie + ";");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		return response;
 	}
 	public JoinGameRequest(HttpExchange exchange){
 		super(exchange);
+		JoinGameRequest tmp = (JoinGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.id = tmp.id;
+		this.color = tmp.color;
 	}
 }

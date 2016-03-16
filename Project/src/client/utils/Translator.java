@@ -65,9 +65,8 @@ public class Translator {
 		Translator.jsonTranslator = jsonTranslator;
 	}
 	public static String modelToJson(ServerGameModel model) {
-		return Translator.jsonTranslator.modelToJson(model);
-	}
-	
+        return Translator.jsonTranslator.modelToJson(model);
+    }
 	public static ResourceType getResourceType(String resource){
 		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
 		int switchType = 5; //SHEEP, sheep
@@ -211,8 +210,8 @@ public class Translator {
 	public static int getGameId(String cookie) {
 		
 		int index = cookie.lastIndexOf(".game=");
-		
-		return Integer.parseInt(cookie.substring(index+6));
+		int lastIndex = cookie.lastIndexOf("]");
+		return index != -1 ? Integer.parseInt(cookie.substring(index+6, lastIndex)) : -1;
 	}
 	
 	/**
@@ -222,16 +221,30 @@ public class Translator {
 	 */
 	public static int getPlayerId(String cookie) {
 		
+		cookie = decodeCookie(cookie);
+		int index = cookie.lastIndexOf("ID\":");
+		int lastIndex = cookie.lastIndexOf("}");
+		String number = cookie.substring(index+4, lastIndex);
+		return Integer.parseInt(number);
+	}
+	public static String getPlayerName(String cookie){
+		cookie = decodeCookie(cookie);
+		int index = cookie.indexOf("e\":\"") + 4; //e":"Sam" -> starts at S
+		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
+		return cookie.substring(index, lastIndex);
+	}
+	public static String getPlayerPassword(String cookie){
+		cookie = decodeCookie(cookie);
+		int index = cookie.indexOf("d\":\"") + 4; //d":"sam" -> starts at s
+		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
+		return cookie.substring(index, lastIndex);
+	}
+	private static String decodeCookie(String cookie){
 		try {
 			cookie = URLDecoder.decode(cookie, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		int index = cookie.lastIndexOf("ID\":");
-		
-		return Integer.parseInt(cookie.substring(index+4));
+		return cookie;
 	}
-	
-	
-	
 }

@@ -2,14 +2,18 @@ package shared.communication.request;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameModel;
 import shared.communication.response.CreateGameResponse;
 import shared.communication.response.Response;
+import shared.definitions.CatanColor;
 
 public class CreateGameRequest extends Request {
 
@@ -32,11 +36,11 @@ public class CreateGameRequest extends Request {
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		ServerGameModel sgm = new ServerGameModel();
-
 		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
 		response.setGameId(gameIDCookie);
-			response.setCookie("Set-cookie", "catan.game=\"" + gameIDCookie + "\";");
-		
+
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";Path=/;");
+
 		return (CreateGameResponse) response;
 	}
 	public CreateGameRequest(HttpExchange exchange){

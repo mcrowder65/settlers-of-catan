@@ -3,10 +3,11 @@ package shared.communication.request;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
-import java.util.List;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
+
 import client.utils.Translator;
 /**
  * Request class.
@@ -27,14 +28,13 @@ public abstract class Request {
 	protected transient String userCookie;
 	protected transient String passCookie;
 	protected void setCookies(Headers headers){
-		
-		if(headers.containsKey("Cookie") && !headers.get("Cookie").isEmpty()){
-			List<String> cookie = headers.get("Cookie"); //TODO this probably aint right
-			String k = cookie.get(0);
-			for (String s : cookie)
-				System.out.println(s);
-			//playerID = Translator.getPlayerId(cookie);
-			//gameID = Translator.getGameId(cookie);
+
+		if(headers.containsKey("Cookie")){
+			playerIDCookie = Translator.getPlayerId(headers.get("Cookie").toString());
+			
+			userCookie = Translator.getPlayerName(headers.get("Cookie").toString());
+			passCookie = Translator.getPlayerPassword(headers.get("Cookie").toString());
+			gameIDCookie = Translator.getGameId(headers.get("Cookie").toString());
 		}
 	}
 	protected static String convertStreamToString(java.io.InputStream is) {

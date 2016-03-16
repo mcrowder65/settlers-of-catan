@@ -6,7 +6,7 @@ import client.utils.Translator;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
-  import shared.definitions.GameModel;
+import shared.definitions.GameModel;
 import shared.definitions.MessageLine;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;

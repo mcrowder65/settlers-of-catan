@@ -39,7 +39,7 @@ public class CreateGameRequest extends Request {
 		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
 		response.setGameId(gameIDCookie);
 
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";Path=/;");
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
 
 		return (CreateGameResponse) response;
 	}

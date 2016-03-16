@@ -1,24 +1,17 @@
 package shared.communication.request;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import client.data.GameInfo;
-import client.data.PlayerInfo;
 import client.utils.Translator;
 import server.Game;
-import server.util.ServerGameModel;
-import shared.communication.response.CreateGameResponse;
-import shared.communication.response.Response;
+import server.util.*;
+import shared.communication.response.*;
 import shared.definitions.*;
-import shared.locations.EdgeValue;
-import shared.locations.HexLocation;
-import shared.locations.VertexObject;
-import sun.security.util.Resources;
+import shared.locations.*;
 
 public class CreateGameRequest extends Request {
 
@@ -27,6 +20,12 @@ public class CreateGameRequest extends Request {
 	private boolean randomNumbers;
 	private boolean randomPorts;
 	private Hex[] hexes = new Hex[19];
+	private Port[] ports = new Port[9];
+	private EdgeValue[] roads = new EdgeValue[0];
+	private VertexObject[] settlements = new VertexObject[0];
+	private VertexObject[] cities = new VertexObject[0];
+	private int radius = 2; //TODO what is radius?
+	private HexLocation robber = new HexLocation(0, -2); //TODO configure random robber
 	public CreateGameRequest(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		setVariables(name, randomTiles, randomNumbers, randomPorts);
 	}
@@ -48,7 +47,9 @@ public class CreateGameRequest extends Request {
 		//Hex[] hexes, Port[] ports, EdgeValue[] roads,
 		//VertexObject[] settlements, VertexObject[] cities, int radius,
 		//HexLocation robber
-		//sgm.setMap(new ServerGameMap());
+		generatePorts();
+		generateHexes();
+		sgm.setMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
 		Game.instance().setGame(gameIDCookie, sgm);
 		response.setGameId(gameIDCookie);
 
@@ -61,7 +62,38 @@ public class CreateGameRequest extends Request {
 		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		setVariables(tmp.name, tmp.randomTiles, tmp.randomNumbers, tmp.randomPorts);
 	}
-	
+	private void generatePorts(){
+		ArrayList<PortTypeAndRatio> portTypes = initPortTypes();
+		if(randomPorts)
+			Collections.shuffle(portTypes);
+		setPorts(portTypes);
+	}
+
+	private void setPorts(ArrayList<PortTypeAndRatio> portTypes){
+		//ResourceType resource, HexLocation location, EdgeDirection direction, int ratio
+		ports[0] = new Port(portTypes.get(0).type, new HexLocation(-1, -2), EdgeDirection.South, portTypes.get(0).ratio);
+		ports[1] = new Port(portTypes.get(1).type, new HexLocation(1, -3), EdgeDirection.South, portTypes.get(1).ratio);
+		ports[2] = new Port(portTypes.get(2).type, new HexLocation(3, -3), EdgeDirection.SouthWest, portTypes.get(2).ratio);
+		ports[3] = new Port(portTypes.get(3).type, new HexLocation(3, -1), EdgeDirection.NorthWest, portTypes.get(3).ratio);
+		ports[4] = new Port(portTypes.get(4).type, new HexLocation(2,1), EdgeDirection.NorthWest, portTypes.get(4).ratio);
+		ports[5] = new Port(portTypes.get(5).type, new HexLocation(0,3), EdgeDirection.North, portTypes.get(5).ratio);
+		ports[6] = new Port(portTypes.get(6).type, new HexLocation(-2,3), EdgeDirection.NorthEast, portTypes.get(6).ratio);
+		ports[7] = new Port(portTypes.get(7).type, new HexLocation(-3,2), EdgeDirection.NorthEast, portTypes.get(7).ratio);
+		ports[8] = new Port(portTypes.get(8).type, new HexLocation(-3,0), EdgeDirection.SouthEast, portTypes.get(8).ratio);
+	}
+	private ArrayList<PortTypeAndRatio> initPortTypes(){
+		ArrayList<PortTypeAndRatio> portTypes = new ArrayList<PortTypeAndRatio>();
+		portTypes.add(new PortTypeAndRatio(ResourceType.WHEAT, 2));
+		portTypes.add(new PortTypeAndRatio(ResourceType.ORE, 2));
+		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
+		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 2));
+		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
+		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
+		portTypes.add(new PortTypeAndRatio(ResourceType.BRICK, 2));
+		portTypes.add(new PortTypeAndRatio(ResourceType.WOOD, 2));
+		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
+		return portTypes;
+	}
 	private void generateHexes(){
 		ArrayList<Integer> nums = initNumbers();
 		ArrayList<ResourceType> resources = initResources();
@@ -98,17 +130,17 @@ public class CreateGameRequest extends Request {
 	}
 	private ArrayList<Integer> initNumbers(){
 		ArrayList<Integer> nums = new ArrayList<Integer>();
-		nums.add(0);
-		nums.add(8);
-		nums.add(4);
-		nums.add(5);
-		nums.add(3);
-		nums.add(11);
-		nums.add(10);
-		nums.add(9);
-		nums.add(2);
-		nums.add(11);
-		nums.add(11);
+		nums.add(0); //0
+		nums.add(8); //1
+		nums.add(4); //2
+		nums.add(5); //3
+		nums.add(3);//4
+		nums.add(11);//5
+		nums.add(10);//6
+		nums.add(9);//7
+		nums.add(2);//8
+		nums.add(11);//9
+		nums.add(12);//10
 		nums.add(9);
 		nums.add(5);
 		nums.add(6);
@@ -142,4 +174,14 @@ public class CreateGameRequest extends Request {
 		resources.add(ResourceType.WHEAT);
 		return resources;
 	}
+	class PortTypeAndRatio{
+		ResourceType type;
+		int ratio;
+		public PortTypeAndRatio(ResourceType type, int ratio){
+			this.type = type;
+			this.ratio = ratio;
+		}
+		
+	};
 }
+

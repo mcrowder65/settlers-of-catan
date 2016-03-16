@@ -7,6 +7,7 @@ import shared.locations.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -113,9 +114,87 @@ public class ServerGameMap extends GameMap {
 	
 		return canLaySecondRoad;
 	}
+
+	
+	public HashSet<EdgeValue> getAllPossibleRoadLocations(int playerIndex, boolean free) {
+		HashSet<EdgeValue> locs = new HashSet<EdgeValue>();
+		
+		for (Hex hex : hexes){
+			EdgeValue newLoc;
+			EdgeLocation edgeLoc;
+			
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    
+		    
+		    if (free && this.canLayRoadFirstRounds(newLoc))
+		    	locs.add(newLoc);
+		    else if (!free && this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.NorthWest).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    if (free && this.canLayRoadFirstRounds(newLoc))
+		    	locs.add(newLoc);
+		    else if (!free && this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.NorthEast).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    if (free && this.canLayRoadFirstRounds(newLoc))
+		    	locs.add(newLoc);
+		    else if (!free && this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    
+		    //TODO: Maybe needed?
+		    /*
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.South).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    if (this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    if (this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    
+		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation();
+		    newLoc = new EdgeValue(playerIndex, edgeLoc);
+		    if (this.canLayRoad(newLoc))
+		    	locs.add(newLoc);
+		    */
+		    
+		    
+		}
+		
+		return locs;
+	}
 	
 	
-	
+	public HashSet<VertexObject> getAllPossibleSettlementLocations(int playerIndex, boolean free) {
+		HashSet<VertexObject> locs = new HashSet<VertexObject>();
+		
+		for (Hex hex : hexes){
+			VertexLocation vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthWest).getNormalizedLocation();
+			VertexObject newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+			
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthEast).getNormalizedLocation();
+			 newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+		}
+		
+		return locs;
+	}
 }
 
 

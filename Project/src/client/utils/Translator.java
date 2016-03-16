@@ -224,20 +224,21 @@ public class Translator {
 		cookie = decodeCookie(cookie);
 		int index = cookie.lastIndexOf("ID\":");
 		int lastIndex = cookie.lastIndexOf("}");
-		String number = cookie.substring(index+4, lastIndex);
-		return Integer.parseInt(number);
+		String number = index == -1 || lastIndex == -1 ? null : cookie.substring(index+4, lastIndex);
+		return number == null ? -1 : Integer.parseInt(number);
 	}
 	public static String getPlayerName(String cookie){
 		cookie = decodeCookie(cookie);
 		int index = cookie.indexOf("e\":\"") + 4; //e":"Sam" -> starts at S
 		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
-		return cookie.substring(index, lastIndex);
+		
+		return index == -1 || lastIndex == -1 ?  null : cookie.substring(index, lastIndex);
 	}
 	public static String getPlayerPassword(String cookie){
 		cookie = decodeCookie(cookie);
 		int index = cookie.indexOf("d\":\"") + 4; //d":"sam" -> starts at s
 		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
-		return cookie.substring(index, lastIndex);
+		return index == -1 || lastIndex == -1 ? null : cookie.substring(index, lastIndex);
 	}
 	private static String decodeCookie(String cookie){
 		try {

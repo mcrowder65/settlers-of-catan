@@ -73,6 +73,36 @@ public class ServerPlayer extends Player {
 		
 		return true;
 	}
+	
+	public boolean canAcceptTrade(ResourceList offer){
+		ResourceList resources = this.getResources();
+		if(offer.getBrick()>0){
+			if(resources.getBrick() < offer.getBrick()){
+				return false;
+			}
+		}
+		if(offer.getWheat()>0){
+			if(resources.getWheat() < offer.getWheat()){
+				return false;
+			}
+		}
+		if(offer.getWood()>0){
+			if(resources.getWood() < offer.getWood()){
+				return false;
+			}
+		}
+		if(offer.getOre()>0){
+			if(resources.getOre() < offer.getOre()){
+				return false;
+			}
+		}
+		if(offer.getSheep()>0){
+			if(resources.getSheep() < offer.getSheep()){
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	 * updates a player when they lay a city during normal play
 	 */

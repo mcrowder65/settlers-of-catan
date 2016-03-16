@@ -95,7 +95,7 @@ public class AcceptTradeCommand extends MoveCommand {
 	public void distributeResources(ResourceType type, int qty, ServerPlayer player, ServerPlayer sendingPlayer) {
 		if(qty < 0) {
 			sendingPlayer.getResources().removeResource(type, Math.abs(qty));
-			player.getResources().addResource(type, qty);
+			player.getResources().addResource(type, Math.abs(qty));
 		}
 		else if(qty > 0) {
 			player.getResources().removeResource(type, qty);

@@ -31,7 +31,6 @@ public abstract class Request {
 
 		if(headers.containsKey("Cookie")){
 			playerIDCookie = Translator.getPlayerId(headers.get("Cookie").toString());
-			
 			userCookie = Translator.getPlayerName(headers.get("Cookie").toString());
 			passCookie = Translator.getPlayerPassword(headers.get("Cookie").toString());
 			gameIDCookie = Translator.getGameId(headers.get("Cookie").toString());

@@ -249,18 +249,25 @@ public class HTTPProxy implements IProxy{
 		HTTPJsonResponse response = sendRequest("/games/list", null);
 		return new ListGamesResponse(response.getResponseCode(), response.getResponseBody());
 	}
+	public String parseGameCookie(String cookie){
+		
+		int index = "catan.game=".length();
+		int lastIndex = cookie.indexOf(";");
+		
+		return index == -1 || lastIndex == -1 ? null : cookie.substring(index, lastIndex);
+	}
 	@Override
 	public CreateGameResponse createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/games/create",  new CreateGameRequest(name, randomTiles, randomNumbers, randomPorts));
 		if (response.getResponseCookie() != null)
-			setGameCookie(parseCookie(response.getResponseCookie()));
+			setGameCookie(parseGameCookie(response.getResponseCookie()));
 		return new CreateGameResponse(response.getResponseCode(), response.getResponseBody());
 	}
 	@Override
 	public Response joinGame(int id, CatanColor color) throws IllegalArgumentException {
 		HTTPJsonResponse response = sendRequest("/games/join", new JoinGameRequest(id, color));
 		if (response.getResponseCookie() != null)
-			setGameCookie(parseCookie(response.getResponseCookie()));
+			setGameCookie(parseGameCookie(response.getResponseCookie()));
 		
 		return new Response(response.getResponseCode(), response.getResponseBody());
 	}

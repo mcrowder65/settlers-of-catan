@@ -4,7 +4,5 @@ public enum AIActionPreference {
 	DEVCARDS,
 	ROADS,
 	SETTLEMENTS,
-	CITIES,
-	PORTS
-	
+	CITIES
 }

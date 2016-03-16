@@ -20,34 +20,34 @@ public class GameMap {
 	/**
 	 * Array of all the hexes on the map
 	 */
-	private Hex[] hexes;
+	protected Hex[] hexes;
 	/**
 	 * Array of all the ports on the map
 	 */
-	private Port[] ports;
+	protected Port[] ports;
 	/**
 	 * Array of all the roads on the map
 	 */
-	private EdgeValue[] roads;
+	protected EdgeValue[] roads;
 	/**
 	 * Array of all the settlements on the map
 	 */
-	private VertexObject[] settlements;
+	protected VertexObject[] settlements;
 	/**
 	 * Array of all the cities on the map
 	 */
-	private VertexObject[] cities;
+	protected VertexObject[] cities;
 	/**
 	 * Radius of the map
 	 */
-	private int radius;
+	protected int radius;
 	/**
 	 * Location of the robber on the map
 	 */
-	private HexLocation robber;
-	private List<EdgeValue>allRoads = new ArrayList<EdgeValue>();
-	private List<VertexObject>allSettlements = new ArrayList<VertexObject>();
-	private List<VertexObject>allCities = new ArrayList<VertexObject>();
+	protected HexLocation robber;
+	protected List<EdgeValue>allRoads = new ArrayList<EdgeValue>();
+	protected List<VertexObject>allSettlements = new ArrayList<VertexObject>();
+	protected List<VertexObject>allCities = new ArrayList<VertexObject>();
 	private List<Port>allPorts = new ArrayList<Port>();
 	
 	

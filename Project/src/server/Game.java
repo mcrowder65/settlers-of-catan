@@ -18,8 +18,6 @@ public class Game {
 	
 	
 	private Game() {
-		RegisteredPersonInfo temp = new RegisteredPersonInfo();
-		
 		addUser("matt", "matt");
 		addUser("brennen", "0000");
 		addUser("eric", "0000");

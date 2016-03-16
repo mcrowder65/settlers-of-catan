@@ -10,19 +10,19 @@ public class TurnTracker {
 	/**
 	 * Who's turn it is (0-3)
 	 */
-	private int currentTurn; 
+	protected int currentTurn; 
 	/**
 	 * ['Rolling' or 'Robbing' or 'Playing' or 'Discarding' or 'FirstRound' or 'SecondRound']: What's happening now
 	 */
-	private String status; 
+	protected String status; 
 	/**
 	 * The index of who has the longest road, -1 if no one has it
 	 */
-	private int longestRoad; 
+	protected int longestRoad; 
 	/**
 	 * //The index of who has the longest army, -1 if no one has it
 	 */
-	private int largestArmy; 
+	protected int largestArmy; 
 	
 	/**
 	 * Constructor for TurnTracker

@@ -2,6 +2,8 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
+import server.util.*;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
@@ -40,7 +42,56 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		return null;
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();
+		ResourceType res1 = this.getResource1();
+		ResourceType res2 = this.getResource2();
+ 		Game game = Game.instance();	
+ 		GetModelResponse response = new GetModelResponse();
+ 		ServerGameModel model = game.getGameId(gameIndex);		
+ 		ServerGameMap map = model.getServerMap();		
+ 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+ 		String status = turnTracker.getStatus();
+ 		
+ 		if(checkTurn(turnTracker,playerIndex) == false){		
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong turn");
+			return response; 		
+		}
+ 		
+ 		if(!status.equals("Playing")){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response;
+ 		}
+ 		
+ 		if(model.getBank().hasResource(res1) == false){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Bank doesn't have resources to fill order");
+			return response;
+ 		}
+ 		
+ 		if(model.getBank().hasResource(res2) == false){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Bank doesn't have resources to fill order");
+			return response;
+ 		}
+ 		
+ 		if(player.getOldDevCards().getYearOfPlenty() < 1){
+ 			response.setSuccess(false);
+			response.setErrorMessage("Player doesn't have YOP card");
+			return response;
+ 		}
+ 		
+ 		player.playYearOfPlentyCard();
+ 		player.getResources().addResource(res1,1);
+ 		player.getResources().addResource(res2,1);
+ 		model.getBank().removeResource(res1,1);
+ 		model.getBank().removeResource(res2,1);
+ 		
+		response.setSuccess(true);
+		return response;
 	}
 
 	public ResourceType getResource1() {

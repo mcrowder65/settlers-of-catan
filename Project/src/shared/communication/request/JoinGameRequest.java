@@ -41,7 +41,7 @@ public class JoinGameRequest extends Request {
 		else
 			games.get(id).addPlayer(new PlayerInfo(playerIDCookie, userCookie, color)); 
 
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";Path=/;");
+		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		return response;

@@ -59,6 +59,7 @@ public class AcceptTradeCommand extends MoveCommand {
  		int wheat = resources.getWheat();
  		int ore = resources.getOre();
  		int sheep = resources.getSheep();
+ 		int wood = resources.getWood();
  		if(player.canAcceptTrade(resources) == false){
  			response.setSuccess(false);
 			response.setErrorMessage("Cannot Accept Trade");
@@ -68,12 +69,79 @@ public class AcceptTradeCommand extends MoveCommand {
  		if(willAccept == true){
  			int sender = offer.getSender();
  			ServerPlayer sendingPlayer = model.getServerPlayers()[sender];
+ 			//if negative take away from the sending and add to the sender
+ 			//if resources positive take away from the sender and add them to the sending
+ 			//player has the income offer. sending player sends the offer
+ 			
+ 			if(brick < 0) {
+ 				for(int i = 0; i < Math.abs(brick); i++) {
+ 					sendingPlayer.removeBrick();
+ 					player.addBrick();
+ 				}
+ 			}
+ 			else if(brick > 0) {
+ 				for(int i = 0; i < Math.abs(brick); i++) {
+ 					player.removeBrick();
+ 					sendingPlayer.addBrick();
+ 				}
+ 			}
+ 			
+ 			if(wheat < 0) {
+ 				for(int i = 0; i < Math.abs(wheat); i++) {
+ 					sendingPlayer.removeWheat();
+ 					player.addWheat();
+ 				}
+ 			}
+ 			else if(wheat > 0) {
+ 				for(int i = 0; i < Math.abs(wheat); i++) {
+ 					player.removeWheat();
+ 					sendingPlayer.addWheat();
+ 				}
+ 			}
+ 			
+ 			if(ore < 0) {
+ 				for(int i = 0; i < Math.abs(ore); i++) {
+ 					sendingPlayer.removeOre();
+ 					player.addOre();
+ 				}
+ 			}
+ 			else if(ore > 0) {
+ 				for(int i = 0; i < Math.abs(ore); i++) {
+ 					player.removeOre();
+ 					sendingPlayer.addOre();
+ 				}
+ 			}
+ 			
+ 			if(sheep < 0) {
+ 				for(int i = 0; i < Math.abs(sheep); i++) {
+ 					sendingPlayer.removeSheep();
+ 					player.addSheep();
+ 				}
+ 			}
+ 			else if(sheep > 0) {
+ 				for(int i = 0; i < Math.abs(sheep); i++) {
+ 					player.removeSheep();
+ 					sendingPlayer.addSheep();
+ 				}
+ 			}
+ 			
+ 			if(wood < 0) {
+ 				for(int i = 0; i < Math.abs(wood); i++) {
+ 					sendingPlayer.removeWood();
+ 					player.addWood();
+ 				}
+ 			}
+ 			else if (wood > 0) {
+ 				for(int i = 0; i < Math.abs(wood); i++) {
+ 					player.removeWood();
+ 					sendingPlayer.addWood();
+ 				}
+ 			}
  			
  		}
  		
- 		
-
-		return null;
+ 		response.setSuccess(true);
+		return response;
 	}
 
 	public boolean getWillAccept() {

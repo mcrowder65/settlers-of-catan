@@ -206,8 +206,8 @@ public class Translator {
 	public static int getGameId(String cookie) {
 		
 		int index = cookie.lastIndexOf(".game=");
-		int lastIndex = cookie.lastIndexOf("]");
-		return index != -1 ? Integer.parseInt(cookie.substring(index+6, lastIndex)) : -1;
+		
+		return Integer.parseInt(cookie.substring(index+6));
 	}
 	
 	/**
@@ -217,30 +217,16 @@ public class Translator {
 	 */
 	public static int getPlayerId(String cookie) {
 		
-		cookie = decodeCookie(cookie);
-		int index = cookie.lastIndexOf("ID\":");
-		int lastIndex = cookie.lastIndexOf("}");
-		String number = cookie.substring(index+4, lastIndex);
-		return Integer.parseInt(number);
-	}
-	public static String getPlayerName(String cookie){
-		cookie = decodeCookie(cookie);
-		int index = cookie.indexOf("e\":\"") + 4; //e":"Sam" -> starts at S
-		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
-		return cookie.substring(index, lastIndex);
-	}
-	public static String getPlayerPassword(String cookie){
-		cookie = decodeCookie(cookie);
-		int index = cookie.indexOf("d\":\"") + 4; //d":"sam" -> starts at s
-		int lastIndex = cookie.indexOf("\"", index); //finds the closing quote
-		return cookie.substring(index, lastIndex);
-	}
-	private static String decodeCookie(String cookie){
 		try {
 			cookie = URLDecoder.decode(cookie, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return cookie;
+		int index = cookie.lastIndexOf("ID\":");
+		
+		return Integer.parseInt(cookie.substring(index+4));
 	}
+	
+	
+	
 }

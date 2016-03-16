@@ -61,31 +61,6 @@ public class ServerPlayer extends Player {
 		removeCity();
 	}
 	
-	public void discardCards(ResourceList cards){
-		int wood = cards.getWood();
-		int brick = cards.getBrick();
-		int wheat = cards.getWheat();
-		int sheep = cards.getSheep();
-		int ore = cards.getOre();
-		
-		if(wood > 0){
-			getResources().removeResource(ResourceType.WOOD, wood);
-		}
-		if(brick > 0){
-			getResources().removeResource(ResourceType.BRICK, brick);
-		}
-		if(wheat > 0){
-			getResources().removeResource(ResourceType.WHEAT, wheat);
-		}
-		if(sheep > 0){
-			getResources().removeResource(ResourceType.SHEEP, sheep);
-		}
-		if(ore > 0){
-			getResources().removeResource(ResourceType.ORE, ore);
-		}
-		setDiscarded(true);
-	}
-	
 	public void addResource(ResourceType resource){
 		if(resource == ResourceType.WOOD){
 			addWood();

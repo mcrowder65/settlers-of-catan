@@ -1,18 +1,15 @@
 package server.util;
 
-import java.util.List;
 import java.util.Random;
 
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
   import shared.definitions.GameModel;
-import shared.definitions.Hex;
 import shared.definitions.MessageLine;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
-import shared.definitions.ResourceType;
-import shared.locations.VertexObject;		
+import shared.definitions.ResourceType;		
   		  
   public class ServerGameModel extends GameModel{		  
   			  	
@@ -37,40 +34,7 @@ import shared.locations.VertexObject;
 	}		
 	public ServerTurnTracker getServerTurnTracker() {		
 		return serverTurnTracker;		
-	}	
-	
-	public boolean allPlayersDiscarded(){
-		for(int i=0; i<serverPlayers.length; i++){
-			if(serverPlayers[i].getDiscarded() == false){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Issues resources depending on the number rolled
-	 * @param numRolled
-	 */
-	public void issueResourcesNormalPlay(int numRolled){
-		Hex[] allHexes = serverMap.getHexes();
-		
-		for(int i=0; i<allHexes.length; i++){
-			Hex loc = allHexes[i];
-			if(loc.getNumber() == numRolled){
-				if(!serverMap.getRobber().equals(loc.getLocation())){
-					List<VertexObject> municipalities = serverMap.getMunicipalityOnHex(loc.getLocation());
-					if(municipalities.size()>0){
-						for(int x=0; x<municipalities.size(); x++){
-							int owner = municipalities.get(x).getOwner();
-							ResourceType resource = loc.getResource();
-							serverPlayers[owner].getResources().addResource(resource,1);
-						}
-					}
-				}
-			}
-		}
-	}
+	}		
 			
  	public ServerPlayer getLocalServerPlayer(int playerId) {		
  		for (int n = 0; n < serverPlayers.length; n++) {		

@@ -54,10 +54,7 @@ public class Catan extends JFrame
 	//
 
 	public static void main(final String[] args)
-	{
-		
-		JsonTranslator.translate();
-		
+	{		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

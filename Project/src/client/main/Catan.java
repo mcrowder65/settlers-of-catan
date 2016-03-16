@@ -13,6 +13,7 @@ import client.login.*;
 import client.map.IMapController;
 import client.join.*;
 import client.misc.*;
+import client.utils.JsonTranslator;
 import client.base.*;
 
 /**
@@ -54,6 +55,9 @@ public class Catan extends JFrame
 
 	public static void main(final String[] args)
 	{
+		
+		JsonTranslator.translate();
+		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

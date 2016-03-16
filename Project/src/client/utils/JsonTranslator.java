@@ -406,18 +406,21 @@ public class JsonTranslator {
 	private JsonArray makeJsonHexesObject(Hex[] hexes) {
 		JsonArray jHexes = new JsonArray();
 
-		//Desert
-		JsonObject temp = new JsonObject();
-		temp.add("location", makeJsonHexLocationObject(hexes[0].getLocation()));
-		jHexes.add(temp);
 
 		//All of the other hexes
-		for(int i = 1; i < hexes.length; i++) {
+		for(int i = 0; i < hexes.length; i++) {
 			JsonObject jHex = new JsonObject();
 
-			jHex.addProperty("resource", hexes[i].getResource().toString().toLowerCase());
-			jHex.add("location", makeJsonHexLocationObject(hexes[i].getLocation()));
-			jHex.addProperty("number", hexes[i].getNumber());
+			//This checks for the Desert 
+			if(hexes[i].getResource() == ResourceType.NONE) {
+				System.out.println("here");
+				jHex.add("location", makeJsonHexLocationObject(hexes[i].getLocation()));
+			}
+			else{
+				jHex.addProperty("resource", hexes[i].getResource().toString().toLowerCase());
+				jHex.add("location", makeJsonHexLocationObject(hexes[i].getLocation()));
+				jHex.addProperty("number", hexes[i].getNumber());
+			}
 
 			jHexes.add(jHex);
 		}
@@ -434,7 +437,7 @@ public class JsonTranslator {
 			if(ports[i].getResource() != ResourceType.NONE){
 				jPort.addProperty("resource", ports[i].getResource().toString().toLowerCase());
 			}
-			jPort.addProperty("direction", ports[i].getDirection().toString());
+			jPort.addProperty("direction", MirrorEdgeDirection.getMirrorEdge(ports[i].getDirection()).toString());      
 			jPort.add("location", makeJsonHexLocationObject(ports[i].getLocation()));
 
 
@@ -472,7 +475,7 @@ public class JsonTranslator {
 	private JsonObject makeJsonEdgeLocationObject(EdgeLocation location) {
 		JsonObject jLocation = new JsonObject();
 
-		jLocation.addProperty("direction", location.getDir().toString());
+		jLocation.addProperty("direction", MirrorEdgeDirection.getMirrorEdge(location.getDir()).toString());
 		jLocation.addProperty("x", location.getHexLoc().getX());
 		jLocation.addProperty("y", location.getHexLoc().getY());
 
@@ -498,7 +501,7 @@ public class JsonTranslator {
 	private JsonObject makeJsonVertexLocationObject(VertexLocation location) {
 		JsonObject jLocation = new JsonObject();
 
-		jLocation.addProperty("direction", location.getDir().toString());
+		jLocation.addProperty("direction", MirrorVertexDirection.getMirrorEdge(location.getDir()).toString());
 		jLocation.addProperty("x", location.getHexLoc().getX());
 		jLocation.addProperty("y", location.getHexLoc().getY());
 
@@ -584,9 +587,8 @@ public class JsonTranslator {
 
 	//**************************************************************************
 	//**************TESTING METHOD************************************
-	public String translate() {
-		Gson gson = new Gson();
-
+	public static String translate() {
+		JsonTranslator t = new JsonTranslator();
 
 		TurnTracker turn = new TurnTracker();
 		turn.setStatus("Playing");
@@ -693,13 +695,13 @@ public class JsonTranslator {
 
 
 		JsonObject shell = new JsonObject();
-		shell.add("deck", makeJsonDevCardListObject(new DevCardList(2,5,2,14,2)));
-		shell.add("map", makeJsonGameMapObject(map));
-		shell.add("players", makeJsonPlayersObject(players));
-		shell.add("log", makeJsonMessageListObject(log));
-		shell.add("chat", makeJsonMessageListObject(chat));
-		shell.add("bank", makeJsonResourceListObject(new ResourceList(22,23,21,20,22)));
-		shell.add("turnTracker", makeJsonTurnTrackerObject(turn));
+		shell.add("deck", t.makeJsonDevCardListObject(new DevCardList(2,5,2,14,2)));
+		shell.add("map", t.makeJsonGameMapObject(map));
+		shell.add("players", t.makeJsonPlayersObject(players));
+		shell.add("log", t.makeJsonMessageListObject(log));
+		shell.add("chat", t.makeJsonMessageListObject(chat));
+		shell.add("bank", t.makeJsonResourceListObject(new ResourceList(22,23,21,20,22)));
+		shell.add("turnTracker", t.makeJsonTurnTrackerObject(turn));
 		shell.addProperty("winner", -1);
 		shell.addProperty("version", 25);
 

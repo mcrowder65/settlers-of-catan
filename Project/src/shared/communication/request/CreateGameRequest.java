@@ -36,6 +36,7 @@ public class CreateGameRequest extends Request {
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		ServerGameModel sgm = new ServerGameModel();
+		sgm.setGameCookie(gameIDCookie);
 		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
 		response.setGameId(gameIDCookie);
 

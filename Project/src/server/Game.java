@@ -55,6 +55,8 @@ public class Game {
 	public static List<AIType> getAiTypes() {
 		return aiTypes;
 	}
+	
+	
 	public  String getUnusedAiName(int gameId) {
 		boolean success = false;
 		for (String name : aiNames) {
@@ -88,7 +90,12 @@ public class Game {
 		}
 		return null;
 	}
-	
+	public void setGame(int gameID, ServerGameModel model){
+		GameCombo combo = new GameCombo();
+		//TODO info?
+		combo.model = model;
+		_instance.arrayGames.set(gameID, combo);
+	}
 	public int addGame(GameInfo info, ServerGameModel model) {
 	
 		GameCombo combo = new GameCombo();

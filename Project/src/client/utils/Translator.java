@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import client.data.GameInfo;
+import server.util.ServerGameModel;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
@@ -63,6 +64,10 @@ public class Translator {
 	public static void setJsonTranslator(JsonTranslator jsonTranslator) {
 		Translator.jsonTranslator = jsonTranslator;
 	}
+	public static String modelToJson(ServerGameModel model) {
+		return Translator.jsonTranslator.modelToJson(model);
+	}
+	
 	public static ResourceType getResourceType(String resource){
 		//NONE, WOOD, BRICK, SHEEP, WHEAT, ORE
 		int switchType = 5; //SHEEP, sheep

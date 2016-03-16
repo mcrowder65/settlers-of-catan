@@ -16,6 +16,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import server.util.ServerGameModel;
 public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
@@ -43,7 +44,7 @@ public class JsonTranslator {
 			JsonArray jsPlayerArray = temp.get("players").getAsJsonArray();
 			for(int x = 0; x < jsPlayerArray.size(); x++){
 				JsonObject jsPlayer = jsPlayerArray.get(x).getAsJsonObject();
-				
+
 				CatanColor color = (jsPlayer.has("color")) ? Translator.getCatanColor(jsPlayer.get("color").getAsString()) : null;
 				String name = (jsPlayer.has("name")) ? jsPlayer.get("name").getAsString() : null;
 				int playerID = (jsPlayer.has("id")) ? jsPlayer.get("id").getAsInt() : -1;
@@ -58,32 +59,32 @@ public class JsonTranslator {
 	}
 	public GameModel makeObject(String json){
 		JsonParser parser = new JsonParser();
-//		StringReader strReader = new StringReader(json);
-//		JsonReader reader = new JsonReader(strReader);
-//		reader.setLenient(true);
+		//		StringReader strReader = new StringReader(json);
+		//		JsonReader reader = new JsonReader(strReader);
+		//		reader.setLenient(true);
 		JsonObject jsonObj = (JsonObject) parser.parse(json);
 		//JsonObject jsonObj = (JsonObject) parser.parse(reader);
-	
+
 		GameModel gameModel = new GameModel();
-		
+
 		DevCardList deck = makeDeck((JsonObject)jsonObj.get("deck"));
 		gameModel.setDeck(deck);
-		
+
 		ResourceList bank = getResourceList((JsonObject)jsonObj.get("bank"));
 		gameModel.setBank(bank);
-		
+
 		MessageList chat = makeMessageList((JsonObject)jsonObj.get("chat"));
 		gameModel.setChat(chat);
-		
+
 		MessageList log = makeMessageList((JsonObject)jsonObj.get("log"));
 		gameModel.setLog(log);
-		
+
 		GameMap map = makeMap(jsonObj.getAsJsonObject("map"));
 		gameModel.setMap(map);
-		
+
 		Player[] players =  makePlayers(jsonObj.getAsJsonArray("players"));
 		gameModel.setPlayers(players);
-		
+
 		if (jsonObj.has("tradeOffer")) {
 			TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));
 			gameModel.setTradeOffer(tradeOffer);
@@ -92,16 +93,16 @@ public class JsonTranslator {
 		{
 			gameModel.setTradeOffer(null);
 		}
-		
+
 		TurnTracker turnTracker = makeTurnTracker((JsonObject)jsonObj.get("turnTracker"));
 		gameModel.setTurnTracker(turnTracker);
-		
+
 		int version = jsonObj.get("version").getAsInt();
 		gameModel.setVersion(version);
-		
+
 		int winner = jsonObj.get("winner").getAsInt();
 		gameModel.setWinner(winner);
-		
+
 		return gameModel;
 	}
 	public DevCardList makeDeck(JsonObject jsDeck){
@@ -126,14 +127,14 @@ public class JsonTranslator {
 		messageList.setLines(lines);
 		return messageList;
 	}
-	
-	
+
+
 	public GameMap makeMap(JsonObject jsMap){
 		GameMap map = new GameMap();
-		
+
 		int radius = jsMap.get("radius").getAsInt();
 		map.setRadius(radius);
-		
+
 		JsonObject jsRobber = (JsonObject)jsMap.get("robber");
 		int rX = jsRobber.get("x").getAsInt();
 		int rY = jsRobber.get("y").getAsInt();
@@ -142,19 +143,19 @@ public class JsonTranslator {
 
 		Hex[] hexes = makeHexes(jsMap.getAsJsonArray("hexes"));
 		map.setHexes(hexes);
-		
+
 		Port[] ports = makePorts(jsMap.getAsJsonArray("ports"));
 		map.setPorts(ports);
-		
+
 		EdgeValue[] roads = makeRoads(jsMap.getAsJsonArray("roads"));
 		map.setRoads(roads);
-		
+
 		VertexObject[] settlements = makeSettlements(jsMap.getAsJsonArray("settlements"));
 		map.setSettlements(settlements);
-		
+
 		VertexObject[] cities = makeCities(jsMap.getAsJsonArray("cities"));
 		map.setCities(cities);
-		
+
 		return map;
 	}
 	public Hex[] makeHexes(JsonArray jsHexes){
@@ -164,46 +165,46 @@ public class JsonTranslator {
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			
+
 			String resource = "None";
 			int number = 0;
 			if (temp.has("resource")) {
-			  resource = temp.get("resource").toString().replace("\"", "");
-			  number = temp.get("number").getAsInt();
+				resource = temp.get("resource").toString().replace("\"", "");
+				number = temp.get("number").getAsInt();
 			}
 			Hex hex = new Hex(new HexLocation(x,y), Translator.getResourceType(resource), number);
 			hexes.add(hex);
 		}
 		return hexes.toArray(new Hex[hexes.size()]);
 	}
-	
+
 	public Port[] makePorts(JsonArray jsPorts){
 		ArrayList<Port> ports = new ArrayList<Port>();
 		for(int i = 0; i < jsPorts.size(); i++){
-			
+
 			JsonObject temp = (JsonObject)jsPorts.get(i);
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
 			HexLocation hex = new HexLocation(x,y);
-			
+
 			String direction = temp.get("direction").getAsString();
 			EdgeDirection edgeDirection = Translator.getEdgeDirection(direction);
-			
+
 			String resource = "None";
 			if (temp.has("resource")) {
-			    resource = temp.get("resource").getAsString();
+				resource = temp.get("resource").getAsString();
 			}
 			ResourceType resourceType = Translator.getResourceType(resource);
 			int ratio = temp.get("ratio").getAsInt();
-			 
+
 			Port port = new Port(resourceType, hex, edgeDirection, ratio);
 			ports.add(port);
 		}
 		return ports.toArray(new Port[ports.size()]);
 	}
-	
-	
+
+
 	public EdgeValue[] makeRoads(JsonArray jsRoads){
 		ArrayList<EdgeValue> roads = new ArrayList<EdgeValue>();
 		for(int i = 0; i < jsRoads.size(); i++){
@@ -212,12 +213,12 @@ public class JsonTranslator {
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
 			HexLocation hex = new HexLocation(x,y);
-			
+
 			String direction = location.get("direction").getAsString();
 			EdgeDirection edgeDirection = Translator.getEdgeDirection(direction);
-			
+
 			EdgeLocation edgeLocation = new EdgeLocation(hex, edgeDirection);
-			
+
 			int owner = temp.get("owner").getAsInt();
 			roads.add(new EdgeValue(owner, edgeLocation));
 		}
@@ -230,7 +231,7 @@ public class JsonTranslator {
 			JsonObject location = (JsonObject)temp.get("location");
 			int x = location.get("x").getAsInt();
 			int y = location.get("y").getAsInt();
-			
+
 			String direction = location.get("direction").getAsString();
 			VertexLocation vertexLocation = 
 					new VertexLocation(new HexLocation(x,y), 
@@ -249,12 +250,12 @@ public class JsonTranslator {
 			int y = location.get("y").getAsInt();
 			//hexlocation
 			//vertexdirection
-			
-			
+
+
 			String direction = location.get("direction").getAsString();
 			VertexLocation vertexLocation = new VertexLocation(
 					new HexLocation(x,y), Translator.getVertexDirection(direction));
-			
+
 			int owner = temp.get("owner").getAsInt();
 			VertexObject vertexObject = new VertexObject(owner, vertexLocation);
 			cities.add(vertexObject);
@@ -280,22 +281,22 @@ public class JsonTranslator {
 			int settlements = player.get("settlements").getAsInt();
 			int soldiers = player.get("soldiers").getAsInt();
 			int victoryPoints = player.get("victoryPoints").getAsInt();
-			
+
 			String name = player.get("name").getAsString();
 			DevCardList newDevCards = getDevCards((JsonObject)player.get("newDevCards"));
 			DevCardList oldDevCards = getDevCards((JsonObject)player.get("oldDevCards"));
 			ResourceList resources = getResourceList((JsonObject)player.get("resources"));
-			
+
 			Player playerObj = new Player(cities,  Translator.getCatanColor(color), discarded, monuments,
 					name, newDevCards, oldDevCards,
 					playerIndex, playedDevCard, playerID,
-				    resources, roads, settlements, soldiers,
+					resources, roads, settlements, soldiers,
 					victoryPoints);
 			players.add(playerObj);
 		}
 		return players.toArray(new Player[players.size()]);
 	}
-	
+
 	public ResourceList getResourceList(JsonObject jsObject){
 		int brick = jsObject.get("brick").getAsInt();
 		int ore = jsObject.get("ore").getAsInt();
@@ -310,7 +311,7 @@ public class JsonTranslator {
 		int roadBuilding = devCards.get("roadBuilding").getAsInt();
 		int soldier = devCards.get("soldier").getAsInt();
 		int yearOfPlenty = devCards.get("yearOfPlenty").getAsInt();
-		
+
 		return new DevCardList(monopoly, monument, 
 				roadBuilding, soldier, yearOfPlenty);
 	}
@@ -327,15 +328,393 @@ public class JsonTranslator {
 		int largestArmy = jsTurnTracker.get("largestArmy").getAsInt();
 		return new TurnTracker(currentTurn, status, longestRoad, largestArmy);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+	//**********************************************************************************************************************************
+	//**********************************************************************************************************************************
+	//************************             *********************************************************************************************
+	//************************MODEL TO JSON*********************************************************************************************
+	//************************             *********************************************************************************************
+	//**********************************************************************************************************************************
+	//**********************************************************************************************************************************
+
+	public String modelToJson(ServerGameModel model) {
+
+		//Extracts all of the different parts from the model
+		DevCardList deck = model.getDeck();
+		GameMap map = model.getMap();
+		Player[] players = model.getPlayers();
+		MessageList log = model.getLog();
+		MessageList chat = model.getChat();
+		ResourceList bank = model.getBank();
+		TurnTracker turnTracker = model.getTurnTracker();
+		int winner = model.getWinner();
+		int version = model.getVersion();
+
+
+		//Creates the inner objects of the Json from the different 
+		//parts of the model extracted above
+		JsonObject innerDeck = this.makeJsonDevCardListObject(deck);
+		JsonObject innerMap = this.makeJsonGameMapObject(map);
+		JsonArray innerPlayers = this.makeJsonPlayersObject(players);
+		JsonObject innerLog = this.makeJsonMessageListObject(log);
+		JsonObject innerChat = this.makeJsonMessageListObject(chat);
+		JsonObject innerBank = this.makeJsonResourceListObject(bank);
+		JsonObject innerTurnTracker = this.makeJsonTurnTrackerObject(turnTracker);
+
+		//The inner objects are inserted in a "Shell" which is the structure
+		//that holds the entire model
+		JsonObject shell = new JsonObject();
+		shell.add("deck", innerDeck);
+		shell.add("map", innerMap);
+		shell.add("players", innerPlayers);
+		shell.add("log", innerLog);
+		shell.add("chat", innerChat);
+		shell.add("bank", innerBank);
+		shell.add("turnTracker", innerTurnTracker);
+		shell.addProperty("winner", winner);
+		shell.addProperty("version", version);
+
+		return shell.toString();
+	}
+
+	public JsonObject makeJsonDevCardListObject(DevCardList list) {
+		JsonObject jList = new JsonObject();
+		jList.addProperty("yearOfPlenty", list.getYearOfPlenty());
+		jList.addProperty("monopoly", list.getMonopoly());
+		jList.addProperty("soldier", list.getSoldier());
+		jList.addProperty("roadBuilding", list.getRoadBuilding());
+		jList.addProperty("monument", list.getMonument());
+
+		return jList;
+	}
+
+	private JsonObject makeJsonGameMapObject(GameMap map) {
+		JsonObject jMap = new JsonObject();
+
+		jMap.add("hexes", makeJsonHexesObject(map.getHexes()));
+		jMap.add("roads", makeJsonEdgeValueObject(map.getRoads()));
+		jMap.add("cities", makeJsonVertexObject(map.getCities()));
+		jMap.add("settlements", makeJsonVertexObject(map.getSettlements()));
+		jMap.addProperty("radius", map.getRadius());
+		jMap.add("ports", makeJsonPortObject(map.getPorts()));
+		jMap.add("robber", makeJsonHexLocationObject(map.getRobber()));
+
+		return jMap;	
+	}
+
+	private JsonArray makeJsonHexesObject(Hex[] hexes) {
+		JsonArray jHexes = new JsonArray();
+
+		//Desert
+		JsonObject temp = new JsonObject();
+		temp.add("location", makeJsonHexLocationObject(hexes[0].getLocation()));
+		jHexes.add(temp);
+
+		//All of the other hexes
+		for(int i = 1; i < hexes.length; i++) {
+			JsonObject jHex = new JsonObject();
+
+			jHex.addProperty("resource", hexes[i].getResource().toString().toLowerCase());
+			jHex.add("location", makeJsonHexLocationObject(hexes[i].getLocation()));
+			jHex.addProperty("number", hexes[i].getNumber());
+
+			jHexes.add(jHex);
+		}
+		return jHexes;
+	}
+
+	private JsonArray makeJsonPortObject(Port[] ports) {
+		JsonArray jPorts = new JsonArray();
+
+		for(int i = 0; i < ports.length; i++) {
+			JsonObject jPort = new JsonObject();
+
+			jPort.addProperty("ration", ports[i].getRatio());
+			if(ports[i].getResource() != ResourceType.NONE){
+				jPort.addProperty("resource", ports[i].getResource().toString().toLowerCase());
+			}
+			jPort.addProperty("direction", ports[i].getDirection().toString());
+			jPort.add("location", makeJsonHexLocationObject(ports[i].getLocation()));
+
+
+			jPorts.add(jPort);
+		}
+
+
+		return jPorts;
+	}
+
+	private JsonObject makeJsonHexLocationObject(HexLocation hex) {
+		JsonObject jHex = new JsonObject();
+
+		jHex.addProperty("x", hex.getX());
+		jHex.addProperty("y", hex.getY());
+
+		return jHex;
+	}
+
+	private JsonArray makeJsonEdgeValueObject(EdgeValue[] roads) {
+		JsonArray jRoads = new JsonArray();
+
+		for(int i = 0; i < roads.length; i++) {
+			JsonObject jRoad = new JsonObject();
+
+			jRoad.addProperty("owner", roads[i].getOwner());
+			jRoad.add("location", makeJsonEdgeLocationObject(roads[i].getLocation()));
+
+			jRoads.add(jRoad);
+		}
+
+		return jRoads;
+	}
+
+	private JsonObject makeJsonEdgeLocationObject(EdgeLocation location) {
+		JsonObject jLocation = new JsonObject();
+
+		jLocation.addProperty("direction", location.getDir().toString());
+		jLocation.addProperty("x", location.getHexLoc().getX());
+		jLocation.addProperty("y", location.getHexLoc().getY());
+
+		return jLocation;
+	}
+
+	private JsonArray makeJsonVertexObject(VertexObject[] array) {
+		JsonArray jArray = new JsonArray();
+
+		for(int i = 0; i < array.length; i++) {
+			JsonObject jObject = new JsonObject();
+
+			jObject.addProperty("owner", array[i].getOwner());
+			jObject.add("location", makeJsonVertexLocationObject(array[i].getLocation()));
+
+			jArray.add(jObject);
+		}
+
+
+		return jArray;
+	}
+
+	private JsonObject makeJsonVertexLocationObject(VertexLocation location) {
+		JsonObject jLocation = new JsonObject();
+
+		jLocation.addProperty("direction", location.getDir().toString());
+		jLocation.addProperty("x", location.getHexLoc().getX());
+		jLocation.addProperty("y", location.getHexLoc().getY());
+
+		return jLocation;
+	}
+
+
+	private JsonArray makeJsonPlayersObject(Player[] players) {
+		JsonArray jArray = new JsonArray();
+
+		for(int i = 0; i < players.length; i++) {
+			jArray.add(makeJsonPlayerObject(players[i]));
+		}
+		return jArray;
+	}
+
+	private JsonObject makeJsonPlayerObject(Player player) {
+		JsonObject jPlayer = new JsonObject();
+
+		jPlayer.add("resources", makeJsonResourceListObject(player.getResources()));
+		jPlayer.add("oldDevCards", makeJsonDevCardListObject(player.getOldDevCards()));
+		jPlayer.add("newDevCards", makeJsonDevCardListObject(player.getNewDevCards()));
+
+		jPlayer.addProperty("roads", player.getRoads());
+		jPlayer.addProperty("cities", player.getCities());
+		jPlayer.addProperty("settlements", player.getSettlements());
+		jPlayer.addProperty("soldiers", player.getSoldiers());
+		jPlayer.addProperty("victoryPoints", player.getVictoryPoints());
+		jPlayer.addProperty("monuments", player.getMonuments());
+		jPlayer.addProperty("playedDevCard", player.getPlayedDevCard());
+		jPlayer.addProperty("discarded", player.getDiscarded());
+		jPlayer.addProperty("playerID", player.getPlayerID());
+		jPlayer.addProperty("playerIndex", player.getPlayerIndex());
+		jPlayer.addProperty("name", player.getName());
+		jPlayer.addProperty("color", player.getColor().toString());
+
+		return jPlayer;
+	}
+
+
+
+	private JsonObject makeJsonMessageListObject(MessageList list) {
+		JsonObject jList = new JsonObject();
+
+
+		JsonArray jArray = new JsonArray();
+		for(int i = 0; i < list.getLines().length; i++) {
+			JsonObject line = new JsonObject();
+
+			line.addProperty("source", list.getLines()[i].getSource());
+			line.addProperty("message", list.getLines()[i].getMessage());
+
+			jArray.add(line);
+		}
+
+		jList.add("lines", jArray);
+		return jList;
+	}
+
+	private JsonObject makeJsonResourceListObject(ResourceList list) {
+		JsonObject jList = new JsonObject();
+
+		jList.addProperty("brick", list.getBrick());
+		jList.addProperty("wood", list.getWood());
+		jList.addProperty("sheep", list.getSheep());
+		jList.addProperty("wheat", list.getWheat());
+		jList.addProperty("ore", list.getOre());
+
+		return jList;
+	}
+
+	private JsonObject makeJsonTurnTrackerObject(TurnTracker turn) {
+		JsonObject jList = new JsonObject();
+
+		jList.addProperty("status", turn.getStatus());
+		jList.addProperty("currentTurn", turn.getCurrentTurn());
+		jList.addProperty("longestRoad", turn.getLongestRoad());
+		jList.addProperty("largestArmy", turn.getlargestArmy());
+
+		return jList;
+	}
+
+
+	//**************************************************************************
+	//**************TESTING METHOD************************************
+	public String translate() {
+		Gson gson = new Gson();
+
+
+		TurnTracker turn = new TurnTracker();
+		turn.setStatus("Playing");
+		turn.setCurrentTurn(0);
+		turn.setLongestRoad(-1);
+		turn.setlargestArmy(-1);
+
+
+		MessageLine[] lines = { new MessageLine("manuel built a road", "manuel"),
+				new MessageLine("manuel buitl a settlement", "manuel"),
+				new MessageLine("manuel's turn just ended", "manuel"),
+				new MessageLine("Ken built a road", "Ken"),
+				new MessageLine("Ken built a settlement", "Ken"),
+				new MessageLine("Ken's turn just ended", "Ken"),
+				new MessageLine("Steve built a road", "Steve"),
+				new MessageLine("Steve built a settlement", "Steve"),
+				new MessageLine("Steve's turn just ended", "Steve"),
+				new MessageLine("Squall built a road", "Squal"),
+				new MessageLine("Squall built a settlement", "Squall"),
+				new MessageLine("Squall's turn just ended", "Squall")
+		};
+		MessageList log = new MessageList(lines);
+
+		MessageList chat = new MessageList(new MessageLine[0]);
+
+
+		Player player1 = new Player();
+		player1.setResources(new ResourceList(2,0,1,0,1));
+		player1.setOldDevCards(new DevCardList(0,0,0,0,0));
+		player1.setNewDevCards(new DevCardList(0,0,0,0,0));
+		player1.setRoads(13);
+		player1.setCities(4);
+		player1.setSettlements(3);
+		player1.setSoldiers(0);
+		player1.setVictoryPoints(2);
+		player1.setMonuments(0);
+		player1.setPlayedDevCard(false);
+		player1.setDiscarded(false);
+		player1.setPlayerID(12);
+		player1.setPlayerIndex(0);
+		player1.setName("manuel");
+		player1.setColor(CatanColor.purple);
+
+		Player player2 = new Player();
+		player2.setResources(new ResourceList(0,1,1,2,0));
+		player2.setOldDevCards(new DevCardList(0,0,0,0,0));
+		player2.setNewDevCards(new DevCardList(0,0,0,0,0));
+		player2.setRoads(13);
+		player2.setCities(4);
+		player2.setSettlements(3);
+		player2.setSoldiers(0);
+		player2.setVictoryPoints(2);
+		player2.setMonuments(0);
+		player2.setPlayedDevCard(false);
+		player2.setDiscarded(false);
+		player2.setPlayerID(-2);
+		player2.setPlayerIndex(1);
+		player2.setName("Ken");
+		player2.setColor(CatanColor.orange);
+
+		Player[] players = {player1, player2};
+
+
+		GameMap map = new GameMap();
+
+		Hex[] hexes = { new Hex(new HexLocation(0,-2),ResourceType.NONE,0),
+				new Hex(new HexLocation(1,-2), ResourceType.BRICK, 4),
+				new Hex(new HexLocation(2,-2), ResourceType.WOOD,11),
+				new Hex(new HexLocation(-1,-1), ResourceType.BRICK,8),
+				new Hex(new HexLocation(0,-1), ResourceType.WOOD, 3)
+		};
+		map.setHexes(hexes);
+
+		EdgeValue[] roads = { new EdgeValue(0, new EdgeLocation(new HexLocation(-1,-1), EdgeDirection.South)),
+				new EdgeValue(1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)),
+				new EdgeValue(2, new EdgeLocation(new HexLocation(2,-1), EdgeDirection.SouthWest)),
+				new EdgeValue(2, new EdgeLocation(new HexLocation(-1,1), EdgeDirection.SouthWest)),
+				new EdgeValue(1, new EdgeLocation(new HexLocation(0,1), EdgeDirection.South))
+		};
+		map.setRoads(roads);
+
+		VertexObject[] cities = new VertexObject[0];
+		map.setCities(cities);
+
+		VertexObject[] settlements = { new VertexObject(1, new VertexLocation(new HexLocation(1,-2), VertexDirection.SouthWest)),
+				new VertexObject(0, new VertexLocation(new HexLocation(-1,0), VertexDirection.SouthEast)),
+				new VertexObject(3, new VertexLocation(new HexLocation(-1,1), VertexDirection.SouthEast)),
+				new VertexObject(2, new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthEast)),
+				new VertexObject(2, new VertexLocation(new HexLocation(1,-1), VertexDirection.SouthEast))
+		};
+		map.setSettlements(settlements);
+		map.setRadius(3);
+
+		Port[] ports = { new Port(ResourceType.BRICK,new HexLocation(-2,3), EdgeDirection.NorthEast, 2),
+				new Port(ResourceType.NONE, new HexLocation(-3,0), EdgeDirection.SouthEast,3),
+				new Port(ResourceType.WOOD, new HexLocation(-3,2), EdgeDirection.NorthEast,2),
+				new Port(ResourceType.SHEEP, new HexLocation(3,-1), EdgeDirection.NorthWest,2),
+				new Port(ResourceType.NONE, new HexLocation(2,1), EdgeDirection.NorthWest,3)				
+		};
+		map.setPorts(ports);
+
+
+		map.setRobber(new HexLocation(0,-2));
+
+
+		JsonObject shell = new JsonObject();
+		shell.add("deck", makeJsonDevCardListObject(new DevCardList(2,5,2,14,2)));
+		shell.add("map", makeJsonGameMapObject(map));
+		shell.add("players", makeJsonPlayersObject(players));
+		shell.add("log", makeJsonMessageListObject(log));
+		shell.add("chat", makeJsonMessageListObject(chat));
+		shell.add("bank", makeJsonResourceListObject(new ResourceList(22,23,21,20,22)));
+		shell.add("turnTracker", makeJsonTurnTrackerObject(turn));
+		shell.addProperty("winner", -1);
+		shell.addProperty("version", 25);
+
+		System.out.println(shell.toString());
+
+
+		return null;
+	}
+
+
+
+
+
+
+
+
+
 }

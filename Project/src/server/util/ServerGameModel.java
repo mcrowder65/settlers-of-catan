@@ -2,6 +2,7 @@ package server.util;
 
 import java.util.Random;
 
+import client.utils.Translator;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
@@ -167,6 +168,11 @@ import shared.definitions.ResourceType;
  	
  	public void addChatMessage(MessageLine line){
  		getChat().addMessage(line);
+ 	}
+ 	
+ 	@Override
+ 	public String toString() {
+ 		return Translator.modelToJson(this);
  	}
   			  	
  } 

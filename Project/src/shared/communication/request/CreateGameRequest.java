@@ -22,6 +22,7 @@ public class CreateGameRequest extends Request {
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;
+	private Hex[] hexes = new Hex[19];
 	public CreateGameRequest(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		setVariables(name, randomTiles, randomNumbers, randomPorts);
 	}
@@ -54,30 +55,31 @@ public class CreateGameRequest extends Request {
 		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		setVariables(tmp.name, tmp.randomTiles, tmp.randomNumbers, tmp.randomPorts);
 	}
-	public Hex[] generateHexes(){
-		HexLocation[] water = {
-				new HexLocation(-3,0), 
-				new HexLocation(-3,1), 
-				new HexLocation(-3,2), 
-				new HexLocation(-3,3), 
-				new HexLocation(-2,3), 
-				new HexLocation(-1,3), 
-				new HexLocation(0,3), 
-				new HexLocation(1,2), 
-				new HexLocation(2,1), 
-				new HexLocation(3,0), 
-				new HexLocation(3,-1), 
-				new HexLocation(3,-2), 
-				new HexLocation(3,-3), 
-				new HexLocation(2,-3), 
-				new HexLocation(1,-3), 
-				new HexLocation(0,-3), 
-				new HexLocation(-1,-2), 
-				new HexLocation(-2,-1)
-		};
-//		for(int i = 0; i < water.length; i++){
-//			().addHex(water[i], HexType.WATER);
+	public void generateHexes(){
+//		Hex[] hexLocs = {
+//				new Hex(new HexLocation(0,-2), ResourceType.NONE, 0),
+//				new Hex(new HexLocation(-1,-1),  ResourceType.BRICK, 8),
+//				new HexLocation(1,-2), 
+//				new HexLocation(-2,0), 
+//				new HexLocation(0, -1), 
+//				new HexLocation(2,-2), 
+//				new HexLocation(-1,0), 
+//				new HexLocation(1,-1), 
+//				new HexLocation(-2,1), 
+//				new HexLocation(0,0), 
+//				new HexLocation(2,-1), 
+//				new HexLocation(-1,1), 
+//				new HexLocation(1,0), 
+//				new HexLocation(-2,2), 
+//				new HexLocation(0,1), 
+//				new HexLocation(2,0), 
+//				new HexLocation(-1,2), 
+//				new HexLocation(1,1),
+//				new HexLocation(0,2)
+//		};
+//		for(int i = 0; i < hexLocs.length; i++){
+//			hexes[i] = new Hex(water[i], ResourceType)
 //		}	
-		return null;
 	}
+	
 }

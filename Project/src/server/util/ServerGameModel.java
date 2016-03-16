@@ -45,6 +45,12 @@ import shared.definitions.ResourceType;
  		return null;		
  	}
  	
+ 	public void addPlayer(ServerPlayer player) throws IllegalStateException {
+ 		if (serverPlayers.length == 4)
+ 			throw new IllegalStateException("Already 4 players");
+ 		serverPlayers[serverPlayers.length] = player;
+ 	}
+ 	
  	public int getPositive(int resource){
  		if(resource>0){
  			return 0;

@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.response.ListAIResponse;
 
 public class ListAIRequest extends Request {
@@ -11,7 +12,9 @@ public class ListAIRequest extends Request {
 	}
 	
 	public ListAIResponse listAITypes() {
-		return new ListAIResponse(0,null);
+		ListAIResponse response = new ListAIResponse(Game.getAiTypes());
+		response.setSuccess(true);
+		return response;
 	}
 	public ListAIRequest(HttpExchange exchange){
 		super(exchange);

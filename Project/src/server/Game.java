@@ -2,6 +2,8 @@ package server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -9,6 +11,9 @@ import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
+import shared.definitions.AIType;
+import shared.definitions.CatanColor;
+import shared.definitions.Player;
 
 public class Game {
 	
@@ -32,6 +37,57 @@ public class Game {
 		return _instance;
 	}
 	
+	private static List<AIType> aiTypes;
+	private static HashSet<String> aiNames;
+	static {
+		aiTypes = new ArrayList<AIType>();
+		aiTypes.add(AIType.LARGEST_ARMY);
+		
+		aiNames = new HashSet<String>();
+		aiNames.add("Steve");
+		aiNames.add("Bentz");
+		aiNames.add("Snell");
+		aiNames.add("Andrew");
+		aiNames.add("Trent");
+		aiNames.add("Bandana");
+		aiNames.add("Sideburns");
+	}
+	public static List<AIType> getAiTypes() {
+		return aiTypes;
+	}
+	public  String getUnusedAiName(int gameId) {
+		boolean success = false;
+		for (String name : aiNames) {
+			success = true;
+			for (Player player : _instance.getGameId(gameId).getPlayers()) {
+				if (name.equals(player.getName())) {
+					success = false;
+					break;
+				}
+			}
+			if (success) {
+				return name;
+			}
+		}
+		return null;
+	}
+	
+	public CatanColor getUnusedColor(int gameId) {
+		boolean success = false;
+		for (CatanColor color : CatanColor.values()) {
+			success = true;
+			for (Player player : _instance.getGameId(gameId).getPlayers()) {
+				if (color.equals(player.getColor())) {
+					success = false;
+					break;
+				}
+			}
+			if (success) {
+				return color;
+			}
+		}
+		return null;
+	}
 	
 	public int addGame(GameInfo info, ServerGameModel model) {
 	

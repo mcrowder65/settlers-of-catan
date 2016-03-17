@@ -23,7 +23,7 @@ public class Game {
 	
 	
 	private Game() {
-		addUser("matt", "matt");
+		addUser("matt", "crowder");
 		addUser("brennen", "0000");
 		addUser("eric", "0000");
 		addUser("manuel","0000");

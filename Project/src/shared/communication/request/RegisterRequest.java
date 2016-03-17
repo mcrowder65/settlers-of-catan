@@ -48,8 +48,8 @@ public class RegisterRequest extends Request {
     	try {
 			response.setCookie("Set-cookie", "catan.user=" +
 					URLEncoder.encode("{" +
-			           "\"name\":\"" + username + "\", " +
-					   "\"password\":\"" + password + "\", " + 
+			           "\"name\":\"" + username + "\"," +
+					   "\"password\":\"" + password + "\"," + 
 			           "\"playerID\":" + id + "}", "UTF-8" ) + ";Path=/;");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

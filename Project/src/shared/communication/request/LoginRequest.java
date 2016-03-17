@@ -48,12 +48,14 @@ public class LoginRequest extends Request {
 		try {
 			response.setCookie("Set-cookie", "catan.user=" +
 					URLEncoder.encode("{" +
-			           "\"name\":\"" + username + "\", " +
-					   "\"password\":\"" + password + "\", " + 
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + username + "\"," +
+					   "\"password\":\"" + password + "\"," + 
 			           "\"playerID\":" + id + "}", "UTF-8" ) + ";Path=/;");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+
     	 return response;
      }
      public LoginRequest(HttpExchange exchange){

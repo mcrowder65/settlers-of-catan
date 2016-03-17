@@ -21,8 +21,7 @@ public class CreateGameResponse extends Response {
 	public void setGameId(int id){
 		game.setId(id);
 	}
-	public CreateGameResponse(String title){
-		game = new GameInfo();
-		game.setTitle(title);
+	public CreateGameResponse(GameInfo game){
+		this.game = game;
 	}
 }

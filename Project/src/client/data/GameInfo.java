@@ -61,6 +61,7 @@ public class GameInfo
 	public void setPlayer(int id, CatanColor color){
 		String name = players.get(id).getName();
 		players.set(id, new PlayerInfo(id, name, color));
+		
 	}
 	public PlayerInfo getPlayer(int id){
 		return players.get(id);

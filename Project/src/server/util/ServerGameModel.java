@@ -6,7 +6,7 @@ import client.utils.Translator;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
-  import shared.definitions.GameModel;
+import shared.definitions.GameModel;
 import shared.definitions.MessageLine;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
@@ -17,7 +17,29 @@ import shared.definitions.ResourceType;
  	private ServerGameMap serverMap;		
  	private ServerPlayer[] serverPlayers;		
  	private ServerTurnTracker serverTurnTracker;		
-  			  	
+ 	public int getLocalIndex(int playerId) {
+		for (int n = 0; n < serverPlayers.length; n++) {
+			if (serverPlayers[n] != null && serverPlayers[n].getPlayerID() == playerId) 
+				return n;
+		}
+		return -1;
+	}
+	/**
+	 * this function was made to get a local index or return the size of the players so that
+	 * i can join the game.
+	 * @param playerId int
+	 * @return index of the player or return the size of the player array so we know what to add
+	 */
+	public int getLocalIndexJoinGame(int playerId){
+		int index = 0;
+		for(int n = 0; n < serverPlayers.length; n++){
+//			if(players[n] != null && players[n].getPlayerID() == playerId)
+//				return n;
+			if(serverPlayers[n] != null)
+				index++; //keep adding to index if there are players 
+		}
+		return index;
+	}		  	
  	public void setServerGameMap(ServerGameMap serverMap){		
  		this.serverMap = serverMap;		
  	}		
@@ -43,6 +65,12 @@ import shared.definitions.ResourceType;
  				return serverPlayers[n];		
  		}		
  		return null;		
+ 	}
+ 	
+ 	public void addPlayer(ServerPlayer player) throws IllegalStateException {
+ 		if (serverPlayers.length == 4)
+ 			throw new IllegalStateException("Already 4 players");
+ 		serverPlayers[serverPlayers.length] = player;
  	}
  	
  	public int getPositive(int resource){

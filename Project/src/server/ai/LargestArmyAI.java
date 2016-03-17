@@ -8,7 +8,7 @@ import shared.definitions.ResourceType;
 
 public class LargestArmyAI extends AIBase {
 
-	protected LargestArmyAI(String name, CatanColor color, int playerID, int playerIndex, IAIFacade facade) {
+	public LargestArmyAI(String name, CatanColor color, int playerID, int playerIndex, IAIFacade facade) {
 		super(name, color, playerID, playerIndex, facade);
 		
 		preferredResources.add(ResourceType.WHEAT);

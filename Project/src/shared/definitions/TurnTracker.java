@@ -61,7 +61,6 @@ public class TurnTracker {
 	 * @return status
 	 */
 	public String getStatus() {
-		System.out.println(status); //TODO output
 		return status;
 	}
 

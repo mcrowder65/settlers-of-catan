@@ -114,7 +114,7 @@ public class CreateGameRequest extends Request {
 		portTypes.add(new PortTypeAndRatio(ResourceType.WHEAT, 2));
 		portTypes.add(new PortTypeAndRatio(ResourceType.ORE, 2));
 		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
-		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
+		portTypes.add(new PortTypeAndRatio(ResourceType.SHEEP, 2));
 		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
 		portTypes.add(new PortTypeAndRatio(ResourceType.NONE, 3));
 		portTypes.add(new PortTypeAndRatio(ResourceType.BRICK, 2));

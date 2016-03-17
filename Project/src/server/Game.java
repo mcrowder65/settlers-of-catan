@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -62,37 +63,21 @@ public class Game {
 	
 	
 	public  String getUnusedAiName(int gameId) {
-		boolean success = false;
-		for (String name : aiNames) {
-			success = true;
-			for (Player player : _instance.getGameId(gameId).getPlayers()) {
-				if (player != null && name.equals(player.getName())) {
-					success = false;
-					break;
-				}
-			}
-			if (success) {
-				return name;
-			}
-		}
-		return null;
+		ArrayList<String> unusedAINames = _instance.arrayGames.get(gameId).model.getUnusedAINames();
+		Random rand = new Random();
+		int max = unusedAINames.size() - 1;
+		int min = 0;
+		int ai = rand.nextInt(max - min + 1) + min;
+		return unusedAINames.get(ai);
 	}
 	
 	public CatanColor getUnusedColor(int gameId) {
-		boolean success = false;
-		for (CatanColor color : CatanColor.values()) {
-			success = true;
-			for (Player player : _instance.getGameId(gameId).getPlayers()) {
-				if (player != null && color.equals(player.getColor())) {
-					success = false;
-					break;
-				}
-			}
-			if (success) {
-				return color;
-			}
-		}
-		return null;
+		ArrayList<CatanColor> unusedColors = _instance.arrayGames.get(gameId).model.getUnusedColors();
+		Random rand = new Random();
+		int max = unusedColors.size() - 1;
+		int min = 0;
+		int color = rand.nextInt(max - min + 1) + min;
+		return unusedColors.get(color);
 	}
 	public void setGame(int gameID, ServerGameModel model){
 		

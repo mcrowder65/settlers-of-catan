@@ -1,8 +1,10 @@
 package server.util;
 
 import java.util.Random;
+import java.util.ArrayList;
 import java.util.List;
 import client.utils.Translator;
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
 import shared.definitions.GameMap;
@@ -48,6 +50,56 @@ import shared.locations.VertexObject;
  				size++;
  		}
  		return size;
+ 	}
+ 	public ArrayList<String> getUnusedAINames(){
+ 		ArrayList<String> aiNames = new ArrayList<String>();
+ 		aiNames.add("Steve");
+		aiNames.add("Bentz");
+		aiNames.add("Snell");
+		aiNames.add("Andrew");
+		aiNames.add("Trent");
+		aiNames.add("Bandana");
+		aiNames.add("Sideburns");
+		for(int x = 0; x < 4; x++){
+			int index = -1;
+			if(serverPlayers[x] != null){
+		 		for(int i = 0; i < aiNames.size(); i++){
+		 			if(aiNames.get(i).equals(serverPlayers[x].getName()))
+		 				index = i;
+		 		}
+		 		if(index != -1)
+		 			aiNames.remove(index);
+		 		index = -1;
+			}
+		}
+		return aiNames;
+ 	}
+ 	public ArrayList<CatanColor> getUnusedColors(){
+ 		ArrayList<CatanColor> unusedColors = new ArrayList<CatanColor>();
+ 		unusedColors.add(CatanColor.red);
+ 		unusedColors.add(CatanColor.orange);
+ 		unusedColors.add(CatanColor.yellow);
+ 		unusedColors.add(CatanColor.blue);
+ 		unusedColors.add(CatanColor.green); 
+ 		unusedColors.add(CatanColor.purple);
+ 		unusedColors.add(CatanColor.puce); 
+ 		unusedColors.add(CatanColor.white);
+ 		unusedColors.add(CatanColor.brown);
+ 		
+
+		for(int x = 0; x < 4; x++){
+			int index = -1;
+			if(serverPlayers[x] != null){
+		 		for(int i = 0; i < unusedColors.size(); i++){
+		 			if(unusedColors.get(i) == serverPlayers[x].getColor())
+		 				index = i;
+		 		}
+		 		unusedColors.remove(index);
+		 		index = -1;
+			}
+		}
+	
+ 		return unusedColors;
  	}
 	/**
 	 * this function was made to get a local index or return the size of the players so that

@@ -33,7 +33,7 @@ public class ListAIHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		Response response = null;
+		ListAIResponse response = null;
 		try{
 		   response = facade.listAiTypes(exchange);
 		}catch(Exception ex) {

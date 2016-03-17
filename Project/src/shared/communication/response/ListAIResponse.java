@@ -7,6 +7,21 @@ import shared.definitions.AIType;
 
 public class ListAIResponse extends Response {
 
+	@Override
+	public String toString() {
+		StringBuilder ais = new StringBuilder("[");
+		for(int i = 0; i < aiTypes.size(); i++){
+			ais.append("\"");
+			ais.append(aiTypes.get(i).toString());
+			ais.append("\"");
+			if(i != aiTypes.size() - 1){
+				ais.append(",");
+			}
+		}
+		ais.append("]");
+		return ais.toString();
+	}
+
 	private List<AIType> aiTypes;
 	public ListAIResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);

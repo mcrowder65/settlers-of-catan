@@ -200,6 +200,22 @@ public class GameModel {
 		}
 		return -1;
 	}
+	/**
+	 * this function was made to get a local index or return the size of the players so that
+	 * i can join the game.
+	 * @param playerId int
+	 * @return index of the player or return the size of the player array so we know what to add
+	 */
+	public int getLocalIndexJoinGame(int playerId){
+		int index = 0;
+		for(int n = 0; n < players.length; n++){
+//			if(players[n] != null && players[n].getPlayerID() == playerId)
+//				return n;
+			if(players[n] != null)
+				index++; //keep adding to index if there are players 
+		}
+		return index;
+	}
 	public int getNumRoadsForPlayer(int playerIndex) {
 		int count = 0;
 		for (EdgeValue o : map.getRoads()) {

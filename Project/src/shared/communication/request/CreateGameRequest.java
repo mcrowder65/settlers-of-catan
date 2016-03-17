@@ -61,11 +61,13 @@ public class CreateGameRequest extends Request {
 		//HexLocation robber
 		generatePorts();
 		generateHexes();
-		sgm.setMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
+		
+		sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
+		sgm.setServerPlayers(new ServerPlayer[4]);
 		Game.instance().setGame(gameIDCookie, sgm);
 		
-		
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
+		response.setGameId(gameIDCookie);
+    	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
 
 		return response;
 	}

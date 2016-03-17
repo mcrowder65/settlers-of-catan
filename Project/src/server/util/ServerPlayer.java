@@ -29,6 +29,10 @@ public class ServerPlayer extends Player {
 		super(name,color, playerID, playerIndex);
 	}
 	
+	public ServerPlayer() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * lays a normal road for the player
 	 */
@@ -327,7 +331,7 @@ public class ServerPlayer extends Player {
 		}		
 		return false;		
 	}
-	
+
 	
 	
 }

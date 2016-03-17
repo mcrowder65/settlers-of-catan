@@ -51,6 +51,18 @@ public class CreateGameRequest extends Request {
 		generateHexes();
 		sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
 		sgm.setServerPlayers(new ServerPlayer[4]);
+		//int brick, int ore, int sheep, int wheat, int wood
+		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));//TODO i think this is right
+		sgm.setDeck(new DevCardList(10, 10, 10, 10, 10)); //TODO how many dev cards?
+		//int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
+		sgm.setChat(new MessageList());
+		sgm.setLog(new MessageList());
+		sgm.setLocalPlayer(Game.instance().getGameId(gameIDCookie).getLocalPlayer(playerIDCookie));
+		sgm.initServerPlayers();
+		sgm.setTurnTracker(new TurnTracker(0, "Rolling", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
+		sgm.setVersion(0);
+		sgm.setWinner(-1);
+		
 		response.setGameId(gameIDCookie);
 
 		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");

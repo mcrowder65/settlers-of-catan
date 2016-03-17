@@ -16,13 +16,29 @@ import shared.definitions.ResourceType;
   			  	
  	private ServerGameMap serverMap;		
  	private ServerPlayer[] serverPlayers;		
- 	private ServerTurnTracker serverTurnTracker;		
+ 	private ServerTurnTracker serverTurnTracker;
+ 	private ServerPlayer localPlayer;
  	public int getLocalIndex(int playerId) {
 		for (int n = 0; n < serverPlayers.length; n++) {
 			if (serverPlayers[n] != null && serverPlayers[n].getPlayerID() == playerId) 
 				return n;
 		}
 		return -1;
+	}
+ 	public void initServerPlayers(){
+ 		serverPlayers = new ServerPlayer[4];
+ 		serverPlayers[0] = localPlayer;
+ 	}
+ 	public ServerPlayer getLocalPlayer(int playerId) {
+ 		if(localPlayer != null)
+ 			return localPlayer;
+		for (int n = 0; n < serverPlayers.length; n++) {
+			if (serverPlayers[n] != null && serverPlayers[n].getPlayerID() == playerId){ 
+				localPlayer = serverPlayers[n];
+				return serverPlayers[n];
+			}
+		}
+		return null;
 	}
 	/**
 	 * this function was made to get a local index or return the size of the players so that
@@ -68,9 +84,27 @@ import shared.definitions.ResourceType;
  	}
  	
  	public void addPlayer(ServerPlayer player) throws IllegalStateException {
- 		if (serverPlayers.length == 4)
+ 	
+ 			
+ 		int amt = 0;
+ 		for(int i = 0; i < 4; i++){
+ 			amt = serverPlayers[i] != null ? amt+1 : amt;
+ 		}
+ 		if(amt == 4)
  			throw new IllegalStateException("Already 4 players");
- 		serverPlayers[serverPlayers.length] = player;
+ 		//player.addResourceCards(new ResourceList());
+ 		player.setCities(0);
+ 		player.setDiscarded(false);
+ 		player.setMonuments(0);
+ 		player.setNewDevCards(new DevCardList());
+ 		player.setOldDevCards(new DevCardList());
+ 		player.setResources(new ResourceList());
+ 		player.setRoads(0);
+ 		player.setSettlements(0);
+ 		player.setSoldiers(0);
+ 		player.setVictoryPoints(0);
+ 		player.setPlayedDevCard(false);
+ 		serverPlayers[amt] = player;
  	}
  	
  	public int getPositive(int resource){

@@ -39,6 +39,10 @@ public class ServerGameMap extends GameMap {
 		super(hexes, ports, roads,settlements, cities, radius,robber);
 	}
 	
+	public ServerGameMap() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * checks to see if you can build a road during the first two rounds
 	 * @param index

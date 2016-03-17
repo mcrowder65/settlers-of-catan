@@ -127,6 +127,10 @@ public class ResourceList {
 		this.wood = wood;
 	}
 	
+	public ResourceList() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int numResource(ResourceType resource){
 		if(resource == ResourceType.WOOD){
 			return wood;

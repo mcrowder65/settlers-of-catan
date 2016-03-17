@@ -16,7 +16,9 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import server.util.ServerGameMap;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
 public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
@@ -342,8 +344,8 @@ public class JsonTranslator {
 
 		//Extracts all of the different parts from the model
 		DevCardList deck = model.getDeck();
-		GameMap map = model.getMap();
-		Player[] players = model.getPlayers();
+		ServerGameMap map = model.getServerMap();
+		ServerPlayer[] players = model.getServerPlayers();
 		MessageList log = model.getLog();
 		MessageList chat = model.getChat();
 		ResourceList bank = model.getBank();
@@ -389,7 +391,7 @@ public class JsonTranslator {
 		return jList;
 	}
 
-	private JsonObject makeJsonGameMapObject(GameMap map) {
+	private JsonObject makeJsonGameMapObject(ServerGameMap map) {
 		JsonObject jMap = new JsonObject();
 
 		jMap.add("hexes", makeJsonHexesObject(map.getHexes()));
@@ -508,16 +510,19 @@ public class JsonTranslator {
 	}
 
 
-	private JsonArray makeJsonPlayersObject(Player[] players) {
+	private JsonArray makeJsonPlayersObject(ServerPlayer[] players) {
 		JsonArray jArray = new JsonArray();
-
-		for(int i = 0; i < players.length; i++) {
-			jArray.add(makeJsonPlayerObject(players[i]));
+		int i = 0;
+		for(int x = 0; x < players.length; x++)
+			i = players[x] != null ? i+1 : i;
+		
+		for(int x = 0; x < i; x++) {
+			jArray.add(makeJsonPlayerObject(players[x]));
 		}
 		return jArray;
 	}
 
-	private JsonObject makeJsonPlayerObject(Player player) {
+	private JsonObject makeJsonPlayerObject(ServerPlayer player) {
 		JsonObject jPlayer = new JsonObject();
 
 		jPlayer.add("resources", makeJsonResourceListObject(player.getResources()));
@@ -547,13 +552,15 @@ public class JsonTranslator {
 
 
 		JsonArray jArray = new JsonArray();
-		for(int i = 0; i < list.getLines().length; i++) {
-			JsonObject line = new JsonObject();
-
-			line.addProperty("source", list.getLines()[i].getSource());
-			line.addProperty("message", list.getLines()[i].getMessage());
-
-			jArray.add(line);
+		if(list.getLines() != null){
+			for(int i = 0; i < list.getLines().length; i++) {
+				JsonObject line = new JsonObject();
+	
+				line.addProperty("source", list.getLines()[i].getSource());
+				line.addProperty("message", list.getLines()[i].getMessage());
+	
+				jArray.add(line);
+			}
 		}
 
 		jList.add("lines", jArray);
@@ -614,7 +621,7 @@ public class JsonTranslator {
 		MessageList chat = new MessageList(new MessageLine[0]);
 
 
-		Player player1 = new Player();
+		ServerPlayer player1 = new ServerPlayer();
 		player1.setResources(new ResourceList(2,0,1,0,1));
 		player1.setOldDevCards(new DevCardList(0,0,0,0,0));
 		player1.setNewDevCards(new DevCardList(0,0,0,0,0));
@@ -631,7 +638,7 @@ public class JsonTranslator {
 		player1.setName("manuel");
 		player1.setColor(CatanColor.purple);
 
-		Player player2 = new Player();
+		ServerPlayer player2 = new ServerPlayer();
 		player2.setResources(new ResourceList(0,1,1,2,0));
 		player2.setOldDevCards(new DevCardList(0,0,0,0,0));
 		player2.setNewDevCards(new DevCardList(0,0,0,0,0));
@@ -648,10 +655,10 @@ public class JsonTranslator {
 		player2.setName("Ken");
 		player2.setColor(CatanColor.orange);
 
-		Player[] players = {player1, player2};
+		ServerPlayer[] players = {player1, player2};
 
 
-		GameMap map = new GameMap();
+		ServerGameMap map = new ServerGameMap();
 
 		Hex[] hexes = { new Hex(new HexLocation(0,-2),ResourceType.NONE,0),
 				new Hex(new HexLocation(1,-2), ResourceType.BRICK, 4),

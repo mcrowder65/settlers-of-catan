@@ -21,7 +21,6 @@ public class CreateGameRequest extends Request {
 	private boolean randomNumbers;
 	private boolean randomPorts;
 	
-	//TODO: Move these into local vars, shouldn't be member-level
 	private transient Hex[] hexes = new Hex[19];
 	private transient Port[] ports = new Port[9];
 	private transient EdgeValue[] roads = new EdgeValue[0];

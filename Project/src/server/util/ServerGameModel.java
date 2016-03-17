@@ -41,6 +41,14 @@ import shared.locations.VertexObject;
 		}
 		return null;
 	}
+ 	public int getAmtOfPlayers(){
+ 		int size = 0;
+ 		for(int i = 0; i < 4; i++){
+ 			if(serverPlayers[i] != null)
+ 				size++;
+ 		}
+ 		return size;
+ 	}
 	/**
 	 * this function was made to get a local index or return the size of the players so that
 	 * i can join the game.

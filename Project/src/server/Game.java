@@ -66,7 +66,7 @@ public class Game {
 		for (String name : aiNames) {
 			success = true;
 			for (Player player : _instance.getGameId(gameId).getPlayers()) {
-				if (name.equals(player.getName())) {
+				if (player != null && name.equals(player.getName())) {
 					success = false;
 					break;
 				}
@@ -83,7 +83,7 @@ public class Game {
 		for (CatanColor color : CatanColor.values()) {
 			success = true;
 			for (Player player : _instance.getGameId(gameId).getPlayers()) {
-				if (color.equals(player.getColor())) {
+				if (player != null && color.equals(player.getColor())) {
 					success = false;
 					break;
 				}

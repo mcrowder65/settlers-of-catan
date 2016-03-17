@@ -1,8 +1,7 @@
 package server.util;
 
-import java.util.List;
 import java.util.Random;
-
+import java.util.List;
 import client.utils.Translator;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
@@ -12,9 +11,8 @@ import shared.definitions.Hex;
 import shared.definitions.MessageLine;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
-import shared.definitions.ResourceType;
-import shared.locations.VertexObject;		
-  		  
+import shared.definitions.ResourceType;		
+import shared.locations.VertexObject;
   public class ServerGameModel extends GameModel{		  
   			  	
  	private ServerGameMap serverMap;		
@@ -131,39 +129,6 @@ import shared.locations.VertexObject;
  		
  		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
  		return normalized;
- 	}
- 	
- 	public boolean allPlayersDiscarded(){
- 		for(int i=0; i<serverPlayers.length; i++){
- 			if(serverPlayers[i].getDiscarded() == false){
- 				return false;
- 			}
- 		}
- 		return true;
- 	}
- 		 	
-	/**
-	 * Issues resources depending on the number rolled
-	 * @param numRolled
-	 */
- 	public void issueResourcesNormalPlay(int numRolled){
- 		Hex[] allHexes = serverMap.getHexes();
- 		
- 		for(int i=0; i<allHexes.length; i++){
- 			Hex loc = allHexes[i];
- 			if(loc.getNumber() == numRolled){
- 				if(!serverMap.getRobber().equals(loc.getLocation())){
- 					List<VertexObject> municipalities = serverMap.getMunicipalityOnHex(loc.getLocation());
- 					if(municipalities.size()>0){
- 						for(int x=0; x<municipalities.size(); x++){
- 							int owner = municipalities.get(x).getOwner();
- 							ResourceType resource = loc.getResource();
- 							serverPlayers[owner].getResources().addResource(resource,1);
- 						}
- 					}
- 				}
- 			}
- 		}
  	}
  	
  	public void buyFromDeck(DevCardType card){
@@ -294,6 +259,33 @@ import shared.locations.VertexObject;
  	@Override
  	public String toString() {
  		return Translator.modelToJson(this);
+ 	}
+ 	public boolean allPlayersDiscarded(){
+ 		for(int i=0; i<serverPlayers.length; i++){
+ 			if(serverPlayers[i].getDiscarded() == false){
+ 				return false;
+ 			}
+ 		}
+ 		return true;
+ 	}
+	public void issueResourcesNormalPlay(int numRolled){
+ 		Hex[] allHexes = serverMap.getHexes();
+ 		
+ 		for(int i=0; i<allHexes.length; i++){
+ 			Hex loc = allHexes[i];
+ 			if(loc.getNumber() == numRolled){
+ 				if(!serverMap.getRobber().equals(loc.getLocation())){
+ 					List<VertexObject> municipalities = serverMap.getMunicipalityOnHex(loc.getLocation());
+ 					if(municipalities.size()>0){
+ 						for(int x=0; x<municipalities.size(); x++){
+ 							int owner = municipalities.get(x).getOwner();
+ 							ResourceType resource = loc.getResource();
+ 							serverPlayers[owner].getResources().addResource(resource,1);
+ 						}
+ 					}
+ 				}
+ 			}
+ 		}
  	}
   			  	
  } 

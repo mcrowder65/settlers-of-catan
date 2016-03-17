@@ -11,7 +11,8 @@ public class ListGamesRequest extends Request {
 	public ListGamesRequest() throws IllegalArgumentException {
 		
 	}
-	
+	//TODO if i add ai's to one client and the other client is waiting in the list games menu
+	//     it doesn't update the 2nd clients window saying which ai's are in there.
 	public ListGamesResponse listGames() {
 		ListGamesResponse listResponse = new ListGamesResponse(Game.instance().getGamesList());
 		return listResponse;

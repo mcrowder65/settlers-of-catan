@@ -139,7 +139,7 @@ public class Game {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * 
 	 * @param username

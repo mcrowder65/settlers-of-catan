@@ -32,7 +32,7 @@ public class GetModelHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		Response response = null;
+		GetModelResponse response = null;
 		try{
 		   response = facade.getModel(exchange);
 		}catch(Exception ex) {

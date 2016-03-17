@@ -7,6 +7,7 @@ public class GetModelResponse extends Response {
 
 	private boolean updated;
 	private GameModel model;
+	private String json;
 	public GetModelResponse(int responseCode, String json) throws IllegalArgumentException {
 		super(responseCode, json);
 		if (success) {
@@ -15,6 +16,7 @@ public class GetModelResponse extends Response {
 			} else {
 				model = Translator.jsonToObject(json);
 				updated = true;
+				this.json = json;
 			}
 		}
 	}
@@ -26,6 +28,9 @@ public class GetModelResponse extends Response {
 	}
 	public GameModel getModel() {
 		return model;
+	}
+	public String toString(){
+		return json;
 	}
 
 }

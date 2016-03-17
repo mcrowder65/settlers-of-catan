@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import client.data.GameInfo;
 import client.utils.Translator;
 import server.Game;
 import server.util.*;
@@ -19,13 +20,17 @@ public class CreateGameRequest extends Request {
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;
-	private Hex[] hexes = new Hex[19];
-	private Port[] ports = new Port[9];
-	private EdgeValue[] roads = new EdgeValue[0];
-	private VertexObject[] settlements = new VertexObject[0];
-	private VertexObject[] cities = new VertexObject[0];
-	private int radius = 2; //TODO what is radius?
-	private HexLocation robber = new HexLocation(0, -2); //TODO configure random robber
+	
+	private transient Hex[] hexes = new Hex[19];
+	private transient Port[] ports = new Port[9];
+	private transient EdgeValue[] roads = new EdgeValue[0];
+	private transient VertexObject[] settlements = new VertexObject[0];
+	private transient VertexObject[] cities = new VertexObject[0];
+	private transient int radius = 2; //TODO what is radius?
+	private transient HexLocation robber = new HexLocation(0, -2); //TODO configure random robber
+	
+	
+	
 	public CreateGameRequest(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		setVariables(name, randomTiles, randomNumbers, randomPorts);
 	}
@@ -37,20 +42,29 @@ public class CreateGameRequest extends Request {
 		this.randomPorts = randomPorts;
 	}
 	public CreateGameResponse createGame() {
-		CreateGameResponse response = new CreateGameResponse(name);
+		GameInfo info = new GameInfo();
+		info.setTitle(name);
+		info.setId(Game.instance().getNumGames());
+		
+		CreateGameResponse response = new CreateGameResponse(info);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
-		ServerGameModel sgm = new ServerGameModel();
 		
-		gameIDCookie = Game.instance().addGame(response.getGame(), sgm);
-		sgm.setGameCookie(Integer.toString(gameIDCookie));
+		
+		ServerGameModel sgm = new ServerGameModel();
+		gameIDCookie = Game.instance().addGame(info, sgm);
+		sgm.setGameId(gameIDCookie);
+		
+
 		//Hex[] hexes, Port[] ports, EdgeValue[] roads,
 		//VertexObject[] settlements, VertexObject[] cities, int radius,
 		//HexLocation robber
 		generatePorts();
 		generateHexes();
+		
 		sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
 		sgm.setServerPlayers(new ServerPlayer[4]);
+
 		//int brick, int ore, int sheep, int wheat, int wood
 		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));//TODO i think this is right
 		sgm.setDeck(new DevCardList(10, 10, 10, 10, 10)); //TODO how many dev cards?
@@ -62,12 +76,14 @@ public class CreateGameRequest extends Request {
 		sgm.setTurnTracker(new TurnTracker(0, "Rolling", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 		sgm.setVersion(0);
 		sgm.setWinner(-1);
+
+		Game.instance().setGame(gameIDCookie, sgm);
+
 		
 		response.setGameId(gameIDCookie);
+    	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
 
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
-
-		return (CreateGameResponse) response;
+		return response;
 	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);

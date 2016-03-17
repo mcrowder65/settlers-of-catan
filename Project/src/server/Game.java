@@ -37,6 +37,10 @@ public class Game {
 		return _instance;
 	}
 	
+	
+	public int getNumGames() {
+		return arrayGames.size();
+	}
 	private static List<AIType> aiTypes;
 	private static HashSet<String> aiNames;
 	static {
@@ -91,10 +95,8 @@ public class Game {
 		return null;
 	}
 	public void setGame(int gameID, ServerGameModel model){
-		GameCombo combo = new GameCombo();
-		//TODO info?
-		combo.model = model;
-		_instance.arrayGames.set(gameID, combo);
+		
+		_instance.arrayGames.get(gameID).model = model;
 	}
 	public int addGame(GameInfo info, ServerGameModel model) {
 	

@@ -2,6 +2,9 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
+import server.util.ServerGameModel;
+import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 /**
  * This is the class the executes a roll number.
@@ -28,7 +31,23 @@ public class RollNumberCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		return null;
+		int gameIndex = this.gameIDCookie;	
+ 		int numRolled = this.getNumber();
+ 		Game game = Game.instance();		
+  		ServerGameModel model = game.getGameId(gameIndex);			
+  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+  		GetModelResponse response = new GetModelResponse();
+ 
+  		
+  		if(numRolled == 7){
+  			turnTracker.setStatus("Discarding");
+  		}
+  		else{
+  			turnTracker.setStatus("Playing");
+  		}
+  		model.issueResourcesNormalPlay(numRolled);
+  		response.setSuccess(true);
+ 		return response;
 	}
 
 	public int getNumber() {

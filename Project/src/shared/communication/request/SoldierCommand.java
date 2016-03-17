@@ -74,8 +74,8 @@ public class SoldierCommand extends MoveCommand {
  		}
  		
  		if(victim.getResources().isEmpty()){
-			response.setSuccess(true);
-			return response; 
+ 			response.setSuccess(true);
+			return response;
 		}
  		
  		ResourceType resource = model.generateRandomResource();

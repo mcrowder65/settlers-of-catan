@@ -21,6 +21,7 @@ public class GetModelRequest extends Request {
 	}
 	
 	public GetModelResponse getModel() {
+		
 		return new GetModelResponse(200, model);
 	}
 	public GetModelRequest(HttpExchange exchange){

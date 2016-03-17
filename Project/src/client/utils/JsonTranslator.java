@@ -434,7 +434,7 @@ public class JsonTranslator {
 		for(int i = 0; i < ports.length; i++) {
 			JsonObject jPort = new JsonObject();
 
-			jPort.addProperty("ration", ports[i].getRatio());
+			jPort.addProperty("ratio", ports[i].getRatio());
 			if(ports[i].getResource() != ResourceType.NONE){
 				jPort.addProperty("resource", ports[i].getResource().toString().toLowerCase());
 			}

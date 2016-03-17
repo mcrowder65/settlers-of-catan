@@ -36,7 +36,7 @@ public class JoinGameRequest extends Request {
 		Response response = new Response();
 		Game game = Game.instance();
 		
-		ServerGameModel model = game.getGameId(gameIDCookie);
+		ServerGameModel model = game.getGameId(id);
 		//String name, CatanColor color, int playerID, int playerIndex
 		int playerIndex = model.getLocalIndex(playerIDCookie);
 		if(playerIndex != -1){
@@ -47,7 +47,7 @@ public class JoinGameRequest extends Request {
 			playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
 			model.addPlayer(new ServerPlayer(userCookie, color, playerIDCookie, playerIndex));
 		}
-		response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
+		response.setCookie("Set-cookie", "catan.game=" + id + ";");
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		return response;

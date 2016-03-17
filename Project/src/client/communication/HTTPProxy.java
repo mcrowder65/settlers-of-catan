@@ -158,6 +158,7 @@ public class HTTPProxy implements IProxy{
 		conn.getOutputStream().write(json.getBytes());
 		conn.getOutputStream().close();
 		
+		String cook = conn.getHeaderField("Set-cookie");
 		response.setResponseCookie(conn.getHeaderField("Set-cookie"));
 		
 		String result = null;

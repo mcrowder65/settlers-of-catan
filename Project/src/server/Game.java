@@ -98,6 +98,16 @@ public class Game {
 		
 		_instance.arrayGames.get(gameID).model = model;
 	}
+	/**
+	 * this function returns the gamecookie of the game you're about to add.
+	 * I use this function to get the future game cookie without setting
+	 * the servergamemodel prematurely
+	 * set to size instead of size - 1 because we haven't added the game yet.
+	 * @return int gameCookie
+	 */
+	public int getAddableGameCookie(){
+		return _instance.arrayGames.size();
+	}
 	public int addGame(GameInfo info, ServerGameModel model) {
 	
 		GameCombo combo = new GameCombo();
@@ -107,7 +117,19 @@ public class Game {
 		
 		return _instance.arrayGames.size() - 1;
 	}
-	
+	/**
+	 * only use this if you are creating a game!!!!!
+	 * @param playerID id of player, int
+	 * @return ServerPlayer
+	 */
+	public ServerPlayer getLocalPlayer(int playerID){
+		for(RegisteredPersonInfo p : registeredUsers){
+			if(p.getId() == playerID){
+				return new ServerPlayer(p.getUsername(), CatanColor.red,playerID, 0); 
+			}
+		}
+		return null;
+	}
 	public ServerGameModel getGameId(int index) {
 		return _instance.arrayGames.get(index).model;
 	}
@@ -160,6 +182,7 @@ public class Game {
 	
 	public ArrayList<GameInfo> getGamesList() {
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
+		
 		for (GameCombo game : arrayGames) {
 			games.add(game.info);
 		}

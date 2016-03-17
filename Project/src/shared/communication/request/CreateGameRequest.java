@@ -7,6 +7,7 @@ import java.util.Collections;
 import com.sun.net.httpserver.HttpExchange;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.utils.Translator;
 import server.Game;
 import server.util.*;
@@ -45,14 +46,14 @@ public class CreateGameRequest extends Request {
 		GameInfo info = new GameInfo();
 		info.setTitle(name);
 		info.setId(Game.instance().getNumGames());
-		
+		info.addPlayer(new PlayerInfo(playerIDCookie, userCookie, CatanColor.red));
 		CreateGameResponse response = new CreateGameResponse(info);
 		response.setErrorMessage("Success");
 		response.setSuccess(true);
 		
 		
 		ServerGameModel sgm = new ServerGameModel();
-		gameIDCookie = Game.instance().addGame(info, sgm);
+		gameIDCookie = Game.instance().getAddableGameCookie();
 		sgm.setGameId(gameIDCookie);
 		
 
@@ -71,15 +72,14 @@ public class CreateGameRequest extends Request {
 		//int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
 		sgm.setChat(new MessageList());
 		sgm.setLog(new MessageList());
-		sgm.setLocalPlayer(Game.instance().getGameId(gameIDCookie).getLocalPlayer(playerIDCookie));
+		sgm.setLocalPlayer(Game.instance().getLocalPlayer(playerIDCookie));
 		sgm.initServerPlayers();
 		sgm.setTurnTracker(new TurnTracker(0, "Rolling", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 		sgm.setVersion(0);
 		sgm.setWinner(-1);
 
-		Game.instance().setGame(gameIDCookie, sgm);
 
-		
+		Game.instance().addGame(info, sgm);
 		response.setGameId(gameIDCookie);
     	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
 

@@ -77,8 +77,8 @@ public class CreateGameRequest extends Request {
 		sgm.setTurnTracker(new TurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 		sgm.setVersion(0);
 		sgm.setWinner(-1);
-
-
+		sgm.initAINames();
+		sgm.initAIColors();
 		Game.instance().addGame(info, sgm);
 		response.setGameId(gameIDCookie);
     	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");

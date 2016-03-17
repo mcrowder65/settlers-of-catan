@@ -40,7 +40,7 @@ public class JoinGameRequest extends Request {
 		//String name, CatanColor color, int playerID, int playerIndex
 		int playerIndex = model.getLocalIndex(playerIDCookie);
 		if(playerIndex != -1){
-			model.setLocalPlayer(new Player(userCookie, color, playerIDCookie, playerIndex));
+			model.setPlayer(new ServerPlayer(userCookie, color, playerIDCookie, playerIndex));
 		}
 		//otherwise they're not in the game, find the index to use to add them to the game.
 		else{

@@ -21,6 +21,8 @@ import shared.locations.VertexObject;
  	private ServerPlayer[] serverPlayers;		
  	private ServerTurnTracker serverTurnTracker;
  	private ServerPlayer localPlayer;
+ 	private ArrayList<String> aiNames;
+ 	private ArrayList<CatanColor> unusedAIColors;
  	public int getLocalIndex(int playerId) {
 		for (int n = 0; n < serverPlayers.length; n++) {
 			if (serverPlayers[n] != null && serverPlayers[n].getPlayerID() == playerId) 
@@ -51,8 +53,24 @@ import shared.locations.VertexObject;
  		}
  		return size;
  	}
- 	public ArrayList<String> getUnusedAINames(){
- 		ArrayList<String> aiNames = new ArrayList<String>();
+ 	public void setPlayer(ServerPlayer player){
+ 		
+ 		//player.addResourceCards(new ResourceList());
+ 		player.setCities(0);
+ 		player.setDiscarded(false);
+ 		player.setMonuments(0);
+ 		player.setNewDevCards(new DevCardList());
+ 		player.setOldDevCards(new DevCardList());
+ 		player.setResources(new ResourceList());
+ 		player.setRoads(0);
+ 		player.setSettlements(0);
+ 		player.setSoldiers(0);
+ 		player.setVictoryPoints(0);
+ 		player.setPlayedDevCard(false);
+ 		serverPlayers[player.getPlayerIndex()] = player;
+ 	}
+ 	public void initAINames(){
+ 		aiNames = new ArrayList<String>();
  		aiNames.add("Steve");
 		aiNames.add("Bentz");
 		aiNames.add("Snell");
@@ -60,46 +78,36 @@ import shared.locations.VertexObject;
 		aiNames.add("Trent");
 		aiNames.add("Bandana");
 		aiNames.add("Sideburns");
-		for(int x = 0; x < 4; x++){
-			int index = -1;
-			if(serverPlayers[x] != null){
-		 		for(int i = 0; i < aiNames.size(); i++){
-		 			if(aiNames.get(i).equals(serverPlayers[x].getName()))
-		 				index = i;
-		 		}
-		 		if(index != -1)
-		 			aiNames.remove(index);
-		 		index = -1;
-			}
-		}
-		return aiNames;
  	}
- 	public ArrayList<CatanColor> getUnusedColors(){
- 		ArrayList<CatanColor> unusedColors = new ArrayList<CatanColor>();
- 		unusedColors.add(CatanColor.red);
- 		unusedColors.add(CatanColor.orange);
- 		unusedColors.add(CatanColor.yellow);
- 		unusedColors.add(CatanColor.blue);
- 		unusedColors.add(CatanColor.green); 
- 		unusedColors.add(CatanColor.purple);
- 		unusedColors.add(CatanColor.puce); 
- 		unusedColors.add(CatanColor.white);
- 		unusedColors.add(CatanColor.brown);
- 		
-
-		for(int x = 0; x < 4; x++){
-			int index = -1;
-			if(serverPlayers[x] != null){
-		 		for(int i = 0; i < unusedColors.size(); i++){
-		 			if(unusedColors.get(i) == serverPlayers[x].getColor())
-		 				index = i;
-		 		}
-		 		unusedColors.remove(index);
-		 		index = -1;
-			}
-		}
-	
- 		return unusedColors;
+ 	public void initAIColors(){
+ 		unusedAIColors = new ArrayList<CatanColor>();
+ 		unusedAIColors.add(CatanColor.red);
+ 		unusedAIColors.add(CatanColor.orange);
+ 		unusedAIColors.add(CatanColor.yellow);
+ 		unusedAIColors.add(CatanColor.blue);
+ 		unusedAIColors.add(CatanColor.green); 
+ 		unusedAIColors.add(CatanColor.purple);
+ 		unusedAIColors.add(CatanColor.puce); 
+ 		unusedAIColors.add(CatanColor.white);
+ 		unusedAIColors.add(CatanColor.brown);
+ 	}
+ 	public String chooseAIName(){
+ 		Random rand = new Random();
+		int max =  aiNames.size() - 1;
+		int min = 0;
+		int ai = rand.nextInt(max - min + 1) + min;
+		String aiChoice = aiNames.get(ai);
+		aiNames.remove(ai);
+		return aiChoice;
+ 	}
+ 	public CatanColor chooseAIColor(){
+ 		Random rand = new Random();
+		int max =  unusedAIColors.size() - 1;
+		int min = 0;
+		int ai = rand.nextInt(max - min + 1) + min;
+		CatanColor colorChoice = unusedAIColors.get(ai);
+		unusedAIColors.remove(ai);
+		return colorChoice;
  	}
 	/**
 	 * this function was made to get a local index or return the size of the players so that

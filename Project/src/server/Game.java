@@ -63,21 +63,11 @@ public class Game {
 	
 	
 	public  String getUnusedAiName(int gameId) {
-		ArrayList<String> unusedAINames = _instance.arrayGames.get(gameId).model.getUnusedAINames();
-		Random rand = new Random();
-		int max = unusedAINames.size() - 1;
-		int min = 0;
-		int ai = rand.nextInt(max - min + 1) + min;
-		return unusedAINames.get(ai);
+		return _instance.arrayGames.get(gameId).model.chooseAIName();
 	}
 	
 	public CatanColor getUnusedColor(int gameId) {
-		ArrayList<CatanColor> unusedColors = _instance.arrayGames.get(gameId).model.getUnusedColors();
-		Random rand = new Random();
-		int max = unusedColors.size() - 1;
-		int min = 0;
-		int color = rand.nextInt(max - min + 1) + min;
-		return unusedColors.get(color);
+		return _instance.arrayGames.get(gameId).model.chooseAIColor();
 	}
 	public void setGame(int gameID, ServerGameModel model){
 		

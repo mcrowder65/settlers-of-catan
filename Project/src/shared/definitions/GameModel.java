@@ -66,14 +66,11 @@ public class GameModel {
 	 */
 	private int winner;
 	
+	
 	/**
-	 * contains username, password, playerID
+	 * unique identifier of the game
 	 */
-	private String userCookie;
-	/**
-	 * unique identifier of the game that the player is in 
-	 */
-	private String gameCookie;
+	private int gameId;
 
 	
 	public ResourceList getBank() throws IllegalArgumentException {
@@ -168,17 +165,12 @@ public class GameModel {
 	public void setWinner(int winner)  throws IllegalArgumentException {
 		this.winner = winner;
 	}
-	public String getUserCookie() throws IllegalArgumentException{
-		return userCookie;
+	
+	public int getGameId() throws IllegalArgumentException{
+		return gameId;
 	}
-	public void setUserCookie(String userCookie)  throws IllegalArgumentException {
-		this.userCookie = userCookie;
-	}
-	public String getGameCookie() throws IllegalArgumentException{
-		return gameCookie;
-	}
-	public void setGameCookie(String gameCookie)  throws IllegalArgumentException {
-		this.gameCookie = gameCookie;
+	public void setGameId(int gameId)  throws IllegalArgumentException {
+		this.gameId = gameId;
 	}
 	public Player getLocalPlayer(int playerId) {
 		for (int n = 0; n < players.length; n++) {

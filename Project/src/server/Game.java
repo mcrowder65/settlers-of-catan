@@ -37,6 +37,10 @@ public class Game {
 		return _instance;
 	}
 	
+	
+	public int getNumGames() {
+		return arrayGames.size();
+	}
 	private static List<AIType> aiTypes;
 	private static HashSet<String> aiNames;
 	static {

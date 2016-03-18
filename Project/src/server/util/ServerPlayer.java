@@ -27,6 +27,9 @@ public class ServerPlayer extends Player {
 	 */
 	public ServerPlayer(String name, CatanColor color, int playerID, int playerIndex) throws IllegalArgumentException {
 		super(name,color, playerID, playerIndex);
+		this.setRoads(15);
+		this.setCities(4);
+		this.setSettlements(5);
 	}
 	
 	public ServerPlayer() {

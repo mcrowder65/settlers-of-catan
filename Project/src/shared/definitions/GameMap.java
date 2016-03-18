@@ -47,6 +47,7 @@ public class GameMap {
 	protected HexLocation robber;
 	protected List<EdgeValue>allRoads = new ArrayList<EdgeValue>();
 	protected List<VertexObject>allSettlements = new ArrayList<VertexObject>();
+	protected List<VertexObject>secondRoundSettlements = new ArrayList<VertexObject>();
 	protected List<VertexObject>allCities = new ArrayList<VertexObject>();
 	private List<Port>allPorts = new ArrayList<Port>();
 	
@@ -3388,10 +3389,24 @@ public class GameMap {
 	 * Adds a settlement to settlements 
 	 * @param settlementToBuild
 	 */
-	public void buildSettlement(VertexObject settlementToBuild) throws IllegalArgumentException {
+	public void buildSettlement(VertexObject settlementToBuild,boolean secondRound) throws IllegalArgumentException {
 		allSettlements.add(settlementToBuild);
 		settlements = new VertexObject[allSettlements.size()];
 		settlements = allSettlements.toArray(settlements);
+		if(secondRound == true){
+			secondRoundSettlements.add(settlementToBuild);
+		}
+	}
+	
+	public List<VertexObject> getSecondRoundSettlements(int owner){
+		List<VertexObject> settlements = new ArrayList<VertexObject>();
+		for(int i=0; i<secondRoundSettlements.size(); i++){
+			if(secondRoundSettlements.get(i).getOwner() == owner){
+				settlements.add(secondRoundSettlements.get(i));
+			}
+		}
+		
+		return settlements;
 	}
 
 	/**
@@ -3416,7 +3431,7 @@ public class GameMap {
 	 * Adds a settlement to settlements 
 	 * @param location
 	 */
-	public boolean laySettlement(VertexObject location){
+	public boolean laySettlement(VertexObject location, boolean secondRound){
 		int x = location.getLocation().getHexLoc().getX(); 
 		int y = location.getLocation().getHexLoc().getY();
 		VertexDirection direction = location.getLocation().getDir();
@@ -3424,7 +3439,7 @@ public class GameMap {
 
 		//Save the road based on the "home" Hex
 
-		buildSettlement(location);
+		buildSettlement(location,secondRound);
 
 
 		//Save the road based on the adjacent Hexes		
@@ -3432,12 +3447,12 @@ public class GameMap {
 			//Hex1
 			if(isLand(new HexLocation(x-1,y))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y, VertexDirection.East);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y-1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y-1,VertexDirection.SouthWest);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 
 		}
@@ -3445,12 +3460,12 @@ public class GameMap {
 			//Hex1
 			if(isLand(new HexLocation(x,y-1))){
 				VertexObject temp = vertexObjectFactory(owner, x, y-1, VertexDirection.SouthEast);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x+1,y-1))){
 				VertexObject temp = vertexObjectFactory(owner,x+1,y-1,VertexDirection.West);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 
 		}
@@ -3458,36 +3473,36 @@ public class GameMap {
 			//Hex1
 			if(isLand(new HexLocation(x+1,y-1))){
 				VertexObject temp = vertexObjectFactory(owner, x+1, y-1, VertexDirection.SouthWest);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x+1,y))){
 				VertexObject temp = vertexObjectFactory(owner,x+1,y,VertexDirection.NorthWest);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 		}
 		else if(direction == VertexDirection.SouthEast){
 			//Hex1
 			if(isLand(new HexLocation(x+1,y))){
 				VertexObject temp = vertexObjectFactory(owner, x+1, y, VertexDirection.West);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y+1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y+1,VertexDirection.NorthEast);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 		}
 		else if(direction == VertexDirection.SouthWest){
 			//Hex1
 			if(isLand(new HexLocation(x-1,y+1))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y+1, VertexDirection.East);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x,y+1))){
 				VertexObject temp = vertexObjectFactory(owner,x,y+1,VertexDirection.NorthWest);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 
 		}
@@ -3495,12 +3510,12 @@ public class GameMap {
 			//Hex1
 			if(isLand(new HexLocation(x-1,y+1))){
 				VertexObject temp = vertexObjectFactory(owner, x-1, y+1, VertexDirection.NorthEast);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 			//Hex2
 			if(isLand(new HexLocation(x-1,y))){
 				VertexObject temp = vertexObjectFactory(owner,x-1,y,VertexDirection.SouthEast);
-				buildSettlement(temp);
+				buildSettlement(temp,secondRound);
 			}
 		}
 

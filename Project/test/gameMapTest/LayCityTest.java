@@ -18,9 +18,9 @@ public class LayCityTest {
 	public void setUp() throws Exception {
 		map = new GameMap();
 		//Laying of Settlements
-		map.laySettlement(map.vertexObjectFactory(0, 0, 0, VertexDirection.East));
-		map.laySettlement(map.vertexObjectFactory(1, 2, -2, VertexDirection.NorthWest));
-		map.laySettlement(map.vertexObjectFactory(3, -1, -1, VertexDirection.NorthWest));
+		map.laySettlement(map.vertexObjectFactory(0, 0, 0, VertexDirection.East),false);
+		map.laySettlement(map.vertexObjectFactory(1, 2, -2, VertexDirection.NorthWest),false);
+		map.laySettlement(map.vertexObjectFactory(3, -1, -1, VertexDirection.NorthWest),false);
 
 		//Laying of Cities. (Settlements should be substituted by cities).
 		map.layCity(map.vertexObjectFactory(0, 0, 0, VertexDirection.East));

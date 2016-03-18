@@ -502,7 +502,7 @@ public class GameMapTest {
 		map.buildRoad(road2);
 		assertTrue(map.getRoads().length == 4);
 	
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		canBuild = false;
@@ -510,7 +510,7 @@ public class GameMapTest {
 		VertexObject settlement2 = new VertexObject(0,location2);
 		canBuild = map.canBuildSettlement(settlement2);
 		assertTrue(canBuild == true);
-		map.laySettlement(settlement2);
+		map.laySettlement(settlement2,false);
 		assertTrue(map.getSettlements().length == 6);
 		
 		
@@ -548,7 +548,7 @@ public class GameMapTest {
 		canBuild = map.canBuildSettlement(settlement6);
 		assertTrue(canBuild == true);
 		
-		map.laySettlement(settlement6);
+		map.laySettlement(settlement6,false);
 		assertTrue(map.getSettlements().length == 9);
 		
 
@@ -597,7 +597,7 @@ public class GameMapTest {
 		map.buildRoad(road2);
 		assertTrue(map.getRoads().length == 4);
 	
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		canBuild = false;
@@ -605,7 +605,7 @@ public class GameMapTest {
 		VertexObject settlement2 = new VertexObject(0,location2);
 		canBuild = map.canBuildSettlement(settlement2);
 		assertTrue(canBuild == true);
-		map.laySettlement(settlement2);
+		map.laySettlement(settlement2,false);
 		assertTrue(map.getSettlements().length == 6);
 		
 		
@@ -643,7 +643,7 @@ public class GameMapTest {
 		canBuild = map.canBuildSettlement(settlement6);
 		assertTrue(canBuild == true);
 		
-		map.laySettlement(settlement6);
+		map.laySettlement(settlement6,false);
 		assertTrue(map.getSettlements().length == 9);
 		
 		boolean canBuildCty = map.canBuildCity(settlement6);

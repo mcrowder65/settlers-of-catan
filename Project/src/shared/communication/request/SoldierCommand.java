@@ -20,6 +20,7 @@ public class SoldierCommand extends MoveCommand {
 
 	private HexLocation location;
 	private int victimIndex;
+	private Object soldierLock = new Object();
 	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -46,74 +47,75 @@ public class SoldierCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
-		HexLocation robberLoc = this.getLocation();		
- 		Game game = Game.instance();	
- 		GetModelResponse response = new GetModelResponse();
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
- 		String status = turnTracker.getStatus();
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		synchronized(soldierLock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+			HexLocation robberLoc = this.getLocation();		
+	 		Game game = Game.instance();	
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		String status = turnTracker.getStatus();
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; 		
+			}
+	 		
+	 		if(!status.equals("Playing")){
+	 			response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+	 		}
+	 		
+	 		if(player.getOldDevCards().getSoldier() < 1){
+	 			response.setSuccess(false);
+				response.setErrorMessage("No dev card to play");
+				return response;
+	 		}
+	 		
+	 		if(map.isLand(robberLoc) == false){
+	 			response.setSuccess(false);
+				response.setErrorMessage("Invalid Hex Location");
+				return response;
+	 		}
+	 		
+	 		if(victim.getResources().isEmpty()){
+	 			model.setVersion(model.getVersion() + 1);
+	 			response.setSuccess(true);
+	 			response.setJson(model.toString());
+				return response;
+			}
+	 		
+	 		ResourceType resource = model.generateRandomResource();
+			
+			while(victim.getResources().hasResource(resource) == false){
+				resource = model.generateRandomResource();
+			}
+			
+			victim.removeResource(resource);
+			player.addResource(resource);
+			model.setVersion(model.getVersion() +1);
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			map.setRobber(robberLoc);
+			player.playSoldierCard();
+			return response; 
 		}
- 		
- 		if(checkTurn(turnTracker,playerIndex) == false){		
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response; 		
-		}
- 		
- 		if(!status.equals("Playing")){
- 			response.setSuccess(false);
-			response.setErrorMessage("Wrong status");
-			return response;
- 		}
- 		
- 		if(player.getOldDevCards().getSoldier() < 1){
- 			response.setSuccess(false);
-			response.setErrorMessage("No dev card to play");
-			return response;
- 		}
- 		
- 		if(map.isLand(robberLoc) == false){
- 			response.setSuccess(false);
-			response.setErrorMessage("Invalid Hex Location");
-			return response;
- 		}
- 		
- 		if(victim.getResources().isEmpty()){
- 			model.setVersion(model.getVersion() + 1);
- 			response.setSuccess(true);
- 			response.setJson(model.toString());
-			return response;
-		}
- 		
- 		ResourceType resource = model.generateRandomResource();
-		
-		while(victim.getResources().hasResource(resource) == false){
-			resource = model.generateRandomResource();
-		}
-		
-		victim.removeResource(resource);
-		player.addResource(resource);
-		model.setVersion(model.getVersion() +1);
-		response.setSuccess(true);
-		response.setJson(model.toString());
-		map.setRobber(robberLoc);
-		player.playSoldierCard();
-		return response; 
-
 	
 	}
 

@@ -20,7 +20,7 @@ import shared.locations.HexLocation;
  *
  */
 public class SendChatCommand extends MoveCommand {
-
+	private Object sendChatLock = new Object();
 	private String content;
 	public SendChatCommand(int playerIndex, String content) throws IllegalArgumentException {
 		super(playerIndex);
@@ -42,29 +42,31 @@ public class SendChatCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
-		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(gameIndex);				
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		GetModelResponse response = new GetModelResponse();
- 		MessageLine line = new MessageLine(getContent(),player.getName());
- 		model.addChatMessage(line);
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		synchronized(sendChatLock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+			Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);				
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		MessageLine line = new MessageLine(getContent(),player.getName());
+	 		model.addChatMessage(line);
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		model.setVersion(model.getVersion() + 1);
+	 		response.setSuccess(true);
+	 		response.setJson(model.toString());
+			return response; 
 		}
- 		
- 		model.setVersion(model.getVersion() + 1);
- 		response.setSuccess(true);
- 		response.setJson(model.toString());
-		return response; 
 	}
 
 	

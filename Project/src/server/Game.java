@@ -94,15 +94,14 @@ public class Game {
 		return _instance.arrayGames.size() - 1;
 	}
 	public void addPlayer(int gameId, ServerPlayer player){
-		getGameId(gameId).addPlayer(player);
 		arrayGames.get(gameId).model.addPlayer(player);
 		PlayerInfo p = new PlayerInfo(player.getPlayerID(), player.getName(), player.getColor());
-		arrayGames.get(gameId).info.addPlayer(p);
+		if(!arrayGames.get(gameId).info.hasPlayer(p.getName()))
+			arrayGames.get(gameId).info.addPlayer(p);
 	}
 	public void setPlayer(int gameId, ServerPlayer player){
-		getGameId(gameId).setPlayer(player);
 		arrayGames.get(gameId).model.setPlayer(player);
-		arrayGames.get(gameId).info.setPlayer(player.getPlayerID(), player.getColor());
+		arrayGames.get(gameId).info.setPlayer(player.getPlayerIndex(),player.getPlayerID(), player.getColor());
 	}
 	/**
 	 * only use this if you are creating a game!!!!!

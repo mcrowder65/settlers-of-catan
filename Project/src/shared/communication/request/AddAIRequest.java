@@ -40,12 +40,13 @@ public class AddAIRequest extends Request {
 			return response;
 		}
 		try {
-			Game.instance().getGameId(this.gameIDCookie).addPlayer(ai);
+			Game.instance().addPlayer(gameIDCookie, ai);
 		}catch (IllegalStateException ex) {
 			response.setSuccess(false);
 			response.setErrorMessage(ex.getMessage());
 		}
-		
+		//String name, CatanColor color, int playerID, int playerIndex
+		//Game.instance().getGameId(gameIDCookie).addPlayer(new ServerPlayer(name, color, playerId, playerIndex));
 		return response;
 	}
 	public AddAIRequest(HttpExchange exchange){

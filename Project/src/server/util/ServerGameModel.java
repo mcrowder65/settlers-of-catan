@@ -68,6 +68,8 @@ import shared.locations.VertexObject;
  		player.setSoldiers(0);
  		player.setVictoryPoints(0);
  		player.setPlayedDevCard(false);
+ 		unusedAIColors.add(serverPlayers[player.getPlayerIndex()].getColor()); //add back color
+ 		unusedAIColors.remove(player.getColor()); //remove color to be added
  		serverPlayers[player.getPlayerIndex()] = player;
  	}
  	public void initAINames(){

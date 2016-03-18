@@ -55,12 +55,12 @@ public class GameInfo
 	}
 	/**
 	 * this will set a player - used for joining a game your player is already in.
-	 * @param id of player
+	 * @param index of player
 	 * @param color new CatanColor
 	 */
-	public void setPlayer(int id, CatanColor color){
-		String name = players.get(id).getName();
-		players.set(id, new PlayerInfo(id, name, color));
+	public void setPlayer(int index, int id, CatanColor color){
+		String name = players.get(index).getName();
+		players.set(index, new PlayerInfo(id, name, color));
 		
 	}
 	public PlayerInfo getPlayer(int id){

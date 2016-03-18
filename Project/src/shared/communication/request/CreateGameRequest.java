@@ -67,8 +67,8 @@ public class CreateGameRequest extends Request {
 		sgm.setServerPlayers(new ServerPlayer[4]);
 
 		//int brick, int ore, int sheep, int wheat, int wood
-		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));//TODO i think this is right
-		sgm.setDeck(new DevCardList(2, 5, 2, 14, 2)); //TODO how many dev cards?
+		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));
+		sgm.setDeck(new DevCardList(2, 5, 2, 14, 2));
 		//int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
 		sgm.setChat(new MessageList());
 		sgm.setLog(new MessageList());

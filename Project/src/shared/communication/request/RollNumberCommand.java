@@ -23,7 +23,7 @@ public class RollNumberCommand extends MoveCommand {
 		if (number < 2 || number > 12) 
 			throw new IllegalArgumentException("number must be between 2 - 12");
 		this.number = number;
-		type = "rollNumber";
+		type = "rollDice";
 	}
 	
 	public RollNumberCommand(HttpExchange exchange) {

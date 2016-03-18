@@ -30,7 +30,16 @@ import shared.locations.VertexObject;
 		}
 		return -1;
 	}
- 	
+ 	/**
+ 	 * Returns a AI ServerPlayer so you can do ai stuff or null if it's not an ai
+ 	 * @return ServerPlayer currentPlayer
+ 	 */
+ 	public ServerPlayer isAiTurn(){
+ 		ServerPlayer currentPlayer = serverPlayers[serverTurnTracker.getCurrentTurn()];
+ 		if(currentPlayer.getPlayerID() < 0) //AI's have id's less than 0.
+ 			return currentPlayer;
+ 		return null;
+ 	}
  	public void initServerPlayers(){
  		serverPlayers = new ServerPlayer[4];
  		serverPlayers[0] = localPlayer;
@@ -351,6 +360,10 @@ import shared.locations.VertexObject;
  			}
  		}
  	}
+	public void doAiStuff() {
+		// TODO Auto-generated method stub
+		
+	}
 	
   			  	
  } 

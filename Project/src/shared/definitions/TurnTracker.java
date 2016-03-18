@@ -133,6 +133,15 @@ public class TurnTracker {
 		
 	}
 	
+	public void decreaseTurn(){
+			this.currentTurn--;
+			
+		if(this.currentTurn == -1){
+			this.currentTurn = 3;
+		}
+		
+	}
+	
 	/**
 	 * Determines if the playerIndex is the current turn
 	 * @param playerIndex

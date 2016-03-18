@@ -54,7 +54,6 @@ public class RollNumberCommand extends MoveCommand {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-  		
   		if(numRolled == 7){
   			turnTracker.setStatus("Discarding");
   		}

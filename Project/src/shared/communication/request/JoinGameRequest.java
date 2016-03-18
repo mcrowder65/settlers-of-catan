@@ -39,13 +39,15 @@ public class JoinGameRequest extends Request {
 		ServerGameModel model = game.getGameId(id);
 		//String name, CatanColor color, int playerID, int playerIndex
 		int playerIndex = model.getLocalIndex(playerIDCookie);
+		ServerPlayer serverPlayer = new ServerPlayer(userCookie, color, playerIDCookie, playerIndex);
 		if(playerIndex != -1){
-			model.setPlayer(new ServerPlayer(userCookie, color, playerIDCookie, playerIndex));
+			Game.instance().setPlayer(id, serverPlayer);
 		}
 		//otherwise they're not in the game, find the index to use to add them to the game.
 		else{
 			playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
-			model.addPlayer(new ServerPlayer(userCookie, color, playerIDCookie, playerIndex));
+			serverPlayer.setPlayerIndex(playerIndex);
+			Game.instance().addPlayer(id, serverPlayer);
 		}
 		response.setCookie("Set-cookie", "catan.game=" + id + ";");
 		response.setErrorMessage("Success");

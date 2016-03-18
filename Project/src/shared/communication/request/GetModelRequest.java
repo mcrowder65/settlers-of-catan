@@ -21,12 +21,15 @@ public class GetModelRequest extends Request {
 	}
 	
 	public GetModelResponse getModel() {
-		
-		return new GetModelResponse(200, model);
+		GetModelResponse response = new GetModelResponse(200, model);
+		return response;
 	}
 	public GetModelRequest(HttpExchange exchange){
 		super(exchange);
 		ServerGameModel sgm = Game.instance().getGameId(gameIDCookie);
+		if(sgm.isAiTurn() != null)
+			sgm.doAiStuff();
 		model = sgm.toString();
+		
 	}
 }

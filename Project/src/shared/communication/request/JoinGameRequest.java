@@ -42,7 +42,7 @@ public class JoinGameRequest extends Request {
 		ServerPlayer serverPlayer = new ServerPlayer(userCookie, color, playerIDCookie, playerIndex);
 		if(playerIndex != -1){
 			serverPlayer = model.getPlayerByIndex(playerIndex);
-			serverPlayer.setColor(color);
+			serverPlayer.setColor(color); //TODO pointer issues
 			Game.instance().setPlayer(id, serverPlayer);
 		}
 		//otherwise they're not in the game, find the index to use to add them to the game.

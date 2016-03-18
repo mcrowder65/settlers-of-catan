@@ -31,7 +31,13 @@ public class ServerPlayer extends Player {
 		this.setCities(4);
 		this.setSettlements(5);
 	}
-	
+	public ServerPlayer(ServerPlayer copy){
+		super(copy.getCities(), copy.getColor(), copy.getDiscarded(), 
+				copy.getMonuments(), copy.getName(), copy.getNewDevCards(),
+				copy.getOldDevCards(), copy.getPlayerIndex(), copy.getPlayedDevCard(),
+				copy.getPlayerID(), copy.getResources(), copy.getRoads(), copy.getSettlements(),
+				copy.getSoldiers(), copy.getVictoryPoints());
+	}
 	public ServerPlayer() {
 		// TODO Auto-generated constructor stub
 	}

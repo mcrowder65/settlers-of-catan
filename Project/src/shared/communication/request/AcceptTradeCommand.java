@@ -24,7 +24,6 @@ import shared.definitions.TradeOffer;
  */
 
 public class AcceptTradeCommand extends MoveCommand {
-
 	private boolean willAccept;
 	public AcceptTradeCommand(int playerIndex, boolean willAccept) throws IllegalArgumentException {
 		super(playerIndex);

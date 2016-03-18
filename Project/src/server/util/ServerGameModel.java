@@ -81,6 +81,7 @@ import shared.locations.VertexObject;
 		aiNames.add("Sideburns");
  	}
  	public void initAIColors(){
+ 		//TODO make it so user colors are taken out of here.
  		unusedAIColors = new ArrayList<CatanColor>();
  		unusedAIColors.add(CatanColor.red);
  		unusedAIColors.add(CatanColor.orange);

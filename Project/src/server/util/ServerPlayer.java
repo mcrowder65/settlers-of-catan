@@ -58,6 +58,7 @@ public class ServerPlayer extends Player {
 	 */
 	public void laySettlement(){
 		chargeBasicSettlement();
+		setVictoryPoints(getVictoryPoints()+1);
 		removeSettlement();
 	}
 	
@@ -141,6 +142,8 @@ public class ServerPlayer extends Player {
 	public void layCity(){
 		chargeBasicCity();
 		removeCity();
+		setVictoryPoints(getVictoryPoints()+1);
+		addSettlement();
 	}
 	
 	public void addResource(ResourceType resource){

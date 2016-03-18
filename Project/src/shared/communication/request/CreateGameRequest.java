@@ -74,7 +74,7 @@ public class CreateGameRequest extends Request {
 		sgm.setLog(new MessageList());
 		sgm.setLocalPlayer(Game.instance().getLocalPlayer(playerIDCookie));
 		sgm.initServerPlayers();
-		sgm.setTurnTracker(new TurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
+		sgm.setServerTurnTracker(new ServerTurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 		sgm.setVersion(0);
 		sgm.setWinner(-1);
 		sgm.initAINames();

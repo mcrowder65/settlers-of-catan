@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 /**
@@ -21,6 +22,8 @@ public abstract class MoveCommand extends Request {
 	}
 	
 	protected MoveCommand(HttpExchange exchange) {
+		super(exchange);
+		
 		
 	}
 	

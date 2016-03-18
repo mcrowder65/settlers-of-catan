@@ -19,6 +19,7 @@ import client.data.PlayerInfo;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
@@ -349,7 +350,7 @@ public class JsonTranslator {
 		MessageList log = model.getLog();
 		MessageList chat = model.getChat();
 		ResourceList bank = model.getBank();
-		TurnTracker turnTracker = model.getTurnTracker();
+		ServerTurnTracker turnTracker = model.getServerTurnTracker();
 		int winner = model.getWinner();
 		int version = model.getVersion();
 

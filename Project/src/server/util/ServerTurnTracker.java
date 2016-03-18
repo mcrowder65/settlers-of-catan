@@ -11,6 +11,10 @@ import shared.definitions.TurnTracker;
  */
 public class ServerTurnTracker extends TurnTracker{
 	
+	public ServerTurnTracker(int i, String string, int j, int k) {
+		super(i, string, j, k);
+	}
+
 	public void updateStatus(String status, int gameId) {
 	    this.status = status;
 	    

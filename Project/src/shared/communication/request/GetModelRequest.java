@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
 import shared.communication.response.GetModelResponse;
 import sun.net.www.protocol.http.HttpURLConnection;
 
@@ -27,8 +28,9 @@ public class GetModelRequest extends Request {
 	public GetModelRequest(HttpExchange exchange){
 		super(exchange);
 		ServerGameModel sgm = Game.instance().getGameId(gameIDCookie);
-		if(sgm.isAiTurn() != null)
-			sgm.doAiStuff();
+		ServerPlayer ai = sgm.isAiTurn();
+		if(ai != null)
+			sgm.doAiTurn(ai, sgm.getGameId());
 		model = sgm.toString();
 		
 	}

@@ -1,5 +1,6 @@
 package server.facade;
 
+import shared.communication.request.FinishTurnCommand;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -91,11 +92,14 @@ public class ServerAIFacade implements IAIFacade {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
-	public void finishTurn() {
-		// TODO Auto-generated method stub
-		
+	public void finishTurn(){
+		// TODO auto-generated method stub
+	}
+	@Override
+	public void finishTurn(int aiIndex, int gameID) {
+		FinishTurnCommand command = new FinishTurnCommand(aiIndex, gameID);
+		command.execute();
 	}
 
 

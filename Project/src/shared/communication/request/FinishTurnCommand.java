@@ -26,6 +26,9 @@ public class FinishTurnCommand extends MoveCommand {
 		super(playerIndex);
 		this.type = "finishTurn";
 	}
+	public FinishTurnCommand(int playerIndex, int gameID){
+		super(playerIndex, gameID);
+	}
 	public FinishTurnCommand(HttpExchange exchange) {
 		super(exchange);
 		FinishTurnCommand tmp = (FinishTurnCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());

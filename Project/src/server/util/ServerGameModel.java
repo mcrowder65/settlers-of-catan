@@ -55,19 +55,6 @@ import shared.locations.VertexObject;
  		return size;
  	}
  	public void setPlayer(ServerPlayer player){
- 		
- 		//player.addResourceCards(new ResourceList());
- 		player.setCities(0);
- 		player.setDiscarded(false);
- 		player.setMonuments(0);
- 		player.setNewDevCards(new DevCardList());
- 		player.setOldDevCards(new DevCardList());
- 		player.setResources(new ResourceList());
- 		player.setRoads(0);
- 		player.setSettlements(0);
- 		player.setSoldiers(0);
- 		player.setVictoryPoints(0);
- 		player.setPlayedDevCard(false);
  		unusedAIColors.add(serverPlayers[player.getPlayerIndex()].getColor()); //add back color
  		unusedAIColors.remove(player.getColor()); //remove color to be added
  		serverPlayers[player.getPlayerIndex()] = player;
@@ -166,14 +153,14 @@ import shared.locations.VertexObject;
  		if(amt == 4)
  			throw new IllegalStateException("Already 4 players");
  		//player.addResourceCards(new ResourceList());
- 		player.setCities(0);
+ 		player.setCities(4);
  		player.setDiscarded(false);
  		player.setMonuments(0);
  		player.setNewDevCards(new DevCardList());
  		player.setOldDevCards(new DevCardList());
  		player.setResources(new ResourceList());
- 		player.setRoads(0);
- 		player.setSettlements(0);
+ 		player.setRoads(15);
+ 		player.setSettlements(5);
  		player.setSoldiers(0);
  		player.setVictoryPoints(0);
  		player.setPlayedDevCard(false);
@@ -339,6 +326,11 @@ import shared.locations.VertexObject;
  			}
  		}
  		return true;
+ 	}
+
+
+ 	public ServerPlayer getPlayerByIndex(int index){
+ 		return serverPlayers[index];
  	}
 	public void issueResourcesNormalPlay(int numRolled){
  		Hex[] allHexes = serverMap.getHexes();

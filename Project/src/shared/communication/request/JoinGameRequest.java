@@ -41,6 +41,8 @@ public class JoinGameRequest extends Request {
 		int playerIndex = model.getLocalIndex(playerIDCookie);
 		ServerPlayer serverPlayer = new ServerPlayer(userCookie, color, playerIDCookie, playerIndex);
 		if(playerIndex != -1){
+			serverPlayer = model.getPlayerByIndex(playerIndex);
+			serverPlayer.setColor(color);
 			Game.instance().setPlayer(id, serverPlayer);
 		}
 		//otherwise they're not in the game, find the index to use to add them to the game.

@@ -97,7 +97,9 @@ public class OfferTradeCommand extends MoveCommand {
 		}
  		
  		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
+ 		model.setVersion(model.getVersion() + 1);
  		response.setSuccess(true);
+ 		response.setJson(model.toString());
 		return response; 
 	}
 

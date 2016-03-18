@@ -91,7 +91,9 @@ public class BuyDevCardCommand extends MoveCommand {
 			}
 			player.buyDevCard(card);
 			model.buyFromDeck(card);
+			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response;	
 			
 		}

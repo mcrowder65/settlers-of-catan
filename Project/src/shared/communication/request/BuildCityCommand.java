@@ -95,6 +95,8 @@ public class BuildCityCommand extends MoveCommand {
 			player.layCity();
 			
 			//return that there was a success
+			model.setVersion(model.getVersion() + 1);
+			response.setJson(model.toString());
 			response.setSuccess(true);
 			return response;
 			

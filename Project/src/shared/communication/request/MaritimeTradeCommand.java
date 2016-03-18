@@ -114,8 +114,9 @@ public class MaritimeTradeCommand extends MoveCommand {
 		
 		player.addResource(input);
 		model.getBank().removeResource(output,ratio);
-		
+		model.setVersion(model.getVersion() + 1);
 		response.setSuccess(true);
+		response.setJson(model.toString());
 		return response;
 	}
 

@@ -93,7 +93,9 @@ public class SoldierCommand extends MoveCommand {
  		}
  		
  		if(victim.getResources().isEmpty()){
+ 			model.setVersion(model.getVersion() + 1);
  			response.setSuccess(true);
+ 			response.setJson(model.toString());
 			return response;
 		}
  		
@@ -105,7 +107,9 @@ public class SoldierCommand extends MoveCommand {
 		
 		victim.removeResource(resource);
 		player.addResource(resource);
+		model.setVersion(model.getVersion() +1);
 		response.setSuccess(true);
+		response.setJson(model.toString());
 		map.setRobber(robberLoc);
 		player.playSoldierCard();
 		return response; 

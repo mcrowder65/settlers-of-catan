@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.scenario.effect.Blend.Mode;
 
 import client.utils.Translator;
 import server.Game;
@@ -89,7 +90,9 @@ public class RobPlayerCommand extends MoveCommand {
 		
 		//victim has no resources
 		if(victim.getResources().isEmpty()){
+			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response; 
 		}
 		
@@ -101,7 +104,9 @@ public class RobPlayerCommand extends MoveCommand {
 		
 		victim.removeResource(resource);
 		player.addResource(resource);
+		model.setVersion(model.getVersion() + 1);
 		response.setSuccess(true);
+		response.setJson(model.toString());
 		map.setRobber(location);
 		return response; 
 

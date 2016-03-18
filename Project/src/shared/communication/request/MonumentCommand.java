@@ -72,7 +72,9 @@ public class MonumentCommand extends MoveCommand {
 				return response;
 			}
 			player.playMonument();
+			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response;
 		}
 		response.setSuccess(false);

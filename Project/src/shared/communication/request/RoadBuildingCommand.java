@@ -105,7 +105,9 @@ public class RoadBuildingCommand extends MoveCommand {
 			map.buildRoad(new EdgeValue(playerIndex,loc1));
 			map.buildRoad(new EdgeValue(playerIndex,loc2));
 			player.layRoadBuilder();
+			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response;
 		}		
 				

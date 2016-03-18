@@ -94,8 +94,9 @@ public class MonopolyCommand extends MoveCommand {
 				}
 			}
 		}
-		
+		model.setVersion(model.getVersion()  + 1);
 		response.setSuccess(true);
+		response.setJson(model.toString());
 		return response;
 	}
 	

@@ -30,6 +30,7 @@ public class FinishTurnCommand extends MoveCommand {
 		super(exchange);
 		FinishTurnCommand tmp = (FinishTurnCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 
 	}
 	/**

@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -44,6 +48,11 @@ public class RoadBuildingCommand extends MoveCommand {
 	
 	public RoadBuildingCommand(HttpExchange exchange) {
 		super(exchange);
+		RoadBuildingCommand tmp = (RoadBuildingCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.spot1 = tmp.spot1;
+		this.spot2 = tmp.spot2;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 		
 	}
 	/**
@@ -62,6 +71,16 @@ public class RoadBuildingCommand extends MoveCommand {
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		GetModelResponse response = new GetModelResponse();
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  				
 		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		

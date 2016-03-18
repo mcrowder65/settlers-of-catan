@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -43,6 +47,11 @@ public class OfferTradeCommand extends MoveCommand {
 	
 	public OfferTradeCommand(HttpExchange exchange) {
 		super(exchange);
+		OfferTradeCommand tmp = (OfferTradeCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.playerIndex = tmp.playerIndex;
+		this.type = tmp.type;
+		this.offer = tmp.offer;
+		this.receiver = tmp.receiver;
 		
 	}
 
@@ -58,6 +67,16 @@ public class OfferTradeCommand extends MoveCommand {
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 
  		ResourceList normalizedList = model.normalizeResourceList(offer);
  		if(player.canMakeTrade(normalizedList) == false){

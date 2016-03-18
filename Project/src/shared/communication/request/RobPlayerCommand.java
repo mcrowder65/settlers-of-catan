@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -34,6 +38,11 @@ public class RobPlayerCommand extends MoveCommand {
 
 	public RobPlayerCommand(HttpExchange exchange) {
 		super(exchange);
+		RobPlayerCommand tmp = (RobPlayerCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.location = tmp.location;
+		this.victimIndex = tmp.victimIndex;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 		
 	}
 	/**
@@ -52,7 +61,17 @@ public class RobPlayerCommand extends MoveCommand {
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		ServerPlayer victim = model.getServerPlayers()[victimIndex];
  		GetModelResponse response = new GetModelResponse();
- 		String status = turnTracker.getStatus();	
+ 		String status = turnTracker.getStatus();
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  		
  		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		

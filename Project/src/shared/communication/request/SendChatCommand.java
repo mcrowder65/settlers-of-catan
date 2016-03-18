@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -27,6 +31,10 @@ public class SendChatCommand extends MoveCommand {
 
 	public SendChatCommand(HttpExchange exchange) {
 		super(exchange);
+		SendChatCommand tmp = (SendChatCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.content = tmp.content;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 		
 	}
 	/**
@@ -42,6 +50,16 @@ public class SendChatCommand extends MoveCommand {
  		GetModelResponse response = new GetModelResponse();
  		MessageLine line = new MessageLine(getContent(),player.getName());
  		model.addChatMessage(line);
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  			
  		response.setSuccess(true);
 		return response; 

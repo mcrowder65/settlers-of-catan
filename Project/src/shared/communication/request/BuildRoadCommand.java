@@ -38,6 +38,7 @@ public class BuildRoadCommand extends MoveCommand {
 		this.free = tmp.free;
 		this.roadLocation = tmp.roadLocation;
 		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 	}
 
 	/**

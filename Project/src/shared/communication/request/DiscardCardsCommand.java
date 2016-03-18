@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -26,7 +30,10 @@ public class DiscardCardsCommand extends MoveCommand {
 	}
 	public DiscardCardsCommand(HttpExchange exchange) {
 		super(exchange);
-		
+		DiscardCardsCommand tmp = (DiscardCardsCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.discardedCards = tmp.discardedCards;
 	}
 
 	/**
@@ -45,6 +52,16 @@ public class DiscardCardsCommand extends MoveCommand {
 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 		String status = turnTracker.getStatus();
+		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
 		if(player.getNumOfCards()<7){
 			response.setSuccess(false);

@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -46,6 +50,11 @@ public class MaritimeTradeCommand extends MoveCommand {
 	
 	public MaritimeTradeCommand(HttpExchange exchange) {
 		super(exchange);
+		MaritimeTradeCommand tmp = (MaritimeTradeCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.ratio = tmp.ratio;
+		this.playerIndex = tmp.playerIndex;
+		this.inputResource = tmp.inputResource;
+		this.outputResource = tmp.outputResource; 
 		
 	}
 	/**
@@ -64,6 +73,17 @@ public class MaritimeTradeCommand extends MoveCommand {
  		int ratio = this.ratio;		
  		ResourceType input = this.getInput();
  		ResourceType output = this.getOutput();
+ 		
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  		
 		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){

@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.*;
 import shared.communication.response.GetModelResponse;
@@ -30,6 +34,11 @@ public class SoldierCommand extends MoveCommand {
 	
 	public SoldierCommand(HttpExchange exchange) {
 		super(exchange);
+		SoldierCommand tmp = (SoldierCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.location = tmp.location;
+		this.victimIndex = tmp.victimIndex;
 		
 	}
 	/**
@@ -48,6 +57,16 @@ public class SoldierCommand extends MoveCommand {
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		ServerPlayer victim = model.getServerPlayers()[victimIndex];
  		String status = turnTracker.getStatus();
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  		
  		if(checkTurn(turnTracker,playerIndex) == false){		
 			response.setSuccess(false);

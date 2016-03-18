@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.*;
 import shared.communication.response.GetModelResponse;
@@ -35,6 +39,10 @@ public class YearOfPlentyCommand extends MoveCommand {
 	
 	public YearOfPlentyCommand(HttpExchange exchange) {
 		super(exchange);
+		YearOfPlentyCommand tmp = (YearOfPlentyCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.resource1 = tmp.resource1;
+		this.resource2 = tmp.resource2;
+		this.playerIndex = tmp.playerIndex;
 		
 	}
 	/**
@@ -53,6 +61,16 @@ public class YearOfPlentyCommand extends MoveCommand {
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  		
  		if(checkTurn(turnTracker,playerIndex) == false){		
 			response.setSuccess(false);

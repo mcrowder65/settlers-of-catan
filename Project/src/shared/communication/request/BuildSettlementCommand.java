@@ -50,6 +50,7 @@ public class BuildSettlementCommand extends MoveCommand {
 		this.free = tmp.free;
 		this.vertexLocation = tmp.vertexLocation;
 		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 	}
 
 	/**

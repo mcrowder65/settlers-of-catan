@@ -1119,7 +1119,7 @@ public class FacadeCanDoTestA {
 		assertTrue(canBuild == true);
 		
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		//try to lay on top of settlement
@@ -1296,7 +1296,7 @@ public class FacadeCanDoTestA {
 		
 		//building settlement
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 2);
 		
 		//testing on the other side of the two roads - still next to the water
@@ -1306,7 +1306,7 @@ public class FacadeCanDoTestA {
 		
 		//building settlement
 		settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 
@@ -1489,7 +1489,7 @@ public class FacadeCanDoTestA {
 		
 		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		boolean canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == false);
@@ -1590,7 +1590,7 @@ public class FacadeCanDoTestA {
 		
 		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		boolean canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == false);
@@ -1882,7 +1882,7 @@ public class FacadeCanDoTestA {
 		
 		VertexLocation location = new VertexLocation(homeHexLoc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		boolean canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == false);
@@ -2092,7 +2092,7 @@ public class FacadeCanDoTestA {
 		assertTrue(canBuild == false);
 		
 		//checking to make sure you can lay once settlements are actually laid down
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		canBuild = facade.canBuildCity(location);
@@ -2100,7 +2100,7 @@ public class FacadeCanDoTestA {
 		
 		location = new VertexLocation(homeHexLoc, VertexDirection.SouthEast);
 		settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 6);
 		canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == true);
@@ -2196,7 +2196,7 @@ public class FacadeCanDoTestA {
 		assertTrue(canBuild == false);
 		
 		//checking to make sure you can lay once settlements are actually laid down
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		canBuild = facade.canBuildCity(location);
@@ -2211,7 +2211,7 @@ public class FacadeCanDoTestA {
 		//laying another settlement and city
 		location = new VertexLocation(homeHexLoc, VertexDirection.SouthEast);
 		settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		canBuild = facade.canBuildCity(location);
 		assertTrue(canBuild == true);
@@ -2314,7 +2314,7 @@ public class FacadeCanDoTestA {
 		assertTrue(canBuild == false);
 		
 		//checking to make sure you can lay once settlements are actually laid down
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 3);
 		
 		canBuild = facade.canBuildCity(location);
@@ -2474,7 +2474,7 @@ public class FacadeCanDoTestA {
 		settlement = new VertexObject(0,location);
 		canLaySettlement = facade.canBuildSettlement(location);
 		assertTrue(canLaySettlement == true);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		assertTrue(map.getSettlements().length == 1);
 		
 		//can player1 upgrade city
@@ -2517,7 +2517,7 @@ public class FacadeCanDoTestA {
 		canLaySettlement = facade.canBuildSettlement(location);
 		assertTrue(canLaySettlement == true);
 		
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		
 		//player 4 now tries to build a city
 		location = new VertexLocation(hex12Loc, VertexDirection.SouthWest);
@@ -2724,7 +2724,7 @@ public class FacadeCanDoTestA {
 		
 		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		
 		
 		boolean canTrade = facade.canMaritimeTrade();
@@ -2817,7 +2817,7 @@ public class FacadeCanDoTestA {
 		
 		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		
 		boolean canTrade = facade.canMaritimeTrade();
 		assertTrue(canTrade == true);
@@ -2919,7 +2919,7 @@ public class FacadeCanDoTestA {
 		canTrade = true;
 		
 		//settlement in the wrong place
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		canTrade = facade.canMaritimeTrade();
 		assertTrue(canTrade == false);
 		canTrade = true;
@@ -2927,7 +2927,7 @@ public class FacadeCanDoTestA {
 		//Settlement in correct place
 		location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		canTrade = facade.canMaritimeTrade();
 		assertTrue(canTrade == true);
 		canTrade = false;
@@ -3007,7 +3007,7 @@ public class FacadeCanDoTestA {
 		//Settlement in correct place
 		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		boolean canTrade = facade.canMaritimeTrade();
 		assertTrue(canTrade == true);
 		canTrade = false;
@@ -3102,7 +3102,7 @@ public class FacadeCanDoTestA {
 		//Settlement in correct place
 		VertexLocation location = new VertexLocation(hex12Loc, VertexDirection.NorthEast);
 		VertexObject settlement = new VertexObject(0,location);
-		map.laySettlement(settlement);
+		map.laySettlement(settlement,false);
 		boolean canTrade = facade.canMaritimeTrade();
 		assertTrue(canTrade == true);
 		

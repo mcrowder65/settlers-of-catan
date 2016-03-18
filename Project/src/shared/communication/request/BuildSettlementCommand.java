@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -12,6 +13,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.Hex;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
@@ -93,8 +95,19 @@ public class BuildSettlementCommand extends MoveCommand {
 				response.setErrorMessage("bad location");
 				return response;
 			}
-			map.buildSettlement(vertex);
+			if(status.equals("SecondRound")){
+				map.laySettlement(vertex,true);
+				List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
+				for(int i=0; i<settlements.size(); i++){
+					if(settlements.get(i)!=null){
+						issueResource(settlements.get(i),map,player);
+					}
+				}
+				
+			}
+			map.laySettlement(vertex,false);
 			player.removeSettlement();
+			
 			//need to return that it was succesful 
 			response.setSuccess(true);
 			model.setVersion(model.getVersion() + 1);
@@ -107,7 +120,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				response.setErrorMessage("Bad Location");
 				return response;
 			}
-			map.buildSettlement(vertex);
+			map.laySettlement(vertex,false);
 			player.laySettlement();
 			response.setSuccess(true);
 			model.setVersion(model.getVersion() + 1);
@@ -119,6 +132,16 @@ public class BuildSettlementCommand extends MoveCommand {
 		response.setSuccess(false);
 		response.setErrorMessage("Wrong status");
 		return response;
+	}
+	
+	public void issueResource(VertexObject settlement, ServerGameMap map, ServerPlayer player){
+		Hex[] allHexes = map.getHexes();
+		for(int i=0; i<allHexes.length; i++){
+			Hex hex = allHexes[i];
+			if(hex.getLocation().equals(settlement.getLocation().getHexLoc())){
+				player.addResource(hex.getResource());
+			}
+		}
 	}
 	
 

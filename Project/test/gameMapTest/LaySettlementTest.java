@@ -15,9 +15,9 @@ public class LaySettlementTest {
 	@Before
 	public void setUp() throws Exception {
 		map = new GameMap();
-		map.laySettlement(map.vertexObjectFactory(0, 0, 0, VertexDirection.East));
-		map.laySettlement(map.vertexObjectFactory(1, 2, -2, VertexDirection.NorthWest));
-		map.laySettlement(map.vertexObjectFactory(3, -1, -1, VertexDirection.NorthWest));
+		map.laySettlement(map.vertexObjectFactory(0, 0, 0, VertexDirection.East),false);
+		map.laySettlement(map.vertexObjectFactory(1, 2, -2, VertexDirection.NorthWest),false);
+		map.laySettlement(map.vertexObjectFactory(3, -1, -1, VertexDirection.NorthWest),false);
 	}
 
 	@Test

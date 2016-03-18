@@ -63,6 +63,7 @@ public class Game {
 	
 	
 	public  String getUnusedAiName(int gameId) {
+		//_instance.arrayGames.get(gameId)
 		return _instance.arrayGames.get(gameId).model.chooseAIName();
 	}
 	
@@ -91,6 +92,17 @@ public class Game {
 		_instance.arrayGames.add(combo);
 		
 		return _instance.arrayGames.size() - 1;
+	}
+	public void addPlayer(int gameId, ServerPlayer player){
+		getGameId(gameId).addPlayer(player);
+		arrayGames.get(gameId).model.addPlayer(player);
+		PlayerInfo p = new PlayerInfo(player.getPlayerID(), player.getName(), player.getColor());
+		arrayGames.get(gameId).info.addPlayer(p);
+	}
+	public void setPlayer(int gameId, ServerPlayer player){
+		getGameId(gameId).setPlayer(player);
+		arrayGames.get(gameId).model.setPlayer(player);
+		arrayGames.get(gameId).info.setPlayer(player.getPlayerID(), player.getColor());
 	}
 	/**
 	 * only use this if you are creating a game!!!!!
@@ -159,6 +171,7 @@ public class Game {
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		
 		for (GameCombo game : arrayGames) {
+			
 			games.add(game.info);
 		}
 		return games;

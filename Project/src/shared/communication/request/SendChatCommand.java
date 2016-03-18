@@ -60,8 +60,10 @@ public class SendChatCommand extends MoveCommand {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
- 			
+ 		
+ 		model.setVersion(model.getVersion() + 1);
  		response.setSuccess(true);
+ 		response.setJson(model.toString());
 		return response; 
 	}
 

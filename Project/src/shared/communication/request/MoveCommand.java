@@ -20,12 +20,19 @@ public abstract class MoveCommand extends Request {
 			throw new IllegalArgumentException("playerIndex must be between 0 and 3");
 		this.playerIndex = playerIndex;
 	}
-	
+	/**
+	 * THIS INITIALIZER IS ONLY FOR AI'S DO NOT USE IT
+	 * IF YOU DON'T KNOW WHAT YOU ARE DOING WITH IT
+	 * @param playerIndex index of player
+	 * @param gameID index of game
+	 */
+	protected MoveCommand(int playerIndex, int gameID){
+		this.playerIndex = playerIndex;
+		this.gameIDCookie = gameID;
+	}
 	protected MoveCommand(HttpExchange exchange) {
 		super(exchange);
 	}
-	
-	
 	public abstract GetModelResponse execute();
 
 	public String getMoveType() {

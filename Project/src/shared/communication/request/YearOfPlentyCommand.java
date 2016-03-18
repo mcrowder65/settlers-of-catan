@@ -108,7 +108,9 @@ public class YearOfPlentyCommand extends MoveCommand {
  		model.getBank().removeResource(res1,1);
  		model.getBank().removeResource(res2,1);
  		
+ 		model.setVersion(model.getVersion() + 1);
 		response.setSuccess(true);
+		response.setJson(model.toString());
 		return response;
 	}
 

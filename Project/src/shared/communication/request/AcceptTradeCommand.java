@@ -96,8 +96,9 @@ public class AcceptTradeCommand extends MoveCommand {
 			distributeResources(ResourceType.ORE, ore, player, sendingPlayer);
 			distributeResources(ResourceType.SHEEP, sheep, player, sendingPlayer);
 			distributeResources(ResourceType.WOOD, wood, player, sendingPlayer);
+			model.setVersion(model.getVersion() + 1);
 		}
-
+		response.setJson(model.toString());
 		response.setSuccess(true);
 		return response;
 	}

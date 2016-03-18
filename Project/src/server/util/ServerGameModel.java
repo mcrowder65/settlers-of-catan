@@ -4,6 +4,10 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 import client.utils.Translator;
+import server.ai.AIBase;
+import server.ai.LargestArmyAI;
+import server.facade.IAIFacade;
+import server.facade.ServerAIFacade;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
@@ -361,9 +365,9 @@ import shared.locations.VertexObject;
  			}
  		}
  	}
-	public void doAiStuff() {
-		// TODO Auto-generated method stub
-		
+	public void doAiTurn(ServerPlayer computerPlayer, int gameID) {
+		ServerAIFacade serverAIFacade = new ServerAIFacade();
+		serverAIFacade.finishTurn(computerPlayer.getPlayerIndex(), gameID);
 	}
 	
   			  	

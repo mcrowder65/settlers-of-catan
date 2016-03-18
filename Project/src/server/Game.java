@@ -21,7 +21,7 @@ public class Game {
 	private ArrayList<GameCombo> arrayGames = new ArrayList<GameCombo>();
 	private ArrayList<RegisteredPersonInfo> registeredUsers = new ArrayList<RegisteredPersonInfo>();
 	private static Game _instance;
-	
+	public Object lock = new Object();
 	
 	private Game() {
 		addUser("matt", "crowder");

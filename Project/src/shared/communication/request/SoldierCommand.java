@@ -20,7 +20,6 @@ public class SoldierCommand extends MoveCommand {
 
 	private HexLocation location;
 	private int victimIndex;
-	private Object soldierLock = new Object();
 	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -47,7 +46,7 @@ public class SoldierCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(soldierLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			HexLocation robberLoc = this.getLocation();		

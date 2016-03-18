@@ -18,7 +18,6 @@ import shared.locations.EdgeLocation;
  * @author mcrowder65
  */
 public class MonumentCommand extends MoveCommand {
-	private Object monumentLock = new Object();
 	public MonumentCommand(int playerIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		this.type = "Monument";
@@ -36,7 +35,7 @@ public class MonumentCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(monumentLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 	 					

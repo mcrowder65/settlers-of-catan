@@ -22,7 +22,6 @@ import shared.locations.VertexObject;
  *
  */
 public class OfferTradeCommand extends MoveCommand {
-	private Object offerTradeLock = new Object();
 	private int receiver;
 	private ResourceList offer;
 	 
@@ -57,7 +56,7 @@ public class OfferTradeCommand extends MoveCommand {
 
 	@Override
 	public GetModelResponse execute() {
-		synchronized(offerTradeLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			ResourceList offer = this.getOffer();	

@@ -33,7 +33,7 @@ public class RegisterRequest extends Request {
     }
     
     public Response register() {
-    	synchronized(registerLock){
+    	synchronized(Game.instance().lock){
 	    	Response response = new Response();
 	    	boolean userExists = Game.instance().userExists(username);
 	    	if (userExists) {

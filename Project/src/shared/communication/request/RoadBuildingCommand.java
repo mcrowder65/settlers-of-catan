@@ -21,7 +21,6 @@ import shared.locations.MirrorEdgeLocation;
  *
  */
 public class RoadBuildingCommand extends MoveCommand {
-	private Object roadBuildingLock = new Object();
 	MirrorEdgeLocation spot1;
 	MirrorEdgeLocation spot2;
 	
@@ -60,7 +59,7 @@ public class RoadBuildingCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(roadBuildingLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 	 				

@@ -20,7 +20,6 @@ import shared.locations.HexLocation;
  *
  */
 public class SendChatCommand extends MoveCommand {
-	private Object sendChatLock = new Object();
 	private String content;
 	public SendChatCommand(int playerIndex, String content) throws IllegalArgumentException {
 		super(playerIndex);
@@ -42,7 +41,7 @@ public class SendChatCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(sendChatLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			Game game = Game.instance();		

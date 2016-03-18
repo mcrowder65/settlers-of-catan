@@ -18,7 +18,6 @@ import shared.definitions.ResourceType;
  *
  */
 public class YearOfPlentyCommand extends MoveCommand {
-	private Object yearOfPlentyLock = new Object();
 	MirrorResourceType resource1;
 	MirrorResourceType resource2;
 	
@@ -50,7 +49,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(yearOfPlentyLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();
 			ResourceType res1 = this.getResource1();

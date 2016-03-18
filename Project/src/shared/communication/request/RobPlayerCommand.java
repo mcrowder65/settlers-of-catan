@@ -25,7 +25,6 @@ public class RobPlayerCommand extends MoveCommand {
 
 	HexLocation location;
 	int victimIndex;
-	private Object robPlayerLock = new Object();
 	public RobPlayerCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -51,7 +50,7 @@ public class RobPlayerCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(robPlayerLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			int victimIndex = this.getVictimIndex();

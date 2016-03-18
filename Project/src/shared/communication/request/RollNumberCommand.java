@@ -16,7 +16,6 @@ import shared.communication.response.GetModelResponse;
  *
  */
 public class RollNumberCommand extends MoveCommand {
-	private Object rollNumberLock = new Object();
 	private int number;
 	public RollNumberCommand(int playerIndex, int number) throws IllegalArgumentException {
 		super(playerIndex);
@@ -38,7 +37,7 @@ public class RollNumberCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(rollNumberLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;	
 	 		int numRolled = this.getNumber();
 	 		Game game = Game.instance();		

@@ -25,7 +25,7 @@ public class RobPlayerCommand extends MoveCommand {
 
 	HexLocation location;
 	int victimIndex;
-	
+	private Object robPlayerLock = new Object();
 	public RobPlayerCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -51,65 +51,66 @@ public class RobPlayerCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
-		int victimIndex = this.getVictimIndex();
-		HexLocation locaiton = this.getLocation();
-		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
- 		GetModelResponse response = new GetModelResponse();
- 		String status = turnTracker.getStatus();
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
- 		
- 		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){		
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response; //Need to throw some error here		
-		}	
-		
-		//check status
-		if(!status.equals("Robbing")){
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong status");
-			return response; //Need to throw some error here
-		}
-		
-		//victim has no resources
-		if(victim.getResources().isEmpty()){
+		synchronized(robPlayerLock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+			int victimIndex = this.getVictimIndex();
+			HexLocation locaiton = this.getLocation();
+			Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		String status = turnTracker.getStatus();
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}	
+			
+			//check status
+			if(!status.equals("Robbing")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response; //Need to throw some error here
+			}
+			
+			//victim has no resources
+			if(victim.getResources().isEmpty()){
+				model.setVersion(model.getVersion() + 1);
+				response.setSuccess(true);
+				response.setJson(model.toString());
+				return response; 
+			}
+			
+			ResourceType resource = model.generateRandomResource();
+			
+			while(victim.getResources().hasResource(resource) == false){
+				resource = model.generateRandomResource();
+			}
+			
+			victim.removeResource(resource);
+			player.addResource(resource);
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
 			response.setJson(model.toString());
+			map.setRobber(location);
 			return response; 
 		}
-		
-		ResourceType resource = model.generateRandomResource();
-		
-		while(victim.getResources().hasResource(resource) == false){
-			resource = model.generateRandomResource();
-		}
-		
-		victim.removeResource(resource);
-		player.addResource(resource);
-		model.setVersion(model.getVersion() + 1);
-		response.setSuccess(true);
-		response.setJson(model.toString());
-		map.setRobber(location);
-		return response; 
-
 	}
 	
 	public HexLocation getLocation() {

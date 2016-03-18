@@ -16,7 +16,7 @@ import sun.misc.IOUtils;
  *
  */
 public class RegisterRequest extends Request {
-	
+	private Object registerLock = new Object();
     private String username;
     private String password;
     /**
@@ -33,29 +33,31 @@ public class RegisterRequest extends Request {
     }
     
     public Response register() {
-    	Response response = new Response();
-    	boolean userExists = Game.instance().userExists(username);
-    	if (userExists) {
-    		response.setErrorMessage("This user already exists");
-    		response.setSuccess(false);
-    		return response;
+    	synchronized(registerLock){
+	    	Response response = new Response();
+	    	boolean userExists = Game.instance().userExists(username);
+	    	if (userExists) {
+	    		response.setErrorMessage("This user already exists");
+	    		response.setSuccess(false);
+	    		return response;
+	    	}
+	    	int id = Game.instance().addUser(username, password);
+	    	
+	    	response.setErrorMessage("Success");
+	    	response.setSuccess(true);
+	    	
+	    	try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+				           "\"name\":\"" + username + "\"," +
+						   "\"password\":\"" + password + "\"," + 
+				           "\"playerID\":" + id + "}", "UTF-8" ) + ";Path=/;");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	    	
+	    	return response;
     	}
-    	int id = Game.instance().addUser(username, password);
-    	
-    	response.setErrorMessage("Success");
-    	response.setSuccess(true);
-    	
-    	try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-			           "\"name\":\"" + username + "\"," +
-					   "\"password\":\"" + password + "\"," + 
-			           "\"playerID\":" + id + "}", "UTF-8" ) + ";Path=/;");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-    	
-    	return response;
     }
     public RegisterRequest(HttpExchange exchange){
     	super(exchange);

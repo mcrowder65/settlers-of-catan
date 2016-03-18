@@ -24,7 +24,7 @@ import shared.locations.VertexObject;
 public class MonopolyCommand extends MoveCommand {
 
 	MirrorResourceType resource;
-	
+	private Object monopolyLock = new Object();
 	public MonopolyCommand(int playerIndex, ResourceType resource) throws IllegalArgumentException {
 		super(playerIndex);
 
@@ -47,57 +47,59 @@ public class MonopolyCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();		
- 		Game game = Game.instance();	
- 		GetModelResponse response = new GetModelResponse();
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		ServerPlayer[] allPlayers = model.getServerPlayers();
- 		String status = turnTracker.getStatus();
- 		ResourceType resource = getResource();
- 		
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
- 		
- 		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){		
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response; //Need to throw some error here		
-		}
-		
-		//check status
-		if(!status.equals("Playing")){
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong status");
-			return response;
-		}
-		
-		for(int i=0; i<allPlayers.length; i++){
-			if(i != playerIndex){
-				ServerPlayer player2 = allPlayers[i];
-				if(player2.getResources().hasResource(resource)){
-					int num = player2.getResources().numResource(resource);
-					player.getResources().addResource(resource,num);
-					player2.getResources().removeResource(resource,num);
+		synchronized(monopolyLock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();		
+	 		Game game = Game.instance();	
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		ServerPlayer[] allPlayers = model.getServerPlayers();
+	 		String status = turnTracker.getStatus();
+	 		ResourceType resource = getResource();
+	 		
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}
+			
+			//check status
+			if(!status.equals("Playing")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+			}
+			
+			for(int i=0; i<allPlayers.length; i++){
+				if(i != playerIndex){
+					ServerPlayer player2 = allPlayers[i];
+					if(player2.getResources().hasResource(resource)){
+						int num = player2.getResources().numResource(resource);
+						player.getResources().addResource(resource,num);
+						player2.getResources().removeResource(resource,num);
+					}
 				}
 			}
+			model.setVersion(model.getVersion()  + 1);
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			return response;
 		}
-		model.setVersion(model.getVersion()  + 1);
-		response.setSuccess(true);
-		response.setJson(model.toString());
-		return response;
 	}
 	
 	public ResourceType getResource() {

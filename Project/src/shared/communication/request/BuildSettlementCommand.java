@@ -95,16 +95,24 @@ public class BuildSettlementCommand extends MoveCommand {
 				response.setErrorMessage("bad location");
 				return response;
 			}
-			if(status.equals("SecondRound")){
-				map.laySettlement(vertex,true);
-				List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
-				for(int i=0; i<settlements.size(); i++){
-					if(settlements.get(i)!=null){
-						issueResource(settlements.get(i),map,player);
-					}
+		}
+		if(status.equals("SecondRound")){
+			map.laySettlement(vertex,true);
+			List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
+			for(int i=0; i<settlements.size(); i++){
+				if(settlements.get(i)!=null){
+					issueResource(settlements.get(i),map,player);
 				}
-				
 			}
+			
+			player.removeSettlement();
+			player.addVictoryPoints();
+			response.setSuccess(true);
+			model.setVersion(model.getVersion() + 1);
+            response.setJson(model.toString());
+			return response;
+		}
+		if(status.equals("FirstRound")){
 			map.laySettlement(vertex,false);
 			player.removeSettlement();
 			

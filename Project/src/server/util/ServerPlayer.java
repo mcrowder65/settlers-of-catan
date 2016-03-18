@@ -202,21 +202,21 @@ public class ServerPlayer extends Player {
 		ResourceList allResources = getResources();
 		int sheep = allResources.getSheep();
 		sheep++;
-		allResources.setBrick(sheep);
+		allResources.setSheep(sheep);
 		setResources(allResources);
 	}
 	public void addWood(){
 		ResourceList allResources = getResources();
 		int wood = allResources.getWood();
 		wood++;
-		allResources.setBrick(wood);
+		allResources.setWood(wood);
 		setResources(allResources);
 	}
 	public void addOre(){
 		ResourceList allResources = getResources();
 		int ore = allResources.getOre();
 		ore++;
-		allResources.setBrick(ore);
+		allResources.setOre(ore);
 		setResources(allResources);
 	}
 	
@@ -238,21 +238,21 @@ public class ServerPlayer extends Player {
 		ResourceList allResources = getResources();
 		int sheep = allResources.getSheep();
 		sheep--;
-		allResources.setBrick(sheep);
+		allResources.setSheep(sheep);
 		setResources(allResources);
 	}
 	public void removeWood(){
 		ResourceList allResources = getResources();
 		int wood = allResources.getWood();
 		wood--;
-		allResources.setBrick(wood);
+		allResources.setWood(wood);
 		setResources(allResources);
 	}
 	public void removeOre(){
 		ResourceList allResources = getResources();
 		int ore = allResources.getOre();
 		ore--;
-		allResources.setBrick(ore);
+		allResources.setOre(ore);
 		setResources(allResources);
 	}
 	
@@ -268,7 +268,7 @@ public class ServerPlayer extends Player {
 		DevCardList oldDevCards = getOldDevCards();
 		int soldier = oldDevCards.getSoldier();
 		soldier++;
-		oldDevCards.setRoadBuilding(soldier);
+		oldDevCards.setSoldier(soldier);
 		setOldDevCards(oldDevCards);
 	}
 	
@@ -276,7 +276,7 @@ public class ServerPlayer extends Player {
 		DevCardList oldDevCards = getOldDevCards();
 		int monopoly = oldDevCards.getMonopoly();
 		monopoly++;
-		oldDevCards.setRoadBuilding(monopoly);
+		oldDevCards.setMonopoly(monopoly);
 		setOldDevCards(oldDevCards);
 	}
 	
@@ -284,7 +284,7 @@ public class ServerPlayer extends Player {
 		DevCardList oldDevCards = getOldDevCards();
 		int YOP = oldDevCards.getYearOfPlenty();
 		YOP++;
-		oldDevCards.setRoadBuilding(YOP);
+		oldDevCards.setYearOfPlenty(YOP);
 		setOldDevCards(oldDevCards);
 	}
 	
@@ -294,7 +294,7 @@ public class ServerPlayer extends Player {
 		int monument = newDevCards.getMonument();
 		monument = monument + oldDevCards.getMonument();
 		monument++;
-		newDevCards.setRoadBuilding(monument);
+		newDevCards.setMonument(monument);
 		setNewDevCards(newDevCards);
 	}
 	

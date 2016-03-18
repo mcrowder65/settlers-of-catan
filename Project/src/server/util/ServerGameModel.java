@@ -365,11 +365,8 @@ import shared.locations.VertexObject;
  		}
  	}
 	public void doAiTurn(ServerPlayer computerPlayer, int gameID) {
-		//String name, CatanColor color, int playerID, int playerIndex, IAIFacade facade)
 		ServerAIFacade serverAIFacade = new ServerAIFacade();
 		serverAIFacade.finishTurn(computerPlayer.getPlayerIndex(), gameID);
-		LargestArmyAI ai = new LargestArmyAI(computerPlayer.getName(), computerPlayer.getColor(), computerPlayer.getPlayerID(), 
-				computerPlayer.getPlayerIndex(), new ServerAIFacade());
 	}
 	
   			  	

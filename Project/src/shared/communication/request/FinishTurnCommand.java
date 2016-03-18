@@ -26,6 +26,12 @@ public class FinishTurnCommand extends MoveCommand {
 		super(playerIndex);
 		this.type = "finishTurn";
 	}
+	/**
+	 * THIS INITIALIZER IS ONLY FOR AI'S DO NOT USE IT
+	 * IF YOU DON'T KNOW WHAT YOU ARE DOING WITH IT
+	 * @param playerIndex index of player
+	 * @param gameID index of game
+	 */
 	public FinishTurnCommand(int playerIndex, int gameID){
 		super(playerIndex, gameID);
 	}

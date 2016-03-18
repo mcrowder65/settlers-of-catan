@@ -1,7 +1,11 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
@@ -42,7 +46,10 @@ public class BuildSettlementCommand extends MoveCommand {
 	}
 	public BuildSettlementCommand(HttpExchange exchange) {
 		super(exchange);
-		
+		BuildSettlementCommand tmp = (BuildSettlementCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		this.free = tmp.free;
+		this.vertexLocation = tmp.vertexLocation;
+		this.type = tmp.type;
 	}
 
 	/**
@@ -62,6 +69,16 @@ public class BuildSettlementCommand extends MoveCommand {
  		ServerPlayer player = model.getServerPlayers()[playerIndex];
  		String status = turnTracker.getStatus();
  		VertexObject vertex = new VertexObject(playerIndex,loc);
+ 		try {
+			response.setCookie("Set-cookie", "catan.user=" +
+					URLEncoder.encode("{" +
+				       "\"authentication\":\"" + "1142128101" + "\"," +
+			           "\"name\":\"" + userCookie + "\"," +
+					   "\"password\":\"" + passCookie + "\"," + 
+			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
  		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){		
 			response.setSuccess(false);
@@ -79,6 +96,8 @@ public class BuildSettlementCommand extends MoveCommand {
 			player.removeSettlement();
 			//need to return that it was succesful 
 			response.setSuccess(true);
+			model.setVersion(model.getVersion() + 1);
+            response.setJson(model.toString());
 			return response;
 		}
 		if(status.equals("Playing")){
@@ -90,6 +109,8 @@ public class BuildSettlementCommand extends MoveCommand {
 			map.buildSettlement(vertex);
 			player.laySettlement();
 			response.setSuccess(true);
+			model.setVersion(model.getVersion() + 1);
+            response.setJson(model.toString());
 			return response;
 		}
 		

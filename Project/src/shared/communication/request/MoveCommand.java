@@ -33,8 +33,6 @@ public abstract class MoveCommand extends Request {
 	protected MoveCommand(HttpExchange exchange) {
 		super(exchange);
 	}
-	
-	
 	public abstract GetModelResponse execute();
 
 	public String getMoveType() {

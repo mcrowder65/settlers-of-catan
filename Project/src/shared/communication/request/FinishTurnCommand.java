@@ -20,7 +20,7 @@ import shared.definitions.TurnTracker;
  */
 
 public class FinishTurnCommand extends MoveCommand {
-
+	private Object finishTurnLock = new Object();
 	public FinishTurnCommand(int playerIndex)
 			throws IllegalArgumentException {
 		super(playerIndex);
@@ -47,71 +47,73 @@ public class FinishTurnCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();
-		
-		Game game = Game.instance();
-		ServerGameModel model = game.getGameId(gameIndex);
-		ServerTurnTracker turnTracker = model.getServerTurnTracker();
-		GetModelResponse response = new GetModelResponse();
-		String status = turnTracker.getStatus();
-		
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		if(status.equals("FirstRound") && playerIndex ==3){
-			turnTracker.setStatus("SecondRound");
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			response.setSuccess(true);
-			return response;
-		}
-		if(status.equals("FirstRound")&& playerIndex != 3){
-			turnTracker.advanceTurn();
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			response.setSuccess(true);
-			return response;
-		}
-		if(status.equals("SecondRound") && playerIndex !=0){
-			turnTracker.decreaseTurn();
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			response.setSuccess(true);
-			return response;
-		}
-		if(status.equals("SecondRound") && playerIndex == 0){
-			turnTracker.setStatus("Rolling");
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			response.setSuccess(true);
-			return response;
-		}
-		
-		//Check to see if it's the player's turn
-		if(checkTurn(turnTracker, playerIndex)) {
-			turnTracker.advanceTurn();
-			turnTracker.setStatus("Rolling");
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			response.setSuccess(true);
-			return response;
-		}
-		else {
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
+		synchronized(finishTurnLock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();
 			
-		}		
-	
-		return response;
+			Game game = Game.instance();
+			ServerGameModel model = game.getGameId(gameIndex);
+			ServerTurnTracker turnTracker = model.getServerTurnTracker();
+			GetModelResponse response = new GetModelResponse();
+			String status = turnTracker.getStatus();
+			
+			try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
+			if(status.equals("FirstRound") && playerIndex ==3){
+				turnTracker.setStatus("SecondRound");
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				response.setSuccess(true);
+				return response;
+			}
+			if(status.equals("FirstRound")&& playerIndex != 3){
+				turnTracker.advanceTurn();
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				response.setSuccess(true);
+				return response;
+			}
+			if(status.equals("SecondRound") && playerIndex !=0){
+				turnTracker.decreaseTurn();
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				response.setSuccess(true);
+				return response;
+			}
+			if(status.equals("SecondRound") && playerIndex == 0){
+				turnTracker.setStatus("Rolling");
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				response.setSuccess(true);
+				return response;
+			}
+			
+			//Check to see if it's the player's turn
+			if(checkTurn(turnTracker, playerIndex)) {
+				turnTracker.advanceTurn();
+				turnTracker.setStatus("Rolling");
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				response.setSuccess(true);
+				return response;
+			}
+			else {
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				
+			}		
+			return response;
+		}
+		
 	}
 
 }

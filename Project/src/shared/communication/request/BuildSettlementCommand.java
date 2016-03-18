@@ -115,6 +115,7 @@ public class BuildSettlementCommand extends MoveCommand {
 		if(status.equals("FirstRound")){
 			map.laySettlement(vertex,false);
 			player.removeSettlement();
+			player.addVictoryPoints();
 			
 			//need to return that it was succesful 
 			response.setSuccess(true);

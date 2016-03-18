@@ -30,6 +30,7 @@ import shared.locations.VertexObject;
 		}
 		return -1;
 	}
+ 	
  	public void initServerPlayers(){
  		serverPlayers = new ServerPlayer[4];
  		serverPlayers[0] = localPlayer;

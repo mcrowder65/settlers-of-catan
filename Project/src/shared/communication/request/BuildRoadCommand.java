@@ -1,5 +1,8 @@
 package shared.communication.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
@@ -51,7 +54,7 @@ public class BuildRoadCommand extends MoveCommand {
  		ServerGameMap map = model.getServerMap();		
  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
  		ServerPlayer player = model.getServerPlayers()[playerIndex];		
- 				
+ 		//response.setCookie("Set-cookie", val);
 		//making sure its the players turn		
 		if(checkTurn(turnTracker,playerIndex) == false){
 			
@@ -77,6 +80,18 @@ public class BuildRoadCommand extends MoveCommand {
 			map.buildRoad(new EdgeValue(playerIndex,loc));
 			player.removeRoad();
 			response.setSuccess(true);
+			try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			model.setVersion(model.getVersion() + 1);
+            response.setJson(model.toString());
 			return response; 	
 		}		
 		if(status.equals("Playing")){		

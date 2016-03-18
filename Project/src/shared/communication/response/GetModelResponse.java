@@ -23,6 +23,17 @@ public class GetModelResponse extends Response {
 	public GetModelResponse(){
 		
 	}
+	public void setJson(String json) {
+        if (success) {
+            if (json.equals("\"true\"")) {
+                updated = false;
+            } else {
+                model = Translator.jsonToObject(json);
+                updated = true;
+                this.json = json;
+            }
+        }
+    }
 	public boolean isUpdated() {
 		return updated;
 	}

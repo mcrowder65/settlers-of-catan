@@ -27,6 +27,7 @@ public abstract class Request {
 	protected transient int playerIDCookie = -1;
 	protected transient String userCookie;
 	protected transient String passCookie;
+	protected transient String totalCookie;
 	protected void setCookies(Headers headers){
 		if(headers.containsKey("Cookie")){
 			String cookie = headers.get("Cookie").toString();
@@ -42,5 +43,7 @@ public abstract class Request {
 	    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 	    return s.hasNext() ? s.next() : "";
 	}
-
+	protected String getCookie(){
+		return totalCookie;
+	}
 }

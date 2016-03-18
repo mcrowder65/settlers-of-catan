@@ -351,9 +351,10 @@ import shared.locations.VertexObject;
  					List<VertexObject> municipalities = serverMap.getMunicipalityOnHex(loc.getLocation());
  					if(municipalities.size()>0){
  						for(int x=0; x<municipalities.size(); x++){
- 							int owner = municipalities.get(x).getOwner();
- 							ResourceType resource = loc.getResource();
- 							serverPlayers[owner].getResources().addResource(resource,1);
+	 						int owner = municipalities.get(x).getOwner();
+	 						ResourceType resource = loc.getResource();
+	 						serverPlayers[owner].getResources().addResource(resource,1);
+ 							
  						}
  					}
  				}

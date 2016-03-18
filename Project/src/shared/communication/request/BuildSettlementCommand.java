@@ -117,7 +117,7 @@ public class BuildSettlementCommand extends MoveCommand {
 			player.removeSettlement();
 			player.addVictoryPoints();
 			
-			//need to return that it was succesful 
+			//need to return that it was successful 
 			response.setSuccess(true);
 			model.setVersion(model.getVersion() + 1);
             response.setJson(model.toString());

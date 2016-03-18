@@ -83,7 +83,7 @@ public class ServerGameMap extends GameMap {
 	public List<VertexObject> getMunicipalityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
- 		VertexObject[] cities = getSettlements();
+ 		VertexObject[] cities = getCities();
  		for(int i=0; i<settlements.length; i++){
  			VertexObject settlement = settlements[i];
  			if(settlement.getLocation().getHexLoc().equals(loc) == true){

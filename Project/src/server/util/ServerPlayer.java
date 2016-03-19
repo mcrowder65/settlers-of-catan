@@ -263,35 +263,35 @@ public class ServerPlayer extends Player {
 	}
 	
 	public void addRoadBuilder(){
-		DevCardList oldDevCards = getOldDevCards();
-		int roadBuilder = oldDevCards.getRoadBuilding();
+		DevCardList newDevCards = getNewDevCards();
+		int roadBuilder = newDevCards.getRoadBuilding();
 		roadBuilder++;
-		oldDevCards.setRoadBuilding(roadBuilder);
-		setOldDevCards(oldDevCards);
+		newDevCards.setRoadBuilding(roadBuilder);
+		setNewDevCards(newDevCards);
 	}
 	
 	public void addSoldierCard(){
-		DevCardList oldDevCards = getOldDevCards();
-		int soldier = oldDevCards.getSoldier();
+		DevCardList newDevCards = getNewDevCards();
+		int soldier = newDevCards.getSoldier();
 		soldier++;
-		oldDevCards.setSoldier(soldier);
-		setOldDevCards(oldDevCards);
+		newDevCards.setSoldier(soldier);
+		setNewDevCards(newDevCards);
 	}
 	
 	public void addMonopoly(){
-		DevCardList oldDevCards = getOldDevCards();
-		int monopoly = oldDevCards.getMonopoly();
+		DevCardList newDevCards = getNewDevCards();
+		int monopoly = newDevCards.getMonopoly();
 		monopoly++;
-		oldDevCards.setMonopoly(monopoly);
-		setOldDevCards(oldDevCards);
+		newDevCards.setMonopoly(monopoly);
+		setNewDevCards(newDevCards);
 	}
 	
 	public void addYearOfPlenty(){
-		DevCardList oldDevCards = getOldDevCards();
-		int YOP = oldDevCards.getYearOfPlenty();
+		DevCardList newDevCards = getNewDevCards();
+		int YOP = newDevCards.getYearOfPlenty();
 		YOP++;
-		oldDevCards.setYearOfPlenty(YOP);
-		setOldDevCards(oldDevCards);
+		newDevCards.setYearOfPlenty(YOP);
+		setNewDevCards(newDevCards);
 	}
 	
 	public void addMonument(){
@@ -300,8 +300,8 @@ public class ServerPlayer extends Player {
 		int monument = newDevCards.getMonument();
 		monument = monument + oldDevCards.getMonument();
 		monument++;
-		newDevCards.setMonument(monument);
-		setNewDevCards(newDevCards);
+		oldDevCards.setMonument(monument);
+		setOldDevCards(oldDevCards);
 	}
 	
 	public void playMonument(){

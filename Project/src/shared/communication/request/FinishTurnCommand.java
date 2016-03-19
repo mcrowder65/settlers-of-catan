@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.TurnTracker;
@@ -55,6 +56,7 @@ public class FinishTurnCommand extends MoveCommand {
 			ServerTurnTracker turnTracker = model.getServerTurnTracker();
 			GetModelResponse response = new GetModelResponse();
 			String status = turnTracker.getStatus();
+			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			
 			try {
 				response.setCookie("Set-cookie", "catan.user=" +
@@ -100,6 +102,7 @@ public class FinishTurnCommand extends MoveCommand {
 			if(checkTurn(turnTracker, playerIndex)) {
 				turnTracker.advanceTurn();
 				turnTracker.setStatus("Rolling");
+				player.updateOldDevCard();
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
 				response.setSuccess(true);

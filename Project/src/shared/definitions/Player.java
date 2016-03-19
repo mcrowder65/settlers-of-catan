@@ -659,10 +659,10 @@ public class Player {
 		int roadBuilding = oldDevCards.getRoadBuilding();
 		int yearOfPlenty = oldDevCards.getYearOfPlenty();
 		int soldierTotal = soldier + newDevCards.getSoldier();
-		int monumentTotal = soldier + newDevCards.getMonument();
-		int monopolyTotal = soldier + newDevCards.getMonopoly();
-		int roadBuildingTotal = soldier + newDevCards.getRoadBuilding();
-		int yopTotal = soldier + newDevCards.getYearOfPlenty();
+		int monumentTotal = monument + newDevCards.getMonument();
+		int monopolyTotal = monopoly + newDevCards.getMonopoly();
+		int roadBuildingTotal = roadBuilding + newDevCards.getRoadBuilding();
+		int yopTotal = yearOfPlenty + newDevCards.getYearOfPlenty();
 		
 		oldDevCards.setSoldier(soldierTotal);
 		oldDevCards.setMonument(monumentTotal);

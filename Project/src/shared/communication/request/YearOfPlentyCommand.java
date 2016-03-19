@@ -33,7 +33,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 		
 		this.resource1 = MirrorResourceType.getResource(resource1);
 		this.resource2 = MirrorResourceType.getResource(resource2);
-		this.type = "Year_of_Plenty";
+		this.type = "Year_Of_Plenty";
 	}
 	
 	public YearOfPlentyCommand(HttpExchange exchange) {

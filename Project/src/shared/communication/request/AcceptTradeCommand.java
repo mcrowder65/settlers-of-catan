@@ -99,7 +99,7 @@ public class AcceptTradeCommand extends MoveCommand {
 			}
 			addGameLog(offer);
 			
-			model.setTradeOffer(null);
+			model.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			return response;
@@ -116,12 +116,12 @@ public class AcceptTradeCommand extends MoveCommand {
 	 */
 	public void distributeResources(ResourceType type, int qty, ServerPlayer player, ServerPlayer sendingPlayer) {
 		if(qty < 0) {
-			sendingPlayer.getResources().removeResource(type, Math.abs(qty));
-			player.getResources().addResource(type, Math.abs(qty));
+			sendingPlayer.getResources().addResource(type, Math.abs(qty));
+			player.getResources().removeResource(type, Math.abs(qty));
 		}
 		else if(qty > 0) {
-			player.getResources().removeResource(type, qty);
-			sendingPlayer.getResources().addResource(type, qty);
+			player.getResources().addResource(type, qty);
+			sendingPlayer.getResources().removeResource(type, qty);
 		}
 	}
 	

@@ -46,7 +46,7 @@ public class Player {
 	/**
 	 *  Whether the player has played a dev card this turn.,
 	 */
-	private Boolean playedDevCard;
+	private boolean playedDevCard;
 	/**
 	 * The unique playerID. This is used to pick the client player apart from the
 		others. This is only used here and in your cookie.,
@@ -818,7 +818,7 @@ public class Player {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((newDevCards == null) ? 0 : newDevCards.hashCode());
 		result = prime * result + ((oldDevCards == null) ? 0 : oldDevCards.hashCode());
-		result = prime * result + ((playedDevCard == null) ? 0 : playedDevCard.hashCode());
+		result = prime * result + ((playedDevCard == false) ? 0 : 1);
 		result = prime * result + playerID;
 		result = prime * result + playerIndex;
 		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
@@ -864,10 +864,7 @@ public class Player {
 				return false;
 		} else if (!oldDevCards.equals(other.oldDevCards))
 			return false;
-		if (playedDevCard == null) {
-			if (other.playedDevCard != null)
-				return false;
-		} else if (!playedDevCard.equals(other.playedDevCard))
+		if (!playedDevCard != other.playedDevCard)
 			return false;
 		if (playerID != other.playerID)
 			return false;

@@ -67,6 +67,7 @@ public class OfferTradeCommand extends MoveCommand {
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
+	 		/*
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -77,6 +78,7 @@ public class OfferTradeCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+	 		*/
 	 		
 	 		//if pos player is giving if neg player is recieving
 	 		ResourceList normalizedList = model.getRecievingResourceList(offer);
@@ -98,7 +100,17 @@ public class OfferTradeCommand extends MoveCommand {
 			}
 	 		
 	 		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
+	 		model.setTradeOffer(trade);
+	 		
+	 		//AIs can't make trades
+	 		if (Game.instance().getGameId(gameIDCookie).getServerPlayers()[receiver].getPlayerID() < 0) {
+	 			AcceptTradeCommand rejectTrade = new AcceptTradeCommand(receiver, false);
+	 			rejectTrade.setGameCookie(gameIDCookie);
+	 			rejectTrade.execute();
+	 		} 
+	 		
 	 		model.setVersion(model.getVersion() + 1);
+	 		
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
 			return response; 

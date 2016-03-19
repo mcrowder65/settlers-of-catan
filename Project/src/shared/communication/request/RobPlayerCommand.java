@@ -91,11 +91,13 @@ public class RobPlayerCommand extends MoveCommand {
 			}
 			
 			turnTracker.setStatus("Playing");
-			//TODO: Game History - robbing
+			
+			map.setRobber(location);
 			model.setVersion(model.getVersion() + 1);
 			
 			//not robbing anyone
 			if (victimIndex == -1) {
+				addGameLog(player, model, null);
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				return response;
@@ -107,6 +109,7 @@ public class RobPlayerCommand extends MoveCommand {
 			
 			//victim has no resources
 			if(victim.getResources().isEmpty()){
+				addGameLog(player, model, null);
 				
 				response.setSuccess(true);
 				response.setJson(model.toString());
@@ -125,13 +128,16 @@ public class RobPlayerCommand extends MoveCommand {
 			addGameLog(player,model,victim);
 			response.setSuccess(true);
 			response.setJson(model.toString());
-			map.setRobber(location);
 			return response; 
 		}
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
-		String message = player.getName() + "moved the robber and robbed "+player2.getName();
+		String message;
+		if (player2 == null)
+			message = player.getName() + " moved the robber but couldn't rob anyone!";
+		else
+		    message = player.getName() + " moved the robber and robbed "+player2.getName();
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}

@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import server.facade.IMovesFacade;
+import shared.communication.response.GetModelResponse;
 import shared.communication.response.Response;
 import sun.net.www.protocol.http.HttpURLConnection;
 
@@ -26,7 +27,7 @@ public class OfferTradeHandler implements HttpHandler  {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		Response response = null;
+		GetModelResponse response = null;
 		try{
 		   response = facade.offerTrade(exchange);
 		}catch(Exception ex) {

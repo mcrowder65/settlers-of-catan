@@ -12,6 +12,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeOffer;
@@ -56,6 +57,7 @@ public class AcceptTradeCommand extends MoveCommand {
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			String status = turnTracker.getStatus();
 			TradeOffer offer = model.getTradeOffer();
+			/*
 			try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -66,7 +68,8 @@ public class AcceptTradeCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	
+	*/
+			
 			if(offer.getReciever() != playerIndex){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong Player");
@@ -79,11 +82,7 @@ public class AcceptTradeCommand extends MoveCommand {
 			int ore = resources.getOre();
 			int sheep = resources.getSheep();
 			int wood = resources.getWood();
-			if(player.canAcceptTrade(resources) == false){
-				response.setSuccess(false);
-				response.setErrorMessage("Cannot Accept Trade");
-				return response;
-			}
+			
 	
 			if(willAccept == true){
 				int sender = offer.getSender();
@@ -98,6 +97,9 @@ public class AcceptTradeCommand extends MoveCommand {
 				distributeResources(ResourceType.WOOD, wood, player, sendingPlayer);
 				model.setVersion(model.getVersion() + 1);
 			}
+			addGameLog(offer);
+			
+			model.setTradeOffer(null);
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			return response;
@@ -124,6 +126,19 @@ public class AcceptTradeCommand extends MoveCommand {
 	}
 	
 
+	public void addGameLog(TradeOffer currentOffer){
+		
+		String message;
+		if (willAccept)
+			message = "The trade was accepted.";
+		else
+			message = "The trade was not accepted.";
+		
+		MessageLine line = new MessageLine(message, Game.instance().getGameId(gameIDCookie).getServerPlayers()[currentOffer.getSender()].getName());
+		Game.instance().getGameId(gameIDCookie).addGameLogMessage(line);
+	}
+	
+	
 	public boolean getWillAccept() {
 		return willAccept;
 	}

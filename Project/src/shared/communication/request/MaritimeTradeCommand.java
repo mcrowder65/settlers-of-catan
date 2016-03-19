@@ -100,20 +100,21 @@ public class MaritimeTradeCommand extends MoveCommand {
 			return response; //Need to throw some error here		
 		}	
 		
-		if(player.getResources().hasResourceCertainNumber(output,ratio) == false){
+		if(player.getResources().hasResourceCertainNumber(input,ratio) == false){
 			response.setSuccess(false);
 			response.setErrorMessage("Doesnt have resource");
 			return response;
 		}
 		
-		if(model.getBank().hasResource(input) == false){
+		if(model.getBank().hasResource(output) == false){
 			response.setSuccess(false);
 			response.setErrorMessage("Bank is all out of that resource");
 			return response;
 		}
 		
-		player.addResource(input);
-		model.getBank().removeResource(output,ratio);
+		player.addResource(output);
+		player.getResources().removeResource(input, ratio);
+		model.getBank().removeResource(output,1);
 		model.setVersion(model.getVersion() + 1);
 		response.setSuccess(true);
 		response.setJson(model.toString());

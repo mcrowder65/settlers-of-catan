@@ -41,7 +41,10 @@ public class MessageList {
 	
 	public void addMessage(MessageLine line){
 		allMessages.add(line);
-		lines = allMessages.toArray(lines);
+		lines = new MessageLine[allMessages.size()]; 
+		for(int i=0; i<lines.length; i++){
+			lines[i] = allMessages.get(i);
+		}
 	}
 
 	/**

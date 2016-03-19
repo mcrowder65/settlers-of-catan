@@ -177,6 +177,7 @@ import shared.locations.VertexObject;
  		player.setSoldiers(0);
  		player.setVictoryPoints(0);
  		player.setPlayedDevCard(false);
+ 		unusedAIColors.remove(player.getColor());
  		serverPlayers[amt] = player;
  	}
  	
@@ -341,9 +342,13 @@ import shared.locations.VertexObject;
  		return true;
  	}
 
-
+ 	/**
+ 	 * this returns the player by index but does not change the original
+ 	 * @param index of player in ServerPlayers array
+ 	 * @return ServerPlayer
+ 	 */
  	public ServerPlayer getPlayerByIndex(int index){
- 		return serverPlayers[index];
+ 		return new ServerPlayer(serverPlayers[index]);
  	}
 	public void issueResourcesNormalPlay(int numRolled){
  		Hex[] allHexes = serverMap.getHexes();

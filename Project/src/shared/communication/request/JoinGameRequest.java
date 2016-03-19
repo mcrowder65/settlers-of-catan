@@ -33,28 +33,30 @@ public class JoinGameRequest extends Request {
 	}
 	
 	public Response joinGame() {
-		Response response = new Response();
-		Game game = Game.instance();
-		
-		ServerGameModel model = game.getGameId(id);
-		//String name, CatanColor color, int playerID, int playerIndex
-		int playerIndex = model.getLocalIndex(playerIDCookie);
-		ServerPlayer serverPlayer = new ServerPlayer(userCookie, color, playerIDCookie, playerIndex);
-		if(playerIndex != -1){
-			serverPlayer = model.getPlayerByIndex(playerIndex);
-			serverPlayer.setColor(color);
-			Game.instance().setPlayer(id, serverPlayer);
+		synchronized(Game.instance().lock){
+			Response response = new Response();
+			Game game = Game.instance();
+			
+			ServerGameModel model = game.getGameId(id);
+			//String name, CatanColor color, int playerID, int playerIndex
+			int playerIndex = model.getLocalIndex(playerIDCookie);
+			ServerPlayer serverPlayer = new ServerPlayer(userCookie, color, playerIDCookie, playerIndex);
+			if(playerIndex != -1){
+				serverPlayer = model.getPlayerByIndex(playerIndex);
+				serverPlayer.setColor(color); //TODO pointer issues
+				Game.instance().setPlayer(id, serverPlayer);
+			}
+			//otherwise they're not in the game, find the index to use to add them to the game.
+			else{
+				playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
+				serverPlayer.setPlayerIndex(playerIndex);
+				Game.instance().addPlayer(id, serverPlayer);
+			}
+			response.setCookie("Set-cookie", "catan.game=" + id + ";");
+			response.setErrorMessage("Success");
+			response.setSuccess(true);
+			return response;
 		}
-		//otherwise they're not in the game, find the index to use to add them to the game.
-		else{
-			playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
-			serverPlayer.setPlayerIndex(playerIndex);
-			Game.instance().addPlayer(id, serverPlayer);
-		}
-		response.setCookie("Set-cookie", "catan.game=" + id + ";");
-		response.setErrorMessage("Success");
-		response.setSuccess(true);
-		return response;
 	}
 	public JoinGameRequest(HttpExchange exchange){
 		super(exchange);

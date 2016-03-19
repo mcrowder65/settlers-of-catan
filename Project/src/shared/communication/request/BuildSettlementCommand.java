@@ -60,87 +60,88 @@ public class BuildSettlementCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
-		VertexLocation loc = this.getLocation().getOriginal();			
- 		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();
- 		GetModelResponse response = new GetModelResponse();
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		String status = turnTracker.getStatus();
- 		VertexObject vertex = new VertexObject(playerIndex,loc);
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
- 		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){		
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response;		
-		}
-		if(status.equals("FirstRound") || status.equals("SecondRound")){
-			if(!map.canBuildSettlementFirstRound(vertex)){
-				//need to return some error here
-				response.setSuccess(false);
-				response.setErrorMessage("bad location");
-				return response;
+		synchronized(Game.instance().lock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+			VertexLocation loc = this.getLocation().getOriginal();			
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		String status = turnTracker.getStatus();
+	 		VertexObject vertex = new VertexObject(playerIndex,loc);
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
-		}
-		if(status.equals("SecondRound")){
-			map.laySettlement(vertex,true);
-			List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
-			for(int i=0; i<settlements.size(); i++){
-				if(settlements.get(i)!=null){
-					issueResource(settlements.get(i),map,player);
+	 		//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response;		
+			}
+			if(status.equals("FirstRound") || status.equals("SecondRound")){
+				if(!map.canBuildSettlementFirstRound(vertex)){
+					//need to return some error here
+					response.setSuccess(false);
+					response.setErrorMessage("bad location");
+					return response;
 				}
 			}
-			
-			player.removeSettlement();
-			player.addVictoryPoints();
-			response.setSuccess(true);
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			return response;
-		}
-		if(status.equals("FirstRound")){
-			map.laySettlement(vertex,false);
-			player.removeSettlement();
-			player.addVictoryPoints();
-			
-			//need to return that it was successful 
-			response.setSuccess(true);
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
-			return response;
-		}
-		if(status.equals("Playing")){
-			if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
-				response.setSuccess(false);
-				response.setErrorMessage("Bad Location");
+			if(status.equals("SecondRound")){
+				map.laySettlement(vertex,true);
+				List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
+				for(int i=0; i<settlements.size(); i++){
+					if(settlements.get(i)!=null){
+						issueResource(settlements.get(i),map,player);
+					}
+				}
+				
+				player.removeSettlement();
+				player.addVictoryPoints();
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
 				return response;
 			}
-			map.laySettlement(vertex,false);
-			player.laySettlement();
-			response.setSuccess(true);
-			model.setVersion(model.getVersion() + 1);
-            response.setJson(model.toString());
+			if(status.equals("FirstRound")){
+				map.laySettlement(vertex,false);
+				player.removeSettlement();
+				player.addVictoryPoints();
+				
+				//need to return that it was successful 
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				return response;
+			}
+			if(status.equals("Playing")){
+				if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
+					response.setSuccess(false);
+					response.setErrorMessage("Bad Location");
+					return response;
+				}
+				map.laySettlement(vertex,false);
+				player.laySettlement();
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+				return response;
+			}
+			
+			//need to return some error
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
 			return response;
 		}
-		
-		//need to return some error
-		response.setSuccess(false);
-		response.setErrorMessage("Wrong status");
-		return response;
 	}
 	
 	public void issueResource(VertexObject settlement, ServerGameMap map, ServerPlayer player){

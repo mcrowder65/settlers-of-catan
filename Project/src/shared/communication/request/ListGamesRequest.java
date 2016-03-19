@@ -14,8 +14,10 @@ public class ListGamesRequest extends Request {
 	//TODO if i add ai's to one client and the other client is waiting in the list games menu
 	//     it doesn't update the 2nd clients window saying which ai's are in there.
 	public ListGamesResponse listGames() {
-		ListGamesResponse listResponse = new ListGamesResponse(Game.instance().getGamesList());
-		return listResponse;
+		synchronized(Game.instance().lock){
+			ListGamesResponse listResponse = new ListGamesResponse(Game.instance().getGamesList());
+			return listResponse;
+		}
 	}
 	public ListGamesRequest(HttpExchange exchange){
 		super(exchange);

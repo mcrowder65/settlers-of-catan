@@ -12,10 +12,12 @@ public class ListAIRequest extends Request {
 	}
 	
 	public ListAIResponse listAITypes() {
-		ListAIResponse response = new ListAIResponse(Game.getAiTypes());
-		response.setSuccess(true);
-		response.setErrorMessage("Success");
-		return response;
+		synchronized(Game.instance().lock){
+			ListAIResponse response = new ListAIResponse(Game.getAiTypes());
+			response.setSuccess(true);
+			response.setErrorMessage("Success");
+			return response;
+		}
 	}
 	public ListAIRequest(HttpExchange exchange){
 		super(exchange);

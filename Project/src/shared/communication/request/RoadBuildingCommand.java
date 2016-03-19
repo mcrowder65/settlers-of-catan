@@ -21,7 +21,6 @@ import shared.locations.MirrorEdgeLocation;
  *
  */
 public class RoadBuildingCommand extends MoveCommand {
-
 	MirrorEdgeLocation spot1;
 	MirrorEdgeLocation spot2;
 	
@@ -60,61 +59,63 @@ public class RoadBuildingCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
- 				
- 		EdgeLocation loc1 = this.getSpot1();	
- 		EdgeLocation loc2 = this.getSpot2();
- 		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(gameIndex);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];
- 		GetModelResponse response = new GetModelResponse();
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
- 				
-		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){		
+		synchronized(Game.instance().lock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+	 				
+	 		EdgeLocation loc1 = this.getSpot1();	
+	 		EdgeLocation loc2 = this.getSpot2();
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 				
+			//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}		
+					
+			String status = turnTracker.getStatus();		
+			//making sure its the right status				
+			if(status.equals("Playing")){		
+				if(!player.canPlayRoadBuilding()){
+					response.setSuccess(false);
+					response.setErrorMessage("Player cannot play card");
+					return response;
+				}
+				if(!map.canUseRoadBuilder(playerIndex,loc1,loc2)){
+					response.setSuccess(false);
+					response.setErrorMessage("Wrong Location");
+					return response;
+				}
+				map.buildRoad(new EdgeValue(playerIndex,loc1));
+				map.buildRoad(new EdgeValue(playerIndex,loc2));
+				player.layRoadBuilder();
+				model.setVersion(model.getVersion() + 1);
+				response.setSuccess(true);
+				response.setJson(model.toString());
+				return response;
+			}		
+					
+			//need to return an error
 			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response; //Need to throw some error here		
-		}		
-				
-		String status = turnTracker.getStatus();		
-		//making sure its the right status				
-		if(status.equals("Playing")){		
-			if(!player.canPlayRoadBuilding()){
-				response.setSuccess(false);
-				response.setErrorMessage("Player cannot play card");
-				return response;
-			}
-			if(!map.canUseRoadBuilder(playerIndex,loc1,loc2)){
-				response.setSuccess(false);
-				response.setErrorMessage("Wrong Location");
-				return response;
-			}
-			map.buildRoad(new EdgeValue(playerIndex,loc1));
-			map.buildRoad(new EdgeValue(playerIndex,loc2));
-			player.layRoadBuilder();
-			model.setVersion(model.getVersion() + 1);
-			response.setSuccess(true);
-			response.setJson(model.toString());
+			response.setErrorMessage("Wrong status");
 			return response;
-		}		
-				
-		//need to return an error
-		response.setSuccess(false);
-		response.setErrorMessage("Wrong status");
-		return response;
+		}
 	}
 
 }

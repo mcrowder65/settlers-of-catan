@@ -191,6 +191,13 @@ import shared.locations.VertexObject;
  		return 0;
  	}
  	
+ 	public int getNegative(int resource){
+ 		if(resource<0){
+ 			return 0;
+ 		}
+ 		return resource;
+ 	}
+ 	
  	
  	public ResourceList normalizeResourceList(ResourceList resource){
  		
@@ -199,6 +206,18 @@ import shared.locations.VertexObject;
  		int ore = getPositive(resource.getOre());
  		int wood = getPositive(resource.getWood());
  		int sheep = getPositive(resource.getSheep());
+ 		
+ 		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
+ 		return normalized;
+ 	}
+ 	
+ 	public ResourceList getRecievingResourceList(ResourceList resource){
+ 		
+ 		int brick = getNegative(resource.getBrick());
+ 		int wheat = getNegative(resource.getWheat());
+ 		int ore = getNegative(resource.getOre());
+ 		int wood = getNegative(resource.getWood());
+ 		int sheep = getNegative(resource.getSheep());
  		
  		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
  		return normalized;

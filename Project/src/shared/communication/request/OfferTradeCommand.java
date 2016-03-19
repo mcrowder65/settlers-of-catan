@@ -77,8 +77,9 @@ public class OfferTradeCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	
-	 		ResourceList normalizedList = model.normalizeResourceList(offer);
+	 		
+	 		//if pos player is giving if neg player is recieving
+	 		ResourceList normalizedList = model.getRecievingResourceList(offer);
 	 		if(player.canMakeTrade(normalizedList) == false){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Not enough resources");

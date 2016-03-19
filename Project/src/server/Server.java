@@ -41,7 +41,7 @@ public class Server {
 	private SendChatHandler sendChatHandler;
 	private SoldierHandler soldierHandler;
 	private YearOfPlentyHandler yearOfPlentyHandler;
-	
+	private OfferTradeHandler offerTradeHandler;
 	public void run(String[] args) {
 		
 		int port = 8081;
@@ -88,6 +88,7 @@ public class Server {
 		sendChatHandler = new SendChatHandler(movesFacade);
 		soldierHandler = new SoldierHandler(movesFacade);
 		yearOfPlentyHandler = new YearOfPlentyHandler(movesFacade);
+		offerTradeHandler = new OfferTradeHandler(movesFacade);
 		
 		httpServer.setExecutor(null);
 		
@@ -106,6 +107,7 @@ public class Server {
 		httpServer.createContext("/game/listAI", listAIHandler);
 		httpServer.createContext("/game/addAI", addAIHandler);
 		
+		httpServer.createContext("/moves/offerTrade", offerTradeHandler);
 		httpServer.createContext("/moves/acceptTrade", acceptTradeHandler);
 		httpServer.createContext("/moves/buildCity", buildCityHandler);
 		httpServer.createContext("/moves/buildSettlement", buildSettlementHandler);

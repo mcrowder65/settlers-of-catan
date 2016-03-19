@@ -81,15 +81,26 @@ public class FinishTurnCommand extends MoveCommand {
 			}
 			*/
 			model.setVersion(model.getVersion() + 1);
-			turnTracker.advanceTurn();
+			//turnTracker.advanceTurn();
 			
 			if(status.equals("FirstRound")){
-				if (playerIndex == 3) 
+				if (playerIndex == 3){ 
 					turnTracker.setStatus("SecondRound");
-			} else if (status.equals("SecondRound")) {
-				if (playerIndex == 3)
+				}
+				else{
+					turnTracker.advanceTurn();
+				}
+			} 
+			else if (status.equals("SecondRound")) {
+				if (playerIndex == 0){
 					turnTracker.setStatus("Rolling");
-			} else {
+				}
+				else{
+					turnTracker.decreaseTurn();
+				}
+			} 
+			else {
+				turnTracker.advanceTurn();
 				turnTracker.setStatus("Rolling");
 			}
 			

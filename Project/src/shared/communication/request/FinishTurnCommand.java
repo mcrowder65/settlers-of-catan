@@ -93,9 +93,10 @@ public class FinishTurnCommand extends MoveCommand {
 				turnTracker.setStatus("Rolling");
 			}
 			
+			addGameLog(player,model);
 			turnTracker.handleAITurn(gameIndex);
 			player.updateOldDevCard();
-			addGameLog(player,model);
+			
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			

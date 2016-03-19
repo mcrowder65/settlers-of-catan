@@ -130,7 +130,6 @@ public class BuildRoadCommand extends MoveCommand {
 		String message = player.getName() + " built a road";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
-
 	}
 	
 	/**

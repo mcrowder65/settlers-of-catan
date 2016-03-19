@@ -13,6 +13,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -105,11 +106,18 @@ public class RobPlayerCommand extends MoveCommand {
 			victim.removeResource(resource);
 			player.addResource(resource);
 			model.setVersion(model.getVersion() + 1);
+			addGameLog(player,model,victim);
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			map.setRobber(location);
 			return response; 
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
+		String message = player.getName() + "moved the robber and robbed "+player2.getName();
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 	
 	public HexLocation getLocation() {

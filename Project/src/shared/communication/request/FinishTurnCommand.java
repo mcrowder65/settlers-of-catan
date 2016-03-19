@@ -11,6 +11,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.TurnTracker;
 
 /**
@@ -94,6 +95,7 @@ public class FinishTurnCommand extends MoveCommand {
 			
 			turnTracker.handleAITurn(gameIndex);
 			player.updateOldDevCard();
+			addGameLog(player,model);
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			
@@ -101,6 +103,11 @@ public class FinishTurnCommand extends MoveCommand {
 			return response;
 		}
 		
+	}
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + "'s turn just ended";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 
 }

@@ -12,6 +12,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.locations.EdgeLocation;
 import shared.locations.EdgeValue;
 import shared.locations.MirrorEdgeLocation;
@@ -106,6 +107,7 @@ public class RoadBuildingCommand extends MoveCommand {
 				map.buildRoad(new EdgeValue(playerIndex,loc2));
 				player.layRoadBuilder();
 				model.setVersion(model.getVersion() + 1);
+				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				return response;
@@ -116,6 +118,18 @@ public class RoadBuildingCommand extends MoveCommand {
 			response.setErrorMessage("Wrong status");
 			return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + "built 2 roads";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
+		String message2 = player.getName() + "built a road";
+		MessageLine line2 = new MessageLine(message2,player.getName());
+		model.addGameLogMessage(line2);
+		String message3 = player.getName() + "built a road";
+		MessageLine line3 = new MessageLine(message3,player.getName());
+		model.addGameLogMessage(line3);
 	}
 
 }

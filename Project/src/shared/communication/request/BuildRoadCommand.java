@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import client.utils.Translator;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.locations.EdgeLocation;
 import shared.locations.EdgeValue;
 import shared.locations.MirrorEdgeLocation;
@@ -93,6 +94,7 @@ public class BuildRoadCommand extends MoveCommand {
 				}
 				map.buildRoad(new EdgeValue(playerIndex,loc));
 				player.removeRoad();
+				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
@@ -111,6 +113,7 @@ public class BuildRoadCommand extends MoveCommand {
 				}
 				map.buildRoad(new EdgeValue(playerIndex,loc));
 				player.layRoad();
+				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
@@ -121,6 +124,13 @@ public class BuildRoadCommand extends MoveCommand {
 			response.setErrorMessage("Should not reach this point in the code");
 			return response; 	
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + " built a road";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
+
 	}
 	
 	/**

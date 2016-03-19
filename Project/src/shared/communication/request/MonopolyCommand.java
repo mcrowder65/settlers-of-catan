@@ -12,6 +12,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 import shared.locations.VertexLocation;
@@ -95,10 +96,17 @@ public class MonopolyCommand extends MoveCommand {
 				}
 			}
 			model.setVersion(model.getVersion()  + 1);
+			addGameLog(player,model);
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + "stole everyones sheep";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 	
 	public ResourceType getResource() {

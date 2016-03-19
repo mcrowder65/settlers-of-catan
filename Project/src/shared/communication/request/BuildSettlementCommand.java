@@ -14,6 +14,7 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.Hex;
+import shared.definitions.MessageLine;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
@@ -109,6 +110,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				
 				player.removeSettlement();
 				player.addVictoryPoints();
+				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
@@ -120,6 +122,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				player.addVictoryPoints();
 				
 				//need to return that it was successful 
+				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
@@ -133,6 +136,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				}
 				map.laySettlement(vertex,false);
 				player.laySettlement();
+				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
@@ -144,6 +148,12 @@ public class BuildSettlementCommand extends MoveCommand {
 			response.setErrorMessage("Wrong status");
 			return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + " built a settlement";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 	
 	public void issueResource(VertexObject settlement, ServerGameMap map, ServerPlayer player){

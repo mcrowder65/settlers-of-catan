@@ -12,6 +12,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.locations.EdgeLocation;
 /**
  * This executes the monument action. Extends MoveCommand
@@ -73,6 +74,7 @@ public class MonumentCommand extends MoveCommand {
 				}
 				player.playMonument();
 				model.setVersion(model.getVersion() + 1);
+				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				return response;
@@ -81,6 +83,12 @@ public class MonumentCommand extends MoveCommand {
 			response.setErrorMessage("Wrong status");
 			return response; //need to return some error here
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + "built a monument and gained a victory point";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 
 

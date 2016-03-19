@@ -102,10 +102,9 @@ public class RollNumberCommand extends MoveCommand {
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model, int numRolled){
-		String message = player.getName() + " rolled a " + numRolled;
+		String message = player.getName() + " rolled a " + numRolled +".";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
-		
 	}
 
 	public int getNumber() {

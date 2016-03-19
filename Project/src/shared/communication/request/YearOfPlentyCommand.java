@@ -9,6 +9,7 @@ import client.utils.Translator;
 import server.Game;
 import server.util.*;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.MirrorResourceType;
 import shared.definitions.ResourceType;
 
@@ -107,12 +108,41 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 		player.getResources().addResource(res2,1);
 	 		model.getBank().removeResource(res1,1);
 	 		model.getBank().removeResource(res2,1);
-	 		
+	 		addGameLog(player,model,res1,res2);
 	 		model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model, ResourceType res1, ResourceType res2){
+		String resource1 = resourceToString(res1);
+		String resource2 = resourceToString(res2);
+		String message = player.getName() + "Year of Plenty and got a "+ resource1 + "and a " + resource2;
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
+	}
+	
+	public String resourceToString(ResourceType res){
+		if(res == ResourceType.SHEEP){
+			return "sheep";
+		}
+		if(res == ResourceType.WHEAT){
+			return "wheat";
+		}
+		if(res == ResourceType.ORE){
+			return "ore";
+		}
+		if(res == ResourceType.BRICK){
+			return "brick";
+		}
+		if(res == ResourceType.WOOD){
+			return "wood";
+		}
+		
+		return "Error";
+		
 	}
 
 	public ResourceType getResource1() {

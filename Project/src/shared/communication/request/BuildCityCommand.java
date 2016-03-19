@@ -12,6 +12,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.locations.EdgeLocation;
 import shared.locations.MirrorVertexLocation;
 import shared.locations.VertexLocation;
@@ -96,6 +97,7 @@ public class BuildCityCommand extends MoveCommand {
 				player.layCity();
 				
 				//return that there was a success
+				addGameLog(player,model);
 				model.setVersion(model.getVersion() + 1);
 				response.setJson(model.toString());
 				response.setSuccess(true);
@@ -107,6 +109,12 @@ public class BuildCityCommand extends MoveCommand {
 			response.setErrorMessage("Unreachable");
 			return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + " built a city";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 
 

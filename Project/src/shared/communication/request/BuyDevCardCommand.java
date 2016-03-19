@@ -13,6 +13,7 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.DevCardType;
+import shared.definitions.MessageLine;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 
@@ -92,6 +93,7 @@ public class BuyDevCardCommand extends MoveCommand {
 				player.buyDevCard(card);
 				model.buyFromDeck(card);
 				model.setVersion(model.getVersion() + 1);
+				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				return response;	
@@ -101,5 +103,11 @@ public class BuyDevCardCommand extends MoveCommand {
 			response.setErrorMessage("Wrong status");
 			return response;	
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model){
+		String message = player.getName() + " bought a development card.";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
 	}
 }

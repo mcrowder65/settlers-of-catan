@@ -9,6 +9,7 @@ import client.utils.Translator;
 import server.Game;
 import server.util.*;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 /**
@@ -96,6 +97,7 @@ public class SoldierCommand extends MoveCommand {
 	 		if(victim.getResources().isEmpty()){
 	 			model.setVersion(model.getVersion() + 1);
 	 			response.setSuccess(true);
+	 			addGameLog(player,model,victim);
 	 			response.setJson(model.toString());
 				return response;
 			}
@@ -109,6 +111,7 @@ public class SoldierCommand extends MoveCommand {
 			victim.removeResource(resource);
 			player.addResource(resource);
 			model.setVersion(model.getVersion() +1);
+			addGameLog(player,model,victim);
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			map.setRobber(robberLoc);
@@ -116,6 +119,16 @@ public class SoldierCommand extends MoveCommand {
 			return response; 
 		}
 	
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
+		String message = player.getName() + "used a soldier";
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
+		
+		String message2 = player.getName() + "moved the robber and robbed "+player2.getName();
+		MessageLine line2 = new MessageLine(message2,player.getName());
+		model.addGameLogMessage(line2);
 	}
 
 	public HexLocation getLocation() {

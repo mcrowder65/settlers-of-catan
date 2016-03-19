@@ -8,8 +8,10 @@ import com.sun.net.httpserver.HttpExchange;
 import client.utils.Translator;
 import server.Game;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
+import shared.definitions.MessageLine;
 /**
  * This is the class the executes a roll number.
  * @author mcrowder65
@@ -44,6 +46,7 @@ public class RollNumberCommand extends MoveCommand {
 	  		ServerGameModel model = game.getGameId(gameIndex);			
 	  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	  		GetModelResponse response = new GetModelResponse();
+	  		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	  		/*
 	  		try {
 				response.setCookie("Set-cookie", "catan.user=" +
@@ -89,13 +92,20 @@ public class RollNumberCommand extends MoveCommand {
 	  		
 	  		
 	  		
-	  		
+	  		addGameLog(player,model,numRolled);
 	  		model.issueResourcesNormalPlay(numRolled);
 	  		model.setVersion(model.getVersion() + 1);
 	        response.setJson(model.toString());
 	  		response.setSuccess(true);
 	 		return response;
 		}
+	}
+	
+	public void addGameLog(ServerPlayer player, ServerGameModel model, int numRolled){
+		String message = player.getName() + " rolled a " + numRolled;
+		MessageLine line = new MessageLine(message,player.getName());
+		model.addGameLogMessage(line);
+		
 	}
 
 	public int getNumber() {

@@ -329,6 +329,10 @@ import shared.locations.VertexObject;
  		getChat().addMessage(line);
  	}
  	
+ 	public void addGameLogMessage(MessageLine line){
+ 		getLog().addMessage(line);
+ 	}
+ 	
  	@Override
  	public String toString() {
  		return Translator.modelToJson(this);

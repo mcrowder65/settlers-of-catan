@@ -56,6 +56,7 @@ public class BuildRoadCommand extends MoveCommand {
 	 		ServerGameMap map = model.getServerMap();		
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];		
+	 		/*
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -66,6 +67,8 @@ public class BuildRoadCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
+	 		
 			//making sure its the players turn		
 			if(checkTurn(turnTracker,playerIndex) == false){
 				

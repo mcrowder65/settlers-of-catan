@@ -22,8 +22,7 @@ public interface IAIFacade {
 	 void acceptTrade(boolean willAccept);
 	 void maritimeTrade(int ratio, ResourceType input, ResourceType output);
 	 
-	 void finishTurn(int aiIndex, int gameID);
-	 void finishTurn(); //put this in here so i get can ai's to finish turns
-
+	 void finishTurn(); 
 	
+	 int getGameId();
 }

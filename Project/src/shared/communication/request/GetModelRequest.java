@@ -23,17 +23,13 @@ public class GetModelRequest extends Request {
 	
 	public GetModelResponse getModel() {
 		synchronized(Game.instance().lock){
-			GetModelResponse response = new GetModelResponse(200, model);
+			ServerGameModel model = Game.instance().getGameId(gameIDCookie);
+			
+			GetModelResponse response = new GetModelResponse(200, model.toString());
 			return response;
 		}
 	}
 	public GetModelRequest(HttpExchange exchange){
 		super(exchange);
-		ServerGameModel sgm = Game.instance().getGameId(gameIDCookie);
-		ServerPlayer ai = sgm.isAiTurn();
-		if(ai != null)
-			sgm.doAiTurn(ai, sgm.getGameId());
-		model = sgm.toString();
-		
 	}
 }

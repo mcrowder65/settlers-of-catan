@@ -54,5 +54,13 @@ public abstract class MoveCommand extends Request {
 		 return false;		
 	}		
 	
+	/**
+	 * DO NOT USE THIS SETTER EXCEPT FOR AI!!!!!!!!!!!!!!
+	 * @param id
+	 */
+	public void setGameCookie(int id) {
+		this.gameIDCookie = id;
+	}
+	
 	
 }

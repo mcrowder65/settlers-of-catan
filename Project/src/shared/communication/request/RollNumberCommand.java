@@ -44,6 +44,7 @@ public class RollNumberCommand extends MoveCommand {
 	  		ServerGameModel model = game.getGameId(gameIndex);			
 	  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	  		GetModelResponse response = new GetModelResponse();
+	  		/*
 	  		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -54,12 +55,41 @@ public class RollNumberCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
+	  		
+	  		
+	  		
 	  		if(numRolled == 7){
 	  			turnTracker.setStatus("Discarding");
+	  			for (int n = 0; n < 4; n++) {
+		  			model.getServerPlayers()[n].setDiscarded(
+		  		    model.getServerPlayers()[n].getNumOfCards() > 6 ? false : true
+		  					);
+		  		}
+	  			
+	  		//Need this for ais to discard
+		  		turnTracker.handleAITurn(gameIDCookie);
+		  		boolean doneDiscarding = false;
+		  		for (int n = 0; n < 4; n++) {
+		  			if (model.getServerPlayers()[n].getDiscarded())  {
+		  				doneDiscarding = true;
+		  				break;
+		  			}
+		  		}
+		  		if (doneDiscarding) {
+		  			turnTracker.setStatus("Playing");
+		  		}
+		  		
+		  		
+		  		
 	  		}
 	  		else{
 	  			turnTracker.setStatus("Playing");
 	  		}
+	  		
+	  		
+	  		
+	  		
 	  		model.issueResourcesNormalPlay(numRolled);
 	  		model.setVersion(model.getVersion() + 1);
 	        response.setJson(model.toString());

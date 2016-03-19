@@ -72,6 +72,7 @@ public class BuildSettlementCommand extends MoveCommand {
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
 	 		VertexObject vertex = new VertexObject(playerIndex,loc);
+	 		/*
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -82,6 +83,7 @@ public class BuildSettlementCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
 	 		//making sure its the players turn		
 			if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);

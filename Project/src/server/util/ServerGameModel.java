@@ -370,10 +370,6 @@ import shared.locations.VertexObject;
  			}
  		}
  	}
-	public void doAiTurn(ServerPlayer computerPlayer, int gameID) {
-		ServerAIFacade serverAIFacade = new ServerAIFacade();
-		serverAIFacade.finishTurn(computerPlayer.getPlayerIndex(), gameID);
-	}
-	
+
   			  	
  } 

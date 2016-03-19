@@ -1,6 +1,6 @@
 package server.facade;
 
-import shared.communication.request.FinishTurnCommand;
+import shared.communication.request.*;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -9,98 +9,130 @@ import shared.locations.VertexLocation;
 
 public class ServerAIFacade implements IAIFacade {
 
+	int playerIndex;
+	int gameId;
+	public ServerAIFacade(int playerIndex, int gameId) {
+		this.playerIndex = playerIndex;
+		this.gameId = gameId;
+	}
+	
 	@Override
 	public void rollNumber(int number) {
-		// TODO Auto-generated method stub
-		
+		RollNumberCommand command = new RollNumberCommand(playerIndex, number);
+		command.setGameCookie(gameId);
+		command.execute();
 	}
 
 	@Override
 	public void discardCards(ResourceList resources) {
-		// TODO Auto-generated method stub
+		DiscardCardsCommand command = new DiscardCardsCommand(playerIndex, resources);
+		command.setGameCookie(gameId);
+		command.execute();
 		
 	}
 
 	@Override
 	public void buildRoad(EdgeLocation location, boolean free) {
-		// TODO Auto-generated method stub
-		
+		 BuildRoadCommand command = new BuildRoadCommand(playerIndex, free, location);
+		 command.setGameCookie(gameId);
+		 command.execute();
 	}
 
 	@Override
 	public void buildSettlement(VertexLocation location, boolean free) {
-		// TODO Auto-generated method stub
-		
+		BuildSettlementCommand command = new BuildSettlementCommand(playerIndex, free, location);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 
 	@Override
 	public void buildCity(VertexLocation location) {
-		// TODO Auto-generated method stub
+		BuildCityCommand command = new BuildCityCommand(playerIndex, location);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 		
 	}
 
 	@Override
 	public void buyDevCard() {
-		// TODO Auto-generated method stub
-		
+		BuyDevCardCommand command = new BuyDevCardCommand(playerIndex);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 
 	@Override
 	public void monopoly(ResourceType resource) {
-		// TODO Auto-generated method stub
+		MonopolyCommand command = new MonopolyCommand(playerIndex, resource);	
+		 command.setGameCookie(gameId);
+		 command.execute();
 		
 	}
 
 	@Override
 	public void soldier(int victimIndex, HexLocation location) {
-		// TODO Auto-generated method stub
-		
+		SoldierCommand command = new SoldierCommand(playerIndex, location, victimIndex);
+		 command.setGameCookie(gameId);
+		 command.execute();
 	}
 
 	@Override
 	public void monument() {
-		// TODO Auto-generated method stub
-		
+		MonumentCommand command = new MonumentCommand(playerIndex);
+		 command.setGameCookie(gameId);
+		 command.execute();
 	}
 
 	@Override
 	public void yearOfPlenty(ResourceType resource1, ResourceType resource2) {
-		// TODO Auto-generated method stub
-		
+		YearOfPlentyCommand command = new YearOfPlentyCommand(playerIndex, resource1, resource2);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 
 	@Override
 	public void roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
-		// TODO Auto-generated method stub
-		
+		RoadBuildingCommand command = new RoadBuildingCommand(playerIndex, spot1, spot2);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 
 	@Override
 	public void robPlayer(int victimIndex, HexLocation location) {
-		// TODO Auto-generated method stub
-		
+		RobPlayerCommand command = new RobPlayerCommand(playerIndex, location, victimIndex);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		// TODO Auto-generated method stub
-		
+		AcceptTradeCommand command = new AcceptTradeCommand(playerIndex, willAccept);
+		 command.setGameCookie(gameId);
+		 command.execute();
 	}
 
 	@Override
 	public void maritimeTrade(int ratio, ResourceType input, ResourceType output) {
-		// TODO Auto-generated method stub
-		
+		MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, input, output);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
 	@Override
 	public void finishTurn(){
-		// TODO auto-generated method stub
+		FinishTurnCommand command = new FinishTurnCommand(playerIndex);
+		 command.setGameCookie(gameId);
+		 command.execute();
+		 
 	}
+	
 	@Override
-	public void finishTurn(int aiIndex, int gameID) {
-		FinishTurnCommand command = new FinishTurnCommand(aiIndex, gameID);
-		command.execute();
+	public int getGameId() {
+		return gameId; 
 	}
-
-
 }

@@ -52,6 +52,7 @@ public class DiscardCardsCommand extends MoveCommand {
 			ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			String status = turnTracker.getStatus();
+			/*
 			try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -62,6 +63,7 @@ public class DiscardCardsCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
 			
 			if(player.getNumOfCards()<7){
 				response.setSuccess(false);
@@ -84,6 +86,10 @@ public class DiscardCardsCommand extends MoveCommand {
 			player.discardCards(cards);
 			if(model.allPlayersDiscarded() == true){
 				turnTracker.setStatus("Robbing");
+				
+				//If it's the ai's turn and a human is done discarding
+				turnTracker.handleAITurn(gameIDCookie);
+				
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);

@@ -5122,6 +5122,9 @@ public class GameMap {
 					return false;
 				}
 			
+			
+			
+			//TODO: Look at this
 			Boolean hasOneRoad = this.oneRoadChecker(hexLoc, vertexDirection, owner);
 			if(hasOneRoad == true){
 				return true;

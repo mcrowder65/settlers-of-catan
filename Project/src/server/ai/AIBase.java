@@ -57,11 +57,12 @@ public abstract class AIBase extends ServerPlayer {
 			facade.soldier(victimIndex, loc);
 		else
 			facade.robPlayer(victimIndex, loc);
-		
+	
 	}
 	
 	
 	public void discard() {
+		Game.instance().getGameId(facade.getGameId()).getPlayers()[getPlayerIndex()].setDiscarded(true);
 		ResourceList resources = this.getResources();
 		HashSet<ResourceType> preferred = getPreferredResources();
 		ResourceList discarding = new ResourceList(0,0,0,0,0);
@@ -259,6 +260,7 @@ public abstract class AIBase extends ServerPlayer {
 			facade.buildSettlement(vertObj.getLocation(), free);
 			return true;
 		}
+		
 		return false;
 	}
 	private boolean placeCityAI() {

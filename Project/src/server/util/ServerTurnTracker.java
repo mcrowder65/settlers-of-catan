@@ -15,8 +15,7 @@ public class ServerTurnTracker extends TurnTracker{
 		super(i, string, j, k);
 	}
 
-	public void updateStatus(String status, int gameId) {
-	    this.status = status;
+	public void handleAITurn(int gameId) {
 	    
 	    ServerPlayer turnPlayer = Game.instance().getGameId(gameId).getServerPlayers()[this.currentTurn];
 	    
@@ -35,6 +34,8 @@ public class ServerTurnTracker extends TurnTracker{
 		    	return;
 		    ai = (AIBase)turnPlayer;
 	    	ai.roll();
+	    	if (status.equals("Playing"))
+	    		ai.play();
 	    	break;
 	    case "FirstRound":
 	    case "SecondRound":
@@ -60,6 +61,8 @@ public class ServerTurnTracker extends TurnTracker{
 		    
 	    	ai = (AIBase)turnPlayer;
 	    	ai.rob(false);
+	    	ai.play();
+	    	
 	    	break;
 	    case "Discarding":
 	    	for (ServerPlayer player : Game.instance().getGameId(gameId).getServerPlayers()) {

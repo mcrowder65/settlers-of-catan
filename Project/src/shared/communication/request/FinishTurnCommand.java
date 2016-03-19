@@ -51,6 +51,8 @@ public class FinishTurnCommand extends MoveCommand {
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();
 			
+			
+			
 			Game game = Game.instance();
 			ServerGameModel model = game.getGameId(gameIndex);
 			ServerTurnTracker turnTracker = model.getServerTurnTracker();
@@ -58,6 +60,14 @@ public class FinishTurnCommand extends MoveCommand {
 			String status = turnTracker.getStatus();
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			
+			if(!checkTurn(turnTracker, playerIndex)) {
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response;
+				
+			}
+			
+			/*
 			try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -68,51 +78,26 @@ public class FinishTurnCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
+			model.setVersion(model.getVersion() + 1);
+			turnTracker.advanceTurn();
 			
-			if(status.equals("FirstRound") && playerIndex ==3){
-				turnTracker.setStatus("SecondRound");
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
-				response.setSuccess(true);
-				return response;
-			}
-			if(status.equals("FirstRound")&& playerIndex != 3){
-				turnTracker.advanceTurn();
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
-				response.setSuccess(true);
-				return response;
-			}
-			if(status.equals("SecondRound") && playerIndex !=0){
-				turnTracker.decreaseTurn();
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
-				response.setSuccess(true);
-				return response;
-			}
-			if(status.equals("SecondRound") && playerIndex == 0){
+			if(status.equals("FirstRound")){
+				if (playerIndex == 3) 
+					turnTracker.setStatus("SecondRound");
+			} else if (status.equals("SecondRound")) {
+				if (playerIndex == 3)
+					turnTracker.setStatus("Rolling");
+			} else {
 				turnTracker.setStatus("Rolling");
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
-				response.setSuccess(true);
-				return response;
 			}
 			
-			//Check to see if it's the player's turn
-			if(checkTurn(turnTracker, playerIndex)) {
-				turnTracker.advanceTurn();
-				turnTracker.setStatus("Rolling");
-				player.updateOldDevCard();
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
-				response.setSuccess(true);
-				return response;
-			}
-			else {
-				response.setSuccess(false);
-				response.setErrorMessage("Wrong turn");
-				
-			}		
+			turnTracker.handleAITurn(gameIndex);
+			player.updateOldDevCard();
+			response.setJson(model.toString());
+			response.setSuccess(true);
+			
+			
 			return response;
 		}
 		

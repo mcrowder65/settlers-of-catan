@@ -23,8 +23,9 @@ public class AddAIRequest extends Request {
 		synchronized(Game.instance().lock){
 			Response response = new Response();
 			
-			IAIFacade facade = new ServerAIFacade();
 			int playerIndex = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
+			IAIFacade facade = new ServerAIFacade(playerIndex, gameIDCookie);
+			
 			String name = Game.instance().getUnusedAiName(gameIDCookie);
 			CatanColor color = Game.instance().getUnusedColor(gameIDCookie);
 			int playerId = (playerIndex + 1) * -1;

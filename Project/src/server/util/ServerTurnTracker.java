@@ -34,8 +34,7 @@ public class ServerTurnTracker extends TurnTracker{
 		    	return;
 		    ai = (AIBase)turnPlayer;
 	    	ai.roll();
-	    	if (status.equals("Playing"))
-	    		ai.play();
+	    	handleAITurn(gameId);
 	    	break;
 	    case "FirstRound":
 	    case "SecondRound":

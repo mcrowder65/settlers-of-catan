@@ -72,15 +72,15 @@ public class RollNumberCommand extends MoveCommand {
 	  			
 	  		//Need this for ais to discard
 		  		turnTracker.handleAITurn(gameIDCookie);
-		  		boolean doneDiscarding = false;
+		  		boolean doneDiscarding = true;
 		  		for (int n = 0; n < 4; n++) {
-		  			if (model.getServerPlayers()[n].getDiscarded())  {
-		  				doneDiscarding = true;
+		  			if (!model.getServerPlayers()[n].getDiscarded())  {
+		  				doneDiscarding = false;
 		  				break;
 		  			}
 		  		}
 		  		if (doneDiscarding) {
-		  			turnTracker.setStatus("Playing");
+		  			turnTracker.setStatus("Robbing");
 		  		}
 		  		
 		  		

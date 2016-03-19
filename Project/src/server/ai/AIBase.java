@@ -62,8 +62,13 @@ public abstract class AIBase extends ServerPlayer {
 	
 	
 	public void discard() {
-		Game.instance().getGameId(facade.getGameId()).getPlayers()[getPlayerIndex()].setDiscarded(true);
-		ResourceList resources = this.getResources();
+		ResourceList resources = new ResourceList(); 
+		resources.setBrick(getResources().getBrick());
+		resources.setOre(getResources().getOre());
+		resources.setSheep(getResources().getSheep());
+		resources.setWood(getResources().getWood());
+		resources.setWheat(getResources().getWheat());
+		
 		HashSet<ResourceType> preferred = getPreferredResources();
 		ResourceList discarding = new ResourceList(0,0,0,0,0);
 		int numToDiscard = resources.total() >= 7 ?  resources.total() / 2 : 0;

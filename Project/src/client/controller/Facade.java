@@ -188,9 +188,9 @@ public class Facade {
 	 */
 	public int rollNumber() throws IllegalArgumentException{
 		int result = roll() + roll();
-		while(result == 7){
-			result = roll() + roll();
-		}
+		//while(result == 7){
+		//	result = roll() + roll();
+		//}
 		GetModelResponse response = proxy.rollNumber(game.getModel().getLocalIndex(playerId),result);
 		return response.isSuccess() == true ? result : -1;
 	}

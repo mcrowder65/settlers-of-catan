@@ -54,15 +54,15 @@ public class RobPlayerCommand extends MoveCommand {
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			int victimIndex = this.getVictimIndex();
-			HexLocation locaiton = this.getLocation();
+			HexLocation location = this.getLocation();
 			Game game = Game.instance();		
 	 		ServerGameModel model = game.getGameId(gameIndex);		
 	 		ServerGameMap map = model.getServerMap();		
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
-	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
 	 		GetModelResponse response = new GetModelResponse();
 	 		String status = turnTracker.getStatus();
+	 		/*
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -73,24 +73,40 @@ public class RobPlayerCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			*/
 	 		
 	 		//making sure its the players turn		
 			if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
-				return response; //Need to throw some error here		
+				return response; 	
 			}	
 			
 			//check status
 			if(!status.equals("Robbing")){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
-				return response; //Need to throw some error here
+				return response; 
 			}
+			
+			turnTracker.setStatus("Playing");
+			//TODO: Game History - robbing
+			model.setVersion(model.getVersion() + 1);
+			
+			//not robbing anyone
+			if (victimIndex == -1) {
+				response.setSuccess(true);
+				response.setJson(model.toString());
+				return response;
+			}
+			
+			
+			ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		
 			
 			//victim has no resources
 			if(victim.getResources().isEmpty()){
-				model.setVersion(model.getVersion() + 1);
+				
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				return response; 

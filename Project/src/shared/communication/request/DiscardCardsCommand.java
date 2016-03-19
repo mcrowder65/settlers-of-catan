@@ -41,54 +41,55 @@ public class DiscardCardsCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();	
-		ResourceList cards = this.getDiscardedCards();	
-		Game game = Game.instance();	
-		GetModelResponse response = new GetModelResponse();
-		ServerGameModel model = game.getGameId(gameIndex);		
-		ServerGameMap map = model.getServerMap();		
-		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
-		ServerPlayer player = model.getServerPlayers()[playerIndex];
-		String status = turnTracker.getStatus();
-		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		if(player.getNumOfCards()<7){
-			response.setSuccess(false);
-			response.setErrorMessage("Not enough cards to discard");
+		synchronized(Game.instance().lock){
+			int gameIndex = this.gameIDCookie;
+			int playerIndex = this.getPlayerIndex();	
+			ResourceList cards = this.getDiscardedCards();	
+			Game game = Game.instance();	
+			GetModelResponse response = new GetModelResponse();
+			ServerGameModel model = game.getGameId(gameIndex);		
+			ServerGameMap map = model.getServerMap();		
+			ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+			ServerPlayer player = model.getServerPlayers()[playerIndex];
+			String status = turnTracker.getStatus();
+			try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
+			if(player.getNumOfCards()<7){
+				response.setSuccess(false);
+				response.setErrorMessage("Not enough cards to discard");
+				return response;
+			}
+			
+			if(!status.equals("Discarding")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+			}
+			
+			if(player.getDiscarded() == true){
+	 			response.setSuccess(false);
+	 			response.setErrorMessage("Already discarded");
+	 			return response;
+	 		}
+			
+			player.discardCards(cards);
+			if(model.allPlayersDiscarded() == true){
+				turnTracker.setStatus("Robbing");
+	 		}
+			model.setVersion(model.getVersion() + 1);
+			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response;
 		}
-		
-		if(!status.equals("Discarding")){
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong status");
-			return response;
-		}
-		
-		if(player.getDiscarded() == true){
- 			response.setSuccess(false);
- 			response.setErrorMessage("Already discarded");
- 			return response;
- 		}
-		
-		player.discardCards(cards);
-		if(model.allPlayersDiscarded() == true){
-			turnTracker.setStatus("Robbing");
- 		}
-		model.setVersion(model.getVersion() + 1);
-		response.setSuccess(true);
-		response.setJson(model.toString());
-		return response;
 	}
 
 	ResourceList discardedCards;

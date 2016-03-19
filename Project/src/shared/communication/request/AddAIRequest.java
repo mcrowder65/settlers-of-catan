@@ -20,34 +20,34 @@ public class AddAIRequest extends Request {
 	}
 	
 	public Response addAI() {
-		Response response = new Response();
-		
-		IAIFacade facade = new ServerAIFacade();
-		int playerIndex = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
-		String name = Game.instance().getUnusedAiName(gameIDCookie);
-		CatanColor color = Game.instance().getUnusedColor(gameIDCookie);
-		int playerId = (playerIndex + 1) * -1;
-		
-		AIBase ai;
-		
-		switch (AIType) {
-		case LARGEST_ARMY:
-			ai = new LargestArmyAI(name, color, playerId, playerIndex, facade);
-			break;
-		default:
-			response.setSuccess(false);
-			response.setErrorMessage("Server error: unhandled type");
+		synchronized(Game.instance().lock){
+			Response response = new Response();
+			
+			IAIFacade facade = new ServerAIFacade();
+			int playerIndex = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
+			String name = Game.instance().getUnusedAiName(gameIDCookie);
+			CatanColor color = Game.instance().getUnusedColor(gameIDCookie);
+			int playerId = (playerIndex + 1) * -1;
+			
+			AIBase ai;
+			
+			switch (AIType) {
+			case LARGEST_ARMY:
+				ai = new LargestArmyAI(name, color, playerId, playerIndex, facade);
+				break;
+			default:
+				response.setSuccess(false);
+				response.setErrorMessage("Server error: unhandled type");
+				return response;
+			}
+			try {
+				Game.instance().addPlayer(gameIDCookie, ai);
+			}catch (IllegalStateException ex) {
+				response.setSuccess(false);
+				response.setErrorMessage(ex.getMessage());
+			}
 			return response;
 		}
-		try {
-			Game.instance().addPlayer(gameIDCookie, ai);
-		}catch (IllegalStateException ex) {
-			response.setSuccess(false);
-			response.setErrorMessage(ex.getMessage());
-		}
-		//String name, CatanColor color, int playerID, int playerIndex
-		//Game.instance().getGameId(gameIDCookie).addPlayer(new ServerPlayer(name, color, playerId, playerIndex));
-		return response;
 	}
 	public AddAIRequest(HttpExchange exchange){
 		super(exchange);

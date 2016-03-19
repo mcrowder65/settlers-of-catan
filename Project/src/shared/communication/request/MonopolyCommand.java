@@ -24,7 +24,6 @@ import shared.locations.VertexObject;
 public class MonopolyCommand extends MoveCommand {
 
 	MirrorResourceType resource;
-	private Object monopolyLock = new Object();
 	public MonopolyCommand(int playerIndex, ResourceType resource) throws IllegalArgumentException {
 		super(playerIndex);
 
@@ -47,7 +46,7 @@ public class MonopolyCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(monopolyLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();		
 	 		Game game = Game.instance();	

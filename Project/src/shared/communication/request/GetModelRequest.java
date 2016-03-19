@@ -22,8 +22,10 @@ public class GetModelRequest extends Request {
 	}
 	
 	public GetModelResponse getModel() {
-		GetModelResponse response = new GetModelResponse(200, model);
-		return response;
+		synchronized(Game.instance().lock){
+			GetModelResponse response = new GetModelResponse(200, model);
+			return response;
+		}
 	}
 	public GetModelRequest(HttpExchange exchange){
 		super(exchange);

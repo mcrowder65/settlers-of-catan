@@ -43,47 +43,45 @@ public class CreateGameRequest extends Request {
 		this.randomPorts = randomPorts;
 	}
 	public CreateGameResponse createGame() {
-		GameInfo info = new GameInfo();
-		info.setTitle(name);
-		info.setId(Game.instance().getNumGames());
-		info.addPlayer(new PlayerInfo(playerIDCookie, userCookie, CatanColor.red));
-		CreateGameResponse response = new CreateGameResponse(info);
-		response.setErrorMessage("Success");
-		response.setSuccess(true);
+		synchronized(Game.instance().lock){
+			GameInfo info = new GameInfo();
+			info.setTitle(name);
+			info.setId(Game.instance().getNumGames());
+			info.addPlayer(new PlayerInfo(playerIDCookie, userCookie, CatanColor.red));
+			CreateGameResponse response = new CreateGameResponse(info);
+			response.setErrorMessage("Success");
+			response.setSuccess(true);
+			
+			
+			ServerGameModel sgm = new ServerGameModel();
+			gameIDCookie = Game.instance().getAddableGameCookie();
+			sgm.setGameId(gameIDCookie);
 		
-		
-		ServerGameModel sgm = new ServerGameModel();
-		gameIDCookie = Game.instance().getAddableGameCookie();
-		sgm.setGameId(gameIDCookie);
-		
-
-		//Hex[] hexes, Port[] ports, EdgeValue[] roads,
-		//VertexObject[] settlements, VertexObject[] cities, int radius,
-		//HexLocation robber
-		generatePorts();
-		generateHexes();
-		
-		sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
-		sgm.setServerPlayers(new ServerPlayer[4]);
-
-		//int brick, int ore, int sheep, int wheat, int wood
-		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));
-		sgm.setDeck(new DevCardList(2, 5, 2, 14, 2));
-		//int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
-		sgm.setChat(new MessageList());
-		sgm.setLog(new MessageList());
-		sgm.setLocalPlayer(Game.instance().getLocalPlayer(playerIDCookie));
-		sgm.initServerPlayers();
-		sgm.setServerTurnTracker(new ServerTurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
-		sgm.setVersion(0);
-		sgm.setWinner(-1);
-		sgm.initAINames();
-		sgm.initAIColors();
-		Game.instance().addGame(info, sgm);
-		response.setGameId(gameIDCookie);
-    	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
-
-		return response;
+			generatePorts();
+			generateHexes();
+			
+			sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
+			sgm.setServerPlayers(new ServerPlayer[4]);
+	
+			//int brick, int ore, int sheep, int wheat, int wood
+			sgm.setBank(new ResourceList(19, 19, 19, 19, 19));
+			sgm.setDeck(new DevCardList(2, 5, 2, 14, 2));
+			//int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
+			sgm.setChat(new MessageList());
+			sgm.setLog(new MessageList());
+			sgm.setLocalPlayer(Game.instance().getLocalPlayer(playerIDCookie));
+			sgm.initServerPlayers();
+			sgm.setServerTurnTracker(new ServerTurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
+			sgm.setVersion(0);
+			sgm.setWinner(-1);
+			sgm.initAINames();
+			sgm.initAIColors();
+			Game.instance().addGame(info, sgm);
+			response.setGameId(gameIDCookie);
+	    	response.setCookie("Set-cookie", "catan.game=" + gameIDCookie + ";");
+	
+			return response;
+		}
 	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);

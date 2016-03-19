@@ -20,7 +20,6 @@ import shared.definitions.TurnTracker;
  */
 
 public class FinishTurnCommand extends MoveCommand {
-	private Object finishTurnLock = new Object();
 	public FinishTurnCommand(int playerIndex)
 			throws IllegalArgumentException {
 		super(playerIndex);
@@ -47,7 +46,7 @@ public class FinishTurnCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		synchronized(finishTurnLock){
+		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();
 			

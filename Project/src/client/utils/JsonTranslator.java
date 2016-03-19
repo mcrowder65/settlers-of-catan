@@ -489,11 +489,13 @@ public class JsonTranslator {
 
 		for(int i = 0; i < array.length; i++) {
 			JsonObject jObject = new JsonObject();
+			if(array[i]!=null){
+				jObject.addProperty("owner", array[i].getOwner());
+				jObject.add("location", makeJsonVertexLocationObject(array[i].getLocation()));
+				jArray.add(jObject);
+			}
 
-			jObject.addProperty("owner", array[i].getOwner());
-			jObject.add("location", makeJsonVertexLocationObject(array[i].getLocation()));
-
-			jArray.add(jObject);
+			
 		}
 
 

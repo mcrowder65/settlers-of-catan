@@ -99,7 +99,8 @@ public class AcceptTradeCommand extends MoveCommand {
 			}
 			addGameLog(offer);
 			
-			model.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
+			//model.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
+			model.setTradeOffer(null);
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			return response;

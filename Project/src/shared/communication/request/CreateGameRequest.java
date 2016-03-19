@@ -73,7 +73,8 @@ public class CreateGameRequest extends Request {
 			sgm.initServerPlayers();
 			sgm.setServerTurnTracker(new ServerTurnTracker(0, "FirstRound", -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 			sgm.setVersion(0);
-			sgm.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
+			//sgm.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
+			sgm.setTradeOffer(null);
 			sgm.setWinner(-1);
 			sgm.initAINames();
 			sgm.initAIColors();

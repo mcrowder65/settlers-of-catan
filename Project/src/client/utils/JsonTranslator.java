@@ -365,7 +365,10 @@ public class JsonTranslator {
 		JsonObject innerChat = this.makeJsonMessageListObject(chat);
 		JsonObject innerBank = this.makeJsonResourceListObject(bank);
 		JsonObject innerTurnTracker = this.makeJsonTurnTrackerObject(turnTracker);
-		JsonObject innerTradeOffer = this.makeJsonTradeOfferObject(offer);
+		JsonObject innerTradeOffer = null;
+		if(offer!=null){
+			innerTradeOffer = this.makeJsonTradeOfferObject(offer);
+		}
 
 		//The inner objects are inserted in a "Shell" which is the structure
 		//that holds the entire model
@@ -379,7 +382,9 @@ public class JsonTranslator {
 		shell.add("turnTracker", innerTurnTracker);
 		shell.addProperty("winner", winner);
 		shell.addProperty("version", version);
-		shell.add("tradeOffer", innerTradeOffer);
+		if(offer!=null){
+			shell.add("tradeOffer", innerTradeOffer);
+		}
 
 		return shell.toString();
 	}

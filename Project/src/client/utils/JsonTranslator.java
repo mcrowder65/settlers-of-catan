@@ -351,6 +351,7 @@ public class JsonTranslator {
 		MessageList chat = model.getChat();
 		ResourceList bank = model.getBank();
 		ServerTurnTracker turnTracker = model.getServerTurnTracker();
+		TradeOffer offer = model.getTradeOffer();
 		int winner = model.getWinner();
 		int version = model.getVersion();
 
@@ -364,6 +365,7 @@ public class JsonTranslator {
 		JsonObject innerChat = this.makeJsonMessageListObject(chat);
 		JsonObject innerBank = this.makeJsonResourceListObject(bank);
 		JsonObject innerTurnTracker = this.makeJsonTurnTrackerObject(turnTracker);
+		JsonObject innerTradeOffer = this.makeJsonTradeOfferObject(offer);
 
 		//The inner objects are inserted in a "Shell" which is the structure
 		//that holds the entire model
@@ -377,6 +379,7 @@ public class JsonTranslator {
 		shell.add("turnTracker", innerTurnTracker);
 		shell.addProperty("winner", winner);
 		shell.addProperty("version", version);
+		shell.add("tradeOffer", innerTradeOffer);
 
 		return shell.toString();
 	}
@@ -589,6 +592,16 @@ public class JsonTranslator {
 		jList.addProperty("currentTurn", turn.getCurrentTurn());
 		jList.addProperty("longestRoad", turn.getLongestRoad());
 		jList.addProperty("largestArmy", turn.getlargestArmy());
+
+		return jList;
+	}
+	
+	private JsonObject makeJsonTradeOfferObject(TradeOffer offer) {
+		JsonObject jList = new JsonObject();
+
+		jList.addProperty("sender", offer.getSender());
+		jList.addProperty("receiver", offer.getReciever());
+		jList.add("offer", makeJsonResourceListObject(offer.getOffer()));
 
 		return jList;
 	}

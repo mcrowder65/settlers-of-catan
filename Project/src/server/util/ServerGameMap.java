@@ -101,6 +101,32 @@ public class ServerGameMap extends GameMap {
  		
  	}
 	
+	public List<VertexObject> getCityOnHex(HexLocation loc){
+ 		List<VertexObject>municipalities = new ArrayList<VertexObject>();
+ 		VertexObject[] cities = getCities();
+ 		for(int x=0; x<cities.length; x++){
+ 			VertexObject city = cities[x];
+ 			if(city.getLocation().getHexLoc().equals(loc) == true){
+ 				municipalities.add(city);
+ 			}
+ 		}
+ 		return municipalities;
+ 	}
+	
+	public List<VertexObject> getSettlementOnHex(HexLocation loc){
+ 		List<VertexObject>municipalities = new ArrayList<VertexObject>();
+ 		VertexObject[] settlements = getSettlements();
+ 		for(int i=0; i<settlements.length; i++){
+ 			VertexObject settlement = settlements[i];
+ 			if(settlement.getLocation().getHexLoc().equals(loc) == true){
+ 				municipalities.add(settlement);
+ 			}
+ 		}
+ 		
+ 		return municipalities;
+ 		
+ 	}
+	
 	/**
 	 * checks to see if the player can lay two roads using his roadBuilder
 	 * @param index

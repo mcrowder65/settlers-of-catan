@@ -81,17 +81,13 @@ public class RollNumberCommand extends MoveCommand {
 		  		}
 		  		if (doneDiscarding) {
 		  			turnTracker.setStatus("Robbing");
-		  		}
-		  		
-		  		
+		  		}	
 		  		
 	  		}
 	  		else{
 	  			turnTracker.setStatus("Playing");
 	  		}
-	  		
-	  		
-	  		
+
 	  		addGameLog(player,model,numRolled);
 	  		model.issueResourcesNormalPlay(numRolled);
 	  		model.setVersion(model.getVersion() + 1);

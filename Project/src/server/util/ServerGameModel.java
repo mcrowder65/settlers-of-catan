@@ -380,13 +380,20 @@ import shared.locations.VertexObject;
  			Hex loc = allHexes[i];
  			if(loc.getNumber() == numRolled){
  				if(!serverMap.getRobber().equals(loc.getLocation())){
- 					List<VertexObject> municipalities = serverMap.getMunicipalityOnHex(loc.getLocation());
- 					if(municipalities.size()>0){
- 						for(int x=0; x<municipalities.size(); x++){
-	 						int owner = municipalities.get(x).getOwner();
+ 					List<VertexObject> settlements = serverMap.getSettlementOnHex(loc.getLocation());
+ 					if(settlements.size()>0){
+ 						for(int x=0; x<settlements.size(); x++){
+	 						int owner = settlements.get(x).getOwner();
 	 						ResourceType resource = loc.getResource();
 	 						serverPlayers[owner].getResources().addResource(resource,1);
- 							
+ 						}
+ 					}
+ 					List<VertexObject> cities = serverMap.getCityOnHex(loc.getLocation());
+ 					if(cities.size()>0){
+ 						for(int x=0; x<cities.size(); x++){
+	 						int owner = cities.get(x).getOwner();
+	 						ResourceType resource = loc.getResource();
+	 						serverPlayers[owner].getResources().addResource(resource,2);
  						}
  					}
  				}

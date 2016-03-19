@@ -62,63 +62,65 @@ public class MaritimeTradeCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
-		int playerIndex=this.getPlayerIndex();			
- 		int index =this.gameIDCookie;		
- 		GetModelResponse response = new GetModelResponse();	
- 		Game game = Game.instance();		
- 		ServerGameModel model = game.getGameId(index);		
- 		ServerGameMap map = model.getServerMap();		
- 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
- 		ServerPlayer player = model.getServerPlayers()[playerIndex];		
- 		int ratio = this.ratio;		
- 		ResourceType input = this.getInput();
- 		ResourceType output = this.getOutput();
- 		
- 		try {
-			response.setCookie("Set-cookie", "catan.user=" +
-					URLEncoder.encode("{" +
-				       "\"authentication\":\"" + "1142128101" + "\"," +
-			           "\"name\":\"" + userCookie + "\"," +
-					   "\"password\":\"" + passCookie + "\"," + 
-			           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
- 		
-		//making sure its the players turn		
-		if(checkTurn(turnTracker,playerIndex) == false){
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong turn");
-			return response; //Need to throw some error here		
-		}
-		
-		String status = turnTracker.getStatus();		
-		//making sure its the right status		
-		if(!status.equals("Playing")){
-			response.setSuccess(false);
-			response.setErrorMessage("Wrong status");
-			return response; //Need to throw some error here		
-		}	
-		
-		if(player.getResources().hasResourceCertainNumber(input,ratio) == false){
-			response.setSuccess(false);
-			response.setErrorMessage("Doesnt have resource");
+		synchronized(Game.instance().lock){
+			int playerIndex=this.getPlayerIndex();			
+	 		int index =this.gameIDCookie;		
+	 		GetModelResponse response = new GetModelResponse();	
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(index);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];		
+	 		int ratio = this.ratio;		
+	 		ResourceType input = this.getInput();
+	 		ResourceType output = this.getOutput();
+	 		
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + userCookie + "\"," +
+						   "\"password\":\"" + passCookie + "\"," + 
+				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+			//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}
+			
+			String status = turnTracker.getStatus();		
+			//making sure its the right status		
+			if(!status.equals("Playing")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response; //Need to throw some error here		
+			}	
+			
+			if(player.getResources().hasResourceCertainNumber(input,ratio) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Doesnt have resource");
+				return response;
+			}
+			
+			if(model.getBank().hasResource(output) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Bank is all out of that resource");
+				return response;
+			}
+			
+			player.addResource(output);
+			player.getResources().removeResource(input, ratio);
+			model.getBank().removeResource(output,1);
+			model.setVersion(model.getVersion() + 1);
+			response.setSuccess(true);
+			response.setJson(model.toString());
 			return response;
 		}
-		
-		if(model.getBank().hasResource(output) == false){
-			response.setSuccess(false);
-			response.setErrorMessage("Bank is all out of that resource");
-			return response;
-		}
-		
-		player.addResource(output);
-		player.getResources().removeResource(input, ratio);
-		model.getBank().removeResource(output,1);
-		model.setVersion(model.getVersion() + 1);
-		response.setSuccess(true);
-		response.setJson(model.toString());
-		return response;
 	}
 
 

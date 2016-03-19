@@ -189,7 +189,7 @@ public abstract class AIBase extends ServerPlayer {
 		if (preferred.contains(AIActionPreference.CITIES)) {
 			if (this.canBuildCity()) {
 				while (this.canBuildCity()) {
-					if (placeCityAI())
+					if (!placeCityAI())
 						break;
 				}
 			}
@@ -229,7 +229,7 @@ public abstract class AIBase extends ServerPlayer {
 		
 		if (this.canBuildCity()) {
 			while (this.canBuildCity()) {
-				if (placeCityAI())
+				if (!placeCityAI())
 					break;
 			}
 		}

@@ -66,7 +66,7 @@ public class RollNumberCommand extends MoveCommand {
 	  			turnTracker.setStatus("Discarding");
 	  			for (int n = 0; n < 4; n++) {
 		  			model.getServerPlayers()[n].setDiscarded(
-		  		    model.getServerPlayers()[n].getNumOfCards() > 6 ? false : true
+		  		    model.getServerPlayers()[n].getNumOfCards() > 7 ? false : true
 		  					);
 		  		}
 	  			

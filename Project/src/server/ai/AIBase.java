@@ -257,8 +257,7 @@ public abstract class AIBase extends ServerPlayer {
 		return true;
 	}
 	private boolean placeSettlementAI(boolean free) {
-		ServerGameMap map = Game.instance().getGameId(0).getServerMap();
-		//TODO: fix this
+		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
 		
 		for (VertexObject vertObj : map.getAllPossibleSettlementLocations(getPlayerIndex(), free)) {
 			//This isn't very "Smart" but it is something
@@ -269,8 +268,7 @@ public abstract class AIBase extends ServerPlayer {
 		return false;
 	}
 	private boolean placeCityAI() {
-		ServerGameMap map = Game.instance().getGameId(0).getServerMap();
-		//TODO: fix this
+		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
 		
 		for (VertexObject settlement : map.getSettlements()) {
 			if (settlement.getOwner() == getPlayerIndex()) {
@@ -305,8 +303,7 @@ public abstract class AIBase extends ServerPlayer {
 	private HexLocation findBestRobbingLocation() {
 		HexLocation bestLocation = null;
 		int bestNum = -1;
-		ServerGameMap map = Game.instance().getGameId(0).getServerMap();
-		//TODO: fix this
+		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
 		for(Hex hex : map.getHexes()) {
 			if (map.canLayRobber(hex.getLocation())) {
 				RobPlayerInfo[] robbable = getRobbablePlayers(hex.getLocation());
@@ -327,18 +324,16 @@ public abstract class AIBase extends ServerPlayer {
 	private RobPlayerInfo[] getRobbablePlayers(HexLocation hexLoc) {
 		 boolean[] usedIndices = new boolean[4];
 		 List<RobPlayerInfo> info = new ArrayList<RobPlayerInfo>();
-		 //TODO: fix this
-		 List<VertexObject> municipalities = Game.instance().getGameId(0).getServerMap().getBorderingMunicipalities(hexLoc);
+		 List<VertexObject> municipalities = Game.instance().getGameId(facade.getGameId()).getServerMap().getBorderingMunicipalities(hexLoc);
 		 for (VertexObject obj : municipalities) {
-			 //TODO: fix this
-			 Player owner = Game.instance().getGameId(0).getServerPlayers()[obj.getOwner()];
+			 Player owner = Game.instance().getGameId(facade.getGameId()).getServerPlayers()[obj.getOwner()];
 			 if (obj.getOwner() != getPlayerIndex() && owner.getNumOfCards() > 0  && !usedIndices[obj.getOwner()]) {
 				 RobPlayerInfo robPlayer = new RobPlayerInfo( owner);
 				 info.add(robPlayer);
 				 usedIndices[obj.getOwner()] = true;
 			 }
 		 }
-		 ;
+		 
 		 RobPlayerInfo[] arrayInfo = new RobPlayerInfo[info.size()];
 		 for (int n = 0; n < arrayInfo.length; n++) {
 			 arrayInfo[n] = info.get(n);
@@ -348,8 +343,7 @@ public abstract class AIBase extends ServerPlayer {
 	}
 	
 	private EdgeValue findRoadToLayLocation(EdgeValue excluding, boolean free) {
-		ServerGameMap map = Game.instance().getGameId(0).getServerMap();
-		//TODO: fix this
+		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
 		for (EdgeValue road : map.getAllPossibleRoadLocations(getPlayerIndex(), free)) {
 			//This isn't very "Smart" but it is something
 			

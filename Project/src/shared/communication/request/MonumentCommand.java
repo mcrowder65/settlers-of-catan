@@ -86,7 +86,7 @@ public class MonumentCommand extends MoveCommand {
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
-		String message = player.getName() + "built a monument and gained a victory point";
+		String message = player.getName() + " built a monument and gained a victory point";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}

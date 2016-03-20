@@ -121,13 +121,13 @@ public class RoadBuildingCommand extends MoveCommand {
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
-		String message = player.getName() + "built 2 roads";
+		String message = player.getName() + " built 2 roads";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
-		String message2 = player.getName() + "built a road";
+		String message2 = player.getName() + " built a road";
 		MessageLine line2 = new MessageLine(message2,player.getName());
 		model.addGameLogMessage(line2);
-		String message3 = player.getName() + "built a road";
+		String message3 = player.getName() + " built a road";
 		MessageLine line3 = new MessageLine(message3,player.getName());
 		model.addGameLogMessage(line3);
 	}

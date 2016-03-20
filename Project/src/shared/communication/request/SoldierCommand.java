@@ -122,11 +122,11 @@ public class SoldierCommand extends MoveCommand {
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
-		String message = player.getName() + "used a soldier";
+		String message = player.getName() + " used a soldier";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 		
-		String message2 = player.getName() + "moved the robber and robbed "+player2.getName();
+		String message2 = player.getName() + " moved the robber and robbed "+player2.getName();
 		MessageLine line2 = new MessageLine(message2,player.getName());
 		model.addGameLogMessage(line2);
 	}

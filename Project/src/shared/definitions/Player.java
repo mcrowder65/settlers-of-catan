@@ -619,7 +619,6 @@ public class Player {
 	}
 	
 	public boolean canPlayMonumentCard() throws IllegalArgumentException{
-		//return !this.playedDevCard && (oldDevCards.getMonument() + newDevCards.getMonument() > 0);
 		return (oldDevCards.getMonument() + newDevCards.getMonument() + this.getVictoryPoints() >= 10);
 	}
 	
@@ -636,19 +635,23 @@ public class Player {
 	
 	public void playSoldierCard() throws IllegalArgumentException{
 		int soldierCard = oldDevCards.getSoldier();
-		oldDevCards.setSoldier(soldierCard-1);
+		soldierCard--;
+		oldDevCards.setSoldier(soldierCard);
 	}
 	public void playMonopolyCard(){
 		int monopolyCard = oldDevCards.getMonopoly();
-		oldDevCards.setMonopoly(monopolyCard-1);
+		monopolyCard--;
+		oldDevCards.setMonopoly(monopolyCard);
 	}
 	public void playYearOfPlentyCard(){
 		int yearOfPlentyCard = oldDevCards.getYearOfPlenty();
-		oldDevCards.setYearOfPlenty(yearOfPlentyCard-1);
+		yearOfPlentyCard--;
+		oldDevCards.setYearOfPlenty(yearOfPlentyCard);
 	}
 	public void playRoadBuilderCard(){
 		int roadBuilder = oldDevCards.getRoadBuilding();
-		oldDevCards.setRoadBuilding(roadBuilder--);
+		roadBuilder--;
+		oldDevCards.setRoadBuilding(roadBuilder);
 	}
 	
 	

@@ -32,6 +32,7 @@ public class RollNumberCommand extends MoveCommand {
 		RollNumberCommand tmp = (RollNumberCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.number = tmp.number;
 		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
 		
 	}
 	/**
@@ -72,6 +73,7 @@ public class RollNumberCommand extends MoveCommand {
 		  		    model.getServerPlayers()[n].getNumOfCards() > 7 ? false : true
 		  					);
 		  		}
+	  			
 	  			
 	  		//Need this for ais to discard
 		  		turnTracker.handleAITurn(gameIDCookie);

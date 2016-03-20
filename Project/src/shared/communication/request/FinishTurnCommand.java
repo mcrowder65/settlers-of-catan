@@ -80,6 +80,10 @@ public class FinishTurnCommand extends MoveCommand {
 				e.printStackTrace();
 			}
 			*/
+			
+			if(playerIndex == 0){
+				System.out.println("Here");
+			}
 			model.setVersion(model.getVersion() + 1);
 			//turnTracker.advanceTurn();
 			

@@ -65,7 +65,11 @@ public class DiscardCardsCommand extends MoveCommand {
 			}
 			*/
 			
-			if(player.getNumOfCards()<7){
+			if(playerIndex == 0){
+				System.out.println("Here");
+			}
+			
+			if(player.getNumOfCards()<8){
 				response.setSuccess(false);
 				response.setErrorMessage("Not enough cards to discard");
 				return response;
@@ -89,7 +93,6 @@ public class DiscardCardsCommand extends MoveCommand {
 				
 				//If it's the ai's turn and a human is done discarding
 				turnTracker.handleAITurn(gameIDCookie);
-				
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);

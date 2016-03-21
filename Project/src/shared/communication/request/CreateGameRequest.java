@@ -28,7 +28,7 @@ public class CreateGameRequest extends Request {
 	private transient VertexObject[] settlements = new VertexObject[0];
 	private transient VertexObject[] cities = new VertexObject[0];
 	private transient int radius = 2;
-	private transient HexLocation robber = new HexLocation(0, -2); //TODO configure random robber
+	private transient HexLocation robber = new HexLocation(0, -2);
 
 	
 	

@@ -24,7 +24,7 @@ public class SoldierCommand extends MoveCommand {
 	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
-			throw new IllegalArgumentException("victimIndex must be between -1 -3");
+			throw new IllegalArgumentException("victimIndex must be between -1 - 3");
 		if (location == null)
 			throw new IllegalArgumentException("location can't be null.");
 
@@ -57,7 +57,8 @@ public class SoldierCommand extends MoveCommand {
 	 		ServerGameMap map = model.getServerMap();		
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
-	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		
+	 		//ServerPlayer victim = model.getServerPlayers()[victimIndex];
 	 		String status = turnTracker.getStatus();
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
@@ -94,7 +95,20 @@ public class SoldierCommand extends MoveCommand {
 				return response;
 	 		}
 	 		Game.instance().getGameId(gameIDCookie).findLargestArmy();
+	 		
+	 		if(victimIndex == -1){
+	 			player.playSoldierCard();
+				map.setRobber(robberLoc);
+	 			model.setVersion(model.getVersion() + 1);
+	 			response.setSuccess(true);
+	 			addGameLog(player,model,null);
+	 			response.setJson(model.toString());
+				return response;
+	 		}
+	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
 	 		if(victim.getResources().isEmpty()){
+	 			player.playSoldierCard();
+				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
 	 			response.setSuccess(true);
 	 			addGameLog(player,model,victim);
@@ -112,10 +126,11 @@ public class SoldierCommand extends MoveCommand {
 			player.addResource(resource);
 			model.setVersion(model.getVersion() +1);
 			addGameLog(player,model,victim);
+			player.playSoldierCard();
+			map.setRobber(robberLoc);
 			response.setSuccess(true);
 			response.setJson(model.toString());
-			map.setRobber(robberLoc);
-			player.playSoldierCard();
+			
 			return response; 
 		}
 	
@@ -126,9 +141,16 @@ public class SoldierCommand extends MoveCommand {
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 		
-		String message2 = player.getName() + " moved the robber and robbed "+player2.getName();
-		MessageLine line2 = new MessageLine(message2,player.getName());
-		model.addGameLogMessage(line2);
+		if(player2 == null){
+			String message2 = player.getName() + " moved the robber but couldn't rob anyone!";
+			MessageLine line2 = new MessageLine(message2,player.getName());
+			model.addGameLogMessage(line2);
+		}
+		else{
+			String message2 = player.getName() + " moved the robber and robbed "+player2.getName();
+			MessageLine line2 = new MessageLine(message2,player.getName());
+			model.addGameLogMessage(line2);
+		}
 	}
 
 	public HexLocation getLocation() {

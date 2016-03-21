@@ -35,8 +35,9 @@ public abstract class Request {
 				return;
 			playerIDCookie = Translator.getPlayerId(headers.get("Cookie").toString());
 			userCookie = Translator.getPlayerName(headers.get("Cookie").toString());
-			passCookie = Translator.getPlayerPassword(headers.get("Cookie").toString());
+			
 			gameIDCookie = Translator.getGameId(headers.get("Cookie").toString());
+			passCookie = Translator.getPlayerPassword(headers.get("Cookie").toString());
 		}
 	}
 	protected static String convertStreamToString(java.io.InputStream is) {

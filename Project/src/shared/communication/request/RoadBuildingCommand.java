@@ -110,6 +110,7 @@ public class RoadBuildingCommand extends MoveCommand {
 				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
+				Game.instance().getGameId(gameIDCookie).findLongestRoad();
 				return response;
 			}		
 					
@@ -119,7 +120,8 @@ public class RoadBuildingCommand extends MoveCommand {
 			return response;
 		}
 	}
-	
+
+
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built 2 roads";
 		MessageLine line = new MessageLine(message,player.getName());

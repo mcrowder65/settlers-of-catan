@@ -48,6 +48,34 @@ import shared.locations.VertexObject;
  		serverPlayers = new ServerPlayer[4];
  		serverPlayers[0] = localPlayer;
  	}
+ 	public void setLongestRoad(int playerIndex, boolean firstTime){
+ 		if(!firstTime){
+	 		int oldLongestRoad = serverTurnTracker.getLongestRoad();
+	 		int oldVictoryPoints = serverPlayers[oldLongestRoad].getVictoryPoints();
+	 		serverPlayers[oldLongestRoad].setVictoryPoints(oldVictoryPoints - 2);
+ 		}
+ 		int newVictoryPoints = serverPlayers[playerIndex].getVictoryPoints();
+ 		serverPlayers[playerIndex].setVictoryPoints(newVictoryPoints + 2);
+ 		serverTurnTracker.setLongestRoad(playerIndex);
+ 	}
+ 	public void findLongestRoad(){
+ 		int currentLongestRoad = serverTurnTracker.getLongestRoad();
+
+		if(currentLongestRoad != -1){
+			for(int i = 0; i < serverPlayers.length; i++){//TODO configure victory points associated
+				if(serverPlayers[i].getRoads() < serverPlayers[currentLongestRoad].getRoads()
+						&& serverPlayers[i].getRoads() <= 10){ //amount remaining not total.
+					setLongestRoad(i, false);
+				}
+			}
+		}
+		else{
+			for(int i = 0; i < serverPlayers.length; i++){
+				if(serverPlayers[i].getRoads() <= 10)
+					setLongestRoad(i, true);
+			}
+		}
+ 	}
  	public ServerPlayer getLocalPlayer(int playerId) {
  		if(localPlayer != null)
  			return localPlayer;

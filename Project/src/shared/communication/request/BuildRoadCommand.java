@@ -98,6 +98,7 @@ public class BuildRoadCommand extends MoveCommand {
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
+				Game.instance().getGameId(gameIDCookie).findLongestRoad();
 				return response; 	
 			}		
 			if(status.equals("Playing")){		
@@ -117,15 +118,17 @@ public class BuildRoadCommand extends MoveCommand {
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
+	            Game.instance().getGameId(gameIDCookie).findLongestRoad();
 				return response; 	
 			}		
 					
 			response.setSuccess(false);
 			response.setErrorMessage("Should not reach this point in the code");
+
 			return response; 	
 		}
 	}
-	
+
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built a road";
 		MessageLine line = new MessageLine(message,player.getName());

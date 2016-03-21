@@ -116,7 +116,7 @@ public class TurnTracker {
 	 * @throws IllegalArgumentException
 	 * Throws if the largestArmy value is invalid
 	 */
-	public void setlargestArmy(int largestArmy) throws IllegalArgumentException  {
+	public void setLargestArmy(int largestArmy) throws IllegalArgumentException  {
 		this.largestArmy = largestArmy;
 	}
 	/**

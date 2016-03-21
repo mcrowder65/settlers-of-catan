@@ -44,6 +44,32 @@ import shared.locations.VertexObject;
  			return currentPlayer;
  		return null;
  	}
+ 	private void setLargestArmy(int newArmy, int oldArmy, boolean firstTime){
+ 		if(!firstTime){
+ 			int oldArmyVictoryPoints = serverPlayers[oldArmy].getVictoryPoints();
+ 			serverPlayers[oldArmy].setVictoryPoints(oldArmyVictoryPoints - 2);
+ 		}
+ 		int newArmyVictoryPoints = serverPlayers[newArmy].getVictoryPoints();
+ 		serverPlayers[newArmy].setVictoryPoints(newArmyVictoryPoints + 2);
+ 	}
+ 	public void findLargestArmy(){
+ 		if(serverTurnTracker.getlargestArmy() == -1){
+	 		for(int i = 0; i < serverPlayers.length; i++){
+	 			if(serverPlayers[i].getSoldiers() >= 3){
+	 				serverTurnTracker.setLargestArmy(i);
+	 				setLargestArmy(i, -1, true);
+	 			}
+	 		}
+ 		}
+ 		else{
+ 			int oldArmy = serverTurnTracker.getlargestArmy();
+ 			for(int i = 0; i < serverPlayers.length; i++){
+ 				if(i != oldArmy && serverPlayers[i].getSoldiers() > serverPlayers[oldArmy].getSoldiers()){
+ 					setLargestArmy(i, oldArmy, false);
+ 				}
+ 			}
+ 		}
+ 	}
  	public void initServerPlayers(){
  		serverPlayers = new ServerPlayer[4];
  		serverPlayers[0] = localPlayer;
@@ -57,6 +83,7 @@ import shared.locations.VertexObject;
  		int newVictoryPoints = serverPlayers[playerIndex].getVictoryPoints();
  		serverPlayers[playerIndex].setVictoryPoints(newVictoryPoints + 2);
  		serverTurnTracker.setLongestRoad(playerIndex);
+ 		
  	}
  	public void findLongestRoad(){
  		int currentLongestRoad = serverTurnTracker.getLongestRoad();

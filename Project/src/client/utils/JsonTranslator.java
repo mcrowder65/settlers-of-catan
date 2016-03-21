@@ -621,7 +621,7 @@ public class JsonTranslator {
 		turn.setStatus("Playing");
 		turn.setCurrentTurn(0);
 		turn.setLongestRoad(-1);
-		turn.setlargestArmy(-1);
+		turn.setLargestArmy(-1);
 
 
 		MessageLine[] lines = { new MessageLine("manuel built a road", "manuel"),

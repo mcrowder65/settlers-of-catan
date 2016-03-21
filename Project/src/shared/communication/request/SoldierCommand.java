@@ -93,7 +93,7 @@ public class SoldierCommand extends MoveCommand {
 				response.setErrorMessage("Invalid Hex Location");
 				return response;
 	 		}
-	 		
+	 		Game.instance().getGameId(gameIDCookie).findLargestArmy();
 	 		if(victim.getResources().isEmpty()){
 	 			model.setVersion(model.getVersion() + 1);
 	 			response.setSuccess(true);

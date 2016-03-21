@@ -120,7 +120,7 @@ public class Server {
 		httpServer.createContext("/moves/Monument", monumentHandler);
 		httpServer.createContext("/moves/Road_Building", roadBuildingHandler);
 		httpServer.createContext("/moves/robPlayer", robPlayerHandler);
-		httpServer.createContext("/moves/rollDice", rollDiceHandler);
+		httpServer.createContext("/moves/rollNumber", rollDiceHandler);
 		httpServer.createContext("/moves/sendChat", sendChatHandler);
 		httpServer.createContext("/moves/Soldier", soldierHandler);
 		httpServer.createContext("/moves/Year_Of_Plenty", yearOfPlentyHandler);

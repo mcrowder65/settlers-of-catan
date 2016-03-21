@@ -378,6 +378,7 @@ public class Player {
 	 */
 	public void setVictoryPoints(int victoryPoints) throws IllegalArgumentException  {
 		this.victoryPoints = victoryPoints;
+		
 	}
 	
 	public boolean canBuildRoad(){

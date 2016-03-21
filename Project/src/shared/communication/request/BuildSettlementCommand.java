@@ -110,6 +110,9 @@ public class BuildSettlementCommand extends MoveCommand {
 				
 				player.removeSettlement();
 				player.addVictoryPoints();
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
 				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
@@ -120,6 +123,9 @@ public class BuildSettlementCommand extends MoveCommand {
 				map.laySettlement(vertex,false);
 				player.removeSettlement();
 				player.addVictoryPoints();
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
 				
 				//need to return that it was successful 
 				addGameLog(player,model);
@@ -136,6 +142,9 @@ public class BuildSettlementCommand extends MoveCommand {
 				}
 				map.laySettlement(vertex,false);
 				player.laySettlement();
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
 				addGameLog(player,model);
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);

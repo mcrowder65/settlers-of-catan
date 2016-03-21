@@ -96,6 +96,10 @@ public class BuildCityCommand extends MoveCommand {
 				map.layCity(vertex);
 				player.layCity();
 				
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
+				
 				//return that there was a success
 				addGameLog(player,model);
 				model.setVersion(model.getVersion() + 1);

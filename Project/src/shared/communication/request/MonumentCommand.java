@@ -73,6 +73,9 @@ public class MonumentCommand extends MoveCommand {
 					return response;
 				}
 				player.playMonument();
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
 				model.setVersion(model.getVersion() + 1);
 				addGameLog(player,model);
 				response.setSuccess(true);

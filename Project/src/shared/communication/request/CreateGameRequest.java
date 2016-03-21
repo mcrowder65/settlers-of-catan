@@ -27,9 +27,9 @@ public class CreateGameRequest extends Request {
 	private transient EdgeValue[] roads = new EdgeValue[0];
 	private transient VertexObject[] settlements = new VertexObject[0];
 	private transient VertexObject[] cities = new VertexObject[0];
-	private transient int radius = 2; //TODO what is radius?
+	private transient int radius = 2;
 	private transient HexLocation robber = new HexLocation(0, -2); //TODO configure random robber
-	
+
 	
 	
 	public CreateGameRequest(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
@@ -85,6 +85,12 @@ public class CreateGameRequest extends Request {
 			return response;
 		}
 	}
+	public void setRobber(){
+		for(int i = 0; i < hexes.length; i++){
+			if(hexes[i].getResource() == ResourceType.NONE)
+				robber = new HexLocation(hexes[i].getLocation().getX(), hexes[i].getLocation().getY());
+		}
+	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);
 		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
@@ -125,35 +131,55 @@ public class CreateGameRequest extends Request {
 	private void generateHexes(){
 		ArrayList<Integer> nums = initNumbers();
 		ArrayList<ResourceType> resources = initResources();
-
+		ArrayList<HexLocation> locations = initHexLocs();
 		if(randomNumbers)
 			Collections.shuffle(nums);
 		if(randomTiles)
 			Collections.shuffle(resources);
-		setHexes(nums,resources);
+		if(randomTiles && randomNumbers)
+			Collections.shuffle(locations);
+
+		setHexes(nums,resources, locations);
+		setRobber();
 	}
-	private void setHexes(ArrayList<Integer> nums, ArrayList<ResourceType> resources){
-		Hex[] hexes = {
-				new Hex(new HexLocation(0,-2),  resources.get(0), nums.get(0)),
-				new Hex(new HexLocation(-1,-1),  resources.get(1), nums.get(1)),
-				new Hex(new HexLocation(1,-2),  resources.get(2), nums.get(2)),
-				new Hex(new HexLocation(-2,0),  resources.get(3), nums.get(3)),
-				new Hex(new HexLocation(0, -1),  resources.get(4), nums.get(4)),
-				new Hex(new HexLocation(2,-2),  resources.get(5), nums.get(5)),
-				new Hex(new HexLocation(-1,0),  resources.get(6), nums.get(6)),
-				new Hex(new HexLocation(1,-1),  resources.get(7), nums.get(7)),
-				new Hex(new HexLocation(-2,1),  resources.get(8), nums.get(8)),
-				new Hex(new HexLocation(0,0),  resources.get(9), nums.get(9)),
-				new Hex(new HexLocation(2,-1),  resources.get(10), nums.get(10)),
-				new Hex(new HexLocation(-1,1),  resources.get(11), nums.get(11)),
-				new Hex(new HexLocation(1,0),  resources.get(12), nums.get(12)),
-				new Hex(new HexLocation(-2,2), resources.get(13), nums.get(13)),
-				new Hex(new HexLocation(0,1),  resources.get(14), nums.get(14)),
-				new Hex(new HexLocation(2,0),  resources.get(15), nums.get(15)),
-				new Hex(new HexLocation(-1,2),  resources.get(16), nums.get(16)),
-				new Hex(new HexLocation(1,1),  resources.get(17), nums.get(17)),
-				new Hex(new HexLocation(0,2),  resources.get(18), nums.get(18))
-		};
+	private int getZero(ArrayList<Integer> nums){
+		for(int i = 0; i < nums.size(); i++){
+			if(nums.get(i) == 0)
+				return i;
+		}
+		return -1;
+	}
+	private int getDesert(ArrayList<ResourceType> resources){
+		for(int i = 0; i < resources.size(); i++){
+			if(resources.get(i) == ResourceType.NONE)
+				return i;
+		}
+		return -1;
+	}
+	/**
+	 * this function takes the arrayLists and adds the desert hex first, then adds all the others.
+	 * @param nums
+	 * @param resources
+	 * @param locations
+	 */
+	private void setHexes(ArrayList<Integer> nums, ArrayList<ResourceType> resources, ArrayList<HexLocation>locations){
+		
+		int desertHex = getDesert(resources);
+		int zero = getZero(nums);
+		hexes[0] = new Hex(locations.get(0), resources.get(desertHex), 0);
+		resources.remove(desertHex);
+		nums.remove(zero);
+		locations.remove(0);
+		int i = 1;
+		while(nums.size() != 0 && resources.size() != 0 && locations.size() != 0){
+			
+			hexes[i] = new Hex(locations.get(0), resources.get(0), nums.get(0));
+			nums.remove(0);
+			
+			locations.remove(0);
+			resources.remove(0);
+			i++;
+		}
 		this.hexes = hexes;
 	}
 	private ArrayList<Integer> initNumbers(){
@@ -178,6 +204,29 @@ public class CreateGameRequest extends Request {
 		nums.add(10);
 		nums.add(8);
 		return nums;
+	}
+	private ArrayList<HexLocation> initHexLocs(){
+		ArrayList<HexLocation> hexLocs = new ArrayList<HexLocation>();
+		hexLocs.add(new HexLocation(0,-2));
+		hexLocs.add(new HexLocation(-1,-1));
+		hexLocs.add(new HexLocation(1,-2));
+		hexLocs.add(new HexLocation(-2,0));
+		hexLocs.add(new HexLocation(0, -1));
+		hexLocs.add(new HexLocation(2,-2));
+		hexLocs.add(new HexLocation(-1,0));
+		hexLocs.add(new HexLocation(1,-1));
+		hexLocs.add(new HexLocation(-2,1));
+		hexLocs.add(new HexLocation(0,0));
+		hexLocs.add(new HexLocation(2,-1));
+		hexLocs.add(new HexLocation(-1,1));
+		hexLocs.add(new HexLocation(1,0));
+		hexLocs.add(new HexLocation(-2,2));
+		hexLocs.add(new HexLocation(0,1));
+		hexLocs.add(new HexLocation(2,0));
+		hexLocs.add(new HexLocation(-1,2));
+		hexLocs.add(new HexLocation(1,1));
+		hexLocs.add(new HexLocation(0,2));
+		return hexLocs;
 	}
 	private ArrayList<ResourceType> initResources(){
 		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();

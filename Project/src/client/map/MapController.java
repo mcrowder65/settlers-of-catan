@@ -24,7 +24,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private HexLocation movedRobberLocation;
 	private boolean isPlayingSoldier = false;
 	private int roadBuildingPassNum = -1;
-	private EdgeLocation roadBuildingFirstPassLocation = null;
+	public EdgeLocation roadBuildingFirstPassLocation = null;
 	private boolean disableUpdates = false;
 	private Facade facade;
 
@@ -183,8 +183,9 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().startDrop(pieceType, currState.getPlayerColor(), true);
 	}
 
-	public void cancelMove() {
+	public EdgeLocation cancelMove() {
 		currState.cancelMove();
+		return roadBuildingFirstPassLocation;
 	}
 
 	public void playSoldierCard() {	

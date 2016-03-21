@@ -358,6 +358,12 @@ public class MapComponent extends JComponent
 		this.repaint();
 	}
 	
+	public void removeRoad(EdgeLocation edgeLoc) {
+		roads.remove(edgeLoc);
+		
+		this.repaint();
+	}
+	
 	public void placeSettlement(VertexLocation vertLoc, CatanColor color)
 	{
 		

@@ -188,11 +188,11 @@ public class MapView extends PanelView implements IMapView
 		}
 		
 		@Override
-		public void cancelMove()
+		public EdgeLocation cancelMove()
 		{
 			
 			closeModal();
-			getController().cancelMove();
+			 return getController().cancelMove();
 		}
 		
 		@Override
@@ -308,7 +308,8 @@ public class MapView extends PanelView implements IMapView
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				getController().cancelMove();
+				EdgeLocation location = getController().cancelMove();
+				map.removeRoad(location);
 			}
 		};
 		

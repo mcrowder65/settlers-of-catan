@@ -112,8 +112,9 @@ public interface IMapController extends IController
 	/**
 	 * This method is called from the modal map overlay when the cancel button
 	 * is pressed.
+	 * @return 
 	 */
-	void cancelMove();
+	EdgeLocation cancelMove();
 	
 	/**
 	 * This method is called when the user plays a "soldier" development card.

@@ -2,6 +2,7 @@ package shared.communication.request;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -13,6 +14,7 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.communication.response.GetModelResponse;
 import shared.definitions.MirrorResourceType;
+import shared.definitions.Port;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 /**
@@ -111,6 +113,15 @@ public class MaritimeTradeCommand extends MoveCommand {
 				response.setSuccess(false);
 				response.setErrorMessage("Bank is all out of that resource");
 				return response;
+			}
+			
+			List<Port> ports = map.getPersonalPorts(playerIndex);
+			boolean correct = false;
+			for(int i=0; i<ports.size(); i++){
+				Port port = ports.get(i);
+				if(port.getRatio() == ratio){
+					
+				}
 			}
 			
 			player.addResource(output);

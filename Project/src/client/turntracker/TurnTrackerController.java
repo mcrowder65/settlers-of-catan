@@ -90,7 +90,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			else highlight = true;
 			
 			boolean largestArmy = false;
-			if(playerIndex == model.getTurnTracker().getlargestArmy()) largestArmy = true;
+			if(playerIndex == model.getTurnTracker().getLargestArmy()) largestArmy = true;
 			else largestArmy = false;
 			
 			boolean longestRoad = false;

@@ -53,7 +53,7 @@ import shared.locations.VertexObject;
  		serverPlayers[newArmy].setVictoryPoints(newArmyVictoryPoints + 2);
  	}
  	public void findLargestArmy(){
- 		if(serverTurnTracker.getlargestArmy() == -1){
+ 		if(serverTurnTracker.getLargestArmy() == -1){
 	 		for(int i = 0; i < serverPlayers.length; i++){
 	 			if(serverPlayers[i].getSoldiers() >= 3){
 	 				serverTurnTracker.setLargestArmy(i);
@@ -62,7 +62,7 @@ import shared.locations.VertexObject;
 	 		}
  		}
  		else{
- 			int oldArmy = serverTurnTracker.getlargestArmy();
+ 			int oldArmy = serverTurnTracker.getLargestArmy();
  			for(int i = 0; i < serverPlayers.length; i++){
  				if(i != oldArmy && serverPlayers[i].getSoldiers() > serverPlayers[oldArmy].getSoldiers()){
  					setLargestArmy(i, oldArmy, false);

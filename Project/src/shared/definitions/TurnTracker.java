@@ -76,7 +76,7 @@ public class TurnTracker {
 	 * retrieves who has the longest army
 	 * @return largestArmy
 	 */
-	public int getlargestArmy() {
+	public int getLargestArmy() {
 		return largestArmy;
 	}
 

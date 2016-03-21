@@ -596,7 +596,7 @@ public class JsonTranslator {
 		jList.addProperty("status", turn.getStatus());
 		jList.addProperty("currentTurn", turn.getCurrentTurn());
 		jList.addProperty("longestRoad", turn.getLongestRoad());
-		jList.addProperty("largestArmy", turn.getlargestArmy());
+		jList.addProperty("largestArmy", turn.getLargestArmy());
 
 		return jList;
 	}

@@ -168,31 +168,28 @@ public abstract class AIBase extends ServerPlayer {
 			
 		}
 		if (preferred.contains(AIActionPreference.ROADS)) {
-			if (this.canBuildRoad()) {
-				while (this.canBuildRoad()) {
+			while (this.canBuildRoad()) {
 					if (!placeRoadAI(false))
 						break;
 				}
-			}
+			
 		}
 		
 		if (preferred.contains(AIActionPreference.SETTLEMENTS))
 		{
-			if (this.canBuildSettlement()) {
-				while (this.canBuildSettlement()) {
+			while (this.canBuildSettlement()) {
 					if (!placeSettlementAI(false))
 						break;
 				}
-			}
+			
 		}
 		
 		if (preferred.contains(AIActionPreference.CITIES)) {
-			if (this.canBuildCity()) {
-				while (this.canBuildCity()) {
+			while (this.canBuildCity()) {
 					if (!placeCityAI())
 						break;
 				}
-			}
+			
 		}
 		
 		
@@ -213,26 +210,22 @@ public abstract class AIBase extends ServerPlayer {
 			facade.monument();
 		
 		
-		if (this.canBuildRoad()) {
-			while (this.canBuildRoad()) {
+		while (this.canBuildRoad()) {
 				if (!placeRoadAI(false))
 					break;
 			}
-		}
-		
-		if (this.canBuildSettlement()) {
-			while (this.canBuildSettlement()) {
+
+		while (this.canBuildSettlement()) {
 				if (!placeSettlementAI(false))
 					break;
-			}
 		}
 		
-		if (this.canBuildCity()) {
-			while (this.canBuildCity()) {
+		
+		while (this.canBuildCity()) {
 				if (!placeCityAI())
 					break;
 			}
-		}
+		
 		
 		
 		facade.finishTurn();
@@ -287,9 +280,7 @@ public abstract class AIBase extends ServerPlayer {
 	}
 	
 	private void considerMaritimeTrade() {
-		HashSet<ResourceType> preferred = getPreferredResources();
-		
-		
+	
 		//TODO: maritime
 	}
 	

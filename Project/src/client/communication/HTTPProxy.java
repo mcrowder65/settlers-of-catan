@@ -423,6 +423,8 @@ public class HTTPProxy implements IProxy{
 		switch(type){
 		case "LARGEST_ARMY":
 			return AIType.LARGEST_ARMY;
+		case "LONGEST_ROAD":
+			return AIType.LONGEST_ROAD;
 		default:
 			return null;
 		}

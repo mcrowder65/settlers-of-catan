@@ -118,7 +118,13 @@ public class ServerGameMap extends GameMap {
  		VertexObject[] settlements = getSettlements();
  		for(int i=0; i<settlements.length; i++){
  			VertexObject settlement = settlements[i];
- 			if(settlement.getLocation().getHexLoc().equals(loc) == true){
+ 			VertexLocation vLoc = settlement.getLocation();
+ 			if (vLoc == null)
+ 				System.out.println("bad bad bad");
+ 			HexLocation hLoc = vLoc.getHexLoc();
+ 			if (hLoc == null)
+ 				System.out.println("very very bad");
+ 			if(hLoc.equals(loc) == true){
  				municipalities.add(settlement);
  			}
  		}
@@ -226,7 +232,7 @@ public class ServerGameMap extends GameMap {
 		HashSet<VertexObject> locs = new HashSet<VertexObject>();
 		
 		for (Hex hex : hexes){
-			VertexLocation vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthWest).getNormalizedLocation();
+			VertexLocation vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthWest);
 			VertexObject newLoc = new VertexObject(playerIndex, vertLoc);
 			
 			
@@ -235,7 +241,39 @@ public class ServerGameMap extends GameMap {
 			else if (!free && this.canBuildSettlement(newLoc))
 				locs.add(newLoc);
 			
-			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthEast).getNormalizedLocation();
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.NorthEast);
+			 newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+			
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.SouthWest);
+			 newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+			
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.SouthEast);
+			 newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+			
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.East);
+			 newLoc = new VertexObject(playerIndex, vertLoc);
+			
+			if (free && this.canBuildSettlementFirstRound(newLoc))
+				locs.add(newLoc);
+			else if (!free && this.canBuildSettlement(newLoc))
+				locs.add(newLoc);
+			
+			 vertLoc = new VertexLocation(hex.getLocation(), VertexDirection.West);
 			 newLoc = new VertexObject(playerIndex, vertLoc);
 			
 			if (free && this.canBuildSettlementFirstRound(newLoc))

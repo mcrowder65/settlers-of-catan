@@ -44,8 +44,20 @@ public class AddAIRequest extends Request {
 				response.setErrorMessage("Server error: unhandled type");
 				return response;
 			}
+			
+			
+			
+			
 			try {
 				Game.instance().addPlayer(gameIDCookie, ai);
+				
+				//TODO: TEMP
+				int cnt = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
+				Game.instance().getGameId(gameIDCookie).getServerPlayers()[cnt - 1].addResource(ResourceType.ORE);
+				Game.instance().getGameId(gameIDCookie).getServerPlayers()[cnt - 1].addResource(ResourceType.ORE);
+				Game.instance().getGameId(gameIDCookie).getServerPlayers()[cnt - 1].addResource(ResourceType.ORE);
+				Game.instance().getGameId(gameIDCookie).getServerPlayers()[cnt - 1].addResource(ResourceType.WHEAT);
+				Game.instance().getGameId(gameIDCookie).getServerPlayers()[cnt - 1].addResource(ResourceType.WHEAT);
 			}catch (IllegalStateException ex) {
 				response.setSuccess(false);
 				response.setErrorMessage(ex.getMessage());

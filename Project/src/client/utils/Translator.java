@@ -208,13 +208,28 @@ public class Translator {
 	 * @return GameId
 	 */
 	public static int getGameId(String cookie) {
+		cookie = decodeCookie(cookie);
+		String chopped = cookie.substring(1, cookie.length() - 1);
+		String[] cookies = chopped.split(";");
+		for (int n = 0; n < cookies.length; n++) {
+			if (cookies[n].trim().substring(0, 10).equals("catan.game")) {
+				int index = cookies[n].lastIndexOf("=") + 1;
+				String temp = cookies[n].substring(index);
+				if (temp == null) return -1;
+				return Integer.parseInt(temp);
+			}
+		}
+		return -1;
+		
+		/*
 		int index = cookie.lastIndexOf(".game=");
-		int lastIndex = cookie.lastIndexOf("]");
+		int lastIndex = cookie.indexOf("]", index);
 		if(index + 5 < lastIndex)
 			lastIndex = cookie.indexOf(";");
 		String temp = index != -1  && lastIndex != -1 ? cookie.substring(index+6, lastIndex) : null;
 		if(temp == null) return -1;
 		return !temp.equals("null") ? Integer.parseInt(temp) : -1;
+		*/
 	}
 	
 	/**

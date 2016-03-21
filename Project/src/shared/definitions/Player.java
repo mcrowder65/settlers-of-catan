@@ -22,7 +22,7 @@ public class Player {
 	/**
 	 * Whether this player has discarded or not already this discard phase.,
 	 */
-	private Boolean discarded;
+	private boolean discarded;
 	/**
 	 * How many monuments this player has played
 	 */
@@ -817,7 +817,7 @@ public class Player {
 		int result = 1;
 		result = prime * result + cities;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + ((discarded == null) ? 0 : discarded.hashCode());
+		result = prime * result + ((discarded == false) ? 0 : 1);
 		result = prime * result + monuments;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((newDevCards == null) ? 0 : newDevCards.hashCode());
@@ -845,12 +845,9 @@ public class Player {
 			return false;
 		if (color != other.color)
 			return false;
-		if (discarded == null) {
-			if (other.discarded != null)
+		if (discarded != other.discarded) {
 				return false;
 		} 
-		else if (!discarded.equals(other.discarded))
-			return false;
 		if (monuments != other.monuments)
 			return false;
 		if (name == null) {

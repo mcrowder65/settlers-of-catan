@@ -41,6 +41,7 @@ public class DiscardCardsCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
+		try{
 		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
@@ -65,9 +66,6 @@ public class DiscardCardsCommand extends MoveCommand {
 			}
 			*/
 			
-			if(playerIndex == 0){
-				System.out.println("Here");
-			}
 			
 			if(player.getNumOfCards()<8){
 				response.setSuccess(false);
@@ -94,12 +92,18 @@ public class DiscardCardsCommand extends MoveCommand {
 				//If it's the ai's turn and a human is done discarding
 				turnTracker.handleAITurn(gameIDCookie);
 	 		} else {
-	 			System.out.println("there");
+	 			System.out.println("there");;
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);
+			
 			response.setJson(model.toString());
 			return response;
+		}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			
+			return null;
 		}
 	}
 

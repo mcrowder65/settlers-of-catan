@@ -71,7 +71,7 @@ public abstract class AIBase extends ServerPlayer {
 		
 		HashSet<ResourceType> preferred = getPreferredResources();
 		ResourceList discarding = new ResourceList(0,0,0,0,0);
-		int numToDiscard = resources.total() >= 7 ?  resources.total() / 2 : 0;
+		int numToDiscard = resources.total() > 7 ?  resources.total() / 2 : 0;
 		if (numToDiscard == 0) return;
 		
 		if (resources.getBrick() > 0 && !preferred.contains(ResourceType.BRICK)) {
@@ -138,7 +138,7 @@ public abstract class AIBase extends ServerPlayer {
 		
 		facade.discardCards(discarding);
 		
-		
+		;
 	}
 	
 	public void play() {

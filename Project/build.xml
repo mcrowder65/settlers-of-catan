@@ -64,7 +64,14 @@
 					</manifest>
 			        <zipgroupfileset dir="${lib}" includes="**/*.jar" />
 				</jar>
-
+		<jar jarfile="catan-server.jar" basedir="${build}">
+							<manifest>
+								<attribute name="Main-Class" value="server.Server"/>
+								<!--<attribute name="Class-Path" 
+									value="lib/gson-2.2.4.jar" />-->
+							</manifest>
+					        <zipgroupfileset dir="${lib}" includes="**/*.jar" />
+						</jar>
 	
 	</target>
 	
@@ -76,7 +83,15 @@
 			
 			
 		</target>
-
+	
+	
+	<target name="our-server" description="run server">
+			<java fork="yes" jar="catan-server.jar">
+				<arg value="${port}"/>
+			</java>
+			
+			
+		</target>
 
 	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
 		<zip destfile="tester.zip">
@@ -85,6 +100,7 @@
 		   <zipfileset dir="${images}" prefix="images"></zipfileset>
 		   <zipfileset dir="" includes="build.xml" ></zipfileset>
 		   <zipfileset dir="" includes="catan-client.jar" ></zipfileset>
+		   <zipfileset dir="" includes="catan-server.jar" ></zipfileset>
 		</zip>
 		
 	</target>

@@ -3529,11 +3529,12 @@ public class GameMap {
 	 * from the ArrayList AllSettlements (because a city was built instead)
 	 */
 	public void updateSettlementArray() throws IllegalArgumentException{
-		settlements = allSettlements.toArray(settlements);
+		
+		settlements = allSettlements.toArray(new VertexObject[allSettlements.size()]);
 	}
 	
 	public void updateRoadArray(){
-		roads = allRoads.toArray(roads);
+		roads = allRoads.toArray(new EdgeValue[allRoads.size()]);
 	}
 
 	/**

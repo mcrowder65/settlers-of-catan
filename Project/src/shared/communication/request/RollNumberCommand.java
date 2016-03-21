@@ -48,24 +48,11 @@ public class RollNumberCommand extends MoveCommand {
 	  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	  		GetModelResponse response = new GetModelResponse();
 	  		ServerPlayer player = model.getServerPlayers()[playerIndex];
-	  		/*
-	  		try {
-				response.setCookie("Set-cookie", "catan.user=" +
-						URLEncoder.encode("{" +
-					       "\"authentication\":\"" + "1142128101" + "\"," +
-				           "\"name\":\"" + userCookie + "\"," +
-						   "\"password\":\"" + passCookie + "\"," + 
-				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			*/
-	  		
-	  		
+	  
+	  		System.out.println("playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
 	  		
 	  		if(numRolled == 7){
-	  			if(player.getNumOfCards() == 7){
-	  			}
+	  			
 	  			turnTracker.setStatus("Discarding");
 	  			for (int n = 0; n < 4; n++) {
 		  			model.getServerPlayers()[n].setDiscarded(
@@ -85,7 +72,9 @@ public class RollNumberCommand extends MoveCommand {
 		  		}
 		  		if (doneDiscarding) {
 		  			turnTracker.setStatus("Robbing");
-		  		}	
+		  		}	else {
+		  			System.out.println("here again");;
+		  		}
 		  		
 	  		}
 	  		else{

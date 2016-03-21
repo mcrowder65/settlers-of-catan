@@ -98,7 +98,7 @@ public class Catan extends JFrame
 						facade);
 
 
-				final Catan catan = new Catan(joinController, facade);
+				Catan catan = new Catan(joinController, facade);
 
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(

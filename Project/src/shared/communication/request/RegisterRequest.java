@@ -16,7 +16,6 @@ import sun.misc.IOUtils;
  *
  */
 public class RegisterRequest extends Request {
-	private Object registerLock = new Object();
     private String username;
     private String password;
     /**

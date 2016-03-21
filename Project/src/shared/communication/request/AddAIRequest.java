@@ -36,6 +36,9 @@ public class AddAIRequest extends Request {
 			case LARGEST_ARMY:
 				ai = new LargestArmyAI(name, color, playerId, playerIndex, facade);
 				break;
+			case LONGEST_ROAD:
+				ai = new LongestRoadAI(name,color,playerId, playerIndex, facade);
+				break;
 			default:
 				response.setSuccess(false);
 				response.setErrorMessage("Server error: unhandled type");

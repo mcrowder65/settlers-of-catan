@@ -3,6 +3,8 @@ package shared.communication.response;
 import java.util.AbstractMap;
 import java.util.Map;
 
+import com.google.gson.JsonPrimitive;
+
 import client.utils.Translator;
 import sun.net.www.protocol.http.HttpURLConnection;
 
@@ -11,9 +13,9 @@ public class Response {
 	@Override
 	public String toString() {
 		if (success)
-			return "Success";
+			return new JsonPrimitive("Success").toString();
 		else
-			return errorMessage;
+			return new JsonPrimitive(errorMessage).toString();
 	}
 	
 	

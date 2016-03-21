@@ -47,6 +47,7 @@ public class Game {
 	static {
 		aiTypes = new ArrayList<AIType>();
 		aiTypes.add(AIType.LARGEST_ARMY);
+		aiTypes.add(AIType.LONGEST_ROAD);
 		
 		aiNames = new HashSet<String>();
 		aiNames.add("Steve");

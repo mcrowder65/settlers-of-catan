@@ -24,7 +24,7 @@ public class RollNumberCommand extends MoveCommand {
 		if (number < 2 || number > 12) 
 			throw new IllegalArgumentException("number must be between 2 - 12");
 		this.number = number;
-		type = "rollDice";
+		type = "rollNumber";
 	}
 	
 	public RollNumberCommand(HttpExchange exchange) {
@@ -65,7 +65,6 @@ public class RollNumberCommand extends MoveCommand {
 	  		
 	  		if(numRolled == 7){
 	  			if(player.getNumOfCards() == 7){
-	  				System.out.println("Here");
 	  			}
 	  			turnTracker.setStatus("Discarding");
 	  			for (int n = 0; n < 4; n++) {

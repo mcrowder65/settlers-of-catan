@@ -93,6 +93,8 @@ public class DiscardCardsCommand extends MoveCommand {
 				
 				//If it's the ai's turn and a human is done discarding
 				turnTracker.handleAITurn(gameIDCookie);
+	 		} else {
+	 			System.out.println("there");
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);

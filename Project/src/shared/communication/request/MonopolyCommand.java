@@ -106,7 +106,7 @@ public class MonopolyCommand extends MoveCommand {
 	}
 	
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
-		String message = player.getName() + "stole everyones sheep";
+		String message = player.getName() + " stole everyones " + resource.toString();
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}

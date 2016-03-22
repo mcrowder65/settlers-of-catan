@@ -95,6 +95,8 @@ public class MonopolyCommand extends MoveCommand {
 					}
 				}
 			}
+			player.playMonopolyCard();
+			player.setPlayedDevCard(true);
 			model.setVersion(model.getVersion()  + 1);
 			addGameLog(player,model);
 			response.setSuccess(true);

@@ -89,6 +89,7 @@ public class SoldierCommand extends MoveCommand {
 				return response;
 	 		}
 	 		
+	 		
 	 		if(map.isLand(robberLoc) == false){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Invalid Hex Location");
@@ -108,6 +109,7 @@ public class SoldierCommand extends MoveCommand {
 	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
 	 		if(victim.getResources().isEmpty()){
 	 			player.playSoldierCard();
+	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
 	 			response.setSuccess(true);
@@ -127,6 +129,7 @@ public class SoldierCommand extends MoveCommand {
 			model.setVersion(model.getVersion() +1);
 			addGameLog(player,model,victim);
 			player.playSoldierCard();
+			player.setPlayedDevCard(true);
 			map.setRobber(robberLoc);
 			response.setSuccess(true);
 			response.setJson(model.toString());

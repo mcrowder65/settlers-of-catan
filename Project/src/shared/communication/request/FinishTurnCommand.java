@@ -111,7 +111,7 @@ public class FinishTurnCommand extends MoveCommand {
 			addGameLog(player,model);
 			turnTracker.handleAITurn(gameIndex);
 			player.updateOldDevCard();
-			
+			player.setPlayedDevCard(false);
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			

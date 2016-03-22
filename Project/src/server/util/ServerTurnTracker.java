@@ -14,67 +14,74 @@ public class ServerTurnTracker extends TurnTracker{
 	public ServerTurnTracker(int i, String string, int j, int k) {
 		super(i, string, j, k);
 	}
+	
+	
 
-	public void handleAITurn(int gameId) {
-	    
-	    ServerPlayer turnPlayer = Game.instance().getGameId(gameId).getServerPlayers()[this.currentTurn];
+	public boolean handleAITurn(int gameId) {
+		return handleAITurn(gameId, -1);
+	}
+	public boolean handleAITurn(int gameId, int aiIndex) {
+	  	
+		
+	    ServerPlayer aiPlayer;
+	    if (aiIndex > -1) //Index was specified, get for that player
+	    	aiPlayer = Game.instance().getGameId(gameId).getServerPlayers()[aiIndex];
+	    else 
+	    	//Else get current turn player
+	    	aiPlayer = Game.instance().getGameId(gameId).getServerPlayers()[this.currentTurn];
+	  
 	    
 	    //Player is not an AI, ignore
-	    if (turnPlayer.getPlayerID() >= 0)
-	    	return;
+	    if (aiPlayer.getPlayerID() >= 0)
+	    	return false;
 	    
 	    AIBase ai;
-	    
+		if (this.currentTurn != aiIndex && !status.equals("Discarding")) {
+    		return false;
+    	}
 	    
 	    
 	    switch (status) {
 	    case "Rolling":
-	    	 //Player is not an AI, ignore
-		    if (turnPlayer.getPlayerID() >= 0)
-		    	return;
-		    ai = (AIBase)turnPlayer;
+	    	
+		    ai = (AIBase)aiPlayer;
 	    	ai.roll();
-	    	handleAITurn(gameId);
+	    	if (status.equals("Robbing")) {
+	    		ai.rob(false);
+	    		ai.play();
+	    	} else if (status.equals("Playing")) {
+	    		ai.play();
+	    	}
 	    	break;
 	    case "FirstRound":
 	    case "SecondRound":
-	    	 //Player is not an AI, ignore
-		    if (turnPlayer.getPlayerID() >= 0)
-		    	return;
-		    
-	    	ai = (AIBase)turnPlayer;
+	    
+	    	ai = (AIBase)aiPlayer;
 	    	ai.playSetup();
 	    	break;
 	    case "Playing":
-	    	 //Player is not an AI, ignore
-		    if (turnPlayer.getPlayerID() >= 0)
-		    	return;
-		    
-	    	ai = (AIBase)turnPlayer;
+	    
+	    	ai = (AIBase)aiPlayer;
 	    	ai.play();
 	    	break;
 	    case "Robbing":
-	    	 //Player is not an AI, ignore
-		    if (turnPlayer.getPlayerID() >= 0)
-		    	return;
-		    
-	    	ai = (AIBase)turnPlayer;
+	    	
+	    	ai = (AIBase)aiPlayer;
 	    	ai.rob(false);
 	    	ai.play();
 	    	
 	    	break;
 	    case "Discarding":
-	    	for (ServerPlayer player : Game.instance().getGameId(gameId).getServerPlayers()) {
-	    		 //Player is not an AI, ignore
-			    if (player.getPlayerID() >= 0)
-			    	continue;
-	    		
-			    ai = (AIBase)player;
-			    ai.discard();
-	    	}
+	    	
+			ai = (AIBase)aiPlayer;
+			ai.discard();
+	    	
 
 	    	break;
 	    
 	    }
+	    
+	    return true;
+	    
 	}
 }

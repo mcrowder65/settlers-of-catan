@@ -27,6 +27,7 @@ public class ServerAIFacade implements IAIFacade {
 	public void discardCards(ResourceList resources) {
 		DiscardCardsCommand command = new DiscardCardsCommand(playerIndex, resources);
 		command.setGameCookie(gameId);
+		command.doSuppressAIHandling();
 		command.execute();
 		
 	}

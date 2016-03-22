@@ -48,6 +48,7 @@ public class FinishTurnCommand extends MoveCommand {
 	 */
 	@Override
 	public GetModelResponse execute() {
+	
 		synchronized(Game.instance().lock){
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();
@@ -61,6 +62,7 @@ public class FinishTurnCommand extends MoveCommand {
 			String status = turnTracker.getStatus();
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			
+		
 			if(!checkTurn(turnTracker, playerIndex)) {
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
@@ -81,9 +83,6 @@ public class FinishTurnCommand extends MoveCommand {
 			}
 			*/
 			
-			if(playerIndex == 0){
-				System.out.println("Here");
-			}
 			model.setVersion(model.getVersion() + 1);
 			//turnTracker.advanceTurn();
 			
@@ -109,9 +108,9 @@ public class FinishTurnCommand extends MoveCommand {
 			}
 			
 			addGameLog(player,model);
-			turnTracker.handleAITurn(gameIndex);
+			turnTracker.handleAITurn(gameIndex, turnTracker.getCurrentTurn());
 			player.updateOldDevCard();
-			
+			player.setPlayedDevCard(false);
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			

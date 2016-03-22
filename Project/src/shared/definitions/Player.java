@@ -154,7 +154,7 @@ public class Player {
 	 * retrieves discarded player attribute
 	 * @return discarded
 	 */
-	public Boolean getDiscarded() throws IllegalArgumentException{
+	public boolean getDiscarded() throws IllegalArgumentException{
 		return discarded;
 	}
 

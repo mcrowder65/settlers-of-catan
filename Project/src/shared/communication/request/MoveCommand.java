@@ -41,6 +41,9 @@ public abstract class MoveCommand extends Request {
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
+	public int getGameCookie() {
+		return gameIDCookie;
+	}
 	/**
 	 * checks to see if its a players turn
 	 * @param turnTracker

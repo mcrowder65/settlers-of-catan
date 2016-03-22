@@ -138,7 +138,7 @@ public abstract class AIBase extends ServerPlayer {
 		
 		facade.discardCards(discarding);
 		
-		;
+		
 	}
 	
 	public void play() {

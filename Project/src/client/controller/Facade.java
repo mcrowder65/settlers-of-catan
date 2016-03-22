@@ -415,7 +415,11 @@ public class Facade {
 	public boolean canDiscardCards() throws IllegalArgumentException{
 		//checks to see if the numer of cards are greater than 7
 		boolean canDiscard = game.getModel().getLocalPlayer(playerId).getNumOfCards() > 7;
-		return canDiscard;
+		boolean canDiscard2 = game.getModel().getLocalPlayer(playerId).getDiscarded();
+		if(canDiscard == true && canDiscard2 == false){
+			return true;
+		}
+		return false;
 	}
 
 	/**

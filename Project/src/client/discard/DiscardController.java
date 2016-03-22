@@ -119,7 +119,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		GameModel model = (GameModel)arg;
 		currState = currState.identifyState(model.getTurnTracker());
 		IDiscardView view = getDiscardView();
-		if (currState instanceof DiscardingState && !view.isModalShowing() && !rollResultView.isModalShowing() && currState.getPlayerResources().total() > 7) {
+		if (currState instanceof DiscardingState && !view.isModalShowing() && !rollResultView.isModalShowing() && currState.getPlayerResources().total() > 7 && currState.canDiscardCards()==true) {
 			
 		    myResources = currState.getPlayerResources();
 			currentDiscarding = new ResourceList(0,0,0,0,0);

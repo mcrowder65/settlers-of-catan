@@ -48,4 +48,6 @@ public class DiscardingState extends GameState {
 	public boolean isGameStatePanelEnabled() {
 		return false;
 	}
+	
+	
 }

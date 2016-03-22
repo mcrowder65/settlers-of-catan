@@ -117,11 +117,26 @@ public class MaritimeTradeCommand extends MoveCommand {
 			
 			List<Port> ports = map.getPersonalPorts(playerIndex);
 			boolean correct = false;
-			for(int i=0; i<ports.size(); i++){
-				Port port = ports.get(i);
-				if(port.getRatio() == ratio){
-					
+			if(ratio == 3){
+				for(int i=0; i<ports.size(); i++){
+					Port port = ports.get(i);
+					if(port.getRatio() == ratio){
+						correct = true;
+					}
 				}
+			}
+			else if(ratio == 2){
+				for(int i=0; i<ports.size(); i++){
+					Port port = ports.get(i);
+					if(port.getRatio() == ratio && port.getResource().equals(output)){
+						correct = true;
+					}
+				}
+			}
+			if(!correct){
+				response.setSuccess(false);
+				response.setErrorMessage("Player does not have necessary port");
+				return response;
 			}
 			
 			player.addResource(output);

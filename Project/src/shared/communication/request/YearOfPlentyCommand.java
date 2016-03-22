@@ -104,6 +104,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 		}
 	 		
 	 		player.playYearOfPlentyCard();
+	 		player.setPlayedDevCard(true);
 	 		player.getResources().addResource(res1,1);
 	 		player.getResources().addResource(res2,1);
 	 		model.getBank().removeResource(res1,1);

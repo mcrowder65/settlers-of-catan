@@ -92,6 +92,13 @@
 			
 			
 		</target>
+	<target name="server" description="run server">
+			<java fork="yes" jar="catan-server.jar">
+				<arg value="${port}"/>
+			</java>
+			
+			
+		</target>
 
 	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
 		<zip destfile="tester.zip">

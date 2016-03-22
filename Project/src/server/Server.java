@@ -48,6 +48,8 @@ public class Server {
 		if (args.length > 0) {
 			port = Integer.parseInt(args[0]);
 		}
+		System.out.println("Port =" + port);
+		
 		
 		try {
 			httpServer = HttpServer.create(new InetSocketAddress(port), MAX_WAITING_CONNECTIONS);

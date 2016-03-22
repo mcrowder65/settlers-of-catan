@@ -63,6 +63,7 @@ public class BuildCityCommand extends MoveCommand {
 	 		String status = turnTracker.getStatus();
 	 		VertexObject vertex = new VertexObject(playerIndex,loc);
 	 		
+	 		//setting the cookie headers
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +

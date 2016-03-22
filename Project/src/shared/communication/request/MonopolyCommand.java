@@ -60,6 +60,7 @@ public class MonopolyCommand extends MoveCommand {
 	 		String status = turnTracker.getStatus();
 	 		ResourceType resource = getResource();
 	 		
+	 		//setting the headers
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -82,6 +83,13 @@ public class MonopolyCommand extends MoveCommand {
 			if(!status.equals("Playing")){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
+				return response;
+			}
+			
+			//checks to make sure the player has a monopoly card and hasnt already played a dev card
+			if(!player.canPlayMonopolyCard()){
+				response.setSuccess(false);
+				response.setErrorMessage("Player cannot play monopoly card");
 				return response;
 			}
 			

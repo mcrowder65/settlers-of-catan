@@ -115,25 +115,8 @@ public class MaritimeTradeCommand extends MoveCommand {
 				return response;
 			}
 			
-			List<Port> ports = map.getPersonalPorts(playerIndex);
-			boolean correct = false;
-			if(ratio == 3){
-				for(int i=0; i<ports.size(); i++){
-					Port port = ports.get(i);
-					if(port.getRatio() == ratio){
-						correct = true;
-					}
-				}
-			}
-			else if(ratio == 2){
-				for(int i=0; i<ports.size(); i++){
-					Port port = ports.get(i);
-					if(port.getRatio() == ratio && port.getResource().equals(output)){
-						correct = true;
-					}
-				}
-			}
-			if(!correct){
+			
+			if(!checkPorts(map,output)){
 				response.setSuccess(false);
 				response.setErrorMessage("Player does not have necessary port");
 				return response;
@@ -147,6 +130,29 @@ public class MaritimeTradeCommand extends MoveCommand {
 			response.setJson(model.toString());
 			return response;
 		}
+	}
+	
+	public boolean checkPorts(ServerGameMap map, ResourceType output){
+		List<Port> ports = map.getPersonalPorts(playerIndex);
+		boolean correct = false;
+		if(ratio == 3){
+			for(int i=0; i<ports.size(); i++){
+				Port port = ports.get(i);
+				if(port.getRatio() == ratio){
+					correct = true;
+				}
+			}
+		}
+		else if(ratio == 2){
+			for(int i=0; i<ports.size(); i++){
+				Port port = ports.get(i);
+				if(port.getRatio() == ratio && port.getResource().equals(output)){
+					correct = true;
+				}
+			}
+		}
+		
+		return correct;
 	}
 
 

@@ -62,9 +62,7 @@ public class FinishTurnCommand extends MoveCommand {
 			String status = turnTracker.getStatus();
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			
-			System.out.println("(FINISH) player index is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
-			
-			
+		
 			if(!checkTurn(turnTracker, playerIndex)) {
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");

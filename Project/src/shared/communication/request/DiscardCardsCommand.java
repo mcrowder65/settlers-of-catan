@@ -71,8 +71,6 @@ public class DiscardCardsCommand extends MoveCommand {
 				e.printStackTrace();
 			}
 			*/
-			System.out.println("(DISCARD) playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
-	  		
 			
 			if(player.getNumOfCards()<8){
 				response.setSuccess(false);
@@ -99,11 +97,8 @@ public class DiscardCardsCommand extends MoveCommand {
 				//If it's the ai's turn and a human is done discarding
 				if (!suppressAIHandling) //Don't want to fire this when the ai will handle it anyway
 					turnTracker.handleAITurn(gameIDCookie, turnTracker.getCurrentTurn());
-				else
-					System.out.println();
+			
 					
-	 		} else {
-	 			System.out.println("there");
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);

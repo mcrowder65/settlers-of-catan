@@ -54,7 +54,6 @@ public class RollNumberCommand extends MoveCommand {
 				return response;
 				
 			}
-	  		System.out.println("(ROLL) playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
 	  		
 	  		if(numRolled == 7){
 	  			

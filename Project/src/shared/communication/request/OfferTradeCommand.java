@@ -67,18 +67,6 @@ public class OfferTradeCommand extends MoveCommand {
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
-	 		/*
-	 		try {
-				response.setCookie("Set-cookie", "catan.user=" +
-						URLEncoder.encode("{" +
-					       "\"authentication\":\"" + "1142128101" + "\"," +
-				           "\"name\":\"" + userCookie + "\"," +
-						   "\"password\":\"" + passCookie + "\"," + 
-				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-	 		*/
 	 		
 	 		//if pos player is giving if neg player is recieving
 	 		ResourceList normalizedList = model.getRecievingResourceList(offer);
@@ -110,7 +98,6 @@ public class OfferTradeCommand extends MoveCommand {
 	 		} 
 	 		
 	 		model.setVersion(model.getVersion() + 1);
-	 		
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
 			return response; 

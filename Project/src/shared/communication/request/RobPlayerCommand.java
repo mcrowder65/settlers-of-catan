@@ -63,18 +63,6 @@ public class RobPlayerCommand extends MoveCommand {
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		GetModelResponse response = new GetModelResponse();
 	 		String status = turnTracker.getStatus();
-	 		/*
-	 		try {
-				response.setCookie("Set-cookie", "catan.user=" +
-						URLEncoder.encode("{" +
-					       "\"authentication\":\"" + "1142128101" + "\"," +
-				           "\"name\":\"" + userCookie + "\"," +
-						   "\"password\":\"" + passCookie + "\"," + 
-				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			*/
 	 		
 	 		//making sure its the players turn		
 			if(checkTurn(turnTracker,playerIndex) == false){		
@@ -102,11 +90,9 @@ public class RobPlayerCommand extends MoveCommand {
 				response.setJson(model.toString());
 				return response;
 			}
-			
-			
+
 			ServerPlayer victim = model.getServerPlayers()[victimIndex];
-	 		
-			
+
 			//victim has no resources
 			if(victim.getResources().isEmpty()){
 				addGameLog(player, model, null);

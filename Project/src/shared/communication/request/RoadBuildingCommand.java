@@ -72,6 +72,8 @@ public class RoadBuildingCommand extends MoveCommand {
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		GetModelResponse response = new GetModelResponse();
+	 		
+	 		//setting cookie headers
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -115,7 +117,7 @@ public class RoadBuildingCommand extends MoveCommand {
 				return response;
 			}		
 					
-			//need to return an error
+			//wrong status
 			response.setSuccess(false);
 			response.setErrorMessage("Wrong status");
 			return response;

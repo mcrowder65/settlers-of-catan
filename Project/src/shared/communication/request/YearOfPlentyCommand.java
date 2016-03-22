@@ -97,9 +97,17 @@ public class YearOfPlentyCommand extends MoveCommand {
 				return response;
 	 		}
 	 		
-	 		if(player.getOldDevCards().getYearOfPlenty() < 1){
+	 		if(res1 == res2){
+	 			if(model.getBank().getResource(res1) < 2){
+	 				response.setSuccess(false);
+					response.setErrorMessage("Bank doesn't have resources to fill order");
+					return response;
+	 			}
+	 		}
+	 		
+	 		if(!player.canPlayYearOfPlentyCard()){
 	 			response.setSuccess(false);
-				response.setErrorMessage("Player doesn't have YOP card");
+				response.setErrorMessage("Player cannot play YOP card");
 				return response;
 	 		}
 	 		

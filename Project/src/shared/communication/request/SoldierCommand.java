@@ -83,9 +83,10 @@ public class SoldierCommand extends MoveCommand {
 				return response;
 	 		}
 	 		
-	 		if(player.getOldDevCards().getSoldier() < 1){
+	 		
+	 		if(!player.canPlaySoldierCard()){
 	 			response.setSuccess(false);
-				response.setErrorMessage("No dev card to play");
+				response.setErrorMessage("Player cannot play dev card");
 				return response;
 	 		}
 	 		
@@ -95,10 +96,12 @@ public class SoldierCommand extends MoveCommand {
 				response.setErrorMessage("Invalid Hex Location");
 				return response;
 	 		}
+	 		
 	 		Game.instance().getGameId(gameIDCookie).findLargestArmy();
 	 		
 	 		if(victimIndex == -1){
 	 			player.playSoldierCard();
+	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
 	 			response.setSuccess(true);

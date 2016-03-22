@@ -48,12 +48,21 @@ public class RollNumberCommand extends MoveCommand {
 	  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	  		GetModelResponse response = new GetModelResponse();
 	  		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	  		
+	  		//checking to make sure its the player's turn
 	  		if(!checkTurn(turnTracker, playerIndex)) {
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
 				return response;
 				
 			}
+	  		
+	  		//checking the status
+	  		if(turnTracker.getStatus() != "Rolling"){
+	  			response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+	  		}
 	  		
 	  		if(numRolled == 7){
 	  			

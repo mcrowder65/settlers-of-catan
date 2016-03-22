@@ -46,6 +46,7 @@ public class MonumentCommand extends MoveCommand {
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		GetModelResponse response = new GetModelResponse();
+	 		//adds response headers
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -64,7 +65,14 @@ public class MonumentCommand extends MoveCommand {
 				return response; //Need to throw some error here		
 			}		
 					
-			String status = turnTracker.getStatus();		
+			String status = turnTracker.getStatus();
+			
+			if(!player.canPlayMonumentCard()){
+				response.setSuccess(false);
+				response.setErrorMessage("Player cannot play monument card");
+				return response; 
+			}
+			
 			//making sure its the right status		
 			if(status.equals("Playing")){
 				if(!player.canPlayMonumentCard()){

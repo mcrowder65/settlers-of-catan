@@ -21,6 +21,12 @@ import shared.definitions.ResourceList;
  */
 
 public class DiscardCardsCommand extends MoveCommand {
+	private transient boolean suppressAIHandling = false;
+	
+	public void doSuppressAIHandling() {
+		suppressAIHandling = true;
+	}
+	
 	public DiscardCardsCommand(int playerIndex, ResourceList discardedCards) throws IllegalArgumentException {
 		super(playerIndex);
 		if (discardedCards == null)
@@ -65,7 +71,8 @@ public class DiscardCardsCommand extends MoveCommand {
 				e.printStackTrace();
 			}
 			*/
-			
+			System.out.println("(DISCARD) playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
+	  		
 			
 			if(player.getNumOfCards()<8){
 				response.setSuccess(false);
@@ -90,9 +97,13 @@ public class DiscardCardsCommand extends MoveCommand {
 				turnTracker.setStatus("Robbing");
 				
 				//If it's the ai's turn and a human is done discarding
-				turnTracker.handleAITurn(gameIDCookie);
+				if (!suppressAIHandling) //Don't want to fire this when the ai will handle it anyway
+					turnTracker.handleAITurn(gameIDCookie, turnTracker.getCurrentTurn());
+				else
+					System.out.println();
+					
 	 		} else {
-	 			System.out.println("there");;
+	 			System.out.println("there");
 	 		}
 			model.setVersion(model.getVersion() + 1);
 			response.setSuccess(true);

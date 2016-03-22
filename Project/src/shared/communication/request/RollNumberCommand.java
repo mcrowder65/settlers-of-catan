@@ -48,8 +48,13 @@ public class RollNumberCommand extends MoveCommand {
 	  		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	  		GetModelResponse response = new GetModelResponse();
 	  		ServerPlayer player = model.getServerPlayers()[playerIndex];
-	  
-	  		System.out.println("playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
+	  		if(!checkTurn(turnTracker, playerIndex)) {
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response;
+				
+			}
+	  		System.out.println("(ROLL) playerIndex is " + playerIndex + ", turn is " + turnTracker.getCurrentTurn());
 	  		
 	  		if(numRolled == 7){
 	  			
@@ -58,11 +63,15 @@ public class RollNumberCommand extends MoveCommand {
 		  			model.getServerPlayers()[n].setDiscarded(
 		  		    model.getServerPlayers()[n].getNumOfCards() > 7 ? false : true
 		  					);
+		  			
+		  			//Discard for ai's
+		  			if (!model.getServerPlayers()[n].getDiscarded()) {
+		  				turnTracker.handleAITurn(gameIDCookie, n);
+		  				model.getServerPlayers()[n].setDiscarded(true);
+		  			}
 		  		}
 	  			
 	  			
-	  		//Need this for ais to discard
-		  		turnTracker.handleAITurn(gameIDCookie);
 		  		boolean doneDiscarding = true;
 		  		for (int n = 0; n < 4; n++) {
 		  			if (!model.getServerPlayers()[n].getDiscarded())  {
@@ -70,11 +79,10 @@ public class RollNumberCommand extends MoveCommand {
 		  				break;
 		  			}
 		  		}
+		  		
 		  		if (doneDiscarding) {
 		  			turnTracker.setStatus("Robbing");
-		  		}	else {
-		  			System.out.println("here again");;
-		  		}
+		  		}	
 		  		
 	  		}
 	  		else{

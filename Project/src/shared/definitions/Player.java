@@ -529,7 +529,9 @@ public class Player {
 		int wood = resources.getWood();
 		int sheep = resources.getSheep();
 		int grain = resources.getWheat();
-		
+		if(settlements <1){
+			return false;
+		}
 		if(brick>0 && wood>0 && sheep>0 && grain>0 && settlements>0){
 			return true;
 		}
@@ -539,7 +541,9 @@ public class Player {
 	public boolean canBuildCity() throws IllegalArgumentException{
 		int ore = resources.getOre();
 		int grain = resources.getWheat();
-		
+		if(cities <1){
+			return false;
+		}
 		if(ore>2 && grain>1 && cities>0){
 			return true;
 		}

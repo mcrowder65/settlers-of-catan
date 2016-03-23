@@ -39,6 +39,16 @@ public class AddAIRequest extends Request {
 			case LONGEST_ROAD:
 				ai = new LongestRoadAI(name,color,playerId, playerIndex, facade);
 				break;
+			case SETTLEMENT_BUILDER:
+				ai = new SettlementBuilderAI(name, color, playerId, playerIndex, facade);
+				break;
+			case CITY_BUILDER:
+				ai = new CityBuilderAI(name,color,playerId, playerIndex, facade);
+				break;
+			case NORMAL:
+				ai = new NormalAI(name, color, playerId, playerIndex, facade);
+				break;
+			
 			default:
 				response.setSuccess(false);
 				response.setErrorMessage("Server error: unhandled type");

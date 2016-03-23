@@ -425,6 +425,12 @@ public class HTTPProxy implements IProxy{
 			return AIType.LARGEST_ARMY;
 		case "LONGEST_ROAD":
 			return AIType.LONGEST_ROAD;
+		case "SETTLEMENT_BUILDER":
+			return AIType.SETTLEMENT_BUILDER;
+		case "CITY_BUILDER":
+			return AIType.CITY_BUILDER;
+		case "NORMAL":
+			return AIType.NORMAL;
 		default:
 			return null;
 		}

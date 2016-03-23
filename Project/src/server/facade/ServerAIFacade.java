@@ -1,6 +1,7 @@
 package server.facade;
 
 import shared.communication.request.*;
+import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -40,11 +41,11 @@ public class ServerAIFacade implements IAIFacade {
 	}
 
 	@Override
-	public void buildSettlement(VertexLocation location, boolean free) {
+	public boolean buildSettlement(VertexLocation location, boolean free) {
 		BuildSettlementCommand command = new BuildSettlementCommand(playerIndex, free, location);
 		 command.setGameCookie(gameId);
-		 command.execute();
-		 
+		GetModelResponse response = command.execute();
+		 return response.isSuccess();
 	}
 
 	@Override
@@ -119,7 +120,7 @@ public class ServerAIFacade implements IAIFacade {
 
 	@Override
 	public void maritimeTrade(int ratio, ResourceType input, ResourceType output) {
-		MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, input, output);
+		 MaritimeTradeCommand command = new MaritimeTradeCommand(playerIndex, ratio, input, output);
 		 command.setGameCookie(gameId);
 		 command.execute();
 		 

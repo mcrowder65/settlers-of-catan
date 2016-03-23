@@ -48,6 +48,9 @@ public class Game {
 		aiTypes = new ArrayList<AIType>();
 		aiTypes.add(AIType.LARGEST_ARMY);
 		aiTypes.add(AIType.LONGEST_ROAD);
+		aiTypes.add(AIType.SETTLEMENT_BUILDER);
+		aiTypes.add(AIType.CITY_BUILDER);
+		aiTypes.add(AIType.NORMAL);
 		
 		aiNames = new HashSet<String>();
 		aiNames.add("Steve");

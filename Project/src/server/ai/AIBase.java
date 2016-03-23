@@ -14,6 +14,7 @@ import shared.communication.response.GetModelResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.Hex;
 import shared.definitions.Player;
+import shared.definitions.Port;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -149,6 +150,44 @@ public abstract class AIBase extends ServerPlayer {
 		
 		considerMaritimeTrade();
 		
+	int roadLimit = 0;
+		
+
+		if (preferred.contains(AIActionPreference.SETTLEMENTS))
+		{
+			while (this.canBuildSettlement()) {
+					if (!placeSettlementAI(false))
+						break;
+					
+				
+				}
+			
+		}
+		
+		roadLimit = 0;
+		if (preferred.contains(AIActionPreference.ROADS)) {
+			while (this.canBuildRoad()) {
+					if (!placeRoadAI(false))
+						break;
+					roadLimit++;
+					if (roadLimit == 1 && this.canBuildSettlement())
+						break;
+					if (roadLimit == 2)
+						break;
+				}
+			
+		}
+		
+		
+		
+		if (preferred.contains(AIActionPreference.CITIES)) {
+			while (this.canBuildCity()) {
+					if (!placeCityAI())
+						break;
+				}
+			
+		}
+		
 		if (preferred.contains(AIActionPreference.DEVCARDS)) {
 			if (this.canBuyDevCard()) {
 				facade.buyDevCard();
@@ -167,30 +206,32 @@ public abstract class AIBase extends ServerPlayer {
 				facade.monument();
 			
 		}
-		if (preferred.contains(AIActionPreference.ROADS)) {
-			while (this.canBuildRoad()) {
-					if (!placeRoadAI(false))
-						break;
-				}
-			
-		}
 		
-		if (preferred.contains(AIActionPreference.SETTLEMENTS))
-		{
-			while (this.canBuildSettlement()) {
-					if (!placeSettlementAI(false))
-						break;
-				}
-			
-		}
 		
-		if (preferred.contains(AIActionPreference.CITIES)) {
-			while (this.canBuildCity()) {
-					if (!placeCityAI())
-						break;
-				}
-			
-		}
+		while (this.canBuildSettlement()) {
+			if (!placeSettlementAI(false))
+				break;
+	    }
+		
+
+		roadLimit = 0;
+		while (this.canBuildRoad()) {
+				if (!placeRoadAI(false))
+					break;
+				roadLimit++;
+				if (roadLimit == 1 && this.canBuildSettlement())
+					break;
+				if (roadLimit == 2)
+					break;
+			}
+
+	
+	
+		
+		while (this.canBuildCity()) {
+				if (!placeCityAI())
+					break;
+			}
 		
 		
 		if (this.canBuyDevCard()) {
@@ -209,22 +250,6 @@ public abstract class AIBase extends ServerPlayer {
 		while (this.canPlayMonumentCard())
 			facade.monument();
 		
-		
-		while (this.canBuildRoad()) {
-				if (!placeRoadAI(false))
-					break;
-			}
-
-		while (this.canBuildSettlement()) {
-				if (!placeSettlementAI(false))
-					break;
-		}
-		
-		
-		while (this.canBuildCity()) {
-				if (!placeCityAI())
-					break;
-			}
 		
 		
 		
@@ -252,13 +277,38 @@ public abstract class AIBase extends ServerPlayer {
 	private boolean placeSettlementAI(boolean free) {
 		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
 		
+	    VertexObject bestLocation = null;
+	    int bestVal = -1;
+		
 		for (VertexObject vertObj : map.getAllPossibleSettlementLocations(getPlayerIndex(), free)) {
-			//This isn't very "Smart" but it is something
-			facade.buildSettlement(vertObj.getLocation(), free);
-			return true;
+			
+			int heuristic = getHeuristicVal(vertObj, map);
+			if (heuristic > bestVal) {
+				bestVal = heuristic;
+				bestLocation = vertObj;
+			}
+			
+		}
+		if (bestLocation == null)
+			return false;
+		
+		return facade.buildSettlement(bestLocation.getLocation(), free);
+	}
+	
+	private int getHeuristicVal(VertexObject obj, ServerGameMap map) {
+		List<Hex> surrounding = map.getSurroundingHexes(obj.getLocation());
+		HashSet<ResourceType> preferredResources =  getPreferredResources();
+		int total = 0;
+		for (Hex hex : surrounding) {
+			if (hex.getResource() == null) continue;
+			
+			if (preferredResources.contains(hex.getResource())) {
+			     total += 2;
+			}
+			total += 6 - Math.abs( 7 - hex.getNumber());
 		}
 		
-		return false;
+		return total;
 	}
 	private boolean placeCityAI() {
 		ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
@@ -280,8 +330,34 @@ public abstract class AIBase extends ServerPlayer {
 	}
 	
 	private void considerMaritimeTrade() {
+		HashSet<ResourceType> preferredResources =  getPreferredResources();
+		ResourceType lowestPreferred = null;
+		int low = 9999;
+		for (ResourceType pref : preferredResources) {
+			if (this.getResources().getResource(pref) < low) {
+				low = this.getResources().getResource(pref);
+				lowestPreferred = pref;
+			}
+		}
+		HashSet<ResourceType> lowPriorityResources = new HashSet<ResourceType>();
+		if (!preferredResources.contains(ResourceType.BRICK)) lowPriorityResources.add(ResourceType.BRICK);
+		if (!preferredResources.contains(ResourceType.ORE)) lowPriorityResources.add(ResourceType.ORE);
+		if (!preferredResources.contains(ResourceType.WHEAT)) lowPriorityResources.add(ResourceType.WHEAT);
+		if (!preferredResources.contains(ResourceType.SHEEP)) lowPriorityResources.add(ResourceType.SHEEP);
+		if (!preferredResources.contains(ResourceType.WOOD)) lowPriorityResources.add(ResourceType.WOOD);
+		
+	ServerGameMap map = Game.instance().getGameId(facade.getGameId()).getServerMap();
+		for (ResourceType lowPrio : lowPriorityResources) {
+			if (this.getResources().getResource(lowPrio) >= 2 && checkPorts(map, lowPrio, 2)) {
+				facade.maritimeTrade(2, lowPrio, lowestPreferred); 
+			} else if (this.getResources().getResource(lowPrio) >= 3 && checkPorts(map, lowPrio, 3)) {
+				facade.maritimeTrade(3, lowPrio, lowestPreferred); 
+			} else if (this.getResources().getResource(lowPrio) >= 4) {
+				facade.maritimeTrade(4, lowPrio, lowestPreferred); 
+			}
+		}
 	
-		//TODO: maritime
+		
 	}
 	
 	private void playRoadBuilding() {
@@ -353,4 +429,29 @@ public abstract class AIBase extends ServerPlayer {
 		}
 		return resources;
 	}
+	
+	public boolean checkPorts(ServerGameMap map, ResourceType input, int ratio){
+		List<Port> ports = map.getPersonalPorts(this.getPlayerIndex());
+		boolean correct = false;
+		if(ratio == 3){
+			for(int i=0; i<ports.size(); i++){
+				Port port = ports.get(i);
+				if(port.getRatio() == ratio){
+					correct = true;
+				}
+			}
+		}
+		else if(ratio == 2){
+			for(int i=0; i<ports.size(); i++){
+				Port port = ports.get(i);
+				if(port.getRatio() == ratio && port.getResource() == input){
+					correct = true;
+				}
+			}
+		}
+		
+		return correct;
+	}
+	
+	
 }

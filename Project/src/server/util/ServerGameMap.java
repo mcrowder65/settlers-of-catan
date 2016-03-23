@@ -133,6 +133,28 @@ public class ServerGameMap extends GameMap {
  		
  	}
 	
+	public List<Hex> getSurroundingHexes(VertexLocation loc) {
+		List<Hex> surrounding = new ArrayList<Hex>();
+	
+		for (Hex hex : this.getHexes()) {
+			if (hex.getLocation().getBorderingVertex(VertexDirection.West).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+			else if (hex.getLocation().getBorderingVertex(VertexDirection.NorthWest).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+			else if (hex.getLocation().getBorderingVertex(VertexDirection.NorthEast).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+			else if (hex.getLocation().getBorderingVertex(VertexDirection.SouthWest).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+			else if (hex.getLocation().getBorderingVertex(VertexDirection.SouthEast).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+			else if (hex.getLocation().getBorderingVertex(VertexDirection.East).getNormalizedLocation().equals(loc.getNormalizedLocation()))
+				surrounding.add(hex);
+		}
+		
+		
+		return surrounding;
+	}
+	
 	/**
 	 * checks to see if the player can lay two roads using his roadBuilder
 	 * @param index

@@ -67,6 +67,8 @@ public class AddAIRequest extends Request {
 				response.setSuccess(false);
 				response.setErrorMessage(ex.getMessage());
 			}
+			response.setSuccess(true);
+			response.setErrorMessage(Game.instance().getGameId(gameIDCookie).toString());
 			return response;
 		}
 	}

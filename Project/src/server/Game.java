@@ -99,9 +99,10 @@ public class Game {
 	}
 	public void addPlayer(int gameId, ServerPlayer player){
 		arrayGames.get(gameId).model.addPlayer(player);
-		PlayerInfo p = new PlayerInfo(player.getPlayerID(), player.getName(), player.getColor());
-		if(!arrayGames.get(gameId).info.hasPlayer(p.getName()))
+		PlayerInfo p = new PlayerInfo(player);
+		if(!arrayGames.get(gameId).info.hasPlayer(p.getName())){
 			arrayGames.get(gameId).info.addPlayer(p);
+		}
 	}
 	public void setPlayer(int gameId, ServerPlayer player){
 		arrayGames.get(gameId).model.setPlayer(player);

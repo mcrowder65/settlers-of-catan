@@ -28,7 +28,11 @@ public class GameInfo
 		setTitle("");
 		players = new ArrayList<PlayerInfo>();
 	}
-	
+	public void setPlayerIndex(int index){
+		PlayerInfo player = players.get(index);
+		player.setPlayerIndex(index);
+		players.set(index, player);
+	}
 	public int getId()
 	{
 		return id;

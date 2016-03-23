@@ -242,6 +242,7 @@ import shared.locations.VertexObject;
  		player.setVictoryPoints(0);
  		player.setPlayedDevCard(false);
  		unusedAIColors.remove(player.getColor());
+ 		
  		serverPlayers[amt] = player;
  	}
  	

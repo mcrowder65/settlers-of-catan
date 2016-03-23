@@ -75,11 +75,6 @@ public class MonumentCommand extends MoveCommand {
 			
 			//making sure its the right status		
 			if(status.equals("Playing")){
-				if(!player.canPlayMonumentCard()){
-					response.setSuccess(false);
-					response.setErrorMessage("Player cannot play monument");
-					return response;
-				}
 				player.playMonument();
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);

@@ -57,10 +57,10 @@ public class PointsController extends Controller implements IPointsController, O
 	 */
 	private void finishGame(GameModel model) {
 		int winner = model.getWinner();
-		String name = model.getPlayers()[model.getLocalIndex(winner)].getName();
+		String name = model.getPlayers()[winner].getName();
 
 		boolean isLocalPlayer = false;
-		if(winner == facade.getPlayerId()) isLocalPlayer = true;
+		if(model.getPlayers()[winner].getPlayerID() == facade.getPlayerId()) isLocalPlayer = true;
 		
 		finishedView.setWinner(name, isLocalPlayer);
 		if(!finishedView.isModalShowing()){

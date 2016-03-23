@@ -192,10 +192,7 @@ public class Facade {
 		//	result = roll() + roll();
 		//}
 		GetModelResponse response = proxy.rollNumber(game.getModel().getLocalIndex(playerId),result);
-		if (!response.isSuccess()) {
-			System.out.println();
-		}
-		return response.isSuccess() == true ? result : -1;
+		return result;
 	}
 	public int roll() throws IllegalArgumentException{
 		return new Random().nextInt((6 - 1) + 1) + 1;

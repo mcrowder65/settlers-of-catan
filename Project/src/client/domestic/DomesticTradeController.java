@@ -48,7 +48,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
 		
 		super(tradeView);
-		
+		System.out.println("creating domestic trade controller");
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
@@ -103,8 +103,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	
 	@Override
 	public void startTrade() {
+		
 		if(!playersWereSet){
 			getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
+			
 			playersWereSet = true;
 		}
 		getTradeOverlay().setResourceSelectionEnabled(true);
@@ -404,6 +406,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if(!facade.isMapSet())
 			return;
 		GameModel gameModel = (GameModel)arg;
+		if(gameModel.getWinner() != -1)
+			playersWereSet = false;
 		currState = currState.identifyState(gameModel.getTurnTracker());
 		
 		if (currState instanceof PlayingState) //only let the person offer a trade if it's his/her turn

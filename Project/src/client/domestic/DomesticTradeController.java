@@ -33,9 +33,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private int sheep = 0;
 	private int wheat = 0;
 	private int ore = 0;
-	private boolean playersWereSet = false;
 	private int receiver = -1;
 	private Facade facade;
+	private boolean playersWereSet = false;
 	/**
 	 * DomesticTradeController constructor
 	 * 
@@ -48,6 +48,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
 		
 		super(tradeView);
+		
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
@@ -56,6 +57,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.facade = facade;
 		facade.addObserver(this);
 		getTradeOverlay().setStateMessage("select the resources you want to trade");
+		
 	}
 	public void findWhichResourcesIHave(){
 		ResourceList resources = currState.getPlayerResources();
@@ -101,7 +103,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	
 	@Override
 	public void startTrade() {
-		
 		if(!playersWereSet){
 			getTradeOverlay().setPlayers(currState.fetchModel().getOtherPlayers(currState.getPlayerId()));
 			playersWereSet = true;

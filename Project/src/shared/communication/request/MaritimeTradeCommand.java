@@ -116,7 +116,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 			}
 			
 			if(ratio <4){
-				if(checkPorts(map,output) == false){
+				if(checkPorts(map,input) == false){
 					response.setSuccess(false);
 					response.setErrorMessage("Player does not have necessary port");
 					return response;
@@ -133,7 +133,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 		}
 	}
 	
-	public boolean checkPorts(ServerGameMap map, ResourceType output){
+	public boolean checkPorts(ServerGameMap map, ResourceType input){
 		List<Port> ports = map.getPersonalPorts(playerIndex);
 		boolean correct = false;
 		if(ratio == 3){
@@ -147,7 +147,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 		else if(ratio == 2){
 			for(int i=0; i<ports.size(); i++){
 				Port port = ports.get(i);
-				if(port.getRatio() == ratio && port.getResource() == output){
+				if(port.getRatio() == ratio && port.getResource() == input){
 					correct = true;
 				}
 			}

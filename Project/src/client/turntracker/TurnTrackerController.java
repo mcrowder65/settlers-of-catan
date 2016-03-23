@@ -80,8 +80,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private void initFromModel(GameModel model) {
 		getView().setLocalPlayerColor(model.getLocalPlayer(facade.getPlayerId()).getColor());
 		
+		
 		for(Player player : model.getPlayers()) {
-
+			getView().initializePlayer(player.getPlayerIndex(), player.getName(), player.getColor());
 			int playerIndex = player.getPlayerIndex();
 			int points = player.getVictoryPoints();
 			

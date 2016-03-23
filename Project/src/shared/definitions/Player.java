@@ -388,12 +388,14 @@ public class Player {
 		int brick = resources.getBrick();
 		int wood = resources.getWood();
 		if(brick >0 && wood>0 && roads>0){
-			return true;
+			if(roads > 0){
+				return true;
+			}
 		}
-		int roadBuildingCard = oldDevCards.getRoadBuilding();
-		if(roadBuildingCard > 0){
-			return true;
-		}
+		//int roadBuildingCard = oldDevCards.getRoadBuilding();
+		//if(roadBuildingCard > 0){
+			//return true;
+		//}
 		
 		return false;
 	}

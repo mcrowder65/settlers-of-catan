@@ -96,7 +96,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private void populateResources(GameModel model) {
 		Player player = model.getLocalPlayer(facade.getPlayerId());
 		ResourceList resource = player.getResources();
-		
 		int wood = resource.getWood();
 		int brick = resource.getBrick();
 		int sheep = resource.getSheep();

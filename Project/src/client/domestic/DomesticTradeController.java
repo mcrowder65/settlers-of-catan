@@ -48,7 +48,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, Facade facade) {
 		
 		super(tradeView);
-		System.out.println("creating domestic trade controller");
+	
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);

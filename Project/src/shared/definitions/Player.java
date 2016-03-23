@@ -586,8 +586,11 @@ public class Player {
 		if(this.playedDevCard == false){
 			int roadBuildingCard = oldDevCards.getRoadBuilding();
 			if(roadBuildingCard > 0){
-				return true;
+				if(roads >1){
+					return true;
+				}
 			}
+			
 		}
 		return false;
 	}

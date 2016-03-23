@@ -69,6 +69,7 @@ import shared.locations.VertexObject;
  			int oldArmy = serverTurnTracker.getLargestArmy();
  			for(int i = 0; i < serverPlayers.length; i++){
  				if(i != oldArmy && serverPlayers[i].getSoldiers() > serverPlayers[oldArmy].getSoldiers()){
+ 					serverTurnTracker.setLargestArmy(i);
  					setLargestArmy(i, oldArmy, false);
  				}
  			}

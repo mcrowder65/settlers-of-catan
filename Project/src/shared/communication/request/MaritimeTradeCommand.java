@@ -115,11 +115,12 @@ public class MaritimeTradeCommand extends MoveCommand {
 				return response;
 			}
 			
-			
-			if(!checkPorts(map,output)){
-				response.setSuccess(false);
-				response.setErrorMessage("Player does not have necessary port");
-				return response;
+			if(ratio <4){
+				if(checkPorts(map,output) == false){
+					response.setSuccess(false);
+					response.setErrorMessage("Player does not have necessary port");
+					return response;
+				}
 			}
 			
 			player.addResource(output);
@@ -146,7 +147,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 		else if(ratio == 2){
 			for(int i=0; i<ports.size(); i++){
 				Port port = ports.get(i);
-				if(port.getRatio() == ratio && port.getResource().equals(output)){
+				if(port.getRatio() == ratio && port.getResource() == output){
 					correct = true;
 				}
 			}

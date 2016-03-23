@@ -142,8 +142,8 @@ import shared.locations.VertexObject;
 		aiNames.add("Snell");
 		aiNames.add("Andrew");
 		aiNames.add("Trent");
-		aiNames.add("Bandana");
-		aiNames.add("Sideburns");
+		aiNames.add("Bandana man");
+
  	}
  	public void initAIColors(){
  		//TODO make it so user colors are taken out of here.

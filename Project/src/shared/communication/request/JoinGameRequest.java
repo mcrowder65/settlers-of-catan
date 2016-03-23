@@ -52,7 +52,7 @@ public class JoinGameRequest extends Request {
 				serverPlayer.setPlayerIndex(playerIndex);
 				Game.instance().addPlayer(id, serverPlayer);
 			}
-			response.setCookie("Set-cookie", "catan.game=" + id + ";");
+			response.setCookie("Set-cookie", "catan.game=" + id + ";Path=/;");
 			response.setErrorMessage("Success");
 			response.setSuccess(true);
 			return response;

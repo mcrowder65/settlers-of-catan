@@ -97,13 +97,14 @@ public class SoldierCommand extends MoveCommand {
 				return response;
 	 		}
 	 		
-	 		Game.instance().getGameId(gameIDCookie).findLargestArmy();
+	 		
 	 		
 	 		if(victimIndex == -1){
 	 			player.playSoldierCard();
 	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
+	 			Game.instance().getGameId(gameIDCookie).findLargestArmy();
 	 			response.setSuccess(true);
 	 			addGameLog(player,model,null);
 	 			response.setJson(model.toString());
@@ -115,6 +116,7 @@ public class SoldierCommand extends MoveCommand {
 	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
+	 			Game.instance().getGameId(gameIDCookie).findLargestArmy();
 	 			response.setSuccess(true);
 	 			addGameLog(player,model,victim);
 	 			response.setJson(model.toString());
@@ -132,6 +134,7 @@ public class SoldierCommand extends MoveCommand {
 			model.setVersion(model.getVersion() +1);
 			addGameLog(player,model,victim);
 			player.playSoldierCard();
+			Game.instance().getGameId(gameIDCookie).findLargestArmy();
 			player.setPlayedDevCard(true);
 			map.setRobber(robberLoc);
 			response.setSuccess(true);

@@ -650,6 +650,8 @@ public class Player {
 		int soldierCard = oldDevCards.getSoldier();
 		soldierCard--;
 		oldDevCards.setSoldier(soldierCard);
+		soldiers++;
+		
 	}
 	public void playMonopolyCard(){
 		int monopolyCard = oldDevCards.getMonopoly();

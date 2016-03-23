@@ -128,7 +128,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ResourceType res1, ResourceType res2){
 		String resource1 = resourceToString(res1);
 		String resource2 = resourceToString(res2);
-		String message = player.getName() + " used a Year of Plenty and got a "+ resource1 + "and a " + resource2;
+		String message = player.getName() + " used a Year of Plenty and got a "+ resource1 + " and a " + resource2;
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}

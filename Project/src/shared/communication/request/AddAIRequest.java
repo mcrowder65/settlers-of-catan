@@ -50,7 +50,8 @@ public class AddAIRequest extends Request {
 			
 			try {
 				Game.instance().addPlayer(gameIDCookie, ai);
-				
+				response.setSuccess(true);
+				response.setErrorMessage("Success");
 			
 			}catch (IllegalStateException ex) {
 				response.setSuccess(false);

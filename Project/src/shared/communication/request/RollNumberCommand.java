@@ -57,12 +57,12 @@ public class RollNumberCommand extends MoveCommand {
 				
 			}
 	  		
-	  		/*
+	  		
 	  		if(turnTracker.getStatus() != "Rolling"){
 	  			response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;
-	  		}*/
+	  		}
 	  		
 	  		if(numRolled == 7){
 	  			

@@ -54,33 +54,37 @@ public class RollController extends Controller implements IRollController,Observ
 	 */
 	@Override
 	public void rollDice() {
-		int result = currState.rollNumber(); //calls the current state which will call the facade to roll the number
-		this.getResultView().setRollValue(result); //sets the results in the modal
-		getResultView().showModal();
-		count = 0;
+		synchronized(DataUtils.modelLock) {
+			if (!(currState instanceof RollingState)) return;
+			int result = currState.rollNumber(); //calls the current state which will call the facade to roll the number
+			this.getResultView().setRollValue(result); //sets the results in the modal
+			getResultView().showModal();
+			count = 0;
+		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		GameModel model = (GameModel)arg;
-		currState = currState.identifyState(model.getTurnTracker());
+		synchronized(DataUtils.modelLock) {
+			GameModel model = (GameModel)arg;
+			currState = currState.identifyState(model.getTurnTracker());
+			
+			if ( (currState instanceof RollingState) && !getRollView().isModalShowing() && !getResultView().isModalShowing()) {
 		
-		if ( (currState instanceof RollingState) && !getRollView().isModalShowing() && !getResultView().isModalShowing()) {
-	
-			getRollView().showModal();
-		}
-		else if((currState instanceof RollingState) && getRollView().isModalShowing()){
-			count++;
-			if(count >=4){
-				synchronized(DataUtils.modelLock) {
-					getRollView().closeModal();
-					rollDice();
-				}
-				
+				getRollView().showModal();
 			}
-		}
+			else if((currState instanceof RollingState) && getRollView().isModalShowing()){
+				count++;
+				if(count >=4){
+						getRollView().closeModal();
+						rollDice();
+					
+					
+				}
+			}
 	
 
+		}
 	}
 
 }

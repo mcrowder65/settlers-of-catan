@@ -55,7 +55,7 @@ public class Game {
 		aiNames.add("Snell");
 		aiNames.add("Andrew");
 		aiNames.add("Trent");
-		aiNames.add("Bandana");
+		aiNames.add("Bandanaman");
 		aiNames.add("Sideburns");
 	}
 	public static List<AIType> getAiTypes() {

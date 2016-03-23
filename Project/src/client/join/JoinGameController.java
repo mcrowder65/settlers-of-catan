@@ -147,7 +147,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * @param info
 	 */
 	private void updateGames(GameInfo[] info) {
-		if (isGamesDifferent(info) && !isFinished) {
+		if (isGamesDifferent(info) && !isFinished && !this.getSelectColorView().isModalShowing() && !this.getNewGameView().isModalShowing()) {
 			currentGames = info;
 			if (getJoinGameView().isModalShowing())
 				getJoinGameView().closeModal();

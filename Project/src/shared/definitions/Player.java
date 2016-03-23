@@ -287,7 +287,10 @@ public class Player {
 	}
 
 	public void removeMonument() throws IllegalArgumentException  {
-		this.monuments--;
+		this.monuments++;
+		int monumentCard = oldDevCards.getMonument();
+		monumentCard--;
+		oldDevCards.setMonument(monumentCard);
 	}
 	public void addVictoryPoints() throws IllegalArgumentException  {
 		this.victoryPoints++;

@@ -31,8 +31,6 @@ public abstract class Request {
 	protected void setCookies(Headers headers){
 		if(headers.containsKey("Cookie")){
 			String cookie = headers.get("Cookie").toString();
-			if(headers.get("Cookie").toString().equals("[catan.game=null]")) //TODO why tf is this even a thing
-				return;
 			playerIDCookie = Translator.getPlayerId(headers.get("Cookie").toString());
 			userCookie = Translator.getPlayerName(headers.get("Cookie").toString());
 			

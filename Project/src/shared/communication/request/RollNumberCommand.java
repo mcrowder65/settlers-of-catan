@@ -75,7 +75,8 @@ public class RollNumberCommand extends MoveCommand {
 		  			//Discard for ai's
 		  			if (!model.getServerPlayers()[n].getDiscarded()) {
 		  				turnTracker.handleAITurn(gameIDCookie, n);
-		  				model.getServerPlayers()[n].setDiscarded(true);
+		  				if (model.getServerPlayers()[n].getPlayerID() < 0)
+		  					model.getServerPlayers()[n].setDiscarded(true);
 		  			}
 		  		}
 	  			

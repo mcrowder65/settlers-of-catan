@@ -143,7 +143,7 @@ import shared.locations.VertexObject;
 		aiNames.add("Snell");
 		aiNames.add("Andrew");
 		aiNames.add("Trent");
-		aiNames.add("Bandana man");
+		aiNames.add("MrBurns");
 
  	}
  	public void initAIColors(){

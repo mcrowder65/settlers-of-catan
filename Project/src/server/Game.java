@@ -30,6 +30,10 @@ public class Game {
 		addUser("manuel","0000");
 	}
 	
+	public static void Reset() {
+		_instance = null;
+	}
+	
 	public static Game instance() {
 		if(_instance == null) {
 			_instance = new Game();
@@ -58,8 +62,7 @@ public class Game {
 		aiNames.add("Snell");
 		aiNames.add("Andrew");
 		aiNames.add("Trent");
-		aiNames.add("Bandanaman");
-		aiNames.add("Sideburns");
+		aiNames.add("MrBurns");
 	}
 	public static List<AIType> getAiTypes() {
 		return aiTypes;

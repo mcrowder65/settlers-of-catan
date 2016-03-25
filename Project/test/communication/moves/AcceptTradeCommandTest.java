@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import server.Game;
 import shared.communication.request.AcceptTradeCommand;
+import shared.communication.response.GetModelResponse;
 import shared.definitions.ResourceList;
 import shared.definitions.TradeOffer;
 
@@ -31,20 +32,20 @@ public class AcceptTradeCommandTest {
 		trade.setOffer(new ResourceList(1,-1,0,0,0));
 		Game.instance().getGameId(0).setTradeOffer(trade);
 		
-		Game.instance().getGameId(0).getServerPlayers()[0].setResources(new ResourceList(1,0,0,0,0));
-		Game.instance().getGameId(0).getServerPlayers()[1].setResources(new ResourceList(0,1,0,0,0));
+		Game.instance().getGameId(0).getServerPlayers()[0].setResources(new ResourceList(0,1,0,0,0));
+		Game.instance().getGameId(0).getServerPlayers()[1].setResources(new ResourceList(1,0,0,0,0));
 		
 		
 		
 		AcceptTradeCommand command = new AcceptTradeCommand(0, true);
 		command.setGameCookie(0);
-		command.execute();
+		GetModelResponse response = command.execute();
 		
-		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getBrick() == 0);
-		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getBrick() == 1);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getBrick() == 1);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getBrick() == 0);
 		
-		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getOre() == 1);
-		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getOre() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getOre() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getOre() == 1);
 		
 	}
 

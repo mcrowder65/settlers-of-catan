@@ -19,16 +19,33 @@ public class AcceptTradeCommandTest {
 	public void setUp() throws Exception {
 		new Setups().SetupGame("Playing");
 		
+
+	}
+
+	@Test
+	public void test() {
+		System.out.println("AcceptTradeCommand test");
 		TradeOffer trade = new TradeOffer();
 		trade.setReceiver(0);
 		trade.setSender(1);
 		trade.setOffer(new ResourceList(1,-1,0,0,0));
 		Game.instance().getGameId(0).setTradeOffer(trade);
-	}
-
-	@Test
-	public void test() {
-		AcceptTradeCommand command = new AcceptTradeCommand();
+		
+		Game.instance().getGameId(0).getServerPlayers()[0].setResources(new ResourceList(1,0,0,0,0));
+		Game.instance().getGameId(0).getServerPlayers()[1].setResources(new ResourceList(0,1,0,0,0));
+		
+		
+		
+		AcceptTradeCommand command = new AcceptTradeCommand(0, true);
+		command.setGameCookie(0);
+		command.execute();
+		
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getBrick() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getBrick() == 1);
+		
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getOre() == 1);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getOre() == 0);
+		
 	}
 
 }

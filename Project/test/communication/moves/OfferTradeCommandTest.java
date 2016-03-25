@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class OfferTradeCommand {
+public class OfferTradeCommandTest {
 
 	@Before
 	public void setUp() throws Exception {

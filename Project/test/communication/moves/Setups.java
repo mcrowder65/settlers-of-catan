@@ -60,7 +60,13 @@ public class Setups {
 		
 		sgm.setServerGameMap(new ServerGameMap(hexes, ports, roads, settlements, cities, radius, robber));
 		sgm.setServerPlayers(new ServerPlayer[4]);
-
+		sgm.initAIColors();
+		sgm.addPlayer(new ServerPlayer("Steve", CatanColor.red, 0, 0));
+		sgm.addPlayer(new ServerPlayer("Bentz", CatanColor.red, 1, 1));
+		sgm.addPlayer(new ServerPlayer("Trent", CatanColor.red, 2, 2));
+		sgm.addPlayer(new ServerPlayer("Andrew", CatanColor.red, 3, 3));
+		
+		
 		//int brick, int ore, int sheep, int wheat, int wood
 		sgm.setBank(new ResourceList(19, 19, 19, 19, 19));
 		sgm.setDeck(new DevCardList(2, 5, 2, 14, 2));
@@ -68,7 +74,7 @@ public class Setups {
 		sgm.setChat(new MessageList());
 		sgm.setLog(new MessageList());
 		sgm.setLocalPlayer(Game.instance().getLocalPlayer(0));
-		sgm.initServerPlayers();
+	
 		sgm.setServerTurnTracker(new ServerTurnTracker(0, initialStatus, -1, -1)); //int currentTurn, String status, int longestRoad, int largestArmy
 		sgm.setVersion(0);
 		//sgm.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));

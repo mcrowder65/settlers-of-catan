@@ -12,6 +12,7 @@ import server.util.ServerPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
 
 public class ServerPlayerTest {
 
@@ -149,6 +150,102 @@ public class ServerPlayerTest {
 		//can accept not equal
 		offer = new ResourceList(0,1,0,1,1);
 		assertTrue(player.canAcceptTrade(offer));
+		
+	}
+	
+	@Test
+	public void layCity(){
+		System.out.println("Testing layCity in ServerPlayer");
+		ResourceList resources = new ResourceList(0,3,0,2,0);
+		player.setResources(resources);
+		player.setCities(1);
+		player.setSettlements(1);
+		player.setVictoryPoints(1);
+		
+		//lay city
+		player.layCity();
+		assertTrue(player.getResources().getOre() == 0);
+		assertTrue(player.getResources().getWheat() == 0);
+		assertTrue(player.getSettlements() == 2);
+		assertTrue(player.getCities() == 0);
+		assertTrue(player.getVictoryPoints() == 2);
+
+	}
+	
+	@Test
+	public void addResource(){
+		System.out.println("Testing addResource in ServerPlayer");
+		ResourceList resources = new ResourceList(0,0,0,0,0);
+		player.setResources(resources);
+		
+		player.addResource(ResourceType.ORE);
+		assertTrue(player.getResources().getOre() == 1);
+		assertTrue(player.getResources().getWood() ==0);
+		
+		player.addResource(ResourceType.WOOD);
+		assertTrue(player.getResources().getWood() == 1);
+	}
+	
+	@Test
+	public void removeResource(){
+		System.out.println("Testing removeResource in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		
+		player.removeResource(ResourceType.ORE);
+		assertTrue(player.getResources().getOre() == 0);
+		assertTrue(player.getResources().getWood() ==1);
+		
+		player.removeResource(ResourceType.WOOD);
+		assertTrue(player.getResources().getWood() == 0);
+	}
+	
+	@Test
+	public void addBrick(){
+		System.out.println("Testing addBrick in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.addBrick();
+		assertTrue(player.getResources().getBrick()==2);
+		
+	}
+	
+	@Test
+	public void addWood(){
+		System.out.println("Testing addWood in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.addWood();
+		assertTrue(player.getResources().getWood()==2);
+		
+	}
+	@Test
+	public void addOre(){
+		System.out.println("Testing addOre in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.addOre();
+		assertTrue(player.getResources().getOre()==2);
+		
+	}
+	
+	@Test
+	public void addSheep(){
+		System.out.println("Testing addSheep in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.addSheep();
+		assertTrue(player.getResources().getSheep()==2);
+		
+	}
+	
+	@Test
+	public void addWheat(){
+		System.out.println("Testing addWheat in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.addWheat();
+		assertTrue(player.getResources().getWheat()==2);
 		
 	}
 

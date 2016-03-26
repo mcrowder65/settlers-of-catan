@@ -178,4 +178,25 @@ public class ServerGameMapTest {
 		assertTrue(city.getLocation().getDir().equals(VertexDirection.NorthEast));
 	}
 
+	@Test
+	public void canUseRoadBuilderTest(){
+		System.out.println("Testing the canUseRoadBuilderTest in ServerGameMap");
+		
+		HexLocation Hloc1 = new HexLocation(3,3);
+		
+		//north side water hex
+		EdgeLocation Eloc = new EdgeLocation(Hloc1, EdgeDirection.North);
+		assertFalse(map.canUseRoadBuilder(0,Eloc,Eloc));
+		
+		//testing with no connecting roads
+		HexLocation Hloc2 = new HexLocation(0,0);
+		EdgeLocation Eloc2 = new EdgeLocation(Hloc2, EdgeDirection.North);
+		EdgeLocation Eloc3 = new EdgeLocation(Hloc2, EdgeDirection.NorthEast);
+		assertFalse(map.canUseRoadBuilder(0,Eloc2,Eloc3));
+		
+		//testing w/ success
+		EdgeLocation Eloc4 = new EdgeLocation(Hloc2, EdgeDirection.NorthWest);
+		map.buildRoad(new EdgeValue(0,Eloc4));
+		assertTrue(map.canUseRoadBuilder(0,Eloc2,Eloc3));
+	}
 }

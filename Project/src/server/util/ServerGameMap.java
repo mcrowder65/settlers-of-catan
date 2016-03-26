@@ -84,17 +84,21 @@ public class ServerGameMap extends GameMap {
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
  		VertexObject[] cities = getCities();
- 		for(int i=0; i<settlements.length; i++){
- 			VertexObject settlement = settlements[i];
- 			if(settlement.getLocation().getHexLoc().equals(loc) == true){
- 				municipalities.add(settlement);
- 			}
+ 		if(this.allSettlements.size()>0){
+	 		for(int i=0; i<settlements.length; i++){
+	 			VertexObject settlement = settlements[i];
+	 			if(settlement.getLocation().getHexLoc().equals(loc) == true){
+	 				municipalities.add(settlement);
+	 			}
+	 		}
  		}
- 		for(int x=0; x<cities.length; x++){
- 			VertexObject city = cities[x];
- 			if(city.getLocation().getHexLoc().equals(loc) == true){
- 				municipalities.add(city);
- 			}
+ 		if(this.allCities.size() >0){
+	 		for(int x=0; x<cities.length; x++){
+	 			VertexObject city = cities[x];
+	 			if(city.getLocation().getHexLoc().equals(loc) == true){
+	 				municipalities.add(city);
+	 			}
+	 		}
  		}
  		
  		return municipalities;
@@ -104,11 +108,13 @@ public class ServerGameMap extends GameMap {
 	public List<VertexObject> getCityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] cities = getCities();
- 		for(int x=0; x<cities.length; x++){
- 			VertexObject city = cities[x];
- 			if(city.getLocation().getHexLoc().equals(loc) == true){
- 				municipalities.add(city);
- 			}
+ 		if(allCities.size()>0){
+	 		for(int x=0; x<cities.length; x++){
+	 			VertexObject city = cities[x];
+	 			if(city.getLocation().getHexLoc().equals(loc) == true){
+	 				municipalities.add(city);
+	 			}
+	 		}
  		}
  		return municipalities;
  	}
@@ -116,17 +122,19 @@ public class ServerGameMap extends GameMap {
 	public List<VertexObject> getSettlementOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
- 		for(int i=0; i<settlements.length; i++){
- 			VertexObject settlement = settlements[i];
- 			VertexLocation vLoc = settlement.getLocation();
- 			if (vLoc == null)
- 				System.out.println("bad bad bad");
- 			HexLocation hLoc = vLoc.getHexLoc();
- 			if (hLoc == null)
- 				System.out.println("very very bad");
- 			if(hLoc.equals(loc) == true){
- 				municipalities.add(settlement);
- 			}
+ 		if(allSettlements.size()>0){
+	 		for(int i=0; i<settlements.length; i++){
+	 			VertexObject settlement = settlements[i];
+	 			VertexLocation vLoc = settlement.getLocation();
+	 			if (vLoc == null)
+	 				System.out.println("bad bad bad");
+	 			HexLocation hLoc = vLoc.getHexLoc();
+	 			if (hLoc == null)
+	 				System.out.println("very very bad");
+	 			if(hLoc.equals(loc) == true){
+	 				municipalities.add(settlement);
+	 			}
+	 		}
  		}
  		
  		return municipalities;

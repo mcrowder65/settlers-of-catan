@@ -40,6 +40,7 @@ public class AcceptTradeCommandTest {
 		AcceptTradeCommand command = new AcceptTradeCommand(0, true);
 		command.setGameCookie(0);
 		GetModelResponse response = command.execute();
+		assertTrue(response.isSuccess());
 		
 		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getBrick() == 1);
 		assertTrue(Game.instance().getGameId(0).getServerPlayers()[1].getResources().getBrick() == 0);

@@ -135,11 +135,14 @@ public class BuildSettlementCommand extends MoveCommand {
 				return response;
 			}
 			if(status.equals("Playing")){
+				//TODO: Sorry Brennen
+				/*
 				if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
 					response.setSuccess(false);
 					response.setErrorMessage("Bad Location");
 					return response;
 				}
+				*/
 				map.laySettlement(vertex,false);
 				player.laySettlement();
 				if(player.getVictoryPoints() > 9){

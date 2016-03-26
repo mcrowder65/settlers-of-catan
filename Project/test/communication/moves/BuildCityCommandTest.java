@@ -45,6 +45,11 @@ public class BuildCityCommandTest {
 		
 		assertTrue(Game.instance().getGameId(0).getServerMap().hasCity(obj));
 		
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getBrick() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getWheat() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getWood() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getSheep() == 0);
+		assertTrue(Game.instance().getGameId(0).getServerPlayers()[0].getResources().getOre() == 0);
 		
 	}
 

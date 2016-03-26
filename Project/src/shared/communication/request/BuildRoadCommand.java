@@ -95,11 +95,15 @@ public class BuildRoadCommand extends MoveCommand {
 					response.setErrorMessage("Not enough resources to build road");
 					return response; 
 				}
+				
+				//TODO: Sorry Brennen
+				/*
 				if(!map.canBuildRoadNormal(playerIndex,loc)){
 					response.setSuccess(false);
 					response.setErrorMessage("Cannot build road at that location");
 					return response; 	
 				}
+				*/
 				map.buildRoad(new EdgeValue(playerIndex,loc));
 				player.layRoad();
 				addGameLog(player,model);

@@ -131,5 +131,25 @@ public class ServerPlayerTest {
 		player.discardCards(discard);
 		assertTrue(player.getResources().equals(new ResourceList(0,0,0,0,0)));
 	}
+	
+	@Test
+	public void canAcceptTradeTest(){
+		System.out.println("Testing canAcceptTrade in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		ResourceList offer = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		
+		//all resources equal
+		assertTrue(player.canAcceptTrade(offer));
+		
+		//cant accept trade - one card too many
+		offer = new ResourceList(2,1,1,1,1);
+		assertFalse(player.canAcceptTrade(offer));
+		
+		//can accept not equal
+		offer = new ResourceList(0,1,0,1,1);
+		assertTrue(player.canAcceptTrade(offer));
+		
+	}
 
 }

@@ -248,5 +248,116 @@ public class ServerPlayerTest {
 		assertTrue(player.getResources().getWheat()==2);
 		
 	}
+	
+	@Test
+	public void removeWheat(){
+		System.out.println("Testing removeWheat in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.removeWheat();
+		assertTrue(player.getResources().getWheat()==0);
+		
+	}
+	@Test
+	public void removeWood(){
+		System.out.println("Testing removeWood in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.removeWood();
+		assertTrue(player.getResources().getWood()==0);
+		
+	}
+	
+	@Test
+	public void removeOre(){
+		System.out.println("Testing removeOre in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.removeOre();
+		assertTrue(player.getResources().getOre()==0);
+		
+	}
+	
+	@Test
+	public void removeBrick(){
+		System.out.println("Testing removeBrick in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.removeBrick();
+		assertTrue(player.getResources().getBrick()==0);
+		
+	}
+	
+	@Test
+	public void removeSheep(){
+		System.out.println("Testing removeOre in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.removeSheep();
+		assertTrue(player.getResources().getSheep()==0);
+	}
+	
+	@Test
+	public void addMonopolyTest(){
+		System.out.println("Testing addMonopoly in ServerPlayer");
+		DevCardList cards = new DevCardList(0,0,0,0,0);
+		player.setNewDevCards(cards);
+		assertTrue(player.getNewDevCards().getMonopoly()==0);
+		player.addMonopoly();
+		assertTrue(player.getNewDevCards().getMonopoly()==1);
+
+	}
+	
+	@Test
+	public void addRoadBuilderTest(){
+		System.out.println("Testing addRoadBuilder in ServerPlayer");
+		DevCardList cards = new DevCardList(0,0,0,0,0);
+		player.setNewDevCards(cards);
+		assertTrue(player.getNewDevCards().getRoadBuilding()==0);
+		player.addRoadBuilder();
+		assertTrue(player.getNewDevCards().getRoadBuilding()==1);
+
+	}
+	@Test
+	public void addMonumentTest(){
+		System.out.println("Testing addMonument in ServerPlayer");
+		DevCardList cards = new DevCardList(0,0,0,0,0);
+		player.setOldDevCards(cards);
+		player.setNewDevCards(cards);
+		assertTrue(player.getOldDevCards().getMonument()==0);
+		player.addMonument();
+		assertTrue(player.getOldDevCards().getMonument()==1);
+	}
+	@Test
+	public void addYOP(){
+		System.out.println("Testing addYOP in ServerPlayer");
+		DevCardList cards = new DevCardList(0,0,0,0,0);
+		player.setNewDevCards(cards);
+		assertTrue(player.getNewDevCards().getYearOfPlenty()==0);
+		player.addYearOfPlenty();
+		assertTrue(player.getNewDevCards().getYearOfPlenty()==1);
+	}
+	@Test
+	public void addSoldier(){
+		System.out.println("Testing addSoldier in ServerPlayer");
+		DevCardList cards = new DevCardList(0,0,0,0,0);
+		player.setNewDevCards(cards);
+		assertTrue(player.getNewDevCards().getSoldier()==0);
+		player.addSoldierCard();
+		assertTrue(player.getNewDevCards().getSoldier()==1);
+	}
+	@Test
+	public void playMonumentTest(){
+		System.out.println("Testing playMonumentTest in ServerPlayer");
+		DevCardList cards = new DevCardList(1,1,1,1,1);
+		player.setOldDevCards(cards);
+		player.setVictoryPoints(0);
+		player.playMonument();
+		assertTrue(player.getOldDevCards().getMonument() == 0);
+		assertTrue(player.getVictoryPoints() == 1);
+		
+	}
+	
+	
 
 }

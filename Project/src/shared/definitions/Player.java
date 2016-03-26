@@ -229,6 +229,8 @@ public class Player {
 	public int getRoads() throws IllegalArgumentException{
 		return roads;
 	}
+	
+	
 
 	/**
 	 * retrieves number of settlements
@@ -350,6 +352,8 @@ public class Player {
 	public void setResources(ResourceList resources) throws IllegalArgumentException  {
 		this.resources = resources;
 	}
+	
+	
 
 	/**
 	 * sets number of roads the player has left to play

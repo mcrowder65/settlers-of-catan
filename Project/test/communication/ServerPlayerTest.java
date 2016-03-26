@@ -75,6 +75,7 @@ public class ServerPlayerTest {
 		//setting it up
 		player.setResources(new ResourceList(1,1,1,1,1));
 		player.setSettlements(1);
+		player.setVictoryPoints(0);
 		player.laySettlement();
 		
 		//check road number
@@ -86,7 +87,49 @@ public class ServerPlayerTest {
 		assertTrue(player.getResources().getSheep() == 0);
 		assertTrue(player.getResources().getWheat() == 0);
 		assertTrue(player.getResources().getOre() == 1);
-
+		
+		//check victorypoints
+		assertTrue(player.getVictoryPoints() == 1);
+		
+	}
+	
+	@Test
+	public void canMakeTradeTest(){
+		System.out.println("Testing canMakeTrade in ServerPlayer");
+		player.setResources(new ResourceList(1,1,1,1,1));
+		ResourceList offer = new ResourceList(1,1,1,1,1);
+		
+		//exact amount for trade
+		assertTrue(player.canMakeTrade(offer));
+		
+		//one resource off
+		offer = new ResourceList(2,1,1,1,1);
+		assertFalse(player.canMakeTrade(offer));
+		
+		//no offer
+		offer = new ResourceList(0,0,0,0,0);
+		assertTrue(player.canMakeTrade(offer));
+	}
+	
+	@Test
+	public void discardCardsTest(){
+		System.out.println("Testing discardCards in ServerPlayer");
+		player.setResources(new ResourceList(1,1,1,1,1));
+		ResourceList discard = new ResourceList(0,0,0,0,0);
+		
+		//discard none
+		player.discardCards(discard);
+		assertTrue(player.getResources().equals(new ResourceList(1,1,1,1,1)));
+		
+		//discard one card
+		discard = new ResourceList(1,0,0,0,0);
+		player.discardCards(discard);
+		assertTrue(player.getResources().equals(new ResourceList(0,1,1,1,1)));
+		
+		//discard the rest 
+		discard = new ResourceList(0,1,1,1,1);
+		player.discardCards(discard);
+		assertTrue(player.getResources().equals(new ResourceList(0,0,0,0,0)));
 	}
 
 }

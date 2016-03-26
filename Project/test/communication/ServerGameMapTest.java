@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -198,5 +199,10 @@ public class ServerGameMapTest {
 		EdgeLocation Eloc4 = new EdgeLocation(Hloc2, EdgeDirection.NorthWest);
 		map.buildRoad(new EdgeValue(0,Eloc4));
 		assertTrue(map.canUseRoadBuilder(0,Eloc2,Eloc3));
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		System.out.println("Testing ServerGameMap Completed");
 	}
 }

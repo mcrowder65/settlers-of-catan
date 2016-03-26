@@ -39,6 +39,9 @@ public class ServerGameMap extends GameMap {
 		super(hexes, ports, roads,settlements, cities, radius,robber);
 	}
 	
+	/**
+	 * blank constructor for testing
+	 */
 	public ServerGameMap() {
 		// TODO Auto-generated constructor stub
 	}
@@ -80,6 +83,11 @@ public class ServerGameMap extends GameMap {
 		return canLayRoad(road);
 	}
 	
+	/**
+	 * gets all the cities or settlements on a particular hex
+	 * @param loc
+	 * @return List<VertexObject>
+	 */
 	public List<VertexObject> getMunicipalityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
@@ -105,6 +113,11 @@ public class ServerGameMap extends GameMap {
  		
  	}
 	
+	/**
+	 * gets all the cities on a particular hex
+	 * @param loc
+	 * @return
+	 */
 	public List<VertexObject> getCityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] cities = getCities();
@@ -119,6 +132,11 @@ public class ServerGameMap extends GameMap {
  		return municipalities;
  	}
 	
+	/**
+	 * gets all the settlements on a particular hex
+	 * @param loc
+	 * @return
+	 */
 	public List<VertexObject> getSettlementOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
@@ -140,6 +158,7 @@ public class ServerGameMap extends GameMap {
  		return municipalities;
  		
  	}
+	
 	
 	public List<Hex> getSurroundingHexes(VertexLocation loc) {
 		List<Hex> surrounding = new ArrayList<Hex>();

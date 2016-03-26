@@ -11,6 +11,7 @@ import org.junit.Test;
 import server.util.ServerPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;
 
@@ -356,6 +357,46 @@ public class ServerPlayerTest {
 		assertTrue(player.getOldDevCards().getMonument() == 0);
 		assertTrue(player.getVictoryPoints() == 1);
 		
+	}
+	@Test
+	public void chargeDevCard(){
+		System.out.println("Testing chargeBuyDevCard in ServerPlayer");
+		ResourceList resources = new ResourceList(1,1,1,1,1);
+		player.setResources(resources);
+		player.chargeBasicDevCard();
+		assertTrue(player.getResources().getBrick()==1);
+		assertTrue(player.getResources().getOre()==0);
+		assertTrue(player.getResources().getSheep()==0);
+		assertTrue(player.getResources().getWheat()==0);
+		
+	}
+	@Test
+	public void buyDevCardTest(){
+		System.out.println("Testing BuyDevCard in ServerPlayer");
+		DevCardList old = new DevCardList(0,0,0,0,0);
+		DevCardList newD = new DevCardList(0,0,0,0,0);
+		ResourceList resources = new ResourceList(2,2,2,2,2);
+		player.setResources(resources);
+		
+		player.setOldDevCards(old);
+		player.setNewDevCards(newD);
+		player.buyDevCard(DevCardType.SOLDIER);
+		assertTrue(player.getNewDevCards().getSoldier()==1);
+		player.buyDevCard(DevCardType.MONOPOLY);
+		assertTrue(player.getNewDevCards().getMonopoly()==1);
+
+	}
+	
+	@Test
+	public void resourcesToBuildRoadTest(){
+		System.out.println("Testing resourcesToBuildRoad in ServerPlayer");
+		ResourceList resources = new ResourceList(2,2,2,2,2);
+		player.setResources(resources);
+		player.setRoads(1);
+		assertTrue(player.resourcesToBuildRoad());
+		resources = new ResourceList(0,0,0,0,0);
+		player.setResources(resources);
+		assertFalse(player.resourcesToBuildRoad());
 	}
 	
 	

@@ -134,10 +134,14 @@ public class CreateGameRequest extends Request {
 		ArrayList<HexLocation> locations = initHexLocs();
 		if(randomNumbers)
 			Collections.shuffle(nums);
-		if(randomTiles)
-			Collections.shuffle(resources);
-		if(randomTiles && randomNumbers)
+		if(randomTiles){
 			Collections.shuffle(locations);
+		}
+		if(randomTiles && randomNumbers){
+			Collections.shuffle(locations);
+			Collections.shuffle(resources);
+			Collections.shuffle(nums);
+		}
 
 		setHexes(nums,resources, locations);
 		setRobber();
@@ -180,7 +184,6 @@ public class CreateGameRequest extends Request {
 			resources.remove(0);
 			i++;
 		}
-		this.hexes = hexes;
 	}
 	private ArrayList<Integer> initNumbers(){
 		ArrayList<Integer> nums = new ArrayList<Integer>();

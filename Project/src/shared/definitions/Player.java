@@ -9,8 +9,6 @@ import shared.locations.*;
  */
 public class Player {
 
-	
-
 	/**
 	 * How many cities this player has left to play,
 	 */

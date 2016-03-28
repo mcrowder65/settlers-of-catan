@@ -15,7 +15,6 @@ public class ServerTurnTracker extends TurnTracker{
 		super(i, string, j, k);
 	}
 	
-	
 
 	public boolean handleAITurn(int gameId) {
 		return handleAITurn(gameId, -1);

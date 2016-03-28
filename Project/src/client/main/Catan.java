@@ -25,8 +25,6 @@ public class Catan extends JFrame
 
 	private CatanPanel catanPanel;
 
-
-
 	public Catan(IJoinGameController joinController, Facade facade)
 	{
 		client.base.OverlayView.setWindow(this);

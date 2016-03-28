@@ -44,7 +44,7 @@ import shared.locations.VertexObject;
  			return currentPlayer;
  		return null;
  	}
- 	private void setLargestArmy(int newArmy, int oldArmy, boolean firstTime){
+ 	public void setLargestArmy(int newArmy, int oldArmy, boolean firstTime){
  		if(!firstTime){
  			int oldArmyVictoryPoints = serverPlayers[oldArmy].getVictoryPoints();
  			serverPlayers[oldArmy].setVictoryPoints(oldArmyVictoryPoints - 2);

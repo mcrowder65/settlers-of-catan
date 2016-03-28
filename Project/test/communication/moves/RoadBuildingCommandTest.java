@@ -8,6 +8,7 @@ import org.junit.Test;
 import server.Game;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
+import shared.communication.request.BuildRoadCommand;
 import shared.communication.request.BuildSettlementCommand;
 import shared.communication.request.FinishTurnCommand;
 import shared.communication.request.RoadBuildingCommand;
@@ -33,16 +34,16 @@ public class RoadBuildingCommandTest {
 	}
 	@Test
 	public void test() {
-		System.out.println("RoadBuildingCommand test");
+		System.out.println("testing RoadBuildingCommand");
 		ServerGameModel model = Game.instance().getGameId(0);
 		ServerPlayer[] players = model.getServerPlayers();
 		
 		players[0].addResourceCards(new ResourceList(3, 5, 1, 7, 5)); //brick, ore, sheep, wheat, wood
-		players[1].addResourceCards(new ResourceList(2, 1, 2, 2, 2));
+		players[1].addResourceCards(new ResourceList(3, 1, 2, 2, 3));
 		
 		players[0].addDevCard(new DevCardList(0, 0, 0, 1, 0)); //monopoly, monument, roadBuilding, soldier, yearOfPlenty
 		HexLocation loc = new HexLocation(0, 2);
-		VertexLocation vertLoc = new VertexLocation(loc, VertexDirection.NorthWest);
+		VertexLocation vertLoc = new VertexLocation(loc, VertexDirection.SouthEast);
 		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(1, true, vertLoc, 0);
 		GetModelResponse response = settlementCommand.execute();
 		assertFalse(response.isSuccess()); //it isn't player 1's turn.
@@ -52,7 +53,11 @@ public class RoadBuildingCommandTest {
 		response = settlementCommand.execute();
 		assertFalse(response.isSuccess()); //status isn't playing, should be false
 		Game.instance().getGameId(0).getServerTurnTracker().setStatus("Playing");
-
+		EdgeLocation edgeLoc = new EdgeLocation(new HexLocation(0,2), EdgeDirection.South);
+		BuildRoadCommand buildRoad = new BuildRoadCommand(1, true, edgeLoc);
+		buildRoad.setGameCookie(0);
+		response = buildRoad.execute();
+		assertTrue(response.isSuccess());
 		response = settlementCommand.execute();
 		
 		assertTrue(response.isSuccess());
@@ -63,9 +68,9 @@ public class RoadBuildingCommandTest {
 		assertTrue(players[1].getResources().getWheat() == 1);
 		//player 1 built a settlement just fine. only 1 of each remaining (excluding ore)
 		players[1].addDevCard(new DevCardList(0, 0, 1, 0, 0));
-		HexLocation hexLoc1 = new HexLocation(1,1);
-		EdgeLocation spot1 = new EdgeLocation(hexLoc1, EdgeDirection.SouthWest);
-		HexLocation hexLoc2 = new HexLocation(0,1);
+		HexLocation hexLoc1 = new HexLocation(0,2);
+		EdgeLocation spot1 = new EdgeLocation(hexLoc1, EdgeDirection.SouthEast);
+		HexLocation hexLoc2 = new HexLocation(0,2);
 		EdgeLocation spot2 = new EdgeLocation(hexLoc2, EdgeDirection.NorthEast);
 		RoadBuildingCommand roadBuilder = new RoadBuildingCommand(1, spot1, spot2);
 		roadBuilder.setGameCookie(0);

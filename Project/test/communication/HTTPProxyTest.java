@@ -38,8 +38,8 @@ public class HTTPProxyTest {
 	}
 	@Test
 	public void atestRegister(){
-		Response register = httpProxy.register("matt", "crowder");
-		Response login = httpProxy.login("matt", "crowder");
+		Response register = httpProxy.register("dipstick", "crowder");
+		Response login = httpProxy.login("dipstick", "crowder");
 		if(!register.isSuccess() && !login.isSuccess()) fail();
 		
 	}

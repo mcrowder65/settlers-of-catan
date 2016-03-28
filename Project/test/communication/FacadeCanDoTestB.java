@@ -311,6 +311,7 @@ public class FacadeCanDoTestB {
 		turn.setStatus("Playing");
 		DevCardList oldDev = new DevCardList(0,0,1,0,0);
 		player.setOldDevCards(oldDev);
+		player.setRoads(2);
 		assertTrue(facade.canUseRoadBuilder());
 		
 		//Player status != Playing / Can't play
@@ -329,6 +330,7 @@ public class FacadeCanDoTestB {
 	@Test
 	public void testCanUseRoadBuilder() {
 		player.setPlayedDevCard(false);
+		player.setRoads(2);
 		// Cant play
 		
 		DevCardList oldDev = new DevCardList(0,0,0,0,0);

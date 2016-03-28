@@ -58,8 +58,8 @@ public class FacadeTests {
 	}
 	@Test
 	public void aRegister(){
-		boolean register = facade.register("dipstick", "dipstick");
-		boolean login = facade.login("dipstick", "dipstick");
+		boolean register = facade.register("helloworld", "dipstick");
+		boolean login = facade.login("helloworld", "dipstick");
 		if(register == false && login == false) fail();
 		localPlayer.setPlayerID(proxy.getPlayerId());
 		game.getModel().setLocalPlayer(localPlayer);

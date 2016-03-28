@@ -39,6 +39,11 @@ public class BuyDevCardCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	//For testing
+	public BuyDevCardCommand(int gameIndex, int playerIndex){
+		super(playerIndex);
+		this.gameIDCookie = gameIndex;		
+	}
 
 	/**
 	 * Executes the logic for the buy dev card command
@@ -53,7 +58,8 @@ public class BuyDevCardCommand extends MoveCommand {
 	 		ServerGameModel model = game.getGameId(gameIndex);		
 	 		ServerGameMap map = model.getServerMap();		
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
-	 		ServerPlayer player = model.getServerPlayers()[playerIndex];	
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		
 	 		GetModelResponse response = new GetModelResponse();
 	 		
 	 		try {

@@ -41,6 +41,12 @@ public class DiscardCardsCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		this.discardedCards = tmp.discardedCards;
 	}
+	//For testing
+	public DiscardCardsCommand(int playerIndex, int gameIndex, ResourceList discardedCards) {
+		super(playerIndex);
+		this.gameIDCookie = gameIndex;
+		this.discardedCards = discardedCards;
+	}
 
 	/**
 	 * Executes the logic for the discard cards command

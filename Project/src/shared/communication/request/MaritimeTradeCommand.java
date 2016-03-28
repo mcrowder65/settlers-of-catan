@@ -59,6 +59,15 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.outputResource = tmp.outputResource; 
 		
 	}
+	//For Testing
+	public MaritimeTradeCommand(int playerIndex, int gameIndex, int ratio, ResourceType input, ResourceType output) {
+		super(playerIndex);
+		this.gameIDCookie = gameIndex;
+		this.ratio = ratio;
+		this.inputResource = MirrorResourceType.getResource(input);
+		this.outputResource = MirrorResourceType.getResource(output);
+	}
+	
 	/**
 	 * This executes the MaritimeTrade.
 	 */

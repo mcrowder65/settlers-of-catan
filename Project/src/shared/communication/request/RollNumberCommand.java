@@ -26,17 +26,6 @@ public class RollNumberCommand extends MoveCommand {
 		this.number = number;
 		type = "rollNumber";
 	}
-	/**
-	 * used for junits only
-	 * @param playerIndex
-	 * @param number
-	 * @param gameIndex
-	 */
-	public RollNumberCommand(int playerIndex, int number, int gameIndex){
-		super(playerIndex, gameIndex);
-		this.number = number;
-		type = "rollNumber";
-	}
 	public RollNumberCommand(HttpExchange exchange) {
 		super(exchange);
 		RollNumberCommand tmp = (RollNumberCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());

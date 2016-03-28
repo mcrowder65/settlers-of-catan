@@ -44,8 +44,6 @@ public class RoadBuildingCommand extends MoveCommand {
 		this.spot2 = new MirrorEdgeLocation(spot2);
 		this.type = "Road_Building";
 	}
-
-	
 	public RoadBuildingCommand(HttpExchange exchange) {
 		super(exchange);
 		RoadBuildingCommand tmp = (RoadBuildingCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());

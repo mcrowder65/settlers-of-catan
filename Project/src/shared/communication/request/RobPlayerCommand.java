@@ -36,19 +36,6 @@ public class RobPlayerCommand extends MoveCommand {
 		this.victimIndex = victimIndex;
 		this.type = "robPlayer";
 	}
-	/**
-	 * used for junits only
-	 * @param playerIndex
-	 * @param location
-	 * @param victimIndex
-	 * @throws IllegalArgumentException
-	 */
-	public RobPlayerCommand(int playerIndex, HexLocation location, int victimIndex, int gameIndex) throws IllegalArgumentException {
-		super(playerIndex, gameIndex);
-		this.location = location;
-		this.victimIndex = victimIndex;
-		this.type = "robPlayer";
-	}
 
 	public RobPlayerCommand(HttpExchange exchange) {
 		super(exchange);

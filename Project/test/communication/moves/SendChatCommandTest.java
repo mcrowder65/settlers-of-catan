@@ -21,8 +21,8 @@ public class SendChatCommandTest {
 	public void test() {
 		ServerGameModel model = Game.instance().getGameId(0);
 		ServerPlayer[] players = model.getServerPlayers();
-		SendChatCommand sendChat = new SendChatCommand(0, "hello world!", 0);
-		
+		SendChatCommand sendChat = new SendChatCommand(0, "hello world!");
+		sendChat.setGameCookie(0);
 		GetModelResponse response = sendChat.execute();
 		
 		assertTrue(response.isSuccess());

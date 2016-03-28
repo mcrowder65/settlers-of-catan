@@ -55,7 +55,19 @@ public class BuildSettlementCommand extends MoveCommand {
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 	}
-
+	/**
+	 * used specifically for junit testing
+	 * @param playerIndex
+	 * @param free
+	 * @param vertexLocation
+	 * @param gameIndex
+	 */
+	public BuildSettlementCommand(int playerIndex, boolean free, VertexLocation vertexLocation, int gameIndex){
+		super(playerIndex, gameIndex);
+		this.free = free;
+		this.vertexLocation = new MirrorVertexLocation(vertexLocation);
+		this.type = "buildSettlement";
+	}
 	/**
 	 * Executes the logic for the build settlement command
 	 */

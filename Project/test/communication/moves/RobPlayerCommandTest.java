@@ -37,7 +37,8 @@ public class RobPlayerCommandTest {
 		players[0].addDevCard(new DevCardList(0, 0, 0, 1, 0)); //monopoly, monument, roadBuilding, soldier, yearOfPlenty
 		HexLocation loc = new HexLocation(0, 2);
 		VertexLocation vertLoc = new VertexLocation(loc, VertexDirection.NorthWest);
-		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(1, true, vertLoc, 0);
+		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(1, true, vertLoc);
+		settlementCommand.setGameCookie(0);
 		GetModelResponse response = settlementCommand.execute();
 		assertFalse(response.isSuccess()); //it isn't player 1's turn.
 		
@@ -61,7 +62,8 @@ public class RobPlayerCommandTest {
 		finishTurn(1);
 		finishTurn(2);
 		finishTurn(3);
-		RobPlayerCommand robPlayer = new RobPlayerCommand(0, loc, 1, 0);
+		RobPlayerCommand robPlayer = new RobPlayerCommand(0, loc, 1);
+		robPlayer.setGameCookie(0);
 		//player 0's turn now
 		response = robPlayer.execute();
 		assertFalse(response.isSuccess()); //should be false, needs to be in robbing status

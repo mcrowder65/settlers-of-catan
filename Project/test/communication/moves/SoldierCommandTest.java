@@ -29,7 +29,8 @@ public class SoldierCommandTest {
 		
 		players[0].addDevCard(new DevCardList(0, 0, 0, 1, 0)); //monopoly, monument, roadBuilding, soldier, yearOfPlenty
 		HexLocation loc = new HexLocation(0, 2);
-		SoldierCommand soldier = new SoldierCommand(0, loc, 1, 0);
+		SoldierCommand soldier = new SoldierCommand(0, loc, 1);
+		soldier.setGameCookie(0);
 		VertexLocation vertLoc = new VertexLocation(loc, VertexDirection.NorthWest);
 		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(1, true, vertLoc, 0);
 		GetModelResponse response = settlementCommand.execute();

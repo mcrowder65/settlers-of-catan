@@ -32,19 +32,6 @@ public class SoldierCommand extends MoveCommand {
 		this.victimIndex = victimIndex;
 		this.type = "Soldier";
 	}
-	/**
-	 * this is used specifically for junits
-	 * @param playerIndex
-	 * @param location
-	 * @param victimIndex
-	 * @param gameIndex
-	 */
-	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex, int gameIndex){
-		super(playerIndex, gameIndex);
-		this.location = location;
-		this.victimIndex = victimIndex;
-		this.type = "Soldier";
-	}
 	public SoldierCommand(HttpExchange exchange) {
 		super(exchange);
 		SoldierCommand tmp = (SoldierCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());

@@ -29,12 +29,14 @@ public class RollNumberCommandTest {
 		players[0].addResourceCards(new ResourceList(1, 0, 1, 1, 1)); //brick, ore, sheep, wheat, wood
 		HexLocation loc = new HexLocation(0, 2);
 		VertexLocation vertLoc = new VertexLocation(loc, VertexDirection.NorthEast);
-		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(0, true, vertLoc, 0);
+		BuildSettlementCommand settlementCommand = new BuildSettlementCommand(0, true, vertLoc);
+		settlementCommand.setGameCookie(0);
 		GetModelResponse response = settlementCommand.execute();
 		assertTrue(response.isSuccess());
 		finishTurn(0);
 		
-		RollNumberCommand rollNumber = new RollNumberCommand(1, 8, 0); //playerIndex,dice roll, gameIndex / gameID
+		RollNumberCommand rollNumber = new RollNumberCommand(1, 8); //playerIndex,dice roll
+		rollNumber.setGameCookie(0);
 		assertTrue(rollNumber.getNumber() == 8);
 		assertTrue(rollNumber.getMoveType().equals("rollNumber"));
 		response = rollNumber.execute();
@@ -43,13 +45,16 @@ public class RollNumberCommandTest {
 		
 		finishTurn(1);
 		
-		rollNumber = new RollNumberCommand(2, 10, 0);
+		rollNumber = new RollNumberCommand(2, 10);
+		rollNumber.setGameCookie(0);
+		
 		response = rollNumber.execute();
 		assertTrue(response.isSuccess());
 		assertTrue(players[0].getResources().getSheep() == 1);
 		finishTurn(2);
 		
-		rollNumber = new RollNumberCommand(3, 4, 0);
+		rollNumber = new RollNumberCommand(3, 4);
+		rollNumber.setGameCookie(0);
 		response = rollNumber.execute();
 		assertTrue(response.isSuccess());
 		assertTrue(players[0].getResources().getWood() == 1); //i want to test all three hexes bordering that settlement

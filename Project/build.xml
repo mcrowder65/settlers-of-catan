@@ -52,6 +52,14 @@
 						<enable/>
 					</assertions>
 				</java>
+		<java classname="generic.ServerTests" fork="yes">
+						<classpath>
+							<path refid="all-classpath"/>
+						</classpath>
+						<assertions>
+							<enable/>
+						</assertions>
+					</java>
 		
 	</target>
 	

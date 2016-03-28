@@ -8,6 +8,7 @@ import java.util.Random;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.utils.Translator;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -28,8 +29,8 @@ public class Game {
 		addUser("brennen", "0000");
 		addUser("eric", "0000");
 		addUser("manuel","0000");
-	}
 	
+	}
 	public static void Reset() {
 		_instance = null;
 	}
@@ -43,11 +44,14 @@ public class Game {
 	}
 	
 	
+	
 	public int getNumGames() {
 		return arrayGames.size();
 	}
 	private static List<AIType> aiTypes;
 	private static HashSet<String> aiNames;
+	private static String initialGamesJson = "[ { \"id\": 0, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" }, { \"id\": -1, \"playerIndex\": 0, \"name\": \"Snell\", \"color\": \"green\" } ] }, { \"id\": 1, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" }, { \"id\": -2, \"playerIndex\": 1, \"name\": \"MrBurns\", \"color\": \"orange\" }, { \"id\": -3, \"playerIndex\": 2, \"name\": \"Bentz\", \"color\": \"brown\" }, { \"id\": -4, \"playerIndex\": 3, \"name\": \"Steve\", \"color\": \"yellow\" } ] }, { \"id\": 2, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" } ] } ]";
+	
 	static {
 		aiTypes = new ArrayList<AIType>();
 		aiTypes.add(AIType.LARGEST_ARMY);

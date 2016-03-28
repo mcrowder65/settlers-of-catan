@@ -2,6 +2,7 @@ package communication.moves;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import server.Game;
@@ -16,9 +17,13 @@ public class SendChatCommandTest {
 	public void setUp() throws Exception {
 		new Setups().SetupGame("Playing");
 	}
-
+	@After
+	public void tearDown() throws Exception {
+		Game.Reset();
+	}
 	@Test
 	public void test() {
+		System.out.println("SendChatCommand test");
 		ServerGameModel model = Game.instance().getGameId(0);
 		ServerPlayer[] players = model.getServerPlayers();
 		SendChatCommand sendChat = new SendChatCommand(0, "hello world!");

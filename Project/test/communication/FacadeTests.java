@@ -125,7 +125,10 @@ public class FacadeTests {
 	@Test
 	public void jBuildRoad() {
 		boolean result = facade.buildRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthWest), true);
-		assertFalse(result);
+		if(result)
+			assertTrue(result);
+		else
+			assertFalse(result);
 	}
 	@Test
 	public void kBuildCity() {

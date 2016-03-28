@@ -259,8 +259,7 @@ public abstract class AIBase extends ServerPlayer {
 	public void playSetup() {
 		
 		placeRoadAI(true);
-		placeSettlementAI(true);
-		
+	    placeSettlementAI(true);
 		facade.finishTurn();
 	}
 	

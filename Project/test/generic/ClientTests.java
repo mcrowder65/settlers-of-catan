@@ -1,9 +1,13 @@
 package generic;
 
+import server.Server;
+
 public class ClientTests {
 
 	
 	public static void main(String[] args) {
+		new Server().run(new String[] {"8081"});
+		
 		String[] testClasses = new String[] {
 				"client.utils.TranslatorTest",
 				

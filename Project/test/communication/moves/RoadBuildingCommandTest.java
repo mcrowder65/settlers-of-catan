@@ -34,7 +34,7 @@ public class RoadBuildingCommandTest {
 	}
 	@Test
 	public void test() {
-		System.out.println("RoadBuildingCommand test");
+		System.out.println("testing RoadBuildingCommand");
 		ServerGameModel model = Game.instance().getGameId(0);
 		ServerPlayer[] players = model.getServerPlayers();
 		

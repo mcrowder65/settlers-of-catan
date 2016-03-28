@@ -31,6 +31,11 @@ public class MonumentCommand extends MoveCommand {
 		this.type = tmp.type; 
 		
 	}
+	//For testing
+	public MonumentCommand(int playerIndex, int gameIndex) {
+		super(playerIndex);
+		this.gameIDCookie = gameIndex;
+	}
 	/**
 	 * This executes the monument command. returns GetModelResponse
 	 */

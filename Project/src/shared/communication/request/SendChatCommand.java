@@ -37,6 +37,17 @@ public class SendChatCommand extends MoveCommand {
 		
 	}
 	/**
+	 * used for junit's exclusively
+	 * @param playerIndex
+	 * @param content
+	 * @param gameIndex
+	 */
+	public SendChatCommand(int playerIndex, String content, int gameIndex){
+		super(playerIndex, gameIndex);
+		this.content = content;
+		this.type = "sendChat";
+	}
+	/**
 	 * This executes the send chat command.
 	 */
 	@Override

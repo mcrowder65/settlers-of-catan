@@ -8,6 +8,11 @@ import shared.locations.*;
  */
 public class MessageLine {
 	
+	@Override
+	public String toString() {
+		return message;
+	}
+
 	/**
 	 * Message to be sent
 	 */

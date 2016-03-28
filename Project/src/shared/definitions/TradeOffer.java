@@ -76,7 +76,22 @@ public class TradeOffer {
 		return "TradeOffer [sender=" + sender + ", receiver=" + receiver + ", offer=" + offer + "]";
 	}
 
-	
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) return false;
+		if (!(other instanceof TradeOffer)) return false;
+		
+		TradeOffer tOther = (TradeOffer)other;
+		
+		if (this.getOffer() == null && tOther.getOffer() != null) return false;
+		if (this.getOffer() != null && tOther.getOffer() == null) return false;
+		
+		
+		return tOther.getReciever() == this.getReciever() &&
+				tOther.getSender() == this.getSender() &&
+				(tOther.getOffer() == this.getOffer() || tOther.getOffer().equals(this.getOffer()));
+		
+	}
 
 
 

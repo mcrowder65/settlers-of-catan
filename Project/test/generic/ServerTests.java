@@ -20,6 +20,8 @@ public class ServerTests {
 				"communication.moves.SendChatCommandTest",
 				"communication.moves.SoldierCommandTest",
 				"communication.moves.YearOfPlentyCommandTest",
+				"communication.ServerPlayerTest",
+				"communication.ServerGameMapTest"
 		};
 		org.junit.runner.JUnitCore.main(testClasses);
 	}

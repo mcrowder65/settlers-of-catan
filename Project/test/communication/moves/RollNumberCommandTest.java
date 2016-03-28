@@ -2,6 +2,7 @@ package communication.moves;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,9 +19,13 @@ public class RollNumberCommandTest {
 	public void setUp() throws Exception {
 		new Setups().SetupGame("Playing");
 	}
-
+	@After
+	public void tearDown() throws Exception {
+		Game.Reset();
+	}
 	@Test
 	public void test() {
+		System.out.println("RollNumberCommand test");
 		ServerGameModel model = Game.instance().getGameId(0);
 		ServerPlayer[] players = model.getServerPlayers();
 		

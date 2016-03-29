@@ -43,7 +43,7 @@ public class ServerGameMap extends GameMap {
 	 * blank constructor for testing
 	 */
 	public ServerGameMap() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -92,6 +92,7 @@ public class ServerGameMap extends GameMap {
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
  		VertexObject[] cities = getCities();
+ 		//going through all the settlements
  		if(this.allSettlements.size()>0){
 	 		for(int i=0; i<settlements.length; i++){
 	 			VertexObject settlement = settlements[i];
@@ -100,6 +101,7 @@ public class ServerGameMap extends GameMap {
 	 			}
 	 		}
  		}
+ 		//going through all the cities
  		if(this.allCities.size() >0){
 	 		for(int x=0; x<cities.length; x++){
 	 			VertexObject city = cities[x];
@@ -109,6 +111,7 @@ public class ServerGameMap extends GameMap {
 	 		}
  		}
  		
+ 		//returning cities and settlements together
  		return municipalities;
  		
  	}
@@ -121,6 +124,8 @@ public class ServerGameMap extends GameMap {
 	public List<VertexObject> getCityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] cities = getCities();
+ 		
+ 		//makes an arrayList with all the cities on a particular hex
  		if(allCities.size()>0){
 	 		for(int x=0; x<cities.length; x++){
 	 			VertexObject city = cities[x];
@@ -140,15 +145,17 @@ public class ServerGameMap extends GameMap {
 	public List<VertexObject> getSettlementOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
  		VertexObject[] settlements = getSettlements();
+ 		
+ 		//makes an arrayList with all the settlements on a particular hex
  		if(allSettlements.size()>0){
 	 		for(int i=0; i<settlements.length; i++){
 	 			VertexObject settlement = settlements[i];
 	 			VertexLocation vLoc = settlement.getLocation();
 	 			if (vLoc == null)
-	 				System.out.println("bad bad bad");
+	 				System.out.println("error loc was null");
 	 			HexLocation hLoc = vLoc.getHexLoc();
 	 			if (hLoc == null)
-	 				System.out.println("very very bad");
+	 				System.out.println("error hex was null");
 	 			if(hLoc.equals(loc) == true){
 	 				municipalities.add(settlement);
 	 			}
@@ -251,25 +258,6 @@ public class ServerGameMap extends GameMap {
 		    	locs.add(newLoc);
 		    else if (!free && this.canLayRoad(newLoc))
 		    	locs.add(newLoc);
-		    
-		    //TODO: Maybe needed?
-		    /*
-		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.South).getNormalizedLocation();
-		    newLoc = new EdgeValue(playerIndex, edgeLoc);
-		    if (this.canLayRoad(newLoc))
-		    	locs.add(newLoc);
-		    
-		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation();
-		    newLoc = new EdgeValue(playerIndex, edgeLoc);
-		    if (this.canLayRoad(newLoc))
-		    	locs.add(newLoc);
-		    
-		    edgeLoc = new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation();
-		    newLoc = new EdgeValue(playerIndex, edgeLoc);
-		    if (this.canLayRoad(newLoc))
-		    	locs.add(newLoc);
-		    */
-		    
 		    
 		}
 		

@@ -2,6 +2,9 @@ package communication;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,6 +16,8 @@ import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
+import shared.definitions.MessageLine;
+import shared.definitions.MessageList;
 import shared.definitions.ResourceList;
 
 public class ServerGameModelTest {
@@ -208,6 +213,28 @@ public class ServerGameModelTest {
 		
 		model.setDeck(new DevCardList(0,0,0,0,0));
 		assertTrue(model.isDeckEmpty());
+		
+	}
+	
+	@Test
+	public void addChatTest(){
+		System.out.println("Testing addChat ServerGameModel");
+		MessageLine[] lines = new MessageLine[4];
+		model.setChat(new MessageList(lines));
+		model.addChatMessage(new MessageLine("Brennen","Hello"));
+		assert(model.getChat().getLines()[0].getSource().equals("Brennen"));
+		assert(model.getChat().getLines()[0].getMessage().equals("Hello"));
+		
+	}
+	
+	@Test
+	public void addGameLogTest(){
+		System.out.println("Testing addGameLog ServerGameModel");
+		MessageLine[] lines = new MessageLine[4];
+		model.setLog(new MessageList(lines));
+		model.addGameLogMessage(new MessageLine("Brennen","Hello"));
+		assert(model.getLog().getLines()[0].getSource().equals("Brennen"));
+		assert(model.getLog().getLines()[0].getMessage().equals("Hello"));
 		
 	}
 	

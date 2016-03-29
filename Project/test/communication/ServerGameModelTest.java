@@ -11,14 +11,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import server.util.ServerGameMap;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
 import shared.definitions.DevCardList;
 import shared.definitions.DevCardType;
+import shared.definitions.GameMap;
+import shared.definitions.Hex;
 import shared.definitions.MessageLine;
 import shared.definitions.MessageList;
 import shared.definitions.ResourceList;
+import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.locations.VertexObject;
 
 public class ServerGameModelTest {
 
@@ -59,6 +67,31 @@ public class ServerGameModelTest {
 		model.setServerPlayers(serverPlayers);
 		model.setServerTurnTracker(turnTracker);
 		model.setDeck(new DevCardList(1,1,1,1,1));
+		
+		Hex[] hexMap = {
+			new Hex(new HexLocation(-2,0),ResourceType.BRICK,1),
+			new Hex(new HexLocation(-1,-1),ResourceType.WHEAT,2),
+			new Hex(new HexLocation(0,-2),ResourceType.SHEEP,3),
+			new Hex(new HexLocation(-2,1),ResourceType.SHEEP,4),
+			new Hex(new HexLocation(-1,0),ResourceType.WHEAT,5),
+			new Hex(new HexLocation(1,-2),ResourceType.ORE,6),
+			new Hex(new HexLocation(-2,2),ResourceType.BRICK,7),
+			new Hex(new HexLocation(-1,1),ResourceType.WOOD,8),
+			new Hex(new HexLocation(0,0),ResourceType.ORE,9),
+			new Hex(new HexLocation(1,-1),ResourceType.WOOD,10),
+			new Hex(new HexLocation(2,-2),ResourceType.SHEEP,11),
+			new Hex(new HexLocation(-1,2),ResourceType.WHEAT,12),
+			new Hex(new HexLocation(0,1),ResourceType.WHEAT,1),
+			new Hex(new HexLocation(1,0),ResourceType.BRICK,2),
+			new Hex(new HexLocation(2,-1),ResourceType.BRICK,3),
+			new Hex(new HexLocation(0,2),ResourceType.SHEEP,4),
+			new Hex(new HexLocation(1,1),ResourceType.BRICK,5),
+			new Hex(new HexLocation(2,0),ResourceType.ORE,6)
+		};
+		ServerGameMap map = new ServerGameMap();
+		map.setHexes(hexMap);
+		map.setRobber(new HexLocation(2,0));
+		model.setServerGameMap(map);
 		
 	}
 
@@ -235,8 +268,48 @@ public class ServerGameModelTest {
 		model.addGameLogMessage(new MessageLine("Brennen","Hello"));
 		assert(model.getLog().getLines()[0].getSource().equals("Brennen"));
 		assert(model.getLog().getLines()[0].getMessage().equals("Hello"));
+	}
+	
+	@Test
+	public void allPlayersDiscardedTest(){
+		System.out.println("Testing allPlayersDiscarded ServerGameModel");
+		assertFalse(model.allPlayersDiscarded());
+		model.getServerPlayers()[0].setDiscarded(true);
+		assertFalse(model.allPlayersDiscarded());
+		model.getServerPlayers()[1].setDiscarded(true);
+		model.getServerPlayers()[2].setDiscarded(true);
+		model.getServerPlayers()[3].setDiscarded(true);
+		assertTrue(model.allPlayersDiscarded());
+	}
+	
+	@Test 
+	public void getPlayersByIndexTest(){
+		System.out.println("Testing getPlayersByIndex ServerGameModel");
+		assert(model.getPlayerByIndex(0).getPlayerID() == model.getServerPlayers()[0].getPlayerID());
+		assert(model.getPlayerByIndex(3).getPlayerID() == model.getServerPlayers()[3].getPlayerID());
+	}
+	
+	@Test
+	public void issueResourcesNormalPlayTest(){
+		System.out.println("Testing issueResourcesNormalPlay ServerGameModel");
+		
+		//setting with settlement
+		model.getServerMap().laySettlement(new VertexObject(0,new VertexLocation(new HexLocation(0,0),VertexDirection.NorthWest)), false); 
+		model.getServerPlayers()[0].setResources(new ResourceList(0,0,0,0,0));
+		model.getServerPlayers()[1].setResources(new ResourceList(0,0,0,0,0));
+		model.getServerPlayers()[2].setResources(new ResourceList(0,0,0,0,0));
+		model.getServerPlayers()[3].setResources(new ResourceList(0,0,0,0,0));
+		model.issueResourcesNormalPlay(9);
+		assert(model.getServerPlayers()[0].getResources().getOre() == 1);
+		
+		//testing with cities
+		model.getServerMap().layCity(new VertexObject(0,new VertexLocation(new HexLocation(0,0),VertexDirection.NorthWest))); 
+		model.issueResourcesNormalPlay(9);
+		assert(model.getServerPlayers()[0].getResources().getOre() == 3);
+		
 		
 	}
+	
 	
 	
 	

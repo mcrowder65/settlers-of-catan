@@ -421,6 +421,8 @@ import shared.locations.VertexObject;
  	public String toString() {
  		return Translator.modelToJson(this);
  	}
+ 	
+ 	
  	public boolean allPlayersDiscarded(){
  		for(int i=0; i<serverPlayers.length; i++){
  			if(serverPlayers[i].getDiscarded() == false){

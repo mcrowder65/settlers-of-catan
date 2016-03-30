@@ -51,12 +51,15 @@ public class ServerGameModelTest {
 		ServerPlayer player1 = new ServerPlayer();
 		player1.setPlayerID(1);
 		player1.setVictoryPoints(0);
+		player1.setRoads(15);
 		ServerPlayer player2 = new ServerPlayer();
 		player2.setPlayerID(2);
 		player2.setVictoryPoints(0);
+		player2.setRoads(15);
 		ServerPlayer player3 = new ServerPlayer();
 		player3.setPlayerID(3);
 		player3.setVictoryPoints(0);
+		player3.setRoads(15);
 		ServerTurnTracker turnTracker = new ServerTurnTracker(0,"Rolling",-1,-1);
 		model = new ServerGameModel();
 		ServerPlayer[] serverPlayers = new ServerPlayer[4];
@@ -112,24 +115,17 @@ public class ServerGameModelTest {
 	public void setLargestArmyTest(){
 		System.out.println("Testing setLargestArmy in ServerGameModel");
 		//setting it first time
-		model.setLargestArmy(0,-1,true);
-		assert(model.getTurnTracker().getLargestArmy() == 0);
-		
-		//setting the second time
-		model.setLargestArmy(1,0,false);
-		assert(model.getTurnTracker().getLargestArmy() == 1);
+		model.findLargestArmy(); //this calls setLargestArmy
+		assertTrue(model.getServerTurnTracker().getLargestArmy() == 0);
 	}
 	
 	@Test
 	public void setLongestRoadTest(){
 		System.out.println("Testing setLongestRoad in ServerGameModel");
 		//setting it first time
-		model.setLongestRoad(0,true);
-		assert(model.getTurnTracker().getLongestRoad() == 0);
+		model.findLongestRoad(); //this method calls setLongestRoad
+		assertTrue(model.getServerTurnTracker().getLongestRoad() == 0);
 		
-		//setting the second time
-		model.setLongestRoad(0,false);
-		assert(model.getTurnTracker().getLargestArmy() == 0);
 	}
 	
 	@Test
@@ -147,19 +143,19 @@ public class ServerGameModelTest {
 	public void getNegative(){
 		System.out.println("Testing getNegative in ServerGameModel");
 		int num = model.getPositive(-1);
-		assert(num == 0);
+		assertTrue(num == 1);
 		
 		num = model.getPositive(1);
-		assert(num == -1);
+		assertTrue(num == 0);
 	}
 	
 	@Test
 	public void normalizeResourceListTest(){
 		System.out.println("Testing normalizeResourceList in ServerGameModel");
 		ResourceList list = new ResourceList(1,-1,0,0,0);
-		list = model.normalizeResourceList(list);
-		assert(list.getBrick() == -1);
-		assert(list.getOre() == 0);
+		ResourceList list2 = model.normalizeResourceList(list);
+		assertTrue(list2.getBrick() == 0);
+		assertTrue(list2.getOre() == 1);
 	}
 	
 	@Test
@@ -167,20 +163,20 @@ public class ServerGameModelTest {
 		System.out.println("Testing getRecievingResourceList in ServerGameModel");
 		ResourceList list = new ResourceList(1,-1,0,0,0);
 		list = model.normalizeResourceList(list);
-		assert(list.getBrick() == 0);
-		assert(list.getOre() == -1);
+		assertTrue(list.getBrick() == 0);
+		assertTrue(list.getOre() == 1);
 	}
 	
 	@Test
 	public void findLargestArmyTest(){
 		System.out.println("Testing findLargestArmyTest in ServerGameModel");
 		model.findLargestArmy();
-		assert(model.getTurnTracker().getLargestArmy() == 0);
+		assert(model.getServerTurnTracker().getLargestArmy() == 0);
 		
 		//player changed
 		model.getServerPlayers()[1].setSoldiers(5);
 		model.findLargestArmy();
-		assert(model.getTurnTracker().getLargestArmy() == 1);
+		assert(model.getServerTurnTracker().getLargestArmy() == 1);
 		
 	}
 
@@ -188,12 +184,12 @@ public class ServerGameModelTest {
 	public void findLongestRoadTest(){
 		System.out.println("Testing findLongestRoad in ServerGameModel");
 		model.findLongestRoad();
-		assert(model.getTurnTracker().getLongestRoad() == 0);
+		assertTrue(model.getServerTurnTracker().getLongestRoad() == 0);
 		
 		//player changed 
 		model.getServerPlayers()[1].setRoads(4);
 		model.findLongestRoad();
-		assert(model.getTurnTracker().getLongestRoad() == 1);
+		assertTrue(model.getServerTurnTracker().getLongestRoad() == 1);
 	}
 	
 	@Test
@@ -205,10 +201,10 @@ public class ServerGameModelTest {
 	@Test
 	public void getLocalPlayerTest(){
 		System.out.println("Testing getLocalPlayer in ServerGameModel");
-		assert(model.getLocalPlayer(0).getPlayerID() == 0);
+		assertTrue(model.getLocalPlayer(0).getPlayerID() == 0);
 		
 		//another one
-		assert(model.getLocalPlayer(1).getPlayerID() == 1);
+		assertTrue(model.getLocalPlayer(1).getPlayerID() == 0);
 	}
 	
 	@Test
@@ -252,22 +248,20 @@ public class ServerGameModelTest {
 	@Test
 	public void addChatTest(){
 		System.out.println("Testing addChat ServerGameModel");
-		MessageLine[] lines = new MessageLine[4];
-		model.setChat(new MessageList(lines));
-		model.addChatMessage(new MessageLine("Brennen","Hello"));
-		assert(model.getChat().getLines()[0].getSource().equals("Brennen"));
-		assert(model.getChat().getLines()[0].getMessage().equals("Hello"));
+		model.setChat(new MessageList());
+		model.addChatMessage(new MessageLine("Hello","Brennen"));
+		assertTrue(model.getChat().getLines()[0].getSource().equals("Brennen"));
+		assertTrue(model.getChat().getLines()[0].getMessage().equals("Hello"));
 		
 	}
 	
 	@Test
 	public void addGameLogTest(){
 		System.out.println("Testing addGameLog ServerGameModel");
-		MessageLine[] lines = new MessageLine[4];
-		model.setLog(new MessageList(lines));
-		model.addGameLogMessage(new MessageLine("Brennen","Hello"));
-		assert(model.getLog().getLines()[0].getSource().equals("Brennen"));
-		assert(model.getLog().getLines()[0].getMessage().equals("Hello"));
+		model.setLog(new MessageList());
+		model.addGameLogMessage(new MessageLine("Hello","Brennen"));
+		assertTrue(model.getLog().getLines()[0].getSource().equals("Brennen"));
+		assertTrue(model.getLog().getLines()[0].getMessage().equals("Hello"));
 	}
 	
 	@Test
@@ -285,8 +279,8 @@ public class ServerGameModelTest {
 	@Test 
 	public void getPlayersByIndexTest(){
 		System.out.println("Testing getPlayersByIndex ServerGameModel");
-		assert(model.getPlayerByIndex(0).getPlayerID() == model.getServerPlayers()[0].getPlayerID());
-		assert(model.getPlayerByIndex(3).getPlayerID() == model.getServerPlayers()[3].getPlayerID());
+		assertTrue(model.getPlayerByIndex(0).getPlayerID() == model.getServerPlayers()[0].getPlayerID());
+		assertTrue(model.getPlayerByIndex(3).getPlayerID() == model.getServerPlayers()[3].getPlayerID());
 	}
 	
 	@Test

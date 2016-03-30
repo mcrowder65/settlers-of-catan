@@ -28,8 +28,6 @@ import shared.locations.VertexObject;
  */
 
 public class BuildSettlementCommand extends MoveCommand {
-
-	
 	
 	boolean free;
 	MirrorVertexLocation vertexLocation;
@@ -74,7 +72,7 @@ public class BuildSettlementCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
-			int gameIndex = this.gameIDCookie;
+			int gameIndex = this.gameIDCookie; //getting all the info needed to execute the command from the cookies and http exchange
 			int playerIndex = this.getPlayerIndex();	
 			VertexLocation loc = this.getLocation().getOriginal();			
 	 		Game game = Game.instance();		
@@ -85,18 +83,7 @@ public class BuildSettlementCommand extends MoveCommand {
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
 	 		VertexObject vertex = new VertexObject(playerIndex,loc);
-	 		/*
-	 		try {
-				response.setCookie("Set-cookie", "catan.user=" +
-						URLEncoder.encode("{" +
-					       "\"authentication\":\"" + "1142128101" + "\"," +
-				           "\"name\":\"" + userCookie + "\"," +
-						   "\"password\":\"" + passCookie + "\"," + 
-				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			*/
+
 	 		//making sure its the players turn		
 			if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);
@@ -104,13 +91,14 @@ public class BuildSettlementCommand extends MoveCommand {
 				return response;		
 			}
 			if(status.equals("FirstRound") || status.equals("SecondRound")){
-				if(!map.canBuildSettlementFirstRound(vertex)){
+				if(!map.canBuildSettlementFirstRound(vertex)){ //making sure settlement can be built during the first two rounds
 					//need to return some error here
 					response.setSuccess(false);
 					response.setErrorMessage("bad location");
 					return response;
 				}
 			}
+			//lays settlement during the second round 
 			if(status.equals("SecondRound")){
 				map.laySettlement(vertex,true);
 				List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
@@ -120,21 +108,26 @@ public class BuildSettlementCommand extends MoveCommand {
 					}
 				}
 				
-				player.removeSettlement();
-				player.addVictoryPoints();
+				player.removeSettlement(); //removes settlement from player count
+				player.addVictoryPoints(); //adds victory points
+				
+				//setting winnder
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);
 				}
-				addGameLog(player,model);
+				addGameLog(player,model); //adds message to gamelog
 				response.setSuccess(true);
-				model.setVersion(model.getVersion() + 1);
+				model.setVersion(model.getVersion() + 1); //updates version
 	            response.setJson(model.toString());
 				return response;
 			}
+			//lays a road if status is first round
 			if(status.equals("FirstRound")){
 				map.laySettlement(vertex,false);
 				player.removeSettlement();
-				player.addVictoryPoints();
+				player.addVictoryPoints(); //adds victory points
+				
+				//sets the winner
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);
 				}
@@ -146,17 +139,11 @@ public class BuildSettlementCommand extends MoveCommand {
 	            response.setJson(model.toString());
 				return response;
 			}
+			//lays a settlement if the for normal play
 			if(status.equals("Playing")){
-				//TODO: Sorry Brennen
-				/*
-				if(!player.canBuildSettlement() || !map.canBuildSettlement(vertex)){
-					response.setSuccess(false);
-					response.setErrorMessage("Bad Location");
-					return response;
-				}
-				*/
 				map.laySettlement(vertex,false);
 				player.laySettlement();
+				//sets the winner
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);
 				}
@@ -174,14 +161,26 @@ public class BuildSettlementCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * updates the game log
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built a settlement";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}
 	
+	/**
+	 * issues resources for the second round
+	 * @param settlement
+	 * @param map
+	 * @param player
+	 */
 	public void issueResource(VertexObject settlement, ServerGameMap map, ServerPlayer player){
 		Hex[] allHexes = map.getHexes();
+		//goes hexes and finds where the player laid the road
 		for(int i=0; i<allHexes.length; i++){
 			Hex hex = allHexes[i];
 			if(hex.getLocation().equals(settlement.getLocation().getHexLoc())){

@@ -74,6 +74,8 @@ public class MaritimeTradeCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+
 			int playerIndex=this.getPlayerIndex();			
 	 		int index =this.gameIDCookie;		
 	 		GetModelResponse response = new GetModelResponse();	
@@ -86,6 +88,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 	 		ResourceType input = this.getInput();
 	 		ResourceType output = this.getOutput();
 	 		
+	 		//setting the response header
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -111,19 +114,20 @@ public class MaritimeTradeCommand extends MoveCommand {
 				response.setErrorMessage("Wrong status");
 				return response; //Need to throw some error here		
 			}	
-			
+			//checking to see if the player has the resources 
 			if(player.getResources().hasResourceCertainNumber(input,ratio) == false){
 				response.setSuccess(false);
 				response.setErrorMessage("Doesnt have resource");
 				return response;
 			}
-			
+			//checking to see if the bank has the resources
 			if(model.getBank().hasResource(output) == false){
 				response.setSuccess(false);
 				response.setErrorMessage("Bank is all out of that resource");
 				return response;
 			}
 			
+			//checks to see if the player has the necessary ports
 			if(ratio <4){
 				if(checkPorts(map,input) == false){
 					response.setSuccess(false);
@@ -132,6 +136,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 				}
 			}
 			
+			//makes the trade
 			player.addResource(output);
 			player.getResources().removeResource(input, ratio);
 			model.getBank().removeResource(output,1);
@@ -142,9 +147,16 @@ public class MaritimeTradeCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * checks to see if the player has the proper ports 
+	 * @param map
+	 * @param input
+	 * @return
+	 */
 	public boolean checkPorts(ServerGameMap map, ResourceType input){
 		List<Port> ports = map.getPersonalPorts(playerIndex);
 		boolean correct = false;
+		//goes through the players ports seeing if they have a port with a ratio of 3
 		if(ratio == 3){
 			for(int i=0; i<ports.size(); i++){
 				Port port = ports.get(i);
@@ -153,6 +165,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 				}
 			}
 		}
+		//going though the players ports seeing if they have a port with the ratio of 2 and the proper resource
 		else if(ratio == 2){
 			for(int i=0; i<ports.size(); i++){
 				Port port = ports.get(i);

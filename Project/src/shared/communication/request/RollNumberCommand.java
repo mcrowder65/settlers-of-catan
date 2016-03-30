@@ -40,6 +40,7 @@ public class RollNumberCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;	
 	 		int numRolled = this.getNumber();
 	 		Game game = Game.instance();		
@@ -56,15 +57,15 @@ public class RollNumberCommand extends MoveCommand {
 				
 			}
 	  		
-	  		
+	  		//checking the status
 	  		if(turnTracker.getStatus() != "Rolling"){
 	  			response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;
 	  		}
 	  		
+	  		//if the number rolled is a 7
 	  		if(numRolled == 7){
-	  			
 	  			turnTracker.setStatus("Discarding");
 	  			for (int n = 0; n < 4; n++) {
 		  			model.getServerPlayers()[n].setDiscarded(
@@ -78,7 +79,6 @@ public class RollNumberCommand extends MoveCommand {
 		  					model.getServerPlayers()[n].setDiscarded(true);
 		  			}
 		  		}
-	  			
 	  			
 		  		boolean doneDiscarding = true;
 		  		for (int n = 0; n < 4; n++) {
@@ -106,6 +106,12 @@ public class RollNumberCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * updating the game log
+	 * @param player
+	 * @param model
+	 * @param numRolled
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model, int numRolled){
 		String message = player.getName() + " rolled a " + numRolled +".";
 		MessageLine line = new MessageLine(message,player.getName());

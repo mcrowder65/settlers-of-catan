@@ -36,6 +36,10 @@ public class BuildCityCommand extends MoveCommand {
 		this.type = "buildCity";
 	}
 	
+	/**
+	 * creating the build city command from the httpexchange
+	 * @param exchange
+	 */
 	public BuildCityCommand(HttpExchange exchange) {
 		super(exchange);
 		BuildCityCommand tmp = (BuildCityCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
@@ -51,6 +55,8 @@ public class BuildCityCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			VertexLocation loc = this.getLocation().getOriginal();		
@@ -81,48 +87,60 @@ public class BuildCityCommand extends MoveCommand {
 				response.setErrorMessage("Wrong turn");
 				return response; //Need to throw some error here		
 			}
+			
+			//making sure that the status is correct
 			if(status.equals("Playing")){
-				if(!player.canBuildCity()){
+				if(!player.canBuildCity()){ //checks to see if a player can build the city
 					//return that there was an error
 					response.setSuccess(false);
 					response.setErrorMessage("Wrong status");
 					return response;
 				}
-				if(!map.canBuildCity(vertex)){
+				if(!map.canBuildCity(vertex)){ //checks to see if the city can be placed on the map
 					response.setSuccess(false);
 					response.setErrorMessage("Bad Location");
 					return response;
 				}
 				
-				map.layCity(vertex);
-				player.layCity();
+				map.layCity(vertex); //lays the city on the map
+				player.layCity(); //updates the player
 				
+				//sets the winner if needed
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);
 				}
 				
 				//return that there was a success
 				addGameLog(player,model);
-				model.setVersion(model.getVersion() + 1);
+				model.setVersion(model.getVersion() + 1);//updating the version
+				//creating the response
 				response.setJson(model.toString());
 				response.setSuccess(true);
 				return response;
 			}
 			
-		
+			//command was unsucesful
 			response.setSuccess(false);
 			response.setErrorMessage("Unreachable");
 			return response;
 		}
 	}
 	
+	/**
+	 * adds the message to the gamelog
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built a city";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
 	}
 
-
+	/**
+	 * gets the mirror vertex loc
+	 * @return
+	 */
 	public MirrorVertexLocation getLocation() {
 		return vertexLocation;
 	}

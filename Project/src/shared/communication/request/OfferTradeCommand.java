@@ -57,6 +57,7 @@ public class OfferTradeCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			ResourceList offer = this.getOffer();	
@@ -75,18 +76,19 @@ public class OfferTradeCommand extends MoveCommand {
 				response.setErrorMessage("Not enough resources");
 				return response;
 	 		}
+	 		//checking the status
 	 		if(status != "Playing"){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Wrong Status");
 				return response;
 	 		}
-	 		
+	 		//checking the turn
 	 		if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
 				return response; 		
 			}
-	 		
+	 		//creating the trade offer
 	 		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
 	 		model.setTradeOffer(trade);
 	 		
@@ -97,7 +99,7 @@ public class OfferTradeCommand extends MoveCommand {
 	 			rejectTrade.execute();
 	 		} 
 	 		
-	 		model.setVersion(model.getVersion() + 1);
+	 		model.setVersion(model.getVersion() + 1);//setting the version
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
 			return response; 

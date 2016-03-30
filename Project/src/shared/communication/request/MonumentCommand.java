@@ -42,9 +42,9 @@ public class MonumentCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
-			int playerIndex = this.getPlayerIndex();	
-	 					
+			int playerIndex = this.getPlayerIndex();		
 	 		Game game = Game.instance();		
 	 		ServerGameModel model = game.getGameId(gameIndex);		
 	 		ServerGameMap map = model.getServerMap();		
@@ -72,6 +72,7 @@ public class MonumentCommand extends MoveCommand {
 					
 			String status = turnTracker.getStatus();
 			
+			//checking to see if the playr can play the monument card
 			if(!player.canPlayMonumentCard()){
 				response.setSuccess(false);
 				response.setErrorMessage("Player cannot play monument card");
@@ -80,7 +81,8 @@ public class MonumentCommand extends MoveCommand {
 			
 			//making sure its the right status		
 			if(status.equals("Playing")){
-				player.playMonument();
+				player.playMonument(); //playing the monument card
+				//checking the winner
 				if(player.getVictoryPoints() > 9){
 					model.setWinner(playerIndex);
 				}
@@ -95,7 +97,11 @@ public class MonumentCommand extends MoveCommand {
 			return response; //need to return some error here
 		}
 	}
-	
+	/**
+	 * updating the gameLog
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built a monument and gained a victory point";
 		MessageLine line = new MessageLine(message,player.getName());

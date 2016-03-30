@@ -59,9 +59,9 @@ public class RoadBuildingCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
-	 				
 	 		EdgeLocation loc1 = this.getSpot1();	
 	 		EdgeLocation loc2 = this.getSpot2();
 	 		Game game = Game.instance();		
@@ -98,16 +98,16 @@ public class RoadBuildingCommand extends MoveCommand {
 					response.setErrorMessage("Player cannot play card");
 					return response;
 				}
-				if(!map.canUseRoadBuilder(playerIndex,loc1,loc2)){
+				if(!map.canUseRoadBuilder(playerIndex,loc1,loc2)){ //checks to see if the map can use the roadbuilder
 					response.setSuccess(false);
 					response.setErrorMessage("Wrong Location");
 					return response;
 				}
-				map.buildRoad(new EdgeValue(playerIndex,loc1));
-				map.buildRoad(new EdgeValue(playerIndex,loc2));
-				player.layRoadBuilder();
+				map.buildRoad(new EdgeValue(playerIndex,loc1)); //build road one
+				map.buildRoad(new EdgeValue(playerIndex,loc2)); //builder road 2 
+				player.layRoadBuilder(); //charge player
 				player.setPlayedDevCard(true);
-				model.setVersion(model.getVersion() + 1);
+				model.setVersion(model.getVersion() + 1); //setting version
 				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
@@ -122,7 +122,11 @@ public class RoadBuildingCommand extends MoveCommand {
 		}
 	}
 
-
+	/**
+	 * updating the gamelog
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built 2 roads";
 		MessageLine line = new MessageLine(message,player.getName());

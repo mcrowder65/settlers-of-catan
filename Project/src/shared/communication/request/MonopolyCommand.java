@@ -48,6 +48,7 @@ public class MonopolyCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();		
 	 		Game game = Game.instance();	
@@ -92,7 +93,7 @@ public class MonopolyCommand extends MoveCommand {
 				response.setErrorMessage("Player cannot play monopoly card");
 				return response;
 			}
-			
+			//excuting the monopoly command
 			for(int i=0; i<allPlayers.length; i++){
 				if(i != playerIndex){
 					ServerPlayer player2 = allPlayers[i];
@@ -103,7 +104,7 @@ public class MonopolyCommand extends MoveCommand {
 					}
 				}
 			}
-			player.playMonopolyCard();
+			player.playMonopolyCard(); //charging the player for the monopoly card
 			player.setPlayedDevCard(true);
 			model.setVersion(model.getVersion()  + 1);
 			addGameLog(player,model);
@@ -112,7 +113,11 @@ public class MonopolyCommand extends MoveCommand {
 			return response;
 		}
 	}
-	
+	/**
+	 * updates the game log
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " stole everyones " + resource.toString();
 		MessageLine line = new MessageLine(message,player.getName());

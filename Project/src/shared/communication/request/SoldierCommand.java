@@ -47,6 +47,7 @@ public class SoldierCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			HexLocation robberLoc = this.getLocation();		
@@ -56,9 +57,8 @@ public class SoldierCommand extends MoveCommand {
 	 		ServerGameMap map = model.getServerMap();		
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
-	 		
-	 		//ServerPlayer victim = model.getServerPlayers()[victimIndex];
 	 		String status = turnTracker.getStatus();
+	 		//updating header
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -69,65 +69,66 @@ public class SoldierCommand extends MoveCommand {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	 		
+	 		//checking the turn
 	 		if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
 				return response; 		
 			}
-	 		
+	 		//checking the status
 	 		if(!status.equals("Playing")){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;
 	 		}
 	 		
-	 		
+	 		//seeing if the player can playt the card
 	 		if(!player.canPlaySoldierCard()){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Player cannot play dev card");
 				return response;
 	 		}
 	 		
-	 		
+	 		//checking to make sure the robber loc is valid
 	 		if(map.isLand(robberLoc) == false){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Invalid Hex Location");
 				return response;
 	 		}
-	 		
-	 		
-	 		
+	 		//checking to see if there is a victim
 	 		if(victimIndex == -1){
-	 			player.playSoldierCard();
+	 			player.playSoldierCard(); 
 	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
-	 			model.setVersion(model.getVersion() + 1);
-	 			Game.instance().getGameId(gameIDCookie).findLargestArmy();
+	 			model.setVersion(model.getVersion() + 1); //updates version
+	 			Game.instance().getGameId(gameIDCookie).findLargestArmy(); //updates largest army
 	 			response.setSuccess(true);
 	 			addGameLog(player,model,null);
 	 			response.setJson(model.toString());
 				return response;
 	 		}
 	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		//if the victim has no resources
 	 		if(victim.getResources().isEmpty()){
 	 			player.playSoldierCard();
 	 			player.setPlayedDevCard(true);
 				map.setRobber(robberLoc);
 	 			model.setVersion(model.getVersion() + 1);
-	 			Game.instance().getGameId(gameIDCookie).findLargestArmy();
+	 			Game.instance().getGameId(gameIDCookie).findLargestArmy(); //updates largest army
 	 			response.setSuccess(true);
 	 			addGameLog(player,model,victim);
 	 			response.setJson(model.toString());
 				return response;
 			}
 	 		
-	 		ResourceType resource = model.generateRandomResource();
+	 		ResourceType resource = model.generateRandomResource(); //gets random resource
 			
+	 		//keeps generating random resources if the victim doesn't have one
 			while(victim.getResources().hasResource(resource) == false){
 				resource = model.generateRandomResource();
 			}
 			
+			//executing the rob
 			victim.removeResource(resource);
 			player.addResource(resource);
 			model.setVersion(model.getVersion() +1);
@@ -144,6 +145,12 @@ public class SoldierCommand extends MoveCommand {
 	
 	}
 	
+	/**
+	 * updates the game log
+	 * @param player
+	 * @param model
+	 * @param player2
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
 		String message = player.getName() + " used a soldier";
 		MessageLine line = new MessageLine(message,player.getName());

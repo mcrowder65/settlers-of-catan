@@ -53,6 +53,7 @@ public class SendChatCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			Game game = Game.instance();		
@@ -60,7 +61,9 @@ public class SendChatCommand extends MoveCommand {
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		GetModelResponse response = new GetModelResponse();
 	 		MessageLine line = new MessageLine(getContent(),player.getName());
-	 		model.addChatMessage(line);
+	 		model.addChatMessage(line); //adding the message to the model
+	 		
+	 		//updating the response header
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -72,7 +75,7 @@ public class SendChatCommand extends MoveCommand {
 				e.printStackTrace();
 			}
 	 		
-	 		model.setVersion(model.getVersion() + 1);
+	 		model.setVersion(model.getVersion() + 1); //updating the version
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
 			return response; 

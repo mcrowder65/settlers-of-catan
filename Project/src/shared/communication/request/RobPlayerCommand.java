@@ -52,6 +52,7 @@ public class RobPlayerCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			int victimIndex = this.getVictimIndex();
@@ -80,8 +81,8 @@ public class RobPlayerCommand extends MoveCommand {
 			
 			turnTracker.setStatus("Playing");
 			
-			map.setRobber(location);
-			model.setVersion(model.getVersion() + 1);
+			map.setRobber(location); //placing the robber
+			model.setVersion(model.getVersion() + 1); //updating the version
 			
 			//not robbing anyone
 			if (victimIndex == -1) {
@@ -102,22 +103,29 @@ public class RobPlayerCommand extends MoveCommand {
 				return response; 
 			}
 			
-			ResourceType resource = model.generateRandomResource();
+			ResourceType resource = model.generateRandomResource(); //getting the random resource
 			
+			//keep generating resources if the player doesn't have that resource
 			while(victim.getResources().hasResource(resource) == false){
 				resource = model.generateRandomResource();
 			}
 			
-			victim.removeResource(resource);
+			victim.removeResource(resource);//remove resource from the victim
 			player.addResource(resource);
 			model.setVersion(model.getVersion() + 1);
-			addGameLog(player,model,victim);
+			addGameLog(player,model,victim); //updating game log
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			return response; 
 		}
 	}
 	
+	/**
+	 * updating the gamelog
+	 * @param player
+	 * @param model
+	 * @param player2
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ServerPlayer player2){
 		String message;
 		if (player2 == null)

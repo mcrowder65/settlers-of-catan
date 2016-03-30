@@ -51,6 +51,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();
 			ResourceType res1 = this.getResource1();
@@ -62,6 +63,8 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
+	 		
+	 		//updates cookie header
 	 		try {
 				response.setCookie("Set-cookie", "catan.user=" +
 						URLEncoder.encode("{" +
@@ -73,30 +76,31 @@ public class YearOfPlentyCommand extends MoveCommand {
 				e.printStackTrace();
 			}
 	 		
+	 		//checks to make sure the turn is correct
 	 		if(checkTurn(turnTracker,playerIndex) == false){		
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
 				return response; 		
 			}
-	 		
+	 		//checking the status
 	 		if(!status.equals("Playing")){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;
 	 		}
-	 		
+	 		//making sure the bank has the first resource
 	 		if(model.getBank().hasResource(res1) == false){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Bank doesn't have resources to fill order");
 				return response;
 	 		}
-	 		
+	 		//making sure the bank has the second resource
 	 		if(model.getBank().hasResource(res2) == false){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Bank doesn't have resources to fill order");
 				return response;
 	 		}
-	 		
+	 		//if both the resources are the same
 	 		if(res1 == res2){
 	 			if(model.getBank().getResource(res1) < 2){
 	 				response.setSuccess(false);
@@ -104,13 +108,13 @@ public class YearOfPlentyCommand extends MoveCommand {
 					return response;
 	 			}
 	 		}
-	 		
+	 		//checks to see if the playr can use the card
 	 		if(!player.canPlayYearOfPlentyCard()){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Player cannot play YOP card");
 				return response;
 	 		}
-	 		
+	 		//plays the card
 	 		player.playYearOfPlentyCard();
 	 		player.setPlayedDevCard(true);
 	 		player.getResources().addResource(res1,1);
@@ -118,13 +122,19 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 		model.getBank().removeResource(res1,1);
 	 		model.getBank().removeResource(res2,1);
 	 		addGameLog(player,model,res1,res2);
-	 		model.setVersion(model.getVersion() + 1);
+	 		model.setVersion(model.getVersion() + 1); //updates model
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			return response;
 		}
 	}
-	
+	/**
+	 * updates the gamelog
+	 * @param player
+	 * @param model
+	 * @param res1
+	 * @param res2
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model, ResourceType res1, ResourceType res2){
 		String resource1 = resourceToString(res1);
 		String resource2 = resourceToString(res2);
@@ -133,6 +143,12 @@ public class YearOfPlentyCommand extends MoveCommand {
 		model.addGameLogMessage(line);
 	}
 	
+	/**
+	 * creats a string from the resource
+	 * used for the gamelog
+	 * @param res
+	 * @return
+	 */
 	public String resourceToString(ResourceType res){
 		if(res == ResourceType.SHEEP){
 			return "sheep";

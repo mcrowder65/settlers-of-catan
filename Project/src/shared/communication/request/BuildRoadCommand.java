@@ -48,6 +48,7 @@ public class BuildRoadCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int playerIndex=this.getPlayerIndex();			
 	 		int index =this.gameIDCookie;		
 	 		GetModelResponse response = new GetModelResponse();
@@ -63,7 +64,7 @@ public class BuildRoadCommand extends MoveCommand {
 				
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
-				return response; //Need to throw some error here		
+				return response; 		
 			}		
 					
 			String status = turnTracker.getStatus();		
@@ -71,49 +72,44 @@ public class BuildRoadCommand extends MoveCommand {
 			if(checkStatus(status) == false){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
-				return response; //Need to throw some error here		
+				return response; 		
 			}		
-					
+			
+			//laying a road during the first two rounds
 			if(status.equals("FirstRound") || status.equals("SecondRound")){		
-				if(!map.canBuildRoadSetup(playerIndex,loc)){	
+				if(!map.canBuildRoadSetup(playerIndex,loc)){ //checking to see if the road can be built on the map	
 					response.setSuccess(false);
 					response.setErrorMessage("Cannot Build Road at that location");
 					return response; 	
 				}
-				map.buildRoad(new EdgeValue(playerIndex,loc));
+				map.buildRoad(new EdgeValue(playerIndex,loc)); //builds the road on the map
 				player.removeRoad();
-				addGameLog(player,model);
+				addGameLog(player,model); //updating gamelog
 				response.setSuccess(true);
-				model.setVersion(model.getVersion() + 1);
-	            response.setJson(model.toString());
+				model.setVersion(model.getVersion() + 1); //updates version
+	            response.setJson(model.toString()); //creates response
 				Game.instance().getGameId(gameIDCookie).findLongestRoad();
 				return response; 	
 			}		
+			//checking the status
 			if(status.equals("Playing")){		
-				if(!player.resourcesToBuildRoad()){		
+				if(!player.resourcesToBuildRoad()){ //checks to see if the player has necessary resources
 					response.setSuccess(false);
 					response.setErrorMessage("Not enough resources to build road");
 					return response; 
 				}
-				
-				//TODO: Sorry Brennen
-				/*
-				if(!map.canBuildRoadNormal(playerIndex,loc)){
-					response.setSuccess(false);
-					response.setErrorMessage("Cannot build road at that location");
-					return response; 	
-				}
-				*/
-				map.buildRoad(new EdgeValue(playerIndex,loc));
+
+				map.buildRoad(new EdgeValue(playerIndex,loc)); //building the road
 				player.layRoad();
 				addGameLog(player,model);
 				response.setSuccess(true);
-				model.setVersion(model.getVersion() + 1);
+				model.setVersion(model.getVersion() + 1); //updating version
 	            response.setJson(model.toString());
-	            Game.instance().getGameId(gameIDCookie).findLongestRoad();
+	            Game.instance().getGameId(gameIDCookie).findLongestRoad(); //checking for the longest road
 				return response; 	
 			}		
-					
+			
+			//error occured
 			response.setSuccess(false);
 			response.setErrorMessage("Should not reach this point in the code");
 
@@ -121,6 +117,11 @@ public class BuildRoadCommand extends MoveCommand {
 		}
 	}
 
+	/**
+	 * adds proper message to the gamelog
+	 * @param player
+	 * @param model
+	 */
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + " built a road";
 		MessageLine line = new MessageLine(message,player.getName());

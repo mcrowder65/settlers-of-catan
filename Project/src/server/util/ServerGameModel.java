@@ -19,7 +19,14 @@ import shared.definitions.Player;
 import shared.definitions.ResourceList;
 import shared.definitions.ResourceType;		
 import shared.locations.VertexObject;
-  public class ServerGameModel extends GameModel{		  
+
+/**
+ * contains added methods to the model
+ * inherits from the GameModel class
+ * @author Brennen
+ *
+ */
+public class ServerGameModel extends GameModel{		  
   			  	
  	private ServerGameMap serverMap;		
  	private ServerPlayer[] serverPlayers;		
@@ -186,8 +193,6 @@ import shared.locations.VertexObject;
 	public int getLocalIndexJoinGame(int playerId){
 		int index = 0;
 		for(int n = 0; n < serverPlayers.length; n++){
-//			if(players[n] != null && players[n].getPlayerID() == playerId)
-//				return n;
 			if(serverPlayers[n] != null)
 				index++; //keep adding to index if there are players 
 		}
@@ -229,7 +234,6 @@ import shared.locations.VertexObject;
  		}
  		if(amt == 4)
  			throw new IllegalStateException("Already 4 players");
- 		//player.addResourceCards(new ResourceList());
  		player.setCities(4);
  		player.setDiscarded(false);
  		player.setMonuments(0);
@@ -246,50 +250,81 @@ import shared.locations.VertexObject;
  		serverPlayers[amt] = player;
  	}
  	
+ 	/**
+ 	 * gets the positive amt of a negative resource sent in
+ 	 * used when evaluating trading
+ 	 * @param resource
+ 	 * @return int
+ 	 */
  	public int getPositive(int resource){
  		if(resource>0){
- 			return 0;
+ 			return 0; //returns 0 if the resource is positive
  		}
  		if(resource<0){
- 			return Math.abs(resource);
+ 			return Math.abs(resource); //returns the positve amt of the neg int
  		}
  		return 0;
  	}
  	
+ 	/**
+ 	 * sets negative resource to 0 
+ 	 * used to evaluate trading
+ 	 * @param resource
+ 	 * @return
+ 	 */
  	public int getNegative(int resource){
  		if(resource<0){
- 			return 0;
+ 			return 0; //returns 0 if neg num is passed in
  		}
- 		return resource;
+ 		return resource; //returns the num passed in if the num is positive
  	}
  	
- 	
+ 	/**
+ 	 * creates a resouceList for all the resources the player is going to give up in a trade
+ 	 * @param resource
+ 	 * @return
+ 	 */
  	public ResourceList normalizeResourceList(ResourceList resource){
  		
+ 		//makes the neg amts positive
  		int brick = getPositive(resource.getBrick());
  		int wheat = getPositive(resource.getWheat());
  		int ore = getPositive(resource.getOre());
  		int wood = getPositive(resource.getWood());
  		int sheep = getPositive(resource.getSheep());
  		
+ 		//creates the new list
  		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
  		return normalized;
  	}
  	
+ 	/**
+ 	 * creates a resourcelist is of all the resources that the player will recieve in a trade
+ 	 * @param resource
+ 	 * @return
+ 	 */
  	public ResourceList getRecievingResourceList(ResourceList resource){
  		
+ 		//sets all the neg amounts to 0
  		int brick = getNegative(resource.getBrick());
  		int wheat = getNegative(resource.getWheat());
  		int ore = getNegative(resource.getOre());
  		int wood = getNegative(resource.getWood());
  		int sheep = getNegative(resource.getSheep());
  		
+ 		//creates new list
  		ResourceList normalized = new ResourceList(brick,ore,sheep,wheat,wood);
  		return normalized;
  	}
  	
+ 	/**
+ 	 * purchase a card from the bank's deck
+ 	 * @param card
+ 	 */
  	public void buyFromDeck(DevCardType card){
- 		DevCardList deck = getDeck();
+ 		DevCardList deck = getDeck();//getting the current deck
+ 		
+ 		//removing the card from the deck
  		if(card == DevCardType.SOLDIER){
  			deck.setSoldier(deck.getSoldier()-1);
  		}
@@ -316,6 +351,8 @@ import shared.locations.VertexObject;
  	 */
  	public boolean isBankEmpty(){
  		ResourceList bank = getBank();
+ 		
+ 		//getting all the resources from the bank
  		int brick = bank.getBrick();
  		int wood = bank.getWood();
  		int ore = bank.getOre();
@@ -327,8 +364,14 @@ import shared.locations.VertexObject;
  		return false;
  	}
  	
+ 	/**
+ 	 * checks to see if the bank decks empty
+ 	 * @return
+ 	 */
 	public boolean isDeckEmpty(){
  		DevCardList deck = getDeck();
+ 		
+ 		//getting dev cards from deck
  		int soldier = deck.getSoldier();
  		int YOP = deck.getYearOfPlenty();
  		int monument = deck.getMonument();
@@ -340,7 +383,10 @@ import shared.locations.VertexObject;
  		return false;
  	}
 	
-	
+	/**
+	 * generates a random resource 
+	 * @return
+	 */
 	public ResourceType generateRandomResource(){
 		int randomNum = new Random().nextInt((5 - 1) + 1) + 1;
 		if(randomNum == 1){
@@ -361,9 +407,14 @@ import shared.locations.VertexObject;
 		return ResourceType.WOOD;
 	}
  	
+	/**
+	 * generates a random dev card
+	 * used when player purchases a dev card
+	 * @return
+	 */
  	public DevCardType generateRandomDevCard(){
  		DevCardList deck = getDeck();
- 		int randomNum = new Random().nextInt((5 - 1) + 1) + 1;
+ 		int randomNum = new Random().nextInt((5 - 1) + 1) + 1; //generates the random int
  		if(randomNum == 1){
  			if(deck.getSoldier() > 0){
  				return DevCardType.SOLDIER;
@@ -409,21 +460,35 @@ import shared.locations.VertexObject;
  		return DevCardType.ROAD_BUILD;
  	}
  	
+ 	/**
+ 	 * adds a message to chat
+ 	 * @param line
+ 	 */
  	public void addChatMessage(MessageLine line){
  		getChat().addMessage(line);
  	}
- 	
+ 	/**
+ 	 * adds a messge to the game log
+ 	 * @param line
+ 	 */
  	public void addGameLogMessage(MessageLine line){
  		getLog().addMessage(line);
  	}
  	
+ 	/**
+ 	 * converts the model to json
+ 	 */
  	@Override
  	public String toString() {
  		return Translator.modelToJson(this);
  	}
  	
- 	
+ 	/**
+ 	 * checks to see if all the players have discarded
+ 	 * @return
+ 	 */
  	public boolean allPlayersDiscarded(){
+ 		//goes through all the players
  		for(int i=0; i<serverPlayers.length; i++){
  			if(serverPlayers[i].getDiscarded() == false){
  				return false;
@@ -440,27 +505,35 @@ import shared.locations.VertexObject;
  	public ServerPlayer getPlayerByIndex(int index){
  		return new ServerPlayer(serverPlayers[index]);
  	}
+ 	
+ 	/**
+ 	 * issues resources to the players depending on which number was rolled
+ 	 * @param numRolled
+ 	 */
 	public void issueResourcesNormalPlay(int numRolled){
- 		Hex[] allHexes = serverMap.getHexes();
+ 		Hex[] allHexes = serverMap.getHexes(); //getting all hexes from map
  		
+ 		//looping through all the hexes
  		for(int i=0; i<allHexes.length; i++){
  			Hex loc = allHexes[i];
  			if(loc.getNumber() == numRolled){
- 				if(!serverMap.getRobber().equals(loc.getLocation())){
- 					List<VertexObject> settlements = serverMap.getSettlementOnHex(loc.getLocation());
+ 				if(!serverMap.getRobber().equals(loc.getLocation())){ //checks to see if the robber is on the hex
+ 					List<VertexObject> settlements = serverMap.getSettlementOnHex(loc.getLocation()); //gets all settlements on the hex
+ 					//goes through the settlments on the hex and awards the resource of that hex to the player that owns the settlement
  					if(settlements.size()>0){
  						for(int x=0; x<settlements.size(); x++){
 	 						int owner = settlements.get(x).getOwner();
 	 						ResourceType resource = loc.getResource();
-	 						serverPlayers[owner].getResources().addResource(resource,1);
+	 						serverPlayers[owner].getResources().addResource(resource,1); //awarding resource
  						}
  					}
- 					List<VertexObject> cities = serverMap.getCityOnHex(loc.getLocation());
+ 					List<VertexObject> cities = serverMap.getCityOnHex(loc.getLocation()); //getting all cities on a particular hex
+ 					//goes through the cities on the hex and awards the resource of that hex to the player that owns the settlement
  					if(cities.size()>0){
  						for(int x=0; x<cities.size(); x++){
 	 						int owner = cities.get(x).getOwner();
 	 						ResourceType resource = loc.getResource();
-	 						serverPlayers[owner].getResources().addResource(resource,2);
+	 						serverPlayers[owner].getResources().addResource(resource,2);//awarding resource
  						}
  					}
  				}

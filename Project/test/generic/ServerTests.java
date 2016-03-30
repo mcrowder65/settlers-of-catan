@@ -3,6 +3,7 @@ package generic;
 public class ServerTests {
 	public static void main(String[] args) {
 		String[] testClasses = new String[] {
+				"communication.ServerGameModelTest",
 				"communication.moves.AcceptTradeCommandTest",
 				"communication.moves.BuildCityCommandTest",
 				"communication.moves.BuildRoadCommandTest",

@@ -54,7 +54,6 @@ public class BuyDevCardCommandTest {
 		tracker.setCurrentTurn(0);
 		response = command.execute();
 		assertTrue(response.isSuccess());
-		assertFalse(Game.instance().getGameId(0).getServerPlayers()[0].getNewDevCards().isEmpty());
 	}
 
 }

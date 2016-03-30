@@ -31,6 +31,11 @@ public class ServerPlayer extends Player {
 		this.setCities(4);
 		this.setSettlements(5);
 	}
+	
+	/**
+	 * constructor to make a serverplayer from another player
+	 * @param copy
+	 */
 	public ServerPlayer(ServerPlayer copy){
 		super(copy.getCities(), copy.getColor(), copy.getDiscarded(), 
 				copy.getMonuments(), copy.getName(), copy.getNewDevCards(),
@@ -38,8 +43,11 @@ public class ServerPlayer extends Player {
 				copy.getPlayerID(), copy.getResources(), copy.getRoads(), copy.getSettlements(),
 				copy.getSoldiers(), copy.getVictoryPoints());
 	}
+	/**
+	 * blank constructor for testing purposes
+	 */
 	public ServerPlayer() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -68,6 +76,11 @@ public class ServerPlayer extends Player {
 		removeSettlement();
 	}
 	
+	/**
+	 * checks to see if a player can make the trade offer that the client sent over
+	 * @param offer
+	 * @return
+	 */
 	public boolean canMakeTrade(ResourceList offer){
 		if(offer.getBrick() > getResources().getBrick()){
 			return false;
@@ -88,6 +101,10 @@ public class ServerPlayer extends Player {
 		return true;
 	}
 	
+	/**
+	 * Discards the card sent in by the server
+	 * @param cards
+	 */
 	public void discardCards(ResourceList cards){
  		int wood = cards.getWood();
  		int brick = cards.getBrick();
@@ -113,6 +130,11 @@ public class ServerPlayer extends Player {
  		setDiscarded(true);
  	}
 	
+	/**
+	 * checks to see if the player can accept the trade sent over
+	 * @param offer
+	 * @return
+	 */
 	public boolean canAcceptTrade(ResourceList offer){
 		ResourceList resources = this.getResources();
 		if(offer.getBrick()>0){
@@ -152,6 +174,10 @@ public class ServerPlayer extends Player {
 		addSettlement();
 	}
 	
+	/**
+	 * adds a recource to the player's resource list
+	 * @param resource
+	 */
 	public void addResource(ResourceType resource){
 		if(resource == ResourceType.WOOD){
 			addWood();
@@ -171,6 +197,10 @@ public class ServerPlayer extends Player {
 		
 	}
 	
+	/**
+	 * removes a resource from the player's resource list
+	 * @param resource
+	 */
 	public void removeResource(ResourceType resource){
 		if(resource == ResourceType.WOOD){
 			removeWood();
@@ -190,6 +220,9 @@ public class ServerPlayer extends Player {
 		
 	}
 	
+	/**
+	 * adds a brick resource to the player's resource List
+	 */
 	public void addBrick(){
 		ResourceList allResources = getResources();
 		int brick = allResources.getBrick();
@@ -197,13 +230,19 @@ public class ServerPlayer extends Player {
 		allResources.setBrick(brick);
 		setResources(allResources);
 	}
+	/**
+	 * adds a wheat to the player's resource list
+	 */
 	public void addWheat(){
 		ResourceList allResources = getResources();
-		int wheat = allResources.getWheat();
-		wheat++;
-		allResources.setWheat(wheat);
+		int wheat = allResources.getWheat(); //getting wheat
+		wheat++; //increasing wheat
+		allResources.setWheat(wheat); //setting wheat
 		setResources(allResources);
 	}
+	/**
+	 * adds a sheep to the player's resource list
+	 */
 	public void addSheep(){
 		ResourceList allResources = getResources();
 		int sheep = allResources.getSheep();
@@ -211,6 +250,9 @@ public class ServerPlayer extends Player {
 		allResources.setSheep(sheep);
 		setResources(allResources);
 	}
+	/**
+	 * adds a wood to the player's resource list
+	 */
 	public void addWood(){
 		ResourceList allResources = getResources();
 		int wood = allResources.getWood();
@@ -218,6 +260,9 @@ public class ServerPlayer extends Player {
 		allResources.setWood(wood);
 		setResources(allResources);
 	}
+	/**
+	 * adds an ore to the player's resource list
+	 */
 	public void addOre(){
 		ResourceList allResources = getResources();
 		int ore = allResources.getOre();
@@ -226,6 +271,9 @@ public class ServerPlayer extends Player {
 		setResources(allResources);
 	}
 	
+	/**
+	 * removes an ore from the player's resource list
+	 */
 	public void removeBrick(){
 		ResourceList allResources = getResources();
 		int brick = allResources.getBrick();
@@ -233,6 +281,9 @@ public class ServerPlayer extends Player {
 		allResources.setBrick(brick);
 		setResources(allResources);
 	}
+	/**
+	 * removes a wheat from the player's resource list
+	 */
 	public void removeWheat(){
 		ResourceList allResources = getResources();
 		int wheat = allResources.getWheat();
@@ -240,6 +291,9 @@ public class ServerPlayer extends Player {
 		allResources.setWheat(wheat);
 		setResources(allResources);
 	}
+	/**
+	 * removes a sheep from the player's resource list
+	 */
 	public void removeSheep(){
 		ResourceList allResources = getResources();
 		int sheep = allResources.getSheep();
@@ -247,6 +301,9 @@ public class ServerPlayer extends Player {
 		allResources.setSheep(sheep);
 		setResources(allResources);
 	}
+	/**
+	 * removes a wood from the player's resource list
+	 */
 	public void removeWood(){
 		ResourceList allResources = getResources();
 		int wood = allResources.getWood();
@@ -254,6 +311,9 @@ public class ServerPlayer extends Player {
 		allResources.setWood(wood);
 		setResources(allResources);
 	}
+	/**
+	 * removes a ore from the player's resource list
+	 */
 	public void removeOre(){
 		ResourceList allResources = getResources();
 		int ore = allResources.getOre();
@@ -262,6 +322,9 @@ public class ServerPlayer extends Player {
 		setResources(allResources);
 	}
 	
+	/**
+	 * adds a roadbuilder to the player's dev cards
+	 */
 	public void addRoadBuilder(){
 		DevCardList newDevCards = getNewDevCards();
 		int roadBuilder = newDevCards.getRoadBuilding();
@@ -269,7 +332,9 @@ public class ServerPlayer extends Player {
 		newDevCards.setRoadBuilding(roadBuilder);
 		setNewDevCards(newDevCards);
 	}
-	
+	/**
+	 * adds a soldier card to the player's dev cards
+	 */
 	public void addSoldierCard(){
 		DevCardList newDevCards = getNewDevCards();
 		int soldier = newDevCards.getSoldier();
@@ -277,7 +342,9 @@ public class ServerPlayer extends Player {
 		newDevCards.setSoldier(soldier);
 		setNewDevCards(newDevCards);
 	}
-	
+	/**
+	 * adds a monopoly card to the player's dev cards
+	 */
 	public void addMonopoly(){
 		DevCardList newDevCards = getNewDevCards();
 		int monopoly = newDevCards.getMonopoly();
@@ -285,38 +352,53 @@ public class ServerPlayer extends Player {
 		newDevCards.setMonopoly(monopoly);
 		setNewDevCards(newDevCards);
 	}
-	
+	/**
+	 * adds a yop card to the player's dev cards
+	 */
 	public void addYearOfPlenty(){
 		DevCardList newDevCards = getNewDevCards();
-		int YOP = newDevCards.getYearOfPlenty();
-		YOP++;
-		newDevCards.setYearOfPlenty(YOP);
-		setNewDevCards(newDevCards);
+		int YOP = newDevCards.getYearOfPlenty(); //gets old yop amt
+		YOP++; //increases yop amt
+		newDevCards.setYearOfPlenty(YOP); //sets yop amt
+		setNewDevCards(newDevCards); //updates cards
 	}
-	
+	/**
+	 * adds a monument card to the player's dev cards
+	 */
 	public void addMonument(){
 		DevCardList newDevCards = getNewDevCards();
 		DevCardList oldDevCards = getOldDevCards();
 		int monument = newDevCards.getMonument();
-		monument = monument + oldDevCards.getMonument();
-		monument++;
-		oldDevCards.setMonument(monument);
-		setOldDevCards(oldDevCards);
+		monument = monument + oldDevCards.getMonument(); //getting monument card amt
+		monument++; //increase monuments
+		oldDevCards.setMonument(monument); //sets monuments
+		setOldDevCards(oldDevCards); //updates list
 	}
-	
+	/**
+	 * updates the player when a monument card is played
+	 */
 	public void playMonument(){
 		removeMonument();
 		addVictoryPoints();
 	}
-	
+	/**
+	 * removes the resources for purchasing a dev card
+	 */
 	public void chargeBuyDevCard(){
 		removeOre();
 		removeSheep();
 		removeWheat();
 	}
 	
+	/**
+	 * buys a dev card for the player
+	 * adds the card to player's dev card list
+	 * @param card
+	 */
 	public void buyDevCard(DevCardType card){
-		chargeBuyDevCard();
+		chargeBuyDevCard(); //removes resources 
+		
+		//adds the card that player bought
 		if(card == DevCardType.SOLDIER){
 			addSoldierCard();
 		}
@@ -333,15 +415,18 @@ public class ServerPlayer extends Player {
 			addMonument();
 		}
 	}
-	
+	/**
+	 * checks to see if a player has the resouces to build a road
+	 * @return true or false
+	 */
 	public boolean resourcesToBuildRoad(){		
 		int brick = getResources().getBrick();		
 		int wood = getResources().getWood();		
 		int roads = getRoads();		
 		if(brick >0 && wood>0 && roads>0){		
-			return true;		
+			return true; //player has the necessary resources		
 		}		
-		return false;		
+		return false;	//player doesn't have the necessary resources	
 	}
 
 	

@@ -1,0 +1,9 @@
+SELECT *
+FROM commands
+WHERE game_id IN
+    (     SELECT game_id
+          FROM commands
+          GROUP BY game_id
+          HAVING COUNT(*) = 5
+    )
+ORDER BY id;

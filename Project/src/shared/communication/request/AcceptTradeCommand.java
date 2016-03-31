@@ -47,6 +47,7 @@ public class AcceptTradeCommand extends MoveCommand {
 	@Override
 	public GetModelResponse execute() {
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();		
 			Game game = Game.instance();	
@@ -57,25 +58,15 @@ public class AcceptTradeCommand extends MoveCommand {
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			String status = turnTracker.getStatus();
 			TradeOffer offer = model.getTradeOffer();
-			/*
-			try {
-				response.setCookie("Set-cookie", "catan.user=" +
-						URLEncoder.encode("{" +
-					       "\"authentication\":\"" + "1142128101" + "\"," +
-				           "\"name\":\"" + userCookie + "\"," +
-						   "\"password\":\"" + passCookie + "\"," + 
-				           "\"playerID\":" + playerIDCookie + "}", "UTF-8" ) + ";catan.game=" + gameIDCookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-	*/
 			
+			//checking to make sure the reciever is correct
 			if(offer.getReciever() != playerIndex){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong Player");
 				return response;
 			}
 	
+			//deconstucting the offer
 			ResourceList resources = offer.getOffer();
 			int brick = resources.getBrick();
 			int wheat = resources.getWheat();
@@ -83,7 +74,7 @@ public class AcceptTradeCommand extends MoveCommand {
 			int sheep = resources.getSheep();
 			int wood = resources.getWood();
 			
-	
+			//executing the trade
 			if(willAccept == true){
 				int sender = offer.getSender();
 				ServerPlayer sendingPlayer = model.getServerPlayers()[sender];
@@ -97,10 +88,9 @@ public class AcceptTradeCommand extends MoveCommand {
 				distributeResources(ResourceType.WOOD, wood, player, sendingPlayer);
 				model.setVersion(model.getVersion() + 1);
 			}
-			addGameLog(offer);
+			addGameLog(offer); //adding to the game log
 			
-			//model.setTradeOffer(new TradeOffer(10,10, new ResourceList(0,0,0,0,0)));
-			model.setTradeOffer(null);
+			model.setTradeOffer(null); //resetting the trade offer
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			return response;
@@ -126,7 +116,10 @@ public class AcceptTradeCommand extends MoveCommand {
 		}
 	}
 	
-
+	/**
+	 * adding messages to the gameLog
+	 * @param currentOffer
+	 */
 	public void addGameLog(TradeOffer currentOffer){
 		
 		String message;

@@ -50,7 +50,7 @@ public class ServerGameMap extends GameMap {
 	 * checks to see if you can build a road during the first two rounds
 	 * @param index
 	 * @param loc
-	 * @return
+	 * @return boolean
 	 */
 	public boolean canBuildRoadSetup(int index, EdgeLocation loc){
 		EdgeValue road = new EdgeValue(index,loc);
@@ -70,7 +70,7 @@ public class ServerGameMap extends GameMap {
 	 * checks to see if you can build a road during normal play - no roadbuilder card
 	 * @param index
 	 * @param loc
-	 * @return
+	 * @return boolean
 	 */
 	public boolean canBuildRoadNormal(int index, EdgeLocation loc){
 		EdgeValue road = new EdgeValue(index,loc);
@@ -119,7 +119,7 @@ public class ServerGameMap extends GameMap {
 	/**
 	 * gets all the cities on a particular hex
 	 * @param loc
-	 * @return
+	 * @return List<VertexObject>
 	 */
 	public List<VertexObject> getCityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
@@ -140,7 +140,7 @@ public class ServerGameMap extends GameMap {
 	/**
 	 * gets all the settlements on a particular hex
 	 * @param loc
-	 * @return
+	 * @return List<VertexObject>
 	 */
 	public List<VertexObject> getSettlementOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
@@ -194,7 +194,7 @@ public class ServerGameMap extends GameMap {
 	 * @param index
 	 * @param loc1
 	 * @param loc2
-	 * @return
+	 * @return boolean
 	 */
 	public boolean canUseRoadBuilder(int index, EdgeLocation loc1, EdgeLocation loc2){
 		EdgeValue road = new EdgeValue(index,loc1);

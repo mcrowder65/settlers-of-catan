@@ -55,6 +55,7 @@ public class DiscardCardsCommand extends MoveCommand {
 	public GetModelResponse execute() {
 		try{
 		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
 			int gameIndex = this.gameIDCookie;
 			int playerIndex = this.getPlayerIndex();	
 			ResourceList cards = this.getDiscardedCards();	
@@ -66,24 +67,26 @@ public class DiscardCardsCommand extends MoveCommand {
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			String status = turnTracker.getStatus();
 			
+			//checking to see if the player doesnt have enough cards
 			if(player.getNumOfCards()<8){
 				response.setSuccess(false);
 				response.setErrorMessage("Not enough cards to discard");
 				return response;
 			}
 			
+			//checking the status
 			if(!status.equals("Discarding")){
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;
 			}
-			
+			//checking to see if the player already discarded this round
 			if(player.getDiscarded() == true){
 	 			response.setSuccess(false);
 	 			response.setErrorMessage("Already discarded");
 	 			return response;
 	 		}
-			
+			//executing the discard
 			player.discardCards(cards);
 			if(model.allPlayersDiscarded() == true){
 				turnTracker.setStatus("Robbing");
@@ -94,7 +97,7 @@ public class DiscardCardsCommand extends MoveCommand {
 			
 					
 	 		}
-			model.setVersion(model.getVersion() + 1);
+			model.setVersion(model.getVersion() + 1); //updating the version num
 			response.setSuccess(true);
 			
 			response.setJson(model.toString());

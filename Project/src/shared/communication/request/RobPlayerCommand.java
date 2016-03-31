@@ -92,7 +92,7 @@ public class RobPlayerCommand extends MoveCommand {
 				return response;
 			}
 
-			ServerPlayer victim = model.getServerPlayers()[victimIndex];
+			ServerPlayer victim = model.getServerPlayers()[victimIndex]; //getting the victim
 
 			//victim has no resources
 			if(victim.getResources().isEmpty()){

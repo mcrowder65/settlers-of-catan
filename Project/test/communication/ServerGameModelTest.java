@@ -104,7 +104,7 @@ public class ServerGameModelTest {
 
 	@Test
 	public void getLocalIndexTest() {
-		System.out.println("Testing getLocalIndexTest in ServerGameModel");
+		System.out.println("Testing getLocalIndexJoinGame in ServerGameModel");
 		boolean worked = model.getLocalIndex(0) == 0 ? true : false;
 		assert(worked == true);
 		worked = model.getLocalIndex(1) == 1 ? true : false;
@@ -194,7 +194,7 @@ public class ServerGameModelTest {
 	
 	@Test
 	public void getNumPlayersTest(){
-		System.out.println("Testing getNumPlayers in ServerGameModel");
+		System.out.println("Testing getAmtOfPlayers in ServerGameModel");
 		assert(model.getAmtOfPlayers() == 4);
 	}
 	
@@ -205,6 +205,15 @@ public class ServerGameModelTest {
 		
 		//another one
 		assertTrue(model.getLocalPlayer(1).getPlayerID() == 0);
+	}
+	
+	@Test
+	public void getLocalServerPlayerTest(){
+		System.out.println("Testing getLocalServerPlayer in ServerGameModel");
+		assertTrue(model.getLocalServerPlayer(0).getPlayerID() == 0);
+		
+		//another one
+		assertTrue(model.getLocalServerPlayer(1).getPlayerID() == 1);
 	}
 	
 	@Test

@@ -136,7 +136,7 @@ public class ServerPlayer extends Player {
 	 * @return
 	 */
 	public boolean canAcceptTrade(ResourceList offer){
-		ResourceList resources = this.getResources();
+		ResourceList resources = this.getResources(); //gets resources
 		if(offer.getBrick()>0){
 			if(resources.getBrick() < offer.getBrick()){
 				return false;

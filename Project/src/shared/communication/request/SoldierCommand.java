@@ -107,7 +107,8 @@ public class SoldierCommand extends MoveCommand {
 	 			response.setJson(model.toString());
 				return response;
 	 		}
-	 		ServerPlayer victim = model.getServerPlayers()[victimIndex];
+	 		ServerPlayer victim = model.getServerPlayers()[victimIndex]; //getting the victim
+	 		
 	 		//if the victim has no resources
 	 		if(victim.getResources().isEmpty()){
 	 			player.playSoldierCard();

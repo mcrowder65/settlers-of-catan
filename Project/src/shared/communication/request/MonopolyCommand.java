@@ -106,7 +106,7 @@ public class MonopolyCommand extends MoveCommand {
 			}
 			player.playMonopolyCard(); //charging the player for the monopoly card
 			player.setPlayedDevCard(true);
-			model.setVersion(model.getVersion()  + 1);
+			model.setVersion(model.getVersion()  + 1);//updating the version
 			addGameLog(player,model);
 			response.setSuccess(true);
 			response.setJson(model.toString());

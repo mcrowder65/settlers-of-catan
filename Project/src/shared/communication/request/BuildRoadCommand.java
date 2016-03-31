@@ -67,7 +67,7 @@ public class BuildRoadCommand extends MoveCommand {
 				return response; 		
 			}		
 					
-			String status = turnTracker.getStatus();		
+			String status = turnTracker.getStatus(); 	
 			//making sure its the right status		
 			if(checkStatus(status) == false){
 				response.setSuccess(false);
@@ -109,7 +109,7 @@ public class BuildRoadCommand extends MoveCommand {
 				return response; 	
 			}		
 			
-			//error occured
+			//error occurred
 			response.setSuccess(false);
 			response.setErrorMessage("Should not reach this point in the code");
 

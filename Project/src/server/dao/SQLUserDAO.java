@@ -35,10 +35,10 @@ public class SQLUserDAO implements IUserDAO{
         try {
 			Class.forName("com.mysql.jdbc.Driver");
 			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/340server", "root", "root");
-			PreparedStatement stmt = null;
+			PreparedStatement pstmt = null;
 			String mysqlstring="Select * from users;";
-			stmt = conn.prepareStatement(mysqlstring);
-			ResultSet set = stmt.executeQuery();
+			pstmt = conn.prepareStatement(mysqlstring);
+			ResultSet set = pstmt.executeQuery();
 			users = new ArrayList<RegisteredPersonInfo>();
 			while(set.next()) { //id, name, password
 				
@@ -47,7 +47,7 @@ public class SQLUserDAO implements IUserDAO{
 				String password = set.getString(3);
 				users.add(new RegisteredPersonInfo(id, username, password));
 			}
-			stmt.close();
+			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
 		}
@@ -61,8 +61,20 @@ public class SQLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) {
-		// TODO Auto-generated method stub
-		
+		 ArrayList<RegisteredPersonInfo> users = null;
+	        try {
+				Class.forName("com.mysql.jdbc.Driver");
+				PreparedStatement pstmt = null;
+				String mysqlstring="insert into users (id, user, pass) values (?, ?, ?);";
+				pstmt = conn.prepareStatement(mysqlstring);
+				pstmt.setInt(1, person.getId());
+				pstmt.setString(2, person.getUsername());
+				pstmt.setString(3, person.getPassword());
+				pstmt.executeUpdate();
+				pstmt.close();
+			} catch (ClassNotFoundException|SQLException e) {
+				e.printStackTrace();
+			}
 	}
 
 }

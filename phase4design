@@ -1,0 +1,55 @@
+We have two persistence provider implementations. One is for an SQL database, and the other is for XML. Each implementation will utilize two DAOs: One for users, and one for games. We have four tables: a games table, join table, users table, and commands table. The games table stores each game’s model, along with their id and title. The join table stores the relationship between users and what games they are in. Each row has a user id, game id that they are in, and color. The users table stores every user that is registered; a user has a username, password and id. The commands table stores the commands that are yet to be committed to a checkpoint, in the game table. Each command has an id, game id that it is associated with, and the data. The commands are ordered chronologically in ascending id number.
+The persistence provider stores Commands in an array, whose length is determined by the value passed into the command line. Each time a command is executed by a client (using a façade), the façade also calls addCommand on the persistence provider, which stores the command in the array, and also in the commands table. Once the array is full, the provider will call flushGame, which clears the array (and the database), and updates the game table.
+Here is the schema:
+
+DROP TABLE IF EXISTS `commands`;
+
+CREATE TABLE `commands` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `data` blob,
+  `game_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `commands to game` (`game_id`),
+  CONSTRAINT `commands to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `game membership`;
+
+CREATE TABLE `game membership` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `game_id` int(11) unsigned NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `playerIndex` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `join to game` (`game_id`),
+  KEY `join to user` (`user_id`),
+  CONSTRAINT `join to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `join to user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `games`;
+
+CREATE TABLE `games` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `data` blob,
+  `title` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `pass` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+The plug in wanted by the user will be passed in the command line, along with the updating interval.
+These two arguments are sent to Game singleton which will hold a PersistanceProvider (Abstract Factory). The plugins will be JAR’s and a Configuration File will be used to map the arguments to the path of the JARs.
+Using Class.instance(...) an instance of the SQL or XML PersistanceProvider is instantiated, which will
+create the appropriate DAO objects (SQL or XML).

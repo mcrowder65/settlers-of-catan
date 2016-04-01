@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.42)
 # Database: 340server
-# Generation Time: 2016-04-01 19:34:55 +0000
+# Generation Time: 2016-04-01 19:39:03 +0000
 # ************************************************************
 
 
@@ -60,6 +60,7 @@ CREATE TABLE `join` (
   `user_id` int(11) unsigned NOT NULL,
   `game_id` int(11) unsigned NOT NULL,
   `color` varchar(255) DEFAULT NULL,
+  `playerIndex` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `join to game` (`game_id`),
   KEY `join to user` (`user_id`),

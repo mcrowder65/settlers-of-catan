@@ -9,6 +9,7 @@ import java.util.Random;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.Translator;
+import server.persistence.PersistenceProvider;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -23,6 +24,7 @@ public class Game {
 	private ArrayList<RegisteredPersonInfo> registeredUsers = new ArrayList<RegisteredPersonInfo>();
 	private static Game _instance;
 	public Object lock = new Object();
+	private PersistenceProvider persistanceProvider;
 	
 	private Game() {
 		addUser("matt", "crowder");
@@ -41,6 +43,15 @@ public class Game {
 		}
 		
 		return _instance;
+	}
+	
+	/**
+	 * initializes the persistence provider
+	 * @param int max
+	 * @param String location
+	 */
+	public void initPersistanceProvider(int max, String location){
+		
 	}
 	
 	

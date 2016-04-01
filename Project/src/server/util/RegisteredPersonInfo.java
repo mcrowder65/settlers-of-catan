@@ -1,7 +1,11 @@
 package server.util;
 
 public class RegisteredPersonInfo {
-
+	public RegisteredPersonInfo(int id, String username, String password){
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
 	private int id;
 	private String username;
 	public int getId() {

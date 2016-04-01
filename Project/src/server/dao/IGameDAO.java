@@ -3,6 +3,7 @@ package server.dao;
 import java.util.List;
 
 import server.util.GameCombo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -28,8 +29,9 @@ public interface IGameDAO {
 	/**
 	 * updates the game in game table or xml file
 	 * @param gameID
+	 * @param model ServerGameModel
 	 */
-	public void updateGame(int gameID);
+	public void updateGame(int gameID, ServerGameModel model);
 	/**
 	 * deletes the commands from the database
 	 * @param gameID

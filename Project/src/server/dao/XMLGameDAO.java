@@ -3,6 +3,7 @@ package server.dao;
 import java.util.List;
 
 import server.util.GameCombo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -39,9 +40,10 @@ public class XMLGameDAO implements IGameDAO{
 	/**
 	 * updates a game in the XML file
 	 *@param int gameID
+	 *@param ServerGameModel model
 	 */
 	@Override
-	public void updateGame(int gameID) {
+	public void updateGame(int gameID, ServerGameModel model) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -9,6 +9,7 @@ import java.util.List;
 
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -67,7 +68,7 @@ public class SQLGameDAO implements IGameDAO{
 	 *@param int gameID
 	 */
 	@Override
-	public void updateGame(int gameID) {
+	public void updateGame(int gameID, ServerGameModel model) {
 		// TODO Auto-generated method stub
 		
 	}

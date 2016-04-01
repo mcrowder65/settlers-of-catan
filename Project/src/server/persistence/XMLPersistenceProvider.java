@@ -5,7 +5,9 @@ import java.util.List;
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.util.GameCombo;
+import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
+import shared.definitions.CatanColor;
 
 public class XMLPersistenceProvider extends PersistenceProvider{
 	
@@ -75,6 +77,26 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * calls the userDAO to add a user to the xml file
+	 * @param int userID, int gameID, CatanColor color
+	 */
+	@Override
+	public void joinUser(int userID, int gameID, CatanColor color){
+		
+	}
+	
+	/**
+	 * calls addUser on the XMLUserDAO
+	 * @param userID
+	 * @param gameID
+	 * @param color
+	 */
+	@Override
+	public void addUser(RegisteredPersonInfo person){
+		
 	}
 	
 }

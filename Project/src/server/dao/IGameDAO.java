@@ -25,7 +25,14 @@ public interface IGameDAO {
 	 * @param command
 	 */
 	public void addCommand(MoveCommand command);
-	
+	/**
+	 * adds a game to the game table
+	 * @param id of game
+	 * @param model ServerGameModel
+	 * @param title String - title of game
+	 */
+	public void addGame(int id, ServerGameModel model, String title);
+		
 	/**
 	 * updates the game in game table or xml file
 	 * @param gameID

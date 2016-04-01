@@ -1,16 +1,13 @@
 
-DROP TABLE IF EXISTS `commands`;
 
 CREATE TABLE `commands` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `data` blob,
+  `data` varchar(255) DEFAULT '',
   `game_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `commands to game` (`game_id`),
   CONSTRAINT `commands to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `game membership`;
 
 CREATE TABLE `game membership` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -25,23 +22,15 @@ CREATE TABLE `game membership` (
   CONSTRAINT `join to user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-DROP TABLE IF EXISTS `games`;
-
 CREATE TABLE `games` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `data` blob,
+  `data` longtext,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `users`;
-
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user` varchar(255) NOT NULL DEFAULT '',
   `pass` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-

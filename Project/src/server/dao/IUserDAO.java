@@ -10,6 +10,14 @@ import server.util.RegisteredPersonInfo;
  *
  */
 public interface IUserDAO {
+	/**
+	 * gets all users from the persistence storage
+	 * @return List<RegisteredPersonInfo>
+	 */
 	public List<RegisteredPersonInfo> getUsers();
+	/**
+	 * adds a user to the persistance storage
+	 * @param person
+	 */
 	public void addUser(RegisteredPersonInfo person);
 }

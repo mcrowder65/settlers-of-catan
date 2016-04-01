@@ -7,7 +7,8 @@ import server.dao.IUserDAO;
 import server.util.GameCombo;
 import shared.communication.request.MoveCommand;
 /**
- * 
+ * Stores the delta between keys
+ * Uses the DAO's to write to the database/files
  * @author Brennen
  *
  */
@@ -43,6 +44,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * adds a command to the array of commands 
+	 * calls the command method on the DAOs
 	 * @param MoveCommand
 	 */
 	@Override

@@ -61,7 +61,6 @@ public class SQLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) {
-		 ArrayList<RegisteredPersonInfo> users = null;
 	        try {
 				Class.forName("com.mysql.jdbc.Driver");
 				PreparedStatement pstmt = null;

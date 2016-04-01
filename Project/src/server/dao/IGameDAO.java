@@ -41,6 +41,7 @@ public interface IGameDAO {
 	 * @param int userID
 	 * @param int gameID
 	 * @param CatanColor color
+	 * @param int playerIndex
 	 */
-	public void joinUser(int userID, int gameID, CatanColor color);
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
 }

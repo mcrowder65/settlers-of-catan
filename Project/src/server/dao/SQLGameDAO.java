@@ -77,7 +77,16 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void deleteCommands(int gameID) {
-		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pstmt = null;
+			String mysqlstring="delete from commands where game_id=1;";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -88,7 +97,7 @@ public class SQLGameDAO implements IGameDAO{
 	 * @param CatanColor color
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color) {
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
 		// TODO Auto-generated method stub
 		
 	}

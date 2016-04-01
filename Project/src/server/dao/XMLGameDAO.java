@@ -61,7 +61,7 @@ public class XMLGameDAO implements IGameDAO{
 	 * @param CatanColor color
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color) {
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
 		// TODO Auto-generated method stub
 		
 	}

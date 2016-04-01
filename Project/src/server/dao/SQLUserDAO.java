@@ -27,7 +27,7 @@ public class SQLUserDAO implements IUserDAO{
 	}
 
 	/**
-	 * adds a user to the user table
+	 * adds a user to the SQL user table 
 	 * @param RegeristeredPersonInfo
 	 */
 	@Override

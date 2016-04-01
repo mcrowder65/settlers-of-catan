@@ -6,7 +6,7 @@ import server.util.GameCombo;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
- * adds games to an XML file
+ * adds updates games in an XML file
  * inherits from IGameDAO
  * @author Brennen
  *
@@ -27,14 +27,17 @@ public class XMLGameDAO implements IGameDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * adds a command to the XML file
+	 * @param MoveCommand - the move that should be added
+	 */
 	@Override
 	public void addCommand(MoveCommand command) {
 		// TODO Auto-generated method stub
 		
 	}
 	/**
-	 * updates a game in the SQL database
+	 * updates a game in the XML file
 	 *@param int gameID
 	 */
 	@Override
@@ -43,7 +46,7 @@ public class XMLGameDAO implements IGameDAO{
 		
 	}
 	/**
-	 * deletes commands 
+	 * deletes commands from the XML file
 	 * @param int gameID
 	 */
 	@Override

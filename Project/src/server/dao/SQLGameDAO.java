@@ -66,6 +66,7 @@ public class SQLGameDAO implements IGameDAO{
 	/**
 	 * updates a game in the SQL database
 	 *@param int gameID
+	 *@param ServerGameModel model
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {

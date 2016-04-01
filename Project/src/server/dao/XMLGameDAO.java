@@ -68,4 +68,16 @@ public class XMLGameDAO implements IGameDAO{
 		
 	}
 
+	/**
+	 * this adds a game
+	 * @param int id
+	 * @param ServerGameModel model
+	 * @param String title
+	 */
+	@Override
+	public void addGame(int id, ServerGameModel model, String title) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

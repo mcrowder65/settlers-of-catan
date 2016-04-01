@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.utils.Translator;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -70,9 +71,12 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
-		// TODO Auto-generated method stub
+		String json = Translator.modelToJson(model);
+		
+		
 		
 	}
+	
 	/**
 	 * deletes commands 
 	 * @param int gameID
@@ -100,6 +104,18 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * adds a game
+	 * @param int id
+	 * @param ServerGameModel model
+	 * @param String title
+	 */
+	@Override
+	public void addGame(int id, ServerGameModel model, String title) {
 		// TODO Auto-generated method stub
 		
 	}

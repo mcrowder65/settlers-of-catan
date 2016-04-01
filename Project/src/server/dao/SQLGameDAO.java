@@ -35,27 +35,7 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public List<GameCombo> getGames() {
-		 ArrayList<GameCombo> games = null;
-	        try {
-				Class.forName("com.mysql.jdbc.Driver");
-				PreparedStatement pstmt = null;
-				String mysqlstring="Select id from join;";
-				pstmt = conn.prepareStatement(mysqlstring);
-				ResultSet set = pstmt.executeQuery();
-				games = new ArrayList<GameCombo>();
-				while(set.next()) { //id, name, password
-					
-					int id = set.getInt(1);
-					String data = set.getString(2);
-					String title = set.getString(3);
-					
-				}
-				pstmt.close();
-			} catch (ClassNotFoundException|SQLException e) {
-				e.printStackTrace();
-			}
-	        
-			return games;
+		return null;
 	}
 
 	@Override
@@ -71,10 +51,6 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
 		String json = Translator.modelToJson(model);
-		
-		
-		
-		
 	}
 	
 	/**
@@ -104,8 +80,22 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
-		// TODO Auto-generated method stub
-		
+		String sColor = color.toString();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pstmt = null;
+			String mysqlstring="insert into 'game membership' (user_id, game_id, color, playerIndex) "
+					+ "values (?, ?, ?, ?);";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.setInt(2, userID);
+			pstmt.setInt(3, gameID);
+			pstmt.setString(4, sColor);
+			pstmt.setInt(playerIndex, playerIndex);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -116,7 +106,20 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) {
-		// TODO Auto-generated method stub
+		String json = Translator.modelToJson(model);
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pstmt = null;
+			String mysqlstring="insert into games (id, data, title) values (?, ?, ?);";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.setInt(1, id);
+			pstmt.setString(2, json);
+			pstmt.setString(3, title);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

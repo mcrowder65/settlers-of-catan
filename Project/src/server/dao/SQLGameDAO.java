@@ -58,9 +58,8 @@ public class SQLGameDAO implements IGameDAO{
 			return games;
 	}
 
-	
 	@Override
-	public void addCommand(MoveCommand command) {
+	public void addCommand(MoveCommand command, int gameID) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -72,6 +71,7 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
 		String json = Translator.modelToJson(model);
+		
 		
 		
 		

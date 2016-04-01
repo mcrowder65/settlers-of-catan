@@ -31,9 +31,10 @@ public class XMLGameDAO implements IGameDAO{
 	/**
 	 * adds a command to the XML file
 	 * @param MoveCommand - the move that should be added
+	 * @param gameID int the id of the game.
 	 */
 	@Override
-	public void addCommand(MoveCommand command) {
+	public void addCommand(MoveCommand command, int gameID) {
 		// TODO Auto-generated method stub
 		
 	}

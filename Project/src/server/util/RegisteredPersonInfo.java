@@ -18,6 +18,10 @@ public class RegisteredPersonInfo {
 	public String getUsername() {
 		return username;
 	}
+	@Override
+	public String toString() {
+		return "RegisteredPersonInfo [id=" + id + ", username=" + username + ", password=" + password + "]";
+	}
 	public void setUsername(String username) {
 		this.username = username;
 	}

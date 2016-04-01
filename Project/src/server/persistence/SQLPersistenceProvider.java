@@ -23,6 +23,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
+		//new dao's, new connection
 	}
 	
 	/**

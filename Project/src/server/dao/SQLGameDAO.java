@@ -28,10 +28,7 @@ public class SQLGameDAO implements IGameDAO{
 		return null;
 	}
 
-	/**
-	 * inserts the command to the command table in the SQL database
-	 * @param MoveCommand
-	 */
+	
 	@Override
 	public void addCommand(MoveCommand command) {
 		// TODO Auto-generated method stub
@@ -47,7 +44,7 @@ public class SQLGameDAO implements IGameDAO{
 		
 	}
 	/**
-	 * deletes commands from the command SQL table 
+	 * deletes commands 
 	 * @param int gameID
 	 */
 	@Override

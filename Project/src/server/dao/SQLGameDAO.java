@@ -1,8 +1,14 @@
 package server.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.util.GameCombo;
+import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -12,10 +18,13 @@ import shared.definitions.CatanColor;
  *
  */
 public class SQLGameDAO implements IGameDAO{
+	private Connection conn;
 	/**
 	 * constructor for SQLGameDAO
 	 */
-	public SQLGameDAO(){}
+	public SQLGameDAO(Connection conn){
+		this.conn = conn;
+	}
 	
 	/**
 	 * gets all the games in the game table of the SQL database
@@ -24,8 +33,27 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public List<GameCombo> getGames() {
-		// TODO Auto-generated method stub
-		return null;
+		 ArrayList<GameCombo> games = null;
+	        try {
+				Class.forName("com.mysql.jdbc.Driver");
+				PreparedStatement pstmt = null;
+				String mysqlstring="Select id from join;";
+				pstmt = conn.prepareStatement(mysqlstring);
+				ResultSet set = pstmt.executeQuery();
+				games = new ArrayList<GameCombo>();
+				while(set.next()) { //id, name, password
+					
+					int id = set.getInt(1);
+					String data = set.getString(2);
+					String title = set.getString(3);
+					
+				}
+				pstmt.close();
+			} catch (ClassNotFoundException|SQLException e) {
+				e.printStackTrace();
+			}
+	        
+			return games;
 	}
 
 	

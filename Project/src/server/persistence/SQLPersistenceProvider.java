@@ -5,7 +5,9 @@ import java.util.List;
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.util.GameCombo;
+import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
+import shared.definitions.CatanColor;
 /**
  * Stores the delta between keys
  * Uses the DAO's to write to the database/files
@@ -91,6 +93,26 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * calls the userDAO to add a user to the join table
+	 * @param int userID, int gameID, CatanColor color
+	 */
+	@Override
+	public void joinUser(int userID, int gameID, CatanColor color){
+		
+	}
+	
+	/**
+	 * calls addUser on the SQLUserDAO
+	 * @param userID
+	 * @param gameID
+	 * @param color
+	 */
+	@Override
+	public void addUser(RegisteredPersonInfo person){
+		
 	}
 
 	

@@ -1,12 +1,19 @@
-package persistence;
+package server.persistence;
 
-import dao.IUserDAO;
+import java.util.List;
+
+import server.dao.IGameDAO;
+import server.dao.IUserDAO;
+import server.util.GameCombo;
 import shared.communication.request.MoveCommand;
 
-public class XMLPersistenceProvider implements IPersistenceProvider{
-	private MoveCommand[] commands;
-	private int max;
-	public XMLPersistenceProvider(){}
+public class XMLPersistenceProvider extends PersistenceProvider{
+	
+	
+	public XMLPersistenceProvider(int commandCount){
+		super(commandCount);
+		
+	}
 	
 
 	/**
@@ -22,7 +29,7 @@ public class XMLPersistenceProvider implements IPersistenceProvider{
 	 * ends a transaction when writing to an XML file
 	 */
 	@Override
-	public void endTransaction() {
+	public void endTransaction(boolean commit) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -37,27 +44,18 @@ public class XMLPersistenceProvider implements IPersistenceProvider{
 		
 	}
 	
-	/**
-	 * Sets how many commands need to be executed before we write to disk
-	 * @param int commandCount
-	 */
-	@Override
-	public void setup(int commandCount) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	/**
 	 * loads a game into memory via the gameID
 	 * @param int gameID
 	 */
 	@Override
-	public void loadGame(int gameID) {
-		// TODO Auto-generated method stub
-		
+	public List<GameCombo> loadGames() {
+		return null;
 	}
 
 	@Override
-	public void flushGame(int gameID) {
+	protected void flushGame(int gameID) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -68,6 +66,13 @@ public class XMLPersistenceProvider implements IPersistenceProvider{
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub
 		return null;
 	}

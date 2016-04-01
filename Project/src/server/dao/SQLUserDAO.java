@@ -1,4 +1,4 @@
-package dao;
+package server.dao;
 
 import java.util.List;
 

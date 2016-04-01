@@ -1,20 +1,26 @@
-package persistence;
+package server.persistence;
 
-import dao.IUserDAO;
+import java.util.List;
+
+import server.dao.IGameDAO;
+import server.dao.IUserDAO;
+import server.util.GameCombo;
 import shared.communication.request.MoveCommand;
 /**
  * 
  * @author Brennen
  *
  */
-public class SQLPersistenceProvider implements IPersistenceProvider{
-	private MoveCommand[] commands;
-	private int max;
+public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
-	 * constructor for SQL Persistence Provider
+	 * constructor for SQL Persistence Provider.
+	 * @param commandCount
+	 *  Sets how many commands need to be executed before we write to disk
 	 */
-	public SQLPersistenceProvider(){}
+	public SQLPersistenceProvider(int commandCount){
+		super(commandCount);
+	}
 	
 	/**
 	 * Starts an SQL transaction 
@@ -29,7 +35,7 @@ public class SQLPersistenceProvider implements IPersistenceProvider{
 	 * Ends an SQL Transaction
 	 */
 	@Override
-	public void endTransaction() {
+	public void endTransaction(boolean commit) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -43,27 +49,18 @@ public class SQLPersistenceProvider implements IPersistenceProvider{
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * Sets how many commands need to be executed before we write to disk
-	 * @param int commandCount
-	 */
-	@Override
-	public void setup(int commandCount) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	/**
 	 * loads a game into memory via the gameID
 	 * @param int gameID
 	 */
 	@Override
-	public void loadGame(int gameID) {
-		// TODO Auto-generated method stub
-		
+	public List<GameCombo> loadGames() {
+		return null;
 	}
 
 	@Override
-	public void flushGame(int gameID) {
+	protected void flushGame(int gameID) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -78,4 +75,11 @@ public class SQLPersistenceProvider implements IPersistenceProvider{
 		return null;
 	}
 
+	@Override
+	public IGameDAO createGameDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

@@ -50,7 +50,6 @@ public class Game {
 	}
 	private static List<AIType> aiTypes;
 	private static HashSet<String> aiNames;
-	private static String initialGamesJson = "[ { \"id\": 0, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" }, { \"id\": -1, \"playerIndex\": 0, \"name\": \"Snell\", \"color\": \"green\" } ] }, { \"id\": 1, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" }, { \"id\": -2, \"playerIndex\": 1, \"name\": \"MrBurns\", \"color\": \"orange\" }, { \"id\": -3, \"playerIndex\": 2, \"name\": \"Bentz\", \"color\": \"brown\" }, { \"id\": -4, \"playerIndex\": 3, \"name\": \"Steve\", \"color\": \"yellow\" } ] }, { \"id\": 2, \"title\": \"matt\", \"players\": [ { \"id\": 0, \"playerIndex\": 0, \"name\": \"matt\", \"color\": \"red\" } ] } ]";
 	
 	static {
 		aiTypes = new ArrayList<AIType>();

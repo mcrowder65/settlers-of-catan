@@ -1,5 +1,10 @@
 package server.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.util.RegisteredPersonInfo;
@@ -22,8 +27,22 @@ public class SQLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = dm.getConnection(); //where do we get this connection?
+
+		PreparedStatement stmt = null;
+		String mysqlstring="Select * from users;";
+		stmt = conn.prepareStatement(mysqlstring);
+		ResultSet set = stmt.executeQuery();
+		ArrayList<RegisteredPersonInfo> users = new ArrayList<RegisteredPersonInfo>();
+		while(set.next()) { //id, name, password
+			int id = set.getInt(0);
+			String username = set.getString(1);
+			String password = set.getString(2);
+			users.add(new RegisteredPersonInfo(id, username, password));
+		}
+		stmt.close();
+		conn.close();
+		return users;
 	}
 
 	/**

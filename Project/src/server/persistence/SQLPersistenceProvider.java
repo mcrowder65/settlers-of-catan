@@ -33,6 +33,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * Ends an SQL Transaction
+	 * @param commit
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
@@ -59,6 +60,11 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		return null;
 	}
 
+	/**
+	 * Writes the entire game model to the database
+	 * Clears the commands table
+	 * @param int gameID
+	 */
 	@Override
 	protected void flushGame(int gameID) {
 		// TODO Auto-generated method stub
@@ -75,6 +81,10 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		return null;
 	}
 
+	/**
+	 * Creates the game DAO 
+	 * @return IGameDAO 
+	 */
 	@Override
 	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub

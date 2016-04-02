@@ -40,8 +40,19 @@ public class SQLGameDAO implements IGameDAO{
 
 	@Override
 	public void addCommand(MoveCommand command, int gameID) {
-		// TODO Auto-generated method stub
-		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pstmt = null;
+			String mysqlstring="insert into commands (data, game_id) "
+					+ "values (?, ?);";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.setString(1, command.getMoveType());
+			pstmt.setInt(2, gameID);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * updates a game in the SQL database
@@ -51,6 +62,17 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
 		String json = Translator.modelToJson(model);
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pstmt = null;
+			String mysqlstring="update games set data = ? where games.id =  " + gameID + ";";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.setString(1, json);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -62,7 +84,7 @@ public class SQLGameDAO implements IGameDAO{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
-			String mysqlstring="delete from commands where game_id=1;";
+			String mysqlstring="delete from commands where game_id=" + gameID + ";";
 			pstmt = conn.prepareStatement(mysqlstring);
 			pstmt.executeUpdate();
 			pstmt.close();

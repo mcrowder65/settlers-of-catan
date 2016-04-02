@@ -1,5 +1,7 @@
 package server.dao;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import server.util.GameCombo;
@@ -17,8 +19,9 @@ public interface IGameDAO {
 	 * gets all the games from the database/file
 	 * should be overridden by the DAOs
 	 * @return List<GameCombo>
+	 * @throws FileNotFoundException 
 	 */
-	public List<GameCombo> getGames();
+	public List<GameCombo> getGames() throws FileNotFoundException;
 	
 	/**
 	 * adds a command to the command table or file
@@ -31,8 +34,9 @@ public interface IGameDAO {
 	 * @param id of game
 	 * @param model ServerGameModel
 	 * @param title String - title of game
+	 * @throws IOException 
 	 */
-	public void addGame(int id, ServerGameModel model, String title);
+	public void addGame(int id, ServerGameModel model, String title) throws IOException;
 		
 	/**
 	 * updates the game in game table or xml file

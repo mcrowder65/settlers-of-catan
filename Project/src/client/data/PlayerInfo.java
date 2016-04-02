@@ -34,6 +34,12 @@ public class PlayerInfo
 		this.name = new String(name);
 		this.color = color;
 	}
+	public PlayerInfo(int id, String name, CatanColor color, int playerIndex){
+		this.id = id;
+		this.name = name;
+		this.color = color;
+		this.playerIndex = playerIndex;
+	}
 	public PlayerInfo(Player player) {
 		this.id = player.getPlayerID();
 		this.name = player.getName();

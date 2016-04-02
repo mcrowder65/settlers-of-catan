@@ -28,6 +28,11 @@ public class GameInfo
 		setTitle("");
 		players = new ArrayList<PlayerInfo>();
 	}
+	public GameInfo(int id, String title, List<PlayerInfo> players){
+		this.id = id;
+		this.title = title;
+		this.players = players;
+	}
 	public void setPlayerIndex(int index){
 		PlayerInfo player = players.get(index);
 		player.setPlayerIndex(index);

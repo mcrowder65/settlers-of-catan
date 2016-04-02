@@ -33,6 +33,7 @@ public class Game {
 		addUser("manuel","0000");
 	
 	}
+	
 	public static void Reset() {
 		_instance = null;
 	}

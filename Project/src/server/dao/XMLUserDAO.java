@@ -33,26 +33,22 @@ public class XMLUserDAO implements IUserDAO{
 	/**
 	 * gets all users from the user xml file
 	 * @return List<RegisteredPersonInfo>
+	 * @throws IOException 
 	 */
 	@Override
-	public List<RegisteredPersonInfo> getUsers() {
+	public List<RegisteredPersonInfo> getUsers() throws IOException {
 		String destination = "./Users.xml";
 		List<RegisteredPersonInfo> users;
 		XStream xStream = new XStream(new DomDriver());
-		InputStream inFile;
-		try {
-			inFile = new BufferedInputStream(new FileInputStream(destination));
-		} catch (FileNotFoundException e1) {
-			return null;
-		}
-		users = (List<RegisteredPersonInfo>)xStream.fromXML(inFile);
-		try {
+		File f = new File(destination);
+		if(f.exists()){
+			InputStream	inFile = new BufferedInputStream(new FileInputStream(destination));
+			users = (List<RegisteredPersonInfo>)xStream.fromXML(inFile);
 			inFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return users;
 		}
-		return users;
 		
+		return null;
 	}
 
 	/**

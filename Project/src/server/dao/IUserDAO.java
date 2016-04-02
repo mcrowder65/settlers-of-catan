@@ -15,8 +15,9 @@ public interface IUserDAO {
 	/**
 	 * gets all users from the persistence storage
 	 * @return List<RegisteredPersonInfo>
+	 * @throws IOException 
 	 */
-	public List<RegisteredPersonInfo> getUsers();
+	public List<RegisteredPersonInfo> getUsers() throws IOException;
 	/**
 	 * adds a user to the persistance storage
 	 * @param person

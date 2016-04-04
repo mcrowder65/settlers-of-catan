@@ -266,7 +266,22 @@ public class XMLGameDAO implements IGameDAO{
 
 	@Override
 	public void dropTables() {
-		
+		File f = new File("xml");
+		this.deleteAll(f);
+	}
+	
+	public void deleteAll(File f){
+		File[] files = f.listFiles();
+		if(files != null){
+			for(File ff : files){
+				if(ff.isDirectory()){
+					deleteAll(ff);
+				}
+				else{
+					ff.delete();
+				}
+			}
+		}
 	}
 
 }

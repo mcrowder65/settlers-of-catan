@@ -264,12 +264,19 @@ public class XMLGameDAO implements IGameDAO{
 		return null;
 	}
 
+	/**
+	 * drops all of the XML files
+	 */
 	@Override
 	public void dropTables() {
 		File f = new File("xml");
 		this.deleteAll(f);
 	}
 	
+	/**
+	 * Recursively deletes XML files
+	 * @param f File
+	 */
 	public void deleteAll(File f){
 		File[] files = f.listFiles();
 		if(files != null){

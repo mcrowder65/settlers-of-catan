@@ -78,9 +78,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 * @param userID int
 	 * @param gameID int
 	 * @param color CatanColor 
+	 * @param playerIndex int
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color){
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
 		
 	}
 	

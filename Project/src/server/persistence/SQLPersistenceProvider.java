@@ -39,7 +39,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
-		//new dao's, new connection
+		connection = null;
 		userDAO = new SQLUserDAO(connection);
 		gameDAO = new SQLGameDAO(connection);
 	}
@@ -160,8 +160,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLUserDAO(connection);
 	}
 
 	/**
@@ -170,8 +169,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IGameDAO createGameDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLGameDAO(connection);
 	}
 	
 	/**
@@ -181,8 +179,20 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * @param color CatanColor
 	 */ 
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color){
-		
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.joinUser(userID, gameID, color, playerIndex);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 	}
 	
 	/**

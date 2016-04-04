@@ -24,7 +24,7 @@ public class Game {
 	private ArrayList<RegisteredPersonInfo> registeredUsers = new ArrayList<RegisteredPersonInfo>();
 	private static Game _instance;
 	public Object lock = new Object();
-	private PersistenceProvider persistanceProvider;
+	private PersistenceProvider persistenceProvider;
 	
 	private Game() {
 		addUser("matt", "crowder");

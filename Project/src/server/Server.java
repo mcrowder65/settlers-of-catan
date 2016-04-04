@@ -127,6 +127,11 @@ public class Server {
 		httpServer.createContext("/moves/Soldier", soldierHandler);
 		httpServer.createContext("/moves/Year_Of_Plenty", yearOfPlentyHandler);
 		
+		
+		Game.
+		
+		
+		
 		httpServer.start();
 		
 		

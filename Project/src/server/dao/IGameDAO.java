@@ -20,8 +20,9 @@ public interface IGameDAO {
 	 * should be overridden by the DAOs
 	 * @return List<GameCombo>
 	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public List<GameCombo> getGames() throws FileNotFoundException;
+	public List<GameCombo> getGames() throws FileNotFoundException, IOException;
 	
 	/**
 	 * adds a command to the command table or file
@@ -56,6 +57,8 @@ public interface IGameDAO {
 	 * @param int gameID
 	 * @param CatanColor color
 	 * @param int playerIndex
+	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws FileNotFoundException, IOException;
 }

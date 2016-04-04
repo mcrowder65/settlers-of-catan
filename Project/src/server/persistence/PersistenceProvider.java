@@ -14,7 +14,8 @@ import shared.definitions.CatanColor;
  * @author Brennen
  */
 public abstract class PersistenceProvider {
-	
+	protected IUserDAO userDAO;
+	protected IGameDAO gameDAO;
 	/**
 	 * num of commands before we write to disk
 	 */

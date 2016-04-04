@@ -1,6 +1,7 @@
 package server.persistence;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,8 +25,6 @@ import shared.definitions.CatanColor;
  */
 public class SQLPersistenceProvider extends PersistenceProvider{
 	private Connection connection;
-	private SQLUserDAO userDAO;
-	private SQLGameDAO gameDAO;
 	private static final String DATABASE_DIRECTORY = "database";
 	
 
@@ -115,7 +114,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			gameDAO.addCommand(command, command.getGameCookie());
 			endTransaction(true);
-		} catch (SQLException e) {
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
 		}
@@ -139,7 +138,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			games = (ArrayList<GameCombo>) gameDAO.getGames();
 			endTransaction(true);
-		} catch (SQLException e) {
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
 			games = null;
@@ -165,7 +164,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {	
 			gameDAO.updateGame(gameID, serverGameModel);
 			endTransaction(true);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			endTransaction(false);
 		}
@@ -207,7 +206,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			gameDAO.joinUser(userID, gameID, color, playerIndex);
 			endTransaction(true);
-		} catch (SQLException e) {
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
 		}
@@ -228,7 +227,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			userDAO.addUser(person);
 			endTransaction(true);
-		} catch (SQLException e) {
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
 		}
@@ -251,8 +250,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	@Override
 	public void dropTables() {
-		// TODO Auto-generated method stub
-		
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.dropTables();
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 	}
 
 	

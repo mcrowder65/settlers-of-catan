@@ -33,7 +33,7 @@ public interface IGameDAO {
 	 */
 	public void addCommand(MoveCommand command, int gameID) throws FileNotFoundException, IOException;
 	/**
-	 * adds a game to the game table
+	 * adds a game to the game table or file
 	 * @param id of game
 	 * @param model ServerGameModel
 	 * @param title String - title of game

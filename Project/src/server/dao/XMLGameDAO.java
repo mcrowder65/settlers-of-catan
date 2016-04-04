@@ -213,7 +213,7 @@ public class XMLGameDAO implements IGameDAO{
 	}
 
 	/**
-	 * this adds a game
+	 * adds a game to the XML games file
 	 * @param int id
 	 * @param ServerGameModel model
 	 * @param String title

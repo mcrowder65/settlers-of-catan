@@ -8,10 +8,18 @@ import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
-
+/**
+ * Stores the delta between keys
+ * Uses the DAO's to write to the XML files
+ * @author Brennen
+ *
+ */
 public class XMLPersistenceProvider extends PersistenceProvider{
 	
-	
+	/**
+	 * constructor for XMLPersistenceProvider
+	 * @param commandCount
+	 */
 	public XMLPersistenceProvider(int commandCount){
 		super(commandCount);
 		
@@ -19,25 +27,8 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 
 	/**
-	 * Starts a transaction to write to an XML file
-	 */
-	@Override
-	public void startTransaction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * ends a transaction when writing to an XML file
-	 */
-	@Override
-	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
 	 * adds a command to the array of commands 
+	 * calls add command on the XML DAO
 	 * @param MoveCommand
 	 */
 	@Override
@@ -72,7 +63,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		return null;
 	}
 
-
+	/**
+	 * creates the gameDAO
+	 * @return IGameDAO
+	 */
 	@Override
 	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub
@@ -96,6 +90,25 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
+		
+	}
+
+	/**
+	 * is not implemented because we are writing to an XML file
+	 */
+	@Override
+	public void startTransaction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * is not implemented because we are writing to an XML file
+	 * @param boolean
+	 */
+	@Override
+	public void endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
 		
 	}
 	

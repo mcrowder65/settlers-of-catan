@@ -22,6 +22,9 @@ import shared.definitions.CatanColor;
  *
  */
 public class SQLGameDAO implements IGameDAO{
+	/**
+	 * connection to the SQL database
+	 */
 	private Connection conn;
 	/**
 	 * constructor for SQLGameDAO
@@ -121,6 +124,11 @@ public class SQLGameDAO implements IGameDAO{
 		return games;
 	}
 
+	/**
+	 * adds a command to the SQL command table
+	 * @param MoveCommand
+	 * @param in gameID
+	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) {
 		try {
@@ -159,7 +167,7 @@ public class SQLGameDAO implements IGameDAO{
 	}
 	
 	/**
-	 * deletes commands 
+	 * deletes commands from command SQL table
 	 * @param int gameID
 	 */
 	@Override
@@ -204,7 +212,7 @@ public class SQLGameDAO implements IGameDAO{
 	}
 
 	/**
-	 * adds a game
+	 * adds a game to the SQL games table
 	 * @param int id
 	 * @param ServerGameModel model
 	 * @param String title

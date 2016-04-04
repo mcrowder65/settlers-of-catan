@@ -10,7 +10,7 @@ import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
  * Stores the delta between keys
- * Uses the DAO's to write to the database/files
+ * Uses the DAO's to write to the SQL database
  * @author Brennen
  *
  */
@@ -57,7 +57,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	}
 	
 	/**
-	 * loads a game into memory via the gameID
+	 * loads a game into memory via the gameID 
+	 * calls the DAOs to do this
 	 * @param int gameID
 	 */
 	@Override
@@ -98,7 +99,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls the userDAO to add a user to the join table
-	 * @param int userID, int gameID, CatanColor color
+	 * @param int userID
+	 * @param int gameID
+	 * @param CatanColor color
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color){

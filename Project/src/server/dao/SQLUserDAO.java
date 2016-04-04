@@ -17,6 +17,9 @@ import java.sql.*;
  *
  */
 public class SQLUserDAO implements IUserDAO{
+	/**
+	 * connection to the SQL database
+	 */
 	private Connection conn;
 	/**
 	 * constructor for the SQLUserDAO

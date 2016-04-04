@@ -23,6 +23,8 @@ public abstract class PersistenceProvider {
 	 */
 	protected MoveCommand[] commands;
 	
+	
+	
 	/**
 	 * constructor for PersistenceProvider
 	 * @param commandCount int

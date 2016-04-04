@@ -1,5 +1,6 @@
 package server;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -7,6 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import server.facade.*;
 import server.handlers.*;
+import server.persistence.PersistenceProvider;
 import server.swagger.*;
 
 public class Server {
@@ -50,6 +52,24 @@ public class Server {
 		}
 		String persistenceIdentifier = args[0];
 		int commandsBetweenCheckpoints = Integer.parseInt(args[1]);
+		
+		
+	    try {
+			ClassLoaderTool.addFile(new File("C:\\Users\\Eric\\git\\cs340\\Project\\sqlpersistprovider.jar"));
+			Class c =ClassLoaderTool.getClass("server.persistence.SQLPersistenceProvider");
+			PersistenceProvider p = (PersistenceProvider)c.newInstance();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Game.instance().initPersistanceProvider(commandsBetweenCheckpoints, persistenceIdentifier);
 		
 		
 		int port = 8081;

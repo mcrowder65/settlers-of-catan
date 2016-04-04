@@ -112,5 +112,12 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void getCommands(int gameID) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

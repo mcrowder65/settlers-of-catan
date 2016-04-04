@@ -82,4 +82,10 @@ public abstract class PersistenceProvider {
 	 */
 	public abstract void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
 	
+	/**
+	 * gets the commands associated with a gameID
+	 * @param gameID int
+	 */
+	public abstract void getCommands(int gameID);
+	
 }

@@ -127,6 +127,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
+
+
 		return null;
 	}
 
@@ -144,7 +146,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 			return;
 		}
-		try {
+		try {	
 			gameDAO.updateGame(gameID, serverGameModel);
 			endTransaction(true);
 		} catch (SQLException e) {
@@ -201,6 +203,29 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			userDAO.addUser(person);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
+		
+	}
+
+	/**
+	 * gets the commands associated with a game id
+	 * @param gameID int
+	 */
+	@Override
+	public void getCommands(int gameID) {
+		// TODO Auto-generated method stub
 		
 	}
 

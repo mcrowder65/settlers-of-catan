@@ -70,6 +70,7 @@ public class SQLGameDAO implements IGameDAO{
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
 				}
+				set.close();
 				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -108,12 +109,14 @@ public class SQLGameDAO implements IGameDAO{
 								String pass = rSet.getString(3);
 								players.get(i).add(new PlayerInfo(user_id, user, color, playerIndex));
 							}
+							rSet.close();
 							pst.close();
 						} catch (SQLException e) {
 							e.printStackTrace();
 							throw new SQLException();
 						}
 					}
+					set.close();
 					pstmt.close();
 					
 				} catch (SQLException e) {
@@ -264,6 +267,7 @@ public class SQLGameDAO implements IGameDAO{
 				MoveCommand command = Translator.jsonToObject(data);
 				commands.add(command);
 			}
+			rSet.close();
 			pst.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

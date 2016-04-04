@@ -55,6 +55,7 @@ public class SQLUserDAO implements IUserDAO{
 				String password = set.getString(3);
 				users.add(new RegisteredPersonInfo(id, username, password));
 			}
+			set.close();
 			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

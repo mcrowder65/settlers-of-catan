@@ -238,12 +238,30 @@ public class SQLGameDAO implements IGameDAO{
 	}
 
 	/**
-	 * @param 
+	 * @param gameID int
 	 */
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<MoveCommand> commands = new ArrayList<MoveCommand>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pst = null;
+			String sql="Select * from commands where game_id = " + gameID + ";";
+			pst = conn.prepareStatement(sql);
+			ResultSet rSet = pst.executeQuery();
+			
+			while(rSet.next()) { 
+				
+				String data = rSet.getString(2);
+				MoveCommand command = Translator.jsonToObject(data);
+				commands.add(command);
+			}
+			pst.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return commands;
 	}
 
 }

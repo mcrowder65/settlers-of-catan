@@ -120,11 +120,25 @@ public class XMLGameDAO implements IGameDAO{
 	 * updates a game in the XML file
 	 *@param int gameID
 	 *@param ServerGameModel model
+	 * @throws IOException 
 	 */
 	@Override
-	public void updateGame(int gameID, ServerGameModel model) {
-		// TODO Auto-generated method stub
-		
+	public void updateGame(int gameID, ServerGameModel model) throws IOException {
+		String destination = "./allGames/"+ gameID + ".xml";
+		File f = new File(destination);
+		String title ="";
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			GameParams game = (GameParams)xStream.fromXML(f);
+			title = game.getTitle();
+			f.delete();
+		}
+		GameParams game = new GameParams(gameID,model,title);
+		XStream xStream = new XStream(new DomDriver()); //new xStream
+		OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
+		xStream.toXML(game,outFile);
+		outFile.close();
 	}
 	/**
 	 * deletes commands from the XML file

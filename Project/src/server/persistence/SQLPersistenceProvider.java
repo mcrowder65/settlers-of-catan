@@ -12,6 +12,7 @@ import server.dao.SQLGameDAO;
 import server.dao.SQLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -83,6 +84,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		}
 		
 	}
+	/**
+	 * safely closes a connection, making sure it isn't null
+	 */
 	private void safeClose() 
 	{
 		if (connection != null) {
@@ -130,10 +134,23 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * Writes the entire game model to the database
 	 * Clears the commands table
 	 * @param gameID int
+	 * @param serverGameModel ServerGameModel
 	 */
 	@Override
-	protected void flushGame(int gameID) {
-		// TODO Auto-generated method stub
+	protected void flushGame(int gameID, ServerGameModel serverGameModel) {
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.updateGame(gameID, serverGameModel);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 		
 	}
 	

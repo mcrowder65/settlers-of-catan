@@ -21,11 +21,18 @@ public class SQLUserDAO implements IUserDAO{
 	 * connection to the SQL database
 	 */
 	private Connection conn;
+	private final String driver = "org.sqlite.JDBC";
 	/**
 	 * constructor for the SQLUserDAO
 	 */
 	public SQLUserDAO(Connection conn){
 		this.conn = conn;
+		
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -36,8 +43,6 @@ public class SQLUserDAO implements IUserDAO{
 	public List<RegisteredPersonInfo> getUsers() throws SQLException{
 		 ArrayList<RegisteredPersonInfo> users = null;
         try {
-			Class.forName("com.mysql.jdbc.Driver");
-			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/340server", "root", "root");
 			PreparedStatement pstmt = null;
 			String mysqlstring="Select * from users;";
 			pstmt = conn.prepareStatement(mysqlstring);
@@ -51,7 +56,7 @@ public class SQLUserDAO implements IUserDAO{
 				users.add(new RegisteredPersonInfo(id, username, password));
 			}
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -66,7 +71,6 @@ public class SQLUserDAO implements IUserDAO{
 	@Override
 	public void addUser(RegisteredPersonInfo person) throws SQLException {
 	        try {
-				Class.forName("com.mysql.jdbc.Driver");
 				PreparedStatement pstmt = null;
 				String mysqlstring="insert into users (id, user, pass) values (?, ?, ?);";
 				pstmt = conn.prepareStatement(mysqlstring);
@@ -75,7 +79,7 @@ public class SQLUserDAO implements IUserDAO{
 				pstmt.setString(3, person.getPassword());
 				pstmt.executeUpdate();
 				pstmt.close();
-			} catch (ClassNotFoundException|SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new SQLException();
 			}

@@ -44,6 +44,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		connection = null;
 		userDAO = new SQLUserDAO(connection);
 		gameDAO = new SQLGameDAO(connection);
+		
 	}
 	
 	/**
@@ -276,6 +277,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		return commands;
 	}
 
+	/**
+	 * this drops all the tables in the sqlite db
+	 */
 	@Override
 	public void dropTables() {
 		try {

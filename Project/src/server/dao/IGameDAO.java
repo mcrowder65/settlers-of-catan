@@ -50,6 +50,11 @@ public interface IGameDAO {
 	 */
 	public void updateGame(int gameID, ServerGameModel model) throws FileNotFoundException, IOException;
 	/**
+	 * gets the commands for a certain game
+	 * @param gameID int
+	 */
+	public void getCommands(int gameID);
+	/**
 	 * deletes the commands from the database
 	 * @param gameID int
 	 */

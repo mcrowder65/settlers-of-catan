@@ -237,4 +237,10 @@ public class XMLGameDAO implements IGameDAO{
 		
 	}
 
+	@Override
+	public void getCommands(int gameID) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

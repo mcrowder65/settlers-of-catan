@@ -54,7 +54,7 @@ public class SQLGameDAO implements IGameDAO{
 				ResultSet set = pstmt.executeQuery();
 				serverGameModels = new ArrayList<ServerGameModel>();
 				titles = new ArrayList<String>();
-				while(set.next()) { //id, data, title
+				while(set.next()) {
 					
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
@@ -145,6 +145,7 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * updates a game in the SQL database
 	 *@param gameID int
@@ -233,6 +234,12 @@ public class SQLGameDAO implements IGameDAO{
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void getCommands(int gameID) {
+		// TODO Auto-generated method stub
 		
 	}
 

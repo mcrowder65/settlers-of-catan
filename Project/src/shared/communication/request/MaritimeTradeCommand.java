@@ -143,6 +143,8 @@ public class MaritimeTradeCommand extends MoveCommand {
 			model.setVersion(model.getVersion() + 1); //updating the version
 			response.setSuccess(true);
 			response.setJson(model.toString());
+			
+			this.modelResponse = response;
 			return response;
 		}
 	}

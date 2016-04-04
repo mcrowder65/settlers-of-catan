@@ -89,6 +89,8 @@ public class BuildRoadCommand extends MoveCommand {
 				model.setVersion(model.getVersion() + 1); //updates version
 	            response.setJson(model.toString()); //creates response
 				Game.instance().getGameId(gameIDCookie).findLongestRoad();
+				
+				this.modelResponse = response;
 				return response; 	
 			}		
 			//checking the status
@@ -106,6 +108,8 @@ public class BuildRoadCommand extends MoveCommand {
 				model.setVersion(model.getVersion() + 1); //updating version
 	            response.setJson(model.toString());
 	            Game.instance().getGameId(gameIDCookie).findLongestRoad(); //checking for the longest road
+	            
+	            this.modelResponse = response;
 				return response; 	
 			}		
 			

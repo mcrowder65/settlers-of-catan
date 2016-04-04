@@ -101,6 +101,8 @@ public class DiscardCardsCommand extends MoveCommand {
 			response.setSuccess(true);
 			
 			response.setJson(model.toString());
+			
+			this.modelResponse = response;
 			return response;
 		}
 		}catch(Exception ex) {

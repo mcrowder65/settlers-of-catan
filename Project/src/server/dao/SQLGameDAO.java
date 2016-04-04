@@ -27,11 +27,17 @@ public class SQLGameDAO implements IGameDAO{
 	 * connection to the SQL database
 	 */
 	private Connection conn;
+	private final String driver = "org.sqlite.JDBC";
 	/**
 	 * constructor for SQLGameDAO
 	 */
 	public SQLGameDAO(Connection conn){
 		this.conn = conn;
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -48,7 +54,6 @@ public class SQLGameDAO implements IGameDAO{
 		 ArrayList<String> titles = null; //the id's of the games are -1 of what they are 
 		 								  //in the database, since arraylists are 0 indexed
 	        try {
-				Class.forName("com.mysql.jdbc.Driver");
 				PreparedStatement pstmt = null;
 				String mysqlstring="Select * from games;";
 				pstmt = conn.prepareStatement(mysqlstring);
@@ -65,8 +70,9 @@ public class SQLGameDAO implements IGameDAO{
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
 				}
+				set.close();
 				pstmt.close();
-			} catch (ClassNotFoundException|SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new SQLException();
 			}
@@ -77,7 +83,6 @@ public class SQLGameDAO implements IGameDAO{
 	        }
 	        for(int i = 0; i < titles.size(); i++){
 	        	try {
-					Class.forName("com.mysql.jdbc.Driver");
 					PreparedStatement pstmt = null;
 					String mysqlstring="Select * from game_membership where game_id = " + (i+1) + ";";
 					pstmt = conn.prepareStatement(mysqlstring);
@@ -91,7 +96,7 @@ public class SQLGameDAO implements IGameDAO{
 						CatanColor color = Translator.getCatanColor(set.getString(4));
 						int playerIndex = set.getInt(5);
 						try {
-							Class.forName("com.mysql.jdbc.Driver");
+							
 							PreparedStatement pst = null;
 							String sql="Select * from users where id = " + user_id + ";";
 							pst = conn.prepareStatement(sql);
@@ -104,15 +109,17 @@ public class SQLGameDAO implements IGameDAO{
 								String pass = rSet.getString(3);
 								players.get(i).add(new PlayerInfo(user_id, user, color, playerIndex));
 							}
+							rSet.close();
 							pst.close();
-						} catch (ClassNotFoundException|SQLException e) {
+						} catch (SQLException e) {
 							e.printStackTrace();
 							throw new SQLException();
 						}
 					}
+					set.close();
 					pstmt.close();
 					
-				} catch (ClassNotFoundException|SQLException e) {
+				} catch (SQLException e) {
 					e.printStackTrace();
 					throw new SQLException();
 				}
@@ -136,7 +143,6 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void addCommand(MoveCommand command, int gameID) throws SQLException{
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="insert into commands (data, game_id) "
 					+ "values (?, ?);";
@@ -145,7 +151,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.setInt(2, gameID);
 			pstmt.executeUpdate();
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -160,14 +166,13 @@ public class SQLGameDAO implements IGameDAO{
 	public void updateGame(int gameID, ServerGameModel model) throws SQLException{
 		String json = Translator.modelToJson(model);
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="update games set data = ? where games.id =  " + gameID + ";";
 			pstmt = conn.prepareStatement(mysqlstring);
 			pstmt.setString(1, json);
 			pstmt.executeUpdate();
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -180,13 +185,12 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void deleteCommands(int gameID) throws SQLException{
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="delete from commands where game_id=" + gameID + ";";
 			pstmt = conn.prepareStatement(mysqlstring);
 			pstmt.executeUpdate();
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -203,7 +207,6 @@ public class SQLGameDAO implements IGameDAO{
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
 		String sColor = color.toString();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="insert into 'game membership' (user_id, game_id, color, playerIndex) "
 					+ "values (?, ?, ?, ?);";
@@ -214,7 +217,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.setInt(playerIndex, playerIndex);
 			pstmt.executeUpdate();
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -230,7 +233,6 @@ public class SQLGameDAO implements IGameDAO{
 	public void addGame(int id, ServerGameModel model, String title) throws SQLException{
 		String json = Translator.modelToJson(model);
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="insert into games (id, data, title) values (?, ?, ?);";
 			pstmt = conn.prepareStatement(mysqlstring);
@@ -239,7 +241,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.setString(3, title);
 			pstmt.executeUpdate();
 			pstmt.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}
@@ -254,7 +256,6 @@ public class SQLGameDAO implements IGameDAO{
 	public List<MoveCommand> getCommands(int gameID) throws SQLException{
 		ArrayList<MoveCommand> commands = new ArrayList<MoveCommand>();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pst = null;
 			String sql="Select * from commands where game_id = " + gameID + ";";
 			pst = conn.prepareStatement(sql);
@@ -266,8 +267,9 @@ public class SQLGameDAO implements IGameDAO{
 				MoveCommand command = Translator.jsonToObject(data);
 				commands.add(command);
 			}
+			rSet.close();
 			pst.close();
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
 		}

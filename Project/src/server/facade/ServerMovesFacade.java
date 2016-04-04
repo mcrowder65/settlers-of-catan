@@ -2,6 +2,7 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.request.AcceptTradeCommand;
 import shared.communication.request.BuildCityCommand;
 import shared.communication.request.BuildRoadCommand;
@@ -34,7 +35,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse sendChat(HttpExchange exchange) {
 		SendChatCommand command = new SendChatCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 
 	/**
@@ -44,7 +48,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse buyDevCard(HttpExchange exchange) {
 		BuyDevCardCommand command = new BuyDevCardCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates buildRoad command and calls execute on it
@@ -53,7 +60,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse buildRoad(HttpExchange exchange) {
 		BuildRoadCommand command = new BuildRoadCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();	
 	}
 	/**
 	 * creates buildSettlement command and calls execute on it
@@ -61,7 +71,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse buildSettlement(HttpExchange exchange) {
 		BuildSettlementCommand command = new BuildSettlementCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates buildCity command and calls execute on it
@@ -69,7 +82,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse buildCity(HttpExchange exchange) {
 		BuildCityCommand command = new BuildCityCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates discardCards command and calls execute on it
@@ -77,7 +93,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse discardCards(HttpExchange exchange) {
 		DiscardCardsCommand command = new DiscardCardsCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates acceptTrade command and calls execute on it
@@ -85,7 +104,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse acceptTrade(HttpExchange exchange) {
 		AcceptTradeCommand command = new AcceptTradeCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates maritimeTrade command and calls execute on it
@@ -93,7 +115,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse maritimeTrade(HttpExchange exchange) {
 		MaritimeTradeCommand command = new MaritimeTradeCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates offerTrade command and calls execute on it
@@ -101,7 +126,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse offerTrade(HttpExchange exchange) {
 		OfferTradeCommand command = new OfferTradeCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates monopoly command and calls execute on it
@@ -109,7 +137,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse monopoly(HttpExchange exchange) {
 		MonopolyCommand command = new MonopolyCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates monument command and calls execute on it
@@ -117,7 +148,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse monument(HttpExchange exchange) {
 		MonumentCommand command = new MonumentCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates yearOfPlenty command and calls execute on it
@@ -125,7 +159,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse yearOfPlenty(HttpExchange exchange) {
 		YearOfPlentyCommand command = new YearOfPlentyCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates soldier command and calls execute on it
@@ -133,7 +170,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse soldier(HttpExchange exchange) {
 		SoldierCommand command = new SoldierCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates roadBuilding command and calls execute on it
@@ -141,7 +181,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse roadBuilding(HttpExchange exchange) {
 		RoadBuildingCommand command = new RoadBuildingCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates rollNumber command and calls execute on it
@@ -149,7 +192,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse rollNumber(HttpExchange exchange) {
 		RollNumberCommand command = new RollNumberCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates robPlayer command and calls execute on it
@@ -157,7 +203,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse robPlayer(HttpExchange exchange) {
 		RobPlayerCommand command = new RobPlayerCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 	/**
 	 * creates finishTurn command and calls execute on it
@@ -165,7 +214,10 @@ public class ServerMovesFacade implements IMovesFacade {
 	@Override
 	public GetModelResponse finishTurn(HttpExchange exchange) {
 		FinishTurnCommand command = new FinishTurnCommand(exchange);
-		return command.execute();
+		if(command.execute().isSuccess()){
+			Game.instance().getProvider().addCommand(command);
+		}
+		return command.getModelResponse();
 	}
 
 }

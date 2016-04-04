@@ -15,7 +15,9 @@ import server.dao.SQLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
+import shared.communication.request.BuyDevCardCommand;
 import shared.communication.request.MoveCommand;
+import shared.communication.request.RobPlayerCommand;
 import shared.definitions.CatanColor;
 /**
  * Stores the delta between keys
@@ -48,6 +50,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		connection = null;
 		userDAO = new SQLUserDAO(connection);
 		gameDAO = new SQLGameDAO(connection);
+		
 	}
 	
 	/**
@@ -149,7 +152,23 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			endTransaction(false);
 			games = null;
 		}
-		
+		for(int i = 0; i < games.size(); i++){
+			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i + 1);
+			for(int x = 0; x < commands.size(); x++){
+				String moveType = commands.get(x).getMoveType();
+				if(moveType.equals("robPlayer")){ //check for reexecutes
+					RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
+					robPlayer.reExecute();
+				}
+				else if(moveType.equals("buyDevCard")){ //check for reexecutes
+					BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
+					devCard.reExecute();
+				}
+				else{
+					commands.get(x).execute();
+				}
+			}
+		}
 		return games;
 	}
 
@@ -241,19 +260,32 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	}
 
 	/**
-	 * gets the commands associated with a game id
+	 * gets the commands associated with a game id, returns null if something broke
 	 * @param gameID int
 	 */
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
+		List<MoveCommand> commands = null;
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			return commands;
 		}
-		return null;
+		try {
+			commands = gameDAO.getCommands(gameID);
+			endTransaction(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			endTransaction(false);
+			return null;
+		}
+		return commands;
 	}
 
+	/**
+	 * this drops all the tables in the sqlite db
+	 */
 	@Override
 	public void dropTables() {
 		try {

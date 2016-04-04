@@ -102,6 +102,8 @@ public class RollNumberCommand extends MoveCommand {
 	  		model.setVersion(model.getVersion() + 1);
 	        response.setJson(model.toString());
 	  		response.setSuccess(true);
+	  		
+	  		this.modelResponse = response;
 	 		return response;
 		}
 	}

@@ -1,7 +1,9 @@
 package server.persistence;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.dao.IGameDAO;
@@ -56,13 +58,23 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
-		return null;
+		ArrayList<GameCombo> games = null;
+		
+		try {
+			games = (ArrayList<GameCombo>) gameDAO.getGames();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} 
+		return games;
 	}
 
 	@Override
 	protected void flushGame(int gameID, ServerGameModel model) {
-		// TODO Auto-generated method stub
-		
+		try {
+			gameDAO.updateGame(gameID, model);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -92,7 +104,11 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
-		
+		try {
+			gameDAO.joinUser(userID, gameID, color, playerIndex);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -101,7 +117,11 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
-		
+		try {
+			userDAO.addUser(person);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -109,8 +129,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void startTransaction() {
-		// TODO Auto-generated method stub
-		
+		// NULL FOR XML
 	}
 
 	/**
@@ -119,22 +138,31 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
-		
+		// NULL FOR XML
 	}
 
 
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+		List<MoveCommand> commands = null;
+		
+		try {
+			commands = gameDAO.getCommands(gameID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return commands;
 	}
 
 
 	@Override
 	public void dropTables() {
-		// TODO Auto-generated method stub
-		
+		try {
+			gameDAO.dropTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

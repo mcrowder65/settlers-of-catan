@@ -1,11 +1,15 @@
 package server.persistence;
 
+import java.io.IOException;
 import java.util.List;
 
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
+import server.dao.XMLGameDAO;
+import server.dao.XMLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -16,12 +20,16 @@ import shared.definitions.CatanColor;
  */
 public class XMLPersistenceProvider extends PersistenceProvider{
 	
+	
 	/**
 	 * constructor for XMLPersistenceProvider
 	 * @param commandCount
 	 */
 	public XMLPersistenceProvider(int commandCount){
 		super(commandCount);
+		
+		this.gameDAO = this.createGameDAO();
+		this.userDAO = this.createUserDAO();
 		
 	}
 	
@@ -33,7 +41,11 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
-		// TODO Auto-generated method stub
+		try {
+			gameDAO.addCommand(command, command.getGameCookie());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -47,7 +59,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	}
 
 	@Override
-	protected void flushGame(int gameID) {
+	protected void flushGame(int gameID, ServerGameModel model) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -58,8 +70,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new XMLUserDAO();
 	}
 
 	/**
@@ -68,8 +79,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IGameDAO createGameDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new XMLGameDAO();
 	}
 	
 	/**
@@ -77,9 +87,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 * @param userID int
 	 * @param gameID int
 	 * @param color CatanColor 
+	 * @param playerIndex int
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color){
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
 		
 	}
 	
@@ -107,6 +118,20 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public List<MoveCommand> getCommands(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void dropTables() {
 		// TODO Auto-generated method stub
 		
 	}

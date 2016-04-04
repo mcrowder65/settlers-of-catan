@@ -44,7 +44,7 @@ public class XMLGameDAO implements IGameDAO{
 	@Override
 	public List<GameCombo> getGames() throws IOException {
 		List<GameCombo> allGames = new ArrayList<GameCombo>();
-		File directory = new File("./allGames"); //getting the directory
+		File directory = new File("xml/allGames"); //getting the directory
 
 		if(!directory.exists()){
 			return null; //no directory therefore no games exist
@@ -58,7 +58,7 @@ public class XMLGameDAO implements IGameDAO{
 				InputStream inFile = new BufferedInputStream(new FileInputStream(file));
 				GameParams game = (GameParams)xStream.fromXML(inFile);
 				
-				File joinDirectory = new File("./joinTable/"+game.getId());
+				File joinDirectory = new File("xml/joinTable/"+game.getId());
 				if(joinDirectory.exists() == false){
 					return null; //no games exist
 				}
@@ -67,9 +67,8 @@ public class XMLGameDAO implements IGameDAO{
 					if(f.isFile()){
 						XStream xStream2 = new XStream(new DomDriver());
 						InputStream inFile2 = new BufferedInputStream(new FileInputStream(f));
-						JoinUserParams user = (JoinUserParams)xStream.fromXML(f);
+						JoinUserParams user = (JoinUserParams)xStream2.fromXML(inFile2);
 						int userId = user.getUserID();
-						int gameId = user.getGameID();
 						int playerIndex = user.getPlayerIndex();
 						CatanColor color = user.getColor();
 						
@@ -115,19 +114,24 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) throws IOException {
-		String destination = "./commands/"+ gameID + "/command.xml";
-		boolean success = (new File("./joinTable/"+gameID)).mkdirs();
-		if(success){
-			File f = new File(destination);
-			int x = 0;
-			while(f.exists()){
-				x++;
-				destination = "./commands/"+ gameID + "/command"+x+".xml";
-				f = new File(destination);
-			}
+		String destination = "xml/commands"+ gameID + ".xml";
+		File f = new File(destination);
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			inFile.close();
+			f.delete();
+			params.allCommands.add(command);
+			XStream xStream2 = new XStream(new DomDriver()); //new xStream
+			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
+			xStream2.toXML(params,outFile);
+			outFile.close();
 			
+		}
+		else{
 			CommandParams params = new CommandParams();
-			params.command = command;
+			params.allCommands.add(command);
 			params.gameID = gameID;
 			XStream xStream = new XStream(new DomDriver()); //new xStream
 			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
@@ -136,6 +140,7 @@ public class XMLGameDAO implements IGameDAO{
 		}
 		
 	}
+	
 	/**
 	 * updates a game in the XML file
 	 *@param gameID int
@@ -144,14 +149,15 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) throws IOException {
-		String destination = "./allGames/"+ gameID + ".xml";
+		String destination = "xml/allGames/"+ gameID + ".xml";
 		File f = new File(destination);
 		String title ="";
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
 			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
-			GameParams game = (GameParams)xStream.fromXML(f);
+			GameParams game = (GameParams)xStream.fromXML(inFile);
 			title = game.getTitle();
+			inFile.close();
 			f.delete();
 		}
 		GameParams game = new GameParams(gameID,model,title);
@@ -163,12 +169,19 @@ public class XMLGameDAO implements IGameDAO{
 	/**
 	 * deletes commands from the XML file
 	 * @param gameID int
+	 * @throws IOException 
 	 */ 
 	@Override
-	public void deleteCommands(int gameID) {
-		String directory = "./commands/"+ gameID;
+	public void deleteCommands(int gameID) throws IOException {
+		String directory = "xml/commands"+ gameID +".xml";
 		File f = new File(directory);
-		f.delete();
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			params.allCommands = new ArrayList<MoveCommand>();
+			inFile.close();
+		}
 	}
 	
 	/**
@@ -196,8 +209,8 @@ public class XMLGameDAO implements IGameDAO{
 	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws IOException {
-		String destination = "./joinTable/"+ gameID + "/" + userID +".xml";
-		boolean success = (new File("./joinTable"+gameID)).mkdirs();
+		String destination = "xml/joinTable/"+ gameID + "/" + userID +".xml";
+		boolean success = (new File("xml/joinTable"+gameID)).mkdirs();
 		if(success){
 			File f = new File(destination);
 			if(f.exists()){
@@ -222,8 +235,8 @@ public class XMLGameDAO implements IGameDAO{
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) throws IOException {
 		GameParams game = new GameParams(id, model, title);
-		String destination = "./allGames/"+ id + ".xml";
-		boolean success = (new File("./allGames")).mkdirs();
+		String destination = "xml/allGames/"+ id + ".xml";
+		boolean success = (new File("xml/allGames")).mkdirs();
 		if(success){
 			File f = new File(destination);
 			if(f.exists()){
@@ -238,9 +251,44 @@ public class XMLGameDAO implements IGameDAO{
 	}
 
 	@Override
-	public List<MoveCommand> getCommands(int gameID) {
-		// TODO Auto-generated method stub
+	public List<MoveCommand> getCommands(int gameID) throws IOException {
+		String destination = "xml/commands"+gameID+".xml";
+		File f = new File(destination);
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			inFile.close();
+			return params.allCommands;
+		}
 		return null;
+	}
+
+	/**
+	 * drops all of the XML files
+	 */
+	@Override
+	public void dropTables() {
+		File f = new File("xml");
+		this.deleteAll(f);
+	}
+	
+	/**
+	 * Recursively deletes XML files
+	 * @param f File
+	 */
+	public void deleteAll(File f){
+		File[] files = f.listFiles();
+		if(files != null){
+			for(File ff : files){
+				if(ff.isDirectory()){
+					deleteAll(ff);
+				}
+				else{
+					ff.delete();
+				}
+			}
+		}
 	}
 
 }

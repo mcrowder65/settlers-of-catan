@@ -26,6 +26,7 @@ public class RobPlayerCommand extends MoveCommand {
 
 	HexLocation location;
 	int victimIndex;
+	private ResourceType resourceGenerated;
 	public RobPlayerCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -109,7 +110,7 @@ public class RobPlayerCommand extends MoveCommand {
 			while(victim.getResources().hasResource(resource) == false){
 				resource = model.generateRandomResource();
 			}
-			
+			this.resourceGenerated = resource;
 			victim.removeResource(resource);//remove resource from the victim
 			player.addResource(resource);
 			model.setVersion(model.getVersion() + 1);
@@ -118,6 +119,53 @@ public class RobPlayerCommand extends MoveCommand {
 			response.setJson(model.toString());
 			return response; 
 		}
+	}
+	
+	public GetModelResponse reExecute() {
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();	
+		int victimIndex = this.getVictimIndex();
+		HexLocation location = this.getLocation();
+		Game game = Game.instance();		
+ 		ServerGameModel model = game.getGameId(gameIndex);		
+ 		ServerGameMap map = model.getServerMap();		
+ 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+ 		GetModelResponse response = new GetModelResponse();
+ 		String status = turnTracker.getStatus();
+ 		
+ 		turnTracker.setStatus("Playing");
+		
+		map.setRobber(location); //placing the robber
+		model.setVersion(model.getVersion() + 1); //updating the version
+		
+		//not robbing anyone
+		if (victimIndex == -1) {
+			addGameLog(player, model, null);
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			return response;
+		}
+
+		ServerPlayer victim = model.getServerPlayers()[victimIndex]; //getting the victim
+
+		//victim has no resources
+		if(victim.getResources().isEmpty()){
+			addGameLog(player, model, null);
+			
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			return response; 
+		}
+		
+
+		victim.removeResource(resourceGenerated);//remove resource from the victim
+		player.addResource(resourceGenerated);
+		model.setVersion(model.getVersion() + 1);
+		addGameLog(player,model,victim); //updating game log
+		response.setSuccess(true);
+		response.setJson(model.toString());
+		return response; 
 	}
 	
 	/**

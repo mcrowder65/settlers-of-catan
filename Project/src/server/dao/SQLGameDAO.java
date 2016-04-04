@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +141,7 @@ public class SQLGameDAO implements IGameDAO{
 			String mysqlstring="insert into commands (data, game_id) "
 					+ "values (?, ?);";
 			pstmt = conn.prepareStatement(mysqlstring);
-			pstmt.setString(1, command.getMoveType());
+			pstmt.setString(1, Translator.objectToJson(command));
 			pstmt.setInt(2, gameID);
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -272,6 +273,83 @@ public class SQLGameDAO implements IGameDAO{
 		}
 		
 		return commands;
+	}
+
+	@Override
+	public void dropTables() throws SQLException {
+		Statement stmnt = null;
+		
+		try{
+			stmnt = conn.createStatement();
+		} 
+		catch (SQLException e1){
+			e1.printStackTrace();
+			throw new SQLException();
+		}
+		try{
+			String sql = "DROP TABLE IF EXISTS `commands`;";
+			stmnt.executeUpdate(sql);
+			
+			
+			sql = sql +""
+				+"	CREATE TABLE `commands` ("
+				+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
+				+"`data` longtext NOT NULL,"
+				+"`game_id` int(11) unsigned NOT NULL,"
+				+"PRIMARY KEY (`id`),"
+				+"KEY `commands to game` (`game_id`),"
+				+"CONSTRAINT `commands to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+				+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + "DROP TABLE IF EXISTS `game_membership`;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + ""
+					+ "CREATE TABLE `game_membership` ("
+					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
+					+"`user_id` int(11) unsigned NOT NULL,"
+					+"`game_id` int(11) unsigned NOT NULL,"
+					+"`color` varchar(255) NOT NULL DEFAULT '',"
+					+"`playerIndex` int(11) NOT NULL,"
+					+"PRIMARY KEY (`id`),"
+					+"KEY `join to game` (`game_id`),"
+					+"KEY `join to user` (`user_id`),"
+					+"CONSTRAINT `join to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,"
+					+"CONSTRAINT `join to user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+					+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + "DROP TABLE IF EXISTS `games`;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + ""
+					+ "CREATE TABLE `games` ("
+					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
+					+"`data` longtext NOT NULL,"
+					+"`title` varchar(255) NOT NULL DEFAULT '',"
+					+"PRIMARY KEY (`id`)"
+				    +") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + "DROP TABLE IF EXISTS `users`;";
+			stmnt.executeUpdate(sql);
+			
+			sql = sql + ""
+					+" CREATE TABLE `users` ("
+					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
+					+"`user` varchar(255) NOT NULL DEFAULT '',"
+					+"`pass` varchar(255) NOT NULL DEFAULT '',"
+					+"PRIMARY KEY (`id`)"
+					+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			stmnt.executeUpdate(sql);
+			stmnt.close();
+		
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			throw new SQLException();
+		}	
 	}
 
 }

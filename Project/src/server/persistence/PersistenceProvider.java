@@ -6,6 +6,7 @@ import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -13,7 +14,8 @@ import shared.definitions.CatanColor;
  * @author Brennen
  */
 public abstract class PersistenceProvider {
-	
+	protected IUserDAO userDAO;
+	protected IGameDAO gameDAO;
 	/**
 	 * num of commands before we write to disk
 	 */
@@ -37,7 +39,7 @@ public abstract class PersistenceProvider {
 	/**
 	 * starts an SQL transaction
 	 */
-	public abstract void startTransaction();
+	public abstract void startTransaction() throws DatabaseException;
 	/**
 	 * ends a sql transaction
 	 * @param commit boolean
@@ -58,7 +60,7 @@ public abstract class PersistenceProvider {
      * writes game to disk
      * @param gameID int
      */
-    protected abstract void flushGame(int gameID);
+    protected abstract void flushGame(int gameID, ServerGameModel serverGameModel);
     /**
      * creates the UserDAO
      * @return a IUserDAO
@@ -79,7 +81,19 @@ public abstract class PersistenceProvider {
 	 * @param userID int
 	 * @param gameID int
 	 * @param color CatanColor
+	 * @param playerIndex int
 	 */
-	public abstract void joinUser(int userID, int gameID, CatanColor color);
+	public abstract void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
+	
+	/**
+	 * gets the commands associated with a gameID
+	 * @param gameID int
+	 */
+	public abstract List<MoveCommand> getCommands(int gameID);
+	
+	/**
+	 * this deletes the xml stuff and/or drops the sql tables
+	 */
+	public abstract void dropTables();
 	
 }

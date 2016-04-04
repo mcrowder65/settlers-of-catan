@@ -58,8 +58,9 @@ public interface IGameDAO {
 	/**
 	 * deletes the commands from the database
 	 * @param gameID int
+	 * @throws IOException 
 	 */
-	public void deleteCommands(int gameID) throws SQLException;
+	public void deleteCommands(int gameID) throws SQLException, IOException;
 	
 	/**
 	 * Adds to the join user section of the database
@@ -71,4 +72,11 @@ public interface IGameDAO {
 	 * @throws IOException if an error
 	 */
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws FileNotFoundException, IOException, SQLException;
+	
+	/**
+	 * drops the tables in the sqlite db or xml
+	 * @throws SQLException 
+	 */
+	public void dropTables() throws SQLException;
+
 }

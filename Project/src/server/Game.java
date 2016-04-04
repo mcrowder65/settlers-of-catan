@@ -48,8 +48,8 @@ public class Game {
 	
 	/**
 	 * initializes the persistence provider
-	 * @param int max
-	 * @param String location
+	 * @param max int
+	 * @param location String
 	 */
 	public void initPersistanceProvider(int max, String location){
 		

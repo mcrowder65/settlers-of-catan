@@ -22,6 +22,9 @@ import shared.definitions.CatanColor;
  *
  */
 public class SQLGameDAO implements IGameDAO{
+	/**
+	 * connection to the SQL database
+	 */
 	private Connection conn;
 	/**
 	 * constructor for SQLGameDAO
@@ -32,7 +35,7 @@ public class SQLGameDAO implements IGameDAO{
 	
 	/**
 	 * gets all the games in the game table of the SQL database
-	 * @return List<GameCombo>
+	 * @return a list of GameCombos
 	 * @return null if there are no games
 	 */
 	@Override
@@ -51,7 +54,7 @@ public class SQLGameDAO implements IGameDAO{
 				ResultSet set = pstmt.executeQuery();
 				serverGameModels = new ArrayList<ServerGameModel>();
 				titles = new ArrayList<String>();
-				while(set.next()) { //id, data, title
+				while(set.next()) {
 					
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
@@ -121,6 +124,11 @@ public class SQLGameDAO implements IGameDAO{
 		return games;
 	}
 
+	/**
+	 * adds a command to the SQL command table
+	 * @param command MoveCommand
+	 * @param gameID int
+	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) {
 		try {
@@ -137,10 +145,11 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * updates a game in the SQL database
-	 *@param int gameID
-	 *@param ServerGameModel model
+	 *@param gameID int
+	 *@param model ServerGameModel
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
@@ -159,8 +168,8 @@ public class SQLGameDAO implements IGameDAO{
 	}
 	
 	/**
-	 * deletes commands 
-	 * @param int gameID
+	 * deletes commands from command SQL table
+	 * @param gameID int
 	 */
 	@Override
 	public void deleteCommands(int gameID) {
@@ -179,9 +188,9 @@ public class SQLGameDAO implements IGameDAO{
 	
 	/**
 	 * adds to the joinUserTable
-	 * @param int UserID
-	 * @param int gameID
-	 * @param CatanColor color
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
@@ -204,10 +213,10 @@ public class SQLGameDAO implements IGameDAO{
 	}
 
 	/**
-	 * adds a game
-	 * @param int id
-	 * @param ServerGameModel model
-	 * @param String title
+	 * adds a game to the SQL games table
+	 * @param id int
+	 * @param model ServerGameModel
+	 * @param title String
 	 */
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) {
@@ -226,6 +235,33 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 		
+	}
+
+	/**
+	 * @param gameID int
+	 */
+	@Override
+	public List<MoveCommand> getCommands(int gameID) {
+		ArrayList<MoveCommand> commands = new ArrayList<MoveCommand>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pst = null;
+			String sql="Select * from commands where game_id = " + gameID + ";";
+			pst = conn.prepareStatement(sql);
+			ResultSet rSet = pst.executeQuery();
+			
+			while(rSet.next()) { 
+				
+				String data = rSet.getString(2);
+				MoveCommand command = Translator.jsonToObject(data);
+				commands.add(command);
+			}
+			pst.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return commands;
 	}
 
 }

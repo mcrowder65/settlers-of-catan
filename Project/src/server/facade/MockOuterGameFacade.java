@@ -24,7 +24,7 @@ public class MockOuterGameFacade implements IOuterGameFacade {
 	}
 	/**
 	 * gets a the list of games from mock server
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public ListGamesResponse listGames(HttpExchange exchange) {
@@ -32,7 +32,7 @@ public class MockOuterGameFacade implements IOuterGameFacade {
 	}
 	/**
 	 * calls createGame on mock server
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public CreateGameResponse createGame(HttpExchange exchange) {
@@ -40,7 +40,7 @@ public class MockOuterGameFacade implements IOuterGameFacade {
 	}
 	/**
 	 * gets join game response from mock server
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public Response joinGame(HttpExchange exchange) {

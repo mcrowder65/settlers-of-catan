@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4529
+# Version 4541
 #
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
 # Host: localhost (MySQL 5.5.42)
 # Database: 340server
-# Generation Time: 2016-04-02 19:53:16 +0000
+# Generation Time: 2016-04-04 17:53:55 +0000
 # ************************************************************
 
 
@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `commands`;
 
 CREATE TABLE `commands` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `data` varchar(255) DEFAULT '',
+  `data` longtext NOT NULL,
   `game_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `commands to game` (`game_id`),
@@ -45,8 +45,8 @@ CREATE TABLE `game_membership` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `game_id` int(11) unsigned NOT NULL,
-  `color` varchar(255) DEFAULT NULL,
-  `playerIndex` int(11) DEFAULT NULL,
+  `color` varchar(255) NOT NULL DEFAULT '',
+  `playerIndex` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `join to game` (`game_id`),
   KEY `join to user` (`user_id`),
@@ -63,8 +63,8 @@ DROP TABLE IF EXISTS `games`;
 
 CREATE TABLE `games` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `data` longtext,
-  `title` varchar(255) DEFAULT NULL,
+  `data` longtext NOT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

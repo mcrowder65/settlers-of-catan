@@ -12,7 +12,7 @@ public class MockUserFacade implements IUserFacade {
 
 	/**
 	 * calls login on the mock server and gets response
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public Response login(HttpExchange exchange) {

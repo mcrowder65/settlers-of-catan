@@ -86,7 +86,7 @@ public class ServerGameMap extends GameMap {
 	/**
 	 * gets all the cities or settlements on a particular hex
 	 * @param loc
-	 * @return List<VertexObject>
+	 * @return a list of VertexObject
 	 */
 	public List<VertexObject> getMunicipalityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
@@ -119,7 +119,7 @@ public class ServerGameMap extends GameMap {
 	/**
 	 * gets all the cities on a particular hex
 	 * @param loc
-	 * @return List<VertexObject>
+	 * @return a list of VertexObject
 	 */
 	public List<VertexObject> getCityOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();
@@ -140,7 +140,7 @@ public class ServerGameMap extends GameMap {
 	/**
 	 * gets all the settlements on a particular hex
 	 * @param loc
-	 * @return List<VertexObject>
+	 * @return a list of VertexObject
 	 */
 	public List<VertexObject> getSettlementOnHex(HexLocation loc){
  		List<VertexObject>municipalities = new ArrayList<VertexObject>();

@@ -13,7 +13,7 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 
 	/**
 	 * gets a list of games
-	 * @param HttpExchange 
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public ListGamesResponse listGames(HttpExchange exchange) {
@@ -23,7 +23,7 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 
 	/**
 	 * Creates a game and gets the response
-	 * @param HttpExchange 
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public CreateGameResponse createGame(HttpExchange exchange) {
@@ -33,7 +33,7 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 
 	/**
 	 * joins a game and gets the response
-	 * @param HttpExchange 
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public Response joinGame(HttpExchange exchange) {

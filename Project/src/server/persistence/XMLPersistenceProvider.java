@@ -8,10 +8,18 @@ import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
-
+/**
+ * Stores the delta between keys
+ * Uses the DAO's to write to the XML files
+ * @author Brennen
+ *
+ */
 public class XMLPersistenceProvider extends PersistenceProvider{
 	
-	
+	/**
+	 * constructor for XMLPersistenceProvider
+	 * @param commandCount
+	 */
 	public XMLPersistenceProvider(int commandCount){
 		super(commandCount);
 		
@@ -19,26 +27,9 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 
 	/**
-	 * Starts a transaction to write to an XML file
-	 */
-	@Override
-	public void startTransaction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * ends a transaction when writing to an XML file
-	 */
-	@Override
-	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
 	 * adds a command to the array of commands 
-	 * @param MoveCommand
+	 * calls add command on the XML DAO
+	 * @param command MoveCommand
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
@@ -49,7 +40,6 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * loads a game into memory via the gameID
-	 * @param int gameID
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
@@ -64,7 +54,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * creates an new UserDAO for an xml file 
-	 * @return IUserDAO
+	 * @return a IUserDAO
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
@@ -72,7 +62,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		return null;
 	}
 
-
+	/**
+	 * creates the gameDAO
+	 * @return a IGameDAO
+	 */
 	@Override
 	public IGameDAO createGameDAO() {
 		// TODO Auto-generated method stub
@@ -81,7 +74,9 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls the userDAO to add a user to the xml file
-	 * @param int userID, int gameID, CatanColor color
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor 
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color){
@@ -90,12 +85,29 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls addUser on the XMLUserDAO
-	 * @param userID
-	 * @param gameID
-	 * @param color
+	 * person RegisteredPersonInfo
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
+		
+	}
+
+	/**
+	 * is not implemented because we are writing to an XML file
+	 */
+	@Override
+	public void startTransaction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * is not implemented because we are writing to an XML file
+	 * @param commit boolean
+	 */
+	@Override
+	public void endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
 		
 	}
 	

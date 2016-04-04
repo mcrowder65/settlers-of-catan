@@ -44,6 +44,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		connection = null;
 		userDAO = new SQLUserDAO(connection);
 		gameDAO = new SQLGameDAO(connection);
+		
 	}
 	
 	/**

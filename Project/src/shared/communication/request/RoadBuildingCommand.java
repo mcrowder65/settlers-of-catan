@@ -112,6 +112,8 @@ public class RoadBuildingCommand extends MoveCommand {
 				response.setSuccess(true);
 				response.setJson(model.toString());
 				Game.instance().getGameId(gameIDCookie).findLongestRoad();
+				
+				this.modelResponse = response;
 				return response;
 			}		
 					

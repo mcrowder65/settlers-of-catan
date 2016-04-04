@@ -116,6 +116,8 @@ public class BuildCityCommand extends MoveCommand {
 				//creating the response
 				response.setJson(model.toString());
 				response.setSuccess(true);
+				
+				this.modelResponse = response;
 				return response;
 			}
 			

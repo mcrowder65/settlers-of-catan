@@ -125,6 +125,8 @@ public class YearOfPlentyCommand extends MoveCommand {
 	 		model.setVersion(model.getVersion() + 1); //updates model
 			response.setSuccess(true);
 			response.setJson(model.toString());
+			
+			this.modelResponse = response;
 			return response;
 		}
 	}

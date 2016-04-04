@@ -55,6 +55,9 @@ public class Game {
 		
 	}
 	
+	public PersistenceProvider getProvider() {
+		return persistenceProvider;
+	}
 	
 	
 	public int getNumGames() {

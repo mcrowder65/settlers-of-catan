@@ -102,6 +102,8 @@ public class OfferTradeCommand extends MoveCommand {
 	 		model.setVersion(model.getVersion() + 1);//setting the version
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
+	 		
+	 		this.modelResponse = response;
 			return response; 
 		}
 	}

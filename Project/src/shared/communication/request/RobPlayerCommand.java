@@ -90,6 +90,8 @@ public class RobPlayerCommand extends MoveCommand {
 				addGameLog(player, model, null);
 				response.setSuccess(true);
 				response.setJson(model.toString());
+				
+				this.modelResponse = response;
 				return response;
 			}
 
@@ -101,6 +103,8 @@ public class RobPlayerCommand extends MoveCommand {
 				
 				response.setSuccess(true);
 				response.setJson(model.toString());
+				
+				this.modelResponse = response;
 				return response; 
 			}
 			
@@ -117,6 +121,8 @@ public class RobPlayerCommand extends MoveCommand {
 			addGameLog(player,model,victim); //updating game log
 			response.setSuccess(true);
 			response.setJson(model.toString());
+			
+			this.modelResponse = response;
 			return response; 
 		}
 	}

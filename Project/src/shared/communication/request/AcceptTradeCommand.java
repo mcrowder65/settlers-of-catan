@@ -93,6 +93,8 @@ public class AcceptTradeCommand extends MoveCommand {
 			model.setTradeOffer(null); //resetting the trade offer
 			response.setJson(model.toString());
 			response.setSuccess(true);
+			
+			this.modelResponse = response;
 			return response;
 		}
 	}

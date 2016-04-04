@@ -108,6 +108,8 @@ public class BuyDevCardCommand extends MoveCommand {
 				addGameLog(player,model);
 				response.setSuccess(true);
 				response.setJson(model.toString());
+				
+				this.modelResponse = response;
 				return response;	
 				
 			}

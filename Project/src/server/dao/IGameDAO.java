@@ -58,8 +58,9 @@ public interface IGameDAO {
 	/**
 	 * deletes the commands from the database
 	 * @param gameID int
+	 * @throws IOException 
 	 */
-	public void deleteCommands(int gameID) throws SQLException;
+	public void deleteCommands(int gameID) throws SQLException, IOException;
 	
 	/**
 	 * Adds to the join user section of the database

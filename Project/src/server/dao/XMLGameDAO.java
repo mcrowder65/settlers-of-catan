@@ -67,9 +67,8 @@ public class XMLGameDAO implements IGameDAO{
 					if(f.isFile()){
 						XStream xStream2 = new XStream(new DomDriver());
 						InputStream inFile2 = new BufferedInputStream(new FileInputStream(f));
-						JoinUserParams user = (JoinUserParams)xStream.fromXML(f);
+						JoinUserParams user = (JoinUserParams)xStream2.fromXML(inFile2);
 						int userId = user.getUserID();
-						int gameId = user.getGameID();
 						int playerIndex = user.getPlayerIndex();
 						CatanColor color = user.getColor();
 						
@@ -115,19 +114,24 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) throws IOException {
-		String destination = "./commands/"+ gameID + "/command.xml";
-		boolean success = (new File("./joinTable/"+gameID)).mkdirs();
-		if(success){
-			File f = new File(destination);
-			int x = 0;
-			while(f.exists()){
-				x++;
-				destination = "./commands/"+ gameID + "/command"+x+".xml";
-				f = new File(destination);
-			}
+		String destination = "./commands"+ gameID + ".xml";
+		File f = new File(destination);
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			inFile.close();
+			f.delete();
+			params.allCommands.add(command);
+			XStream xStream2 = new XStream(new DomDriver()); //new xStream
+			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
+			xStream2.toXML(params,outFile);
+			outFile.close();
 			
+		}
+		else{
 			CommandParams params = new CommandParams();
-			params.command = command;
+			params.allCommands.add(command);
 			params.gameID = gameID;
 			XStream xStream = new XStream(new DomDriver()); //new xStream
 			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
@@ -136,6 +140,7 @@ public class XMLGameDAO implements IGameDAO{
 		}
 		
 	}
+	
 	/**
 	 * updates a game in the XML file
 	 *@param gameID int
@@ -150,8 +155,9 @@ public class XMLGameDAO implements IGameDAO{
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
 			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
-			GameParams game = (GameParams)xStream.fromXML(f);
+			GameParams game = (GameParams)xStream.fromXML(inFile);
 			title = game.getTitle();
+			inFile.close();
 			f.delete();
 		}
 		GameParams game = new GameParams(gameID,model,title);
@@ -163,12 +169,19 @@ public class XMLGameDAO implements IGameDAO{
 	/**
 	 * deletes commands from the XML file
 	 * @param gameID int
+	 * @throws IOException 
 	 */ 
 	@Override
-	public void deleteCommands(int gameID) {
-		String directory = "./commands/"+ gameID;
+	public void deleteCommands(int gameID) throws IOException {
+		String directory = "./commands"+ gameID +".xml";
 		File f = new File(directory);
-		f.delete();
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			params.allCommands = new ArrayList<MoveCommand>();
+			inFile.close();
+		}
 	}
 	
 	/**
@@ -238,8 +251,17 @@ public class XMLGameDAO implements IGameDAO{
 	}
 
 	@Override
-	public List<MoveCommand> getCommands(int gameID) {
-		// TODO Auto-generated method stub
+	public List<MoveCommand> getCommands(int gameID) throws IOException {
+		String destination = "./commands"+gameID+".xml";
+		File f = new File(destination);
+		if(f.exists()){
+			XStream xStream = new XStream(new DomDriver());
+			InputStream inFile = new BufferedInputStream(new FileInputStream(f));
+			CommandParams params = (CommandParams)xStream.fromXML(inFile);
+			inFile.close();
+			return params.allCommands;
+		}
+		
 		return null;
 	}
 

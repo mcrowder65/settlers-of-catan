@@ -2,6 +2,7 @@ package server.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.util.GameCombo;
@@ -22,7 +23,7 @@ public interface IGameDAO {
 	 * @throws FileNotFoundException if the file isn't found
 	 * @throws IOException if an error occurs
 	 */
-	public List<GameCombo> getGames() throws FileNotFoundException, IOException;
+	public List<GameCombo> getGames() throws FileNotFoundException, IOException, SQLException;
 	
 	/**
 	 * adds a command to the command table or file
@@ -31,7 +32,7 @@ public interface IGameDAO {
 	 * @throws FileNotFoundException if file isn't found
 	 * @throws IOException if error occurs
 	 */
-	public void addCommand(MoveCommand command, int gameID) throws FileNotFoundException, IOException;
+	public void addCommand(MoveCommand command, int gameID) throws FileNotFoundException, IOException, SQLException;
 	/**
 	 * adds a game to the game table or file
 	 * @param id - int (of game)
@@ -39,7 +40,7 @@ public interface IGameDAO {
 	 * @param title String - title of game
 	 * @throws IOException if error occurs
 	 */
-	public void addGame(int id, ServerGameModel model, String title) throws IOException;
+	public void addGame(int id, ServerGameModel model, String title) throws IOException, SQLException;
 		
 	/**
 	 * updates the game in game table or xml file
@@ -48,17 +49,17 @@ public interface IGameDAO {
 	 * @throws FileNotFoundException if the file isn't found
 	 * @throws IOException if error occurs
 	 */
-	public void updateGame(int gameID, ServerGameModel model) throws FileNotFoundException, IOException;
+	public void updateGame(int gameID, ServerGameModel model) throws FileNotFoundException, IOException, Exception;
 	/**
 	 * gets the commands for a certain game
 	 * @param gameID int
 	 */
-	public List<MoveCommand> getCommands(int gameID);
+	public List<MoveCommand> getCommands(int gameID) throws Exception;
 	/**
 	 * deletes the commands from the database
 	 * @param gameID int
 	 */
-	public void deleteCommands(int gameID);
+	public void deleteCommands(int gameID) throws SQLException;
 	
 	/**
 	 * Adds to the join user section of the database
@@ -69,5 +70,5 @@ public interface IGameDAO {
 	 * @throws FileNotFoundException if the file isn't found
 	 * @throws IOException if an error
 	 */
-	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws FileNotFoundException, IOException;
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws FileNotFoundException, IOException, SQLException;
 }

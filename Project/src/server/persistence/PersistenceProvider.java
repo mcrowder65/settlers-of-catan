@@ -78,7 +78,19 @@ public abstract class PersistenceProvider {
 	 * @param userID int
 	 * @param gameID int
 	 * @param color CatanColor
+	 * @param playerIndex int
 	 */
-	public abstract void joinUser(int userID, int gameID, CatanColor color);
+	public abstract void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
+	
+	/**
+	 * gets the commands associated with a gameID
+	 * @param gameID int
+	 */
+	public abstract List<MoveCommand> getCommands(int gameID);
+	
+	/**
+	 * this deletes the xml stuff and/or drops the sql tables
+	 */
+	public abstract void dropTables();
 	
 }

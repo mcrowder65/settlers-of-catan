@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.dao.IGameDAO;
@@ -39,7 +40,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
-		//new dao's, new connection
+		connection = null;
 		userDAO = new SQLUserDAO(connection);
 		gameDAO = new SQLGameDAO(connection);
 	}
@@ -124,10 +125,27 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * loads a game into memory via the gameID 
 	 * calls the DAOs to do this
+	 * returns null if it fails
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
-		return null;
+		ArrayList<GameCombo> games = null;
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try {
+			games = (ArrayList<GameCombo>) gameDAO.getGames();
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+			games = null;
+		}
+		
+		return games;
 	}
 
 	/**
@@ -144,7 +162,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 			return;
 		}
-		try {
+		try {	
 			gameDAO.updateGame(gameID, serverGameModel);
 			endTransaction(true);
 		} catch (SQLException e) {
@@ -160,8 +178,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLUserDAO(connection);
 	}
 
 	/**
@@ -170,8 +187,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public IGameDAO createGameDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SQLGameDAO(connection);
 	}
 	
 	/**
@@ -181,8 +197,20 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * @param color CatanColor
 	 */ 
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color){
-		
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.joinUser(userID, gameID, color, playerIndex);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 	}
 	
 	/**
@@ -191,6 +219,39 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			userDAO.addUser(person);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
+		
+	}
+
+	/**
+	 * gets the commands associated with a game id
+	 * @param gameID int
+	 */
+	@Override
+	public List<MoveCommand> getCommands(int gameID) {
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void dropTables() {
+		// TODO Auto-generated method stub
 		
 	}
 

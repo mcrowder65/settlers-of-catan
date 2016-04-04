@@ -87,9 +87,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 * @param userID int
 	 * @param gameID int
 	 * @param color CatanColor 
+	 * @param playerIndex int
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color){
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
 		
 	}
 	
@@ -117,6 +118,20 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public List<MoveCommand> getCommands(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void dropTables() {
 		// TODO Auto-generated method stub
 		
 	}

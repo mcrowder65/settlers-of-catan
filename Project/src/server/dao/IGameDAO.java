@@ -28,8 +28,10 @@ public interface IGameDAO {
 	 * adds a command to the command table or file
 	 * @param command
 	 * @param int gameID
+	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public void addCommand(MoveCommand command, int gameID);
+	public void addCommand(MoveCommand command, int gameID) throws FileNotFoundException, IOException;
 	/**
 	 * adds a game to the game table
 	 * @param id of game

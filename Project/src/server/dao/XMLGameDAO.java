@@ -110,10 +110,29 @@ public class XMLGameDAO implements IGameDAO{
 	 * adds a command to the XML file
 	 * @param MoveCommand - the move that should be added
 	 * @param gameID int the id of the game.
+	 * @throws IOException 
 	 */
 	@Override
-	public void addCommand(MoveCommand command, int gameID) {
-		// TODO Auto-generated method stub
+	public void addCommand(MoveCommand command, int gameID) throws IOException {
+		String destination = "./commands/"+ gameID + "/command.xml";
+		boolean success = (new File("./joinTable/"+gameID)).mkdirs();
+		if(success){
+			File f = new File(destination);
+			int x = 0;
+			while(f.exists()){
+				x++;
+				destination = "./commands/"+ gameID + "/command"+x+".xml";
+				f = new File(destination);
+			}
+			
+			CommandParams params = new CommandParams();
+			params.command = command;
+			params.gameID = gameID;
+			XStream xStream = new XStream(new DomDriver()); //new xStream
+			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
+			xStream.toXML(params,outFile);
+			outFile.close();
+		}
 		
 	}
 	/**

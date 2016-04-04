@@ -1,6 +1,7 @@
 package server.persistence;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.dao.IGameDAO;
@@ -43,7 +44,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	public void addCommand(MoveCommand command) {
 		try {
 			gameDAO.addCommand(command, command.getGameCookie());
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -55,6 +56,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
+		//ArrayList<GameCombo> games = null;
 		return null;
 	}
 
@@ -108,8 +110,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void startTransaction() {
-		// TODO Auto-generated method stub
-		
+		// NULL FOR XML
 	}
 
 	/**
@@ -118,8 +119,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
-		
+		// NULL FOR XML
 	}
 
 

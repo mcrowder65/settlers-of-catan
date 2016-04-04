@@ -274,4 +274,10 @@ public class SQLGameDAO implements IGameDAO{
 		return commands;
 	}
 
+	@Override
+	public void dropTables() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

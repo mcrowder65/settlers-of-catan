@@ -243,4 +243,10 @@ public class XMLGameDAO implements IGameDAO{
 		return null;
 	}
 
+	@Override
+	public void dropTables() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

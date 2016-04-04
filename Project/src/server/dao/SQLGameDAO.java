@@ -237,10 +237,13 @@ public class SQLGameDAO implements IGameDAO{
 		
 	}
 
+	/**
+	 * @param 
+	 */
 	@Override
-	public void getCommands(int gameID) {
+	public List<MoveCommand> getCommands(int gameID) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

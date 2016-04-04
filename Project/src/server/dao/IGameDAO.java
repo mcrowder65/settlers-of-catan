@@ -53,7 +53,7 @@ public interface IGameDAO {
 	 * gets the commands for a certain game
 	 * @param gameID int
 	 */
-	public void getCommands(int gameID);
+	public List<MoveCommand> getCommands(int gameID);
 	/**
 	 * deletes the commands from the database
 	 * @param gameID int

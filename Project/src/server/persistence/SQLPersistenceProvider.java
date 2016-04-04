@@ -31,6 +31,12 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	private static final String DATABASE_FILE = "db.sqlite";
 	private static final String DATABASE_URL = "jdbc:sqlite:"  + DATABASE_DIRECTORY + 
 												File.separator + DATABASE_FILE;
+	
+	
+	public SQLPersistenceProvider() {
+		
+	}
+	
 	/**
 	 * constructor for SQL Persistence Provider.
 	 *  Sets how many commands need to be executed before we write to disk

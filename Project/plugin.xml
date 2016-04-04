@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugins>
+
+
+	<plugin>
+		<name>sqlite</name>
+		<path>server.persistence.SQLPersistenceProvider</path>
+	</plugin>
+	<plugin>
+		<name>xml</name>
+		<path>server.persistence.XMLPersistenceProvider</path>
+	</plugin>
+
+
+</plugins>

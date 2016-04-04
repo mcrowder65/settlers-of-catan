@@ -26,12 +26,18 @@ public abstract class PersistenceProvider {
 	protected MoveCommand[] commands;
 	
 	
-	
+	public PersistenceProvider() {
+		
+	}
 	/**
 	 * constructor for PersistenceProvider
 	 * @param commandCount int
 	 */
 	public PersistenceProvider(int commandCount) {
+		setup(commandCount);
+	}
+	
+	public void setup(int commandCount) {
 		max = commandCount;
 		commands = new MoveCommand[max];
 	}

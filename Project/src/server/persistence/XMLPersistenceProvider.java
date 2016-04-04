@@ -1,6 +1,7 @@
 package server.persistence;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.dao.IGameDAO;
@@ -43,7 +44,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	public void addCommand(MoveCommand command) {
 		try {
 			gameDAO.addCommand(command, command.getGameCookie());
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		

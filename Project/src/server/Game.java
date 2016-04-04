@@ -1,5 +1,7 @@
 package server;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.Translator;
 import server.persistence.PersistenceProvider;
+import server.plugin.ClassLoaderTool;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -25,6 +28,9 @@ public class Game {
 	private static Game _instance;
 	public Object lock = new Object();
 	private PersistenceProvider persistenceProvider;
+	public PersistenceProvider getPersistenceProvider() {
+		return persistenceProvider;
+	}
 	
 	private Game() {
 		addUser("matt", "crowder");
@@ -52,7 +58,32 @@ public class Game {
 	 * @param location String
 	 */
 	public void initPersistanceProvider(int max, String location){
-		
+		Class c =ClassLoaderTool.getClass(location);
+		Constructor constructor;
+		PersistenceProvider p;
+		try {
+			constructor = c.getConstructor(int.class);
+			p = (PersistenceProvider)constructor.newInstance(max);
+			persistenceProvider = p;
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

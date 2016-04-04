@@ -2,20 +2,30 @@ package server;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import com.sun.net.httpserver.HttpServer;
 
 import server.facade.*;
 import server.handlers.*;
 import server.persistence.PersistenceProvider;
+import server.plugin.ClassLoaderTool;
+import server.plugin.ConfigurationTool;
+import server.plugin.PluginDefinition;
 import server.swagger.*;
 
 public class Server {
 
 	private final int MAX_WAITING_CONNECTIONS = 30;
 	private HttpServer httpServer;
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		new Server().run(args);
 	}
 	
@@ -44,7 +54,7 @@ public class Server {
 	private SoldierHandler soldierHandler;
 	private YearOfPlentyHandler yearOfPlentyHandler;
 	private OfferTradeHandler offerTradeHandler;
-	public void run(String[] args) {
+	public void run(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		
 		if (args.length != 2) {
 			System.out.println("Usage: ant our-server <persistence-type> <commands-between-checkpoints>");
@@ -54,22 +64,22 @@ public class Server {
 		int commandsBetweenCheckpoints = Integer.parseInt(args[1]);
 		
 		
-	    try {
-			ClassLoaderTool.addFile(new File("C:\\Users\\Eric\\git\\cs340\\Project\\sqlpersistprovider.jar"));
-			Class c =ClassLoaderTool.getClass("server.persistence.SQLPersistenceProvider");
-			PersistenceProvider p = (PersistenceProvider)c.newInstance();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<PluginDefinition> definitions = ConfigurationTool.readConfigFile("plugin.xml");
+		ClassLoaderTool.loadPlugins("resources");
+	
+	
+		for (PluginDefinition def : definitions) {
+			if (def.name.equals(persistenceIdentifier)) {
+				Game.instance().initPersistanceProvider(commandsBetweenCheckpoints, def.path);
+				break;
+			}
+		}
+		if (Game.instance().getPersistenceProvider() == null) {
+			System.out.println("Persistence identifier " + persistenceIdentifier + " was not found. Exiting.");
+			return;
 		}
 		
-		Game.instance().initPersistanceProvider(commandsBetweenCheckpoints, persistenceIdentifier);
+	  
 		
 		
 		int port = 8081;

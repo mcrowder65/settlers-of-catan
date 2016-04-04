@@ -1,11 +1,17 @@
 package generic;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import server.Server;
 
 public class ClientTests {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		new Server().run(new String[] {"8081"});
 		
 		String[] testClasses = new String[] {

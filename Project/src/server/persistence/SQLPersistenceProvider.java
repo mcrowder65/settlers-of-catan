@@ -66,10 +66,41 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
+		try {
+			if (commit) {
+				connection.commit();
+			}
+			else {
+				connection.rollback();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			safeClose(connection);
+			connection = null;
+		}
 		
 	}
-
+	/**
+	 * 
+	 * @param conn
+	 */
+	public static void safeClose(Connection conn) 
+	{
+		if (conn != null) 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e) 
+			{
+				
+			}
+		}
+	}
 	/**
 	 * adds a command to the array of commands 
 	 * calls the command method on the DAOs
@@ -77,8 +108,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
-		// TODO Auto-generated method stub
-		//startTransaction();
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.addCommand(command, command.getGameCookie());
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 		
 	}
 	

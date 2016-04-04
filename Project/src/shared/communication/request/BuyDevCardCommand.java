@@ -26,6 +26,8 @@ import shared.locations.EdgeLocation;
 
 public class BuyDevCardCommand extends MoveCommand {
 
+	private DevCardType purchasedCard;
+	
 	public BuyDevCardCommand(int playerIndex)
 			throws IllegalArgumentException {
 		super(playerIndex);
@@ -98,6 +100,7 @@ public class BuyDevCardCommand extends MoveCommand {
 				while(card == DevCardType.NONE){
 					card = model.generateRandomDevCard();
 				}
+				this.purchasedCard = card;
 				//buys the dev card for player and model
 				player.buyDevCard(card);
 				model.buyFromDeck(card);
@@ -123,5 +126,24 @@ public class BuyDevCardCommand extends MoveCommand {
 		String message = player.getName() + " bought a development card.";
 		MessageLine line = new MessageLine(message,player.getName());
 		model.addGameLogMessage(line);
+	}
+	
+	public GetModelResponse reExecute() {
+		int gameIndex = this.gameIDCookie;
+		int playerIndex = this.getPlayerIndex();			
+ 		Game game = Game.instance();		
+ 		ServerGameModel model = game.getGameId(gameIndex);			
+ 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+ 		
+ 		GetModelResponse response = new GetModelResponse(); //creating a response
+		
+		player.buyDevCard(purchasedCard);
+		model.buyFromDeck(purchasedCard);
+		model.setVersion(model.getVersion() + 1);
+		addGameLog(player,model);
+		response.setSuccess(true);
+		response.setJson(model.toString());
+		
+		return response;
 	}
 }

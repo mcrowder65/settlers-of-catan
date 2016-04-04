@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.dao.IGameDAO;
@@ -124,12 +125,27 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * loads a game into memory via the gameID 
 	 * calls the DAOs to do this
+	 * returns null if it fails
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
-
-
-		return null;
+		ArrayList<GameCombo> games = null;
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try {
+			games = (ArrayList<GameCombo>) gameDAO.getGames();
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+			games = null;
+		}
+		
+		return games;
 	}
 
 	/**
@@ -224,9 +240,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * @param gameID int
 	 */
 	@Override
-	public void getCommands(int gameID) {
-		// TODO Auto-generated method stub
+	public List<MoveCommand> getCommands(int gameID) {
 		
+		return null;
 	}
 
 	

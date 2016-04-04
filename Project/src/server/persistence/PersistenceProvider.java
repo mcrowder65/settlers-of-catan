@@ -86,6 +86,6 @@ public abstract class PersistenceProvider {
 	 * gets the commands associated with a gameID
 	 * @param gameID int
 	 */
-	public abstract void getCommands(int gameID);
+	public abstract List<MoveCommand> getCommands(int gameID);
 	
 }

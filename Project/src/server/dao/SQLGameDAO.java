@@ -54,7 +54,7 @@ public class SQLGameDAO implements IGameDAO{
 				ResultSet set = pstmt.executeQuery();
 				serverGameModels = new ArrayList<ServerGameModel>();
 				titles = new ArrayList<String>();
-				while(set.next()) { //id, data, title
+				while(set.next()) {
 					
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
@@ -145,6 +145,7 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * updates a game in the SQL database
 	 *@param gameID int
@@ -234,6 +235,33 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 		
+	}
+
+	/**
+	 * @param gameID int
+	 */
+	@Override
+	public List<MoveCommand> getCommands(int gameID) {
+		ArrayList<MoveCommand> commands = new ArrayList<MoveCommand>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			PreparedStatement pst = null;
+			String sql="Select * from commands where game_id = " + gameID + ";";
+			pst = conn.prepareStatement(sql);
+			ResultSet rSet = pst.executeQuery();
+			
+			while(rSet.next()) { 
+				
+				String data = rSet.getString(2);
+				MoveCommand command = Translator.jsonToObject(data);
+				commands.add(command);
+			}
+			pst.close();
+		} catch (ClassNotFoundException|SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return commands;
 	}
 
 }

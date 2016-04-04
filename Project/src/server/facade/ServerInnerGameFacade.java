@@ -13,7 +13,7 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 
 	/**
 	 * gets a list of the AI types
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public ListAIResponse listAiTypes(HttpExchange exchange) {
@@ -23,7 +23,7 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 
 	/**
 	 * adds and AI 
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public Response addAi(HttpExchange exchange) {
@@ -33,7 +33,7 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 	
 	/**
 	 * retrieves the model 
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public GetModelResponse getModel(HttpExchange exchange) {

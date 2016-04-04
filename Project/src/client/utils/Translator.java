@@ -24,10 +24,8 @@ public class Translator {
 	private static JsonTranslator jsonTranslator = new JsonTranslator();
 	/**
 	 * Converts the JSON string to its java object representation
-	 * @param json
-	 * The JSON string
-	 * @return
-	 * Returns an object of the given type, constructed from the json.
+	 * @param json The JSON string
+	 * @return Returns an object of the given type, constructed from the json.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T jsonToObject(String json) throws IllegalArgumentException  {
@@ -204,8 +202,8 @@ public class Translator {
 	
 	/**
 	 * This method parses the cookies and retrieves the game Id
-	 * @param String - cookie
-	 * @return GameId
+	 * @param cookie - String
+	 * @return gameID - int
 	 */
 	public static int getGameId(String cookie) {
 		cookie = decodeCookie(cookie);
@@ -234,8 +232,8 @@ public class Translator {
 	
 	/**
 	 * This method parses the cookies and retrieves the player id
-	 * @param String - cookie
-	 * @return Player id
+	 * @param cookie String
+	 * @return playerID - int
 	 */
 	public static int getPlayerId(String cookie) {
 		

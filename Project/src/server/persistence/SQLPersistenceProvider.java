@@ -18,8 +18,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * constructor for SQL Persistence Provider.
-	 * @param commandCount
 	 *  Sets how many commands need to be executed before we write to disk
+	 * @param commandCount int
+	 * 
 	 */
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
@@ -37,7 +38,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * Ends an SQL Transaction
-	 * @param commit
+	 * @param commit boolean
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
@@ -48,7 +49,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * adds a command to the array of commands 
 	 * calls the command method on the DAOs
-	 * @param MoveCommand
+	 * @param command MoveCommand
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
@@ -59,7 +60,6 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * loads a game into memory via the gameID 
 	 * calls the DAOs to do this
-	 * @param int gameID
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
@@ -69,7 +69,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * Writes the entire game model to the database
 	 * Clears the commands table
-	 * @param int gameID
+	 * @param gameID int
 	 */
 	@Override
 	protected void flushGame(int gameID) {
@@ -79,7 +79,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * creates an new UserDAO for the SQL database
-	 * @return IUserDAO
+	 * @return a IUserDAO
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
@@ -89,7 +89,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * Creates the game DAO 
-	 * @return IGameDAO 
+	 * @return a IGameDAO 
 	 */
 	@Override
 	public IGameDAO createGameDAO() {
@@ -99,10 +99,10 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls the userDAO to add a user to the join table
-	 * @param int userID
-	 * @param int gameID
-	 * @param CatanColor color
-	 */
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor
+	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color){
 		
@@ -110,9 +110,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls addUser on the SQLUserDAO
-	 * @param userID
-	 * @param gameID
-	 * @param color
+	 * @param person RegisteredPersonInfo
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){

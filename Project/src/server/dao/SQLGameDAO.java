@@ -35,7 +35,7 @@ public class SQLGameDAO implements IGameDAO{
 	
 	/**
 	 * gets all the games in the game table of the SQL database
-	 * @return List<GameCombo>
+	 * @return a list of GameCombos
 	 * @return null if there are no games
 	 */
 	@Override
@@ -126,8 +126,8 @@ public class SQLGameDAO implements IGameDAO{
 
 	/**
 	 * adds a command to the SQL command table
-	 * @param MoveCommand
-	 * @param in gameID
+	 * @param command MoveCommand
+	 * @param gameID int
 	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) {
@@ -147,8 +147,8 @@ public class SQLGameDAO implements IGameDAO{
 	}
 	/**
 	 * updates a game in the SQL database
-	 *@param int gameID
-	 *@param ServerGameModel model
+	 *@param gameID int
+	 *@param model ServerGameModel
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) {
@@ -168,7 +168,7 @@ public class SQLGameDAO implements IGameDAO{
 	
 	/**
 	 * deletes commands from command SQL table
-	 * @param int gameID
+	 * @param gameID int
 	 */
 	@Override
 	public void deleteCommands(int gameID) {
@@ -187,9 +187,9 @@ public class SQLGameDAO implements IGameDAO{
 	
 	/**
 	 * adds to the joinUserTable
-	 * @param int UserID
-	 * @param int gameID
-	 * @param CatanColor color
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
@@ -213,9 +213,9 @@ public class SQLGameDAO implements IGameDAO{
 
 	/**
 	 * adds a game to the SQL games table
-	 * @param int id
-	 * @param ServerGameModel model
-	 * @param String title
+	 * @param id int
+	 * @param model ServerGameModel
+	 * @param title String
 	 */
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) {

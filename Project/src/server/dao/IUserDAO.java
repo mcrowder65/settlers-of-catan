@@ -14,15 +14,15 @@ import server.util.RegisteredPersonInfo;
 public interface IUserDAO {
 	/**
 	 * gets all users from the persistence storage
-	 * @return List<RegisteredPersonInfo>
-	 * @throws IOException 
+	 * @return a list of RegisteredPersonInfo
+	 * @throws IOException if error
 	 */
 	public List<RegisteredPersonInfo> getUsers() throws IOException;
 	/**
 	 * adds a user to the persistance storage
-	 * @param person
-	 * @throws FileNotFoundException 
-	 * @throws IOException 
+	 * @param person RegisteredPersonInfo
+	 * @throws FileNotFoundException if file isn't found
+	 * @throws IOException if there's an error
 	 */
 	public void addUser(RegisteredPersonInfo person) throws FileNotFoundException, IOException;
 }

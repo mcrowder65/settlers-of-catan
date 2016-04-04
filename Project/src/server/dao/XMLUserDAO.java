@@ -32,8 +32,8 @@ public class XMLUserDAO implements IUserDAO{
 
 	/**
 	 * gets all users from the user xml file
-	 * @return List<RegisteredPersonInfo>
-	 * @throws IOException 
+	 * @return a list of List of RegisteredPersonInfo
+	 * @throws IOException if error occurs
 	 */
 	@Override
 	public List<RegisteredPersonInfo> getUsers() throws IOException {
@@ -53,7 +53,7 @@ public class XMLUserDAO implements IUserDAO{
 
 	/**
 	 * adds a user to the user xml file
-	 * @param RegeristeredPersonInfo
+	 * @param person RegeristeredPersonInfo
 	 * @throws IOException 
 	 */
 	@Override

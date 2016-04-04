@@ -29,7 +29,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	/**
 	 * adds a command to the array of commands 
 	 * calls add command on the XML DAO
-	 * @param MoveCommand
+	 * @param command MoveCommand
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
@@ -40,7 +40,6 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * loads a game into memory via the gameID
-	 * @param int gameID
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
@@ -55,7 +54,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * creates an new UserDAO for an xml file 
-	 * @return IUserDAO
+	 * @return a IUserDAO
 	 */
 	@Override
 	public IUserDAO createUserDAO() {
@@ -65,7 +64,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * creates the gameDAO
-	 * @return IGameDAO
+	 * @return a IGameDAO
 	 */
 	@Override
 	public IGameDAO createGameDAO() {
@@ -75,7 +74,9 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls the userDAO to add a user to the xml file
-	 * @param int userID, int gameID, CatanColor color
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor 
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color){
@@ -84,9 +85,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	
 	/**
 	 * calls addUser on the XMLUserDAO
-	 * @param userID
-	 * @param gameID
-	 * @param color
+	 * person RegisteredPersonInfo
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
@@ -104,7 +103,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 
 	/**
 	 * is not implemented because we are writing to an XML file
-	 * @param boolean
+	 * @param commit boolean
 	 */
 	@Override
 	public void endTransaction(boolean commit) {

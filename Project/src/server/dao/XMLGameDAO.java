@@ -37,9 +37,9 @@ public class XMLGameDAO implements IGameDAO{
 	
 	/**
 	 * gets all the games in the XML file
-	 * @return List<GameCombo>
+	 * @return a list of GameCombos
 	 * @return null if there are no games
-	 * @throws IOException 
+	 * @throws IOException  if an error occurs
 	 */
 	@Override
 	public List<GameCombo> getGames() throws IOException {
@@ -109,9 +109,9 @@ public class XMLGameDAO implements IGameDAO{
 	}
 	/**
 	 * adds a command to the XML file
-	 * @param MoveCommand - the move that should be added
+	 * @param command MoveCommand - the move that should be added
 	 * @param gameID int the id of the game.
-	 * @throws IOException 
+	 * @throws IOException  if an error occurs
 	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) throws IOException {
@@ -138,9 +138,9 @@ public class XMLGameDAO implements IGameDAO{
 	}
 	/**
 	 * updates a game in the XML file
-	 *@param int gameID
-	 *@param ServerGameModel model
-	 * @throws IOException 
+	 *@param gameID int
+	 *@param model ServerGameModel
+	 * @throws IOException  if an error occurs
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) throws IOException {
@@ -162,8 +162,8 @@ public class XMLGameDAO implements IGameDAO{
 	}
 	/**
 	 * deletes commands from the XML file
-	 * @param int gameID
-	 */
+	 * @param gameID int
+	 */ 
 	@Override
 	public void deleteCommands(int gameID) {
 		String directory = "./commands/"+ gameID;
@@ -173,8 +173,8 @@ public class XMLGameDAO implements IGameDAO{
 	
 	/**
 	 * Recursively defeats files from a directory and then deletes the directory
-	 * @param f
-	 * @throws FileNotFoundException
+	 * @param f File
+	 * @throws FileNotFoundException if the file isn't found
 	 */
 	public void delete(File f) throws FileNotFoundException{
 		if(f.isDirectory()){
@@ -189,11 +189,11 @@ public class XMLGameDAO implements IGameDAO{
 	}
 	/**
 	 * 
-	 * @param int UserID
-	 * @param int gameID
-	 * @param CatanColor color
-	 * @throws IOException 
-	 */
+	 * @param userID int 
+	 * @param gameID int
+	 * @param color CatanColor
+	 * @throws IOException if an error occurs
+	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws IOException {
 		String destination = "./joinTable/"+ gameID + "/" + userID +".xml";
@@ -214,10 +214,10 @@ public class XMLGameDAO implements IGameDAO{
 
 	/**
 	 * adds a game to the XML games file
-	 * @param int id
-	 * @param ServerGameModel model
-	 * @param String title
-	 * @throws IOException 
+	 * @param id int
+	 * @param model ServerGameModel
+	 * @param title String 
+	 * @throws IOException if an error occurs
 	 */
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) throws IOException {

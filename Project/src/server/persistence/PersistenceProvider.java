@@ -25,7 +25,7 @@ public abstract class PersistenceProvider {
 	
 	/**
 	 * constructor for PersistenceProvider
-	 * @param commandCount
+	 * @param commandCount int
 	 */
 	public PersistenceProvider(int commandCount) {
 		max = commandCount;
@@ -38,45 +38,45 @@ public abstract class PersistenceProvider {
 	public abstract void startTransaction();
 	/**
 	 * ends a sql transaction
-	 * @param boolean commit
+	 * @param commit boolean
 	 */
 	public abstract void endTransaction(boolean commit);
 	/**
 	 * adds a command to the command array 
 	 * calls the add a command to the DAOs
-	 * @param MoveCommand command
+	 * @param command MoveCommand
 	 */
 	public abstract void addCommand(MoveCommand command);
 	/**
 	 * gets all of the games stored 
-	 * @return List<GameCombo>
+	 * @return a list of GameCombo
 	 */
     public abstract List<GameCombo> loadGames();
     /**
      * writes game to disk
-     * @param int gameID
+     * @param gameID int
      */
     protected abstract void flushGame(int gameID);
     /**
      * creates the UserDAO
-     * @return IUserDAO
+     * @return a IUserDAO
      */
 	public abstract IUserDAO createUserDAO();
 	/**
 	 * creates the gameDAO
-	 * @return IGameDAO
+	 * @return a IGameDAO
 	 */
 	public abstract IGameDAO createGameDAO();
 	/**
 	 * adds a user to disk
-	 * @param RegisteredPersonInfo person
+	 * @param person RegisteredPersonInfo 
 	 */
 	public abstract void addUser(RegisteredPersonInfo person);
 	/**
 	 * adds a user to the joinUser table/file
-	 * @param userID
-	 * @param gameID
-	 * @param color
+	 * @param userID int
+	 * @param gameID int
+	 * @param color CatanColor
 	 */
 	public abstract void joinUser(int userID, int gameID, CatanColor color);
 	

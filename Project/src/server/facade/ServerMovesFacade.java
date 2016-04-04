@@ -29,7 +29,7 @@ public class ServerMovesFacade implements IMovesFacade {
 
 	/**
 	 * creates a chat command and calls execute on it
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public GetModelResponse sendChat(HttpExchange exchange) {
@@ -39,7 +39,7 @@ public class ServerMovesFacade implements IMovesFacade {
 
 	/**
 	 * creates buyDevCard command and calls execute on it
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public GetModelResponse buyDevCard(HttpExchange exchange) {

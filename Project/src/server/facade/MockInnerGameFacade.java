@@ -19,7 +19,7 @@ public class MockInnerGameFacade implements IInnerGameFacade {
 	}
 	/**
 	 * lists the AI types
-	 * @param HttpExchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public ListAIResponse listAiTypes(HttpExchange exchange) {
@@ -27,7 +27,7 @@ public class MockInnerGameFacade implements IInnerGameFacade {
 	}
 	/**
 	 * adds an AI to the game
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public Response addAi(HttpExchange exchange) {
@@ -36,7 +36,7 @@ public class MockInnerGameFacade implements IInnerGameFacade {
 
 	/**
 	 * gets the gameModel
-	 * @param HttpExchange exchange
+	 * @param exchange HttpExchange
 	 */
 	@Override
 	public GetModelResponse getModel(HttpExchange exchange) {

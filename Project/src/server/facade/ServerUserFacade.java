@@ -13,7 +13,7 @@ import shared.communication.response.Response;
 public class ServerUserFacade implements IUserFacade {
 	/**
 	 * logs users in and gets response
-	 * @param HttpExchange 
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public Response login(HttpExchange exchange) {
@@ -23,7 +23,7 @@ public class ServerUserFacade implements IUserFacade {
 
 	/**
 	 * registers user and gets response
-	 * @param HttpExchange 
+	 * @param exchange HttpExchange 
 	 */
 	@Override
 	public Response register(HttpExchange exchange) {

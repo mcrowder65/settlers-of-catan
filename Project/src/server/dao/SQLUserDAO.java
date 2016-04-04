@@ -30,7 +30,7 @@ public class SQLUserDAO implements IUserDAO{
 	
 	/**
 	 * gets all users from the User table in the SQL database
-	 * @return List<RegisteredPersonInfo>
+	 * @return a list of RegisteredPersonInfo
 	 */
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
@@ -60,7 +60,7 @@ public class SQLUserDAO implements IUserDAO{
 
 	/**
 	 * adds a user to the SQL user table 
-	 * @param RegeristeredPersonInfo
+	 * @param person RegeristeredPersonInfo
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) {

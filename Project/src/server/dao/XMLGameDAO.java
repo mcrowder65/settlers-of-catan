@@ -261,7 +261,6 @@ public class XMLGameDAO implements IGameDAO{
 			inFile.close();
 			return params.allCommands;
 		}
-		
 		return null;
 	}
 

@@ -119,5 +119,12 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void dropTables() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -72,4 +72,10 @@ public interface IGameDAO {
 	 * @throws IOException if an error
 	 */
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws FileNotFoundException, IOException, SQLException;
+	
+	/**
+	 * drops the tables in the sqlite db or xml
+	 */
+	public void dropTables();
+
 }

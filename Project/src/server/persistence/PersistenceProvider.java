@@ -88,4 +88,9 @@ public abstract class PersistenceProvider {
 	 */
 	public abstract List<MoveCommand> getCommands(int gameID);
 	
+	/**
+	 * this deletes the xml stuff and/or drops the sql tables
+	 */
+	public abstract void dropTables();
+	
 }

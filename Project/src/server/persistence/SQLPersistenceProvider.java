@@ -241,8 +241,18 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
-		
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 		return null;
+	}
+
+	@Override
+	public void dropTables() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

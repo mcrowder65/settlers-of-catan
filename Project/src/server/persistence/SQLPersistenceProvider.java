@@ -78,26 +78,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 		}
 		finally {
-			safeClose(connection);
+			safeClose();
 			connection = null;
 		}
 		
 	}
-	/**
-	 * 
-	 * @param conn
-	 */
-	public static void safeClose(Connection conn) 
+	private void safeClose() 
 	{
-		if (conn != null) 
-		{
-			try 
-			{
-				conn.close();
+		if (connection != null) {
+			try {
+				connection.close();
 			}
-			catch (SQLException e) 
-			{
-				
+			catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 	}

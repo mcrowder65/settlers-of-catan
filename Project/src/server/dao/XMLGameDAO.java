@@ -44,7 +44,7 @@ public class XMLGameDAO implements IGameDAO{
 	@Override
 	public List<GameCombo> getGames() throws IOException {
 		List<GameCombo> allGames = new ArrayList<GameCombo>();
-		File directory = new File("./allGames"); //getting the directory
+		File directory = new File("xml/allGames"); //getting the directory
 
 		if(!directory.exists()){
 			return null; //no directory therefore no games exist
@@ -58,7 +58,7 @@ public class XMLGameDAO implements IGameDAO{
 				InputStream inFile = new BufferedInputStream(new FileInputStream(file));
 				GameParams game = (GameParams)xStream.fromXML(inFile);
 				
-				File joinDirectory = new File("./joinTable/"+game.getId());
+				File joinDirectory = new File("xml/joinTable/"+game.getId());
 				if(joinDirectory.exists() == false){
 					return null; //no games exist
 				}
@@ -114,7 +114,7 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void addCommand(MoveCommand command, int gameID) throws IOException {
-		String destination = "./commands"+ gameID + ".xml";
+		String destination = "xml/commands"+ gameID + ".xml";
 		File f = new File(destination);
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
@@ -149,7 +149,7 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void updateGame(int gameID, ServerGameModel model) throws IOException {
-		String destination = "./allGames/"+ gameID + ".xml";
+		String destination = "xml/allGames/"+ gameID + ".xml";
 		File f = new File(destination);
 		String title ="";
 		if(f.exists()){
@@ -173,7 +173,7 @@ public class XMLGameDAO implements IGameDAO{
 	 */ 
 	@Override
 	public void deleteCommands(int gameID) throws IOException {
-		String directory = "./commands"+ gameID +".xml";
+		String directory = "xml/commands"+ gameID +".xml";
 		File f = new File(directory);
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
@@ -209,8 +209,8 @@ public class XMLGameDAO implements IGameDAO{
 	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws IOException {
-		String destination = "./joinTable/"+ gameID + "/" + userID +".xml";
-		boolean success = (new File("./joinTable"+gameID)).mkdirs();
+		String destination = "xml/joinTable/"+ gameID + "/" + userID +".xml";
+		boolean success = (new File("xml/joinTable"+gameID)).mkdirs();
 		if(success){
 			File f = new File(destination);
 			if(f.exists()){
@@ -235,8 +235,8 @@ public class XMLGameDAO implements IGameDAO{
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) throws IOException {
 		GameParams game = new GameParams(id, model, title);
-		String destination = "./allGames/"+ id + ".xml";
-		boolean success = (new File("./allGames")).mkdirs();
+		String destination = "xml/allGames/"+ id + ".xml";
+		boolean success = (new File("xml/allGames")).mkdirs();
 		if(success){
 			File f = new File(destination);
 			if(f.exists()){
@@ -252,7 +252,7 @@ public class XMLGameDAO implements IGameDAO{
 
 	@Override
 	public List<MoveCommand> getCommands(int gameID) throws IOException {
-		String destination = "./commands"+gameID+".xml";
+		String destination = "xml/commands"+gameID+".xml";
 		File f = new File(destination);
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
@@ -266,7 +266,6 @@ public class XMLGameDAO implements IGameDAO{
 
 	@Override
 	public void dropTables() {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -276,6 +276,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		return commands;
 	}
 
+	/**
+	 * this drops all the tables in the sqlite db
+	 */
 	@Override
 	public void dropTables() {
 		try {

@@ -2,6 +2,7 @@ package server.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.util.RegisteredPersonInfo;
@@ -17,12 +18,12 @@ public interface IUserDAO {
 	 * @return a list of RegisteredPersonInfo
 	 * @throws IOException if error
 	 */
-	public List<RegisteredPersonInfo> getUsers() throws IOException;
+	public List<RegisteredPersonInfo> getUsers() throws IOException, SQLException;
 	/**
 	 * adds a user to the persistance storage
 	 * @param person RegisteredPersonInfo
 	 * @throws FileNotFoundException if file isn't found
 	 * @throws IOException if there's an error
 	 */
-	public void addUser(RegisteredPersonInfo person) throws FileNotFoundException, IOException;
+	public void addUser(RegisteredPersonInfo person) throws FileNotFoundException, IOException, SQLException;
 }

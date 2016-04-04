@@ -6,6 +6,7 @@ import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -35,7 +36,7 @@ public abstract class PersistenceProvider {
 	/**
 	 * starts an SQL transaction
 	 */
-	public abstract void startTransaction();
+	public abstract void startTransaction() throws DatabaseException;
 	/**
 	 * ends a sql transaction
 	 * @param commit boolean
@@ -56,7 +57,7 @@ public abstract class PersistenceProvider {
      * writes game to disk
      * @param gameID int
      */
-    protected abstract void flushGame(int gameID);
+    protected abstract void flushGame(int gameID, ServerGameModel serverGameModel);
     /**
      * creates the UserDAO
      * @return a IUserDAO

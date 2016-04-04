@@ -1,11 +1,18 @@
 package server.persistence;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
+import server.dao.SQLGameDAO;
+import server.dao.SQLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -15,7 +22,15 @@ import shared.definitions.CatanColor;
  *
  */
 public class SQLPersistenceProvider extends PersistenceProvider{
+	private Connection connection;
+	private SQLUserDAO userDAO;
+	private SQLGameDAO gameDAO;
+	private static final String DATABASE_DIRECTORY = "database";
 	
+
+	private static final String DATABASE_FILE = "db.sqlite";
+	private static final String DATABASE_URL = "jdbc:sqlite:"  + DATABASE_DIRECTORY + 
+												File.separator + DATABASE_FILE;
 	/**
 	 * constructor for SQL Persistence Provider.
 	 *  Sets how many commands need to be executed before we write to disk
@@ -25,14 +40,24 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
 		//new dao's, new connection
+		userDAO = new SQLUserDAO(connection);
+		gameDAO = new SQLGameDAO(connection);
 	}
 	
 	/**
 	 * Starts an SQL transaction 
+	 * @throws DatabaseException 
 	 */
 	@Override
-	public void startTransaction() {
-		// TODO Auto-generated method stub
+	public void startTransaction() throws DatabaseException {
+		try {	
+			connection = DriverManager.getConnection(DATABASE_URL);
+			connection.setAutoCommit(false);
+		}
+		catch (SQLException e) {
+			throw new DatabaseException("Could not connect to database. Make sure " + 
+				DATABASE_FILE + " is available in ./" + DATABASE_DIRECTORY, e);
+		}
 		
 	}
 
@@ -42,10 +67,37 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
+		try {
+			if (commit) {
+				connection.commit();
+			}
+			else {
+				connection.rollback();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			safeClose();
+			connection = null;
+		}
 		
 	}
-
+	/**
+	 * safely closes a connection, making sure it isn't null
+	 */
+	private void safeClose() 
+	{
+		if (connection != null) {
+			try {
+				connection.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * adds a command to the array of commands 
 	 * calls the command method on the DAOs
@@ -53,7 +105,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
-		// TODO Auto-generated method stub
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.addCommand(command, command.getGameCookie());
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 		
 	}
 	
@@ -70,10 +134,23 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * Writes the entire game model to the database
 	 * Clears the commands table
 	 * @param gameID int
+	 * @param serverGameModel ServerGameModel
 	 */
 	@Override
-	protected void flushGame(int gameID) {
-		// TODO Auto-generated method stub
+	protected void flushGame(int gameID, ServerGameModel serverGameModel) {
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return;
+		}
+		try {
+			gameDAO.updateGame(gameID, serverGameModel);
+			endTransaction(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+		}
 		
 	}
 	

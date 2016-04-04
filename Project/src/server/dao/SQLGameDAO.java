@@ -39,7 +39,7 @@ public class SQLGameDAO implements IGameDAO{
 	 * @return null if there are no games
 	 */
 	@Override
-	public List<GameCombo> getGames() {
+	public List<GameCombo> getGames() throws SQLException{
 		//GameCombo - ServerGameModel, GameInfo
 		//ServerGameModel from games list data
 		//GameInfo from game membership and games title
@@ -67,6 +67,7 @@ public class SQLGameDAO implements IGameDAO{
 				pstmt.close();
 			} catch (ClassNotFoundException|SQLException e) {
 				e.printStackTrace();
+				throw new SQLException();
 			}
 	        
 	        ArrayList<ArrayList<PlayerInfo>> players = new ArrayList<ArrayList<PlayerInfo>>();
@@ -105,12 +106,14 @@ public class SQLGameDAO implements IGameDAO{
 							pst.close();
 						} catch (ClassNotFoundException|SQLException e) {
 							e.printStackTrace();
+							throw new SQLException();
 						}
 					}
 					pstmt.close();
 					
 				} catch (ClassNotFoundException|SQLException e) {
 					e.printStackTrace();
+					throw new SQLException();
 				}
 	        }
 	        
@@ -130,19 +133,20 @@ public class SQLGameDAO implements IGameDAO{
 	 * @param gameID int
 	 */
 	@Override
-	public void addCommand(MoveCommand command, int gameID) {
+	public void addCommand(MoveCommand command, int gameID) throws SQLException{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
 			String mysqlstring="insert into commands (data, game_id) "
 					+ "values (?, ?);";
 			pstmt = conn.prepareStatement(mysqlstring);
-			pstmt.setString(1, command.getMoveType());
+			pstmt.setString(1, Translator.objectToJson(command));
 			pstmt.setInt(2, gameID);
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 	}
 	
@@ -152,7 +156,7 @@ public class SQLGameDAO implements IGameDAO{
 	 *@param model ServerGameModel
 	 */
 	@Override
-	public void updateGame(int gameID, ServerGameModel model) {
+	public void updateGame(int gameID, ServerGameModel model) throws SQLException{
 		String json = Translator.modelToJson(model);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -164,6 +168,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 	}
 	
@@ -172,7 +177,7 @@ public class SQLGameDAO implements IGameDAO{
 	 * @param gameID int
 	 */
 	@Override
-	public void deleteCommands(int gameID) {
+	public void deleteCommands(int gameID) throws SQLException{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			PreparedStatement pstmt = null;
@@ -182,6 +187,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 		
 	}
@@ -193,7 +199,7 @@ public class SQLGameDAO implements IGameDAO{
 	 * @param color CatanColor
 	 */
 	@Override
-	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) {
+	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
 		String sColor = color.toString();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -209,6 +215,7 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 	}
 
@@ -219,7 +226,7 @@ public class SQLGameDAO implements IGameDAO{
 	 * @param title String
 	 */
 	@Override
-	public void addGame(int id, ServerGameModel model, String title) {
+	public void addGame(int id, ServerGameModel model, String title) throws SQLException{
 		String json = Translator.modelToJson(model);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -233,15 +240,17 @@ public class SQLGameDAO implements IGameDAO{
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 		
 	}
 
 	/**
 	 * @param gameID int
+	 * @throws SQLException 
 	 */
 	@Override
-	public List<MoveCommand> getCommands(int gameID) {
+	public List<MoveCommand> getCommands(int gameID) throws SQLException{
 		ArrayList<MoveCommand> commands = new ArrayList<MoveCommand>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -259,6 +268,7 @@ public class SQLGameDAO implements IGameDAO{
 			pst.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
 		
 		return commands;

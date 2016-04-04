@@ -6,6 +6,7 @@ import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameModel;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -47,7 +48,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	}
 
 	@Override
-	protected void flushGame(int gameID) {
+	protected void flushGame(int gameID, ServerGameModel model) {
 		// TODO Auto-generated method stub
 		
 	}

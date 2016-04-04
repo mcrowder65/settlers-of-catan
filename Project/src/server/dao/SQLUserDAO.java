@@ -33,7 +33,7 @@ public class SQLUserDAO implements IUserDAO{
 	 * @return a list of RegisteredPersonInfo
 	 */
 	@Override
-	public List<RegisteredPersonInfo> getUsers() {
+	public List<RegisteredPersonInfo> getUsers() throws SQLException{
 		 ArrayList<RegisteredPersonInfo> users = null;
         try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -53,6 +53,7 @@ public class SQLUserDAO implements IUserDAO{
 			pstmt.close();
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		}
         
 		return users;
@@ -63,7 +64,7 @@ public class SQLUserDAO implements IUserDAO{
 	 * @param person RegeristeredPersonInfo
 	 */
 	@Override
-	public void addUser(RegisteredPersonInfo person) {
+	public void addUser(RegisteredPersonInfo person) throws SQLException {
 	        try {
 				Class.forName("com.mysql.jdbc.Driver");
 				PreparedStatement pstmt = null;
@@ -76,6 +77,7 @@ public class SQLUserDAO implements IUserDAO{
 				pstmt.close();
 			} catch (ClassNotFoundException|SQLException e) {
 				e.printStackTrace();
+				throw new SQLException();
 			}
 	}
 

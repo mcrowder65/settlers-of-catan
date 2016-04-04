@@ -44,10 +44,16 @@ public class Server {
 	private OfferTradeHandler offerTradeHandler;
 	public void run(String[] args) {
 		
-		int port = 8081;
-		if (args.length > 0) {
-			port = Integer.parseInt(args[0]);
+		if (args.length != 2) {
+			System.out.println("Usage: ant our-server <persistence-type> <commands-between-checkpoints>");
+			return;
 		}
+		String persistenceIdentifier = args[0];
+		int commandsBetweenCheckpoints = Integer.parseInt(args[1]);
+		
+		
+		int port = 8081;
+		
 		System.out.println("Port =" + port);
 		
 		
@@ -126,6 +132,9 @@ public class Server {
 		httpServer.createContext("/moves/sendChat", sendChatHandler);
 		httpServer.createContext("/moves/Soldier", soldierHandler);
 		httpServer.createContext("/moves/Year_Of_Plenty", yearOfPlentyHandler);
+		
+
+		
 		
 		httpServer.start();
 		

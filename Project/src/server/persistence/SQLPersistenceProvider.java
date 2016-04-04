@@ -235,17 +235,27 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	}
 
 	/**
-	 * gets the commands associated with a game id
+	 * gets the commands associated with a game id, returns null if something broke
 	 * @param gameID int
 	 */
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
+		List<MoveCommand> commands = null;
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			return commands;
 		}
-		return null;
+		try {
+			commands = gameDAO.getCommands(gameID);
+			endTransaction(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			endTransaction(false);
+			return null;
+		}
+		return commands;
 	}
 
 	@Override

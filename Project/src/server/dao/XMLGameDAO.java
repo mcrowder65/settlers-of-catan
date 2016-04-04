@@ -17,6 +17,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import server.swagger.FileUtils;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -165,8 +166,26 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void deleteCommands(int gameID) {
-		// TODO Auto-generated method stub
-		
+		String directory = "./commands/"+ gameID;
+		File f = new File(directory);
+		f.delete();
+	}
+	
+	/**
+	 * Recursively defeats files from a directory and then deletes the directory
+	 * @param f
+	 * @throws FileNotFoundException
+	 */
+	public void delete(File f) throws FileNotFoundException{
+		if(f.isDirectory()){
+			for(File ff : f.listFiles()){
+				ff.delete();
+			}
+		}
+		if(f.delete() == false){
+			throw new FileNotFoundException("File Not Found");
+		}
+
 	}
 	/**
 	 * 

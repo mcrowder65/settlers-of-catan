@@ -140,7 +140,7 @@ public class SQLGameDAO implements IGameDAO{
 			String mysqlstring="insert into commands (data, game_id) "
 					+ "values (?, ?);";
 			pstmt = conn.prepareStatement(mysqlstring);
-			pstmt.setString(1, command.getMoveType());
+			pstmt.setString(1, Translator.objectToJson(command));
 			pstmt.setInt(2, gameID);
 			pstmt.executeUpdate();
 			pstmt.close();

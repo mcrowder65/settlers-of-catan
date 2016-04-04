@@ -35,7 +35,7 @@ public abstract class PersistenceProvider {
 	/**
 	 * starts an SQL transaction
 	 */
-	public abstract void startTransaction();
+	public abstract void startTransaction() throws DatabaseException;
 	/**
 	 * ends a sql transaction
 	 * @param commit boolean

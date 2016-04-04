@@ -1,9 +1,15 @@
 package server.persistence;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
+import server.dao.SQLGameDAO;
+import server.dao.SQLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import shared.communication.request.MoveCommand;
@@ -15,7 +21,15 @@ import shared.definitions.CatanColor;
  *
  */
 public class SQLPersistenceProvider extends PersistenceProvider{
+	private Connection connection;
+	private SQLUserDAO userDAO;
+	private SQLGameDAO gameDAO;
+	private static final String DATABASE_DIRECTORY = "database";
 	
+
+	private static final String DATABASE_FILE = "db.sqlite";
+	private static final String DATABASE_URL = "jdbc:sqlite:"  + DATABASE_DIRECTORY + 
+												File.separator + DATABASE_FILE;
 	/**
 	 * constructor for SQL Persistence Provider.
 	 *  Sets how many commands need to be executed before we write to disk
@@ -25,14 +39,24 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
 		//new dao's, new connection
+		userDAO = new SQLUserDAO(connection);
+		gameDAO = new SQLGameDAO(connection);
 	}
 	
 	/**
 	 * Starts an SQL transaction 
+	 * @throws DatabaseException 
 	 */
 	@Override
-	public void startTransaction() {
-		// TODO Auto-generated method stub
+	public void startTransaction() throws DatabaseException {
+		try {	
+			connection = DriverManager.getConnection(DATABASE_URL);
+			connection.setAutoCommit(false);
+		}
+		catch (SQLException e) {
+			throw new DatabaseException("Could not connect to database. Make sure " + 
+				DATABASE_FILE + " is available in ./" + DATABASE_DIRECTORY, e);
+		}
 		
 	}
 
@@ -54,6 +78,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public void addCommand(MoveCommand command) {
 		// TODO Auto-generated method stub
+		//startTransaction();
 		
 	}
 	

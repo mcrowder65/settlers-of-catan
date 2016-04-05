@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import server.util.GameCombo;
+import server.util.RegisteredPersonInfo;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
@@ -173,7 +174,11 @@ public class XMLGameDaoTest {
 		dao.addGame(1, model, "SnellSucks");
 		dao.addGame(2, model2, "DopeSauce");
 		dao.addGame(3, model2, "balls");
-		
+		XMLUserDAO userDAO = new XMLUserDAO();
+		userDAO.addUser(new RegisteredPersonInfo(0,"brennen","tyler423"));
+		userDAO.addUser(new RegisteredPersonInfo(1,"james","tyler423"));
+		userDAO.addUser(new RegisteredPersonInfo(2,"john","tyler423"));
+		userDAO.addUser(new RegisteredPersonInfo(3,"jim","tyler423"));
 		List<GameCombo> combo = dao.getGames();
 		System.out.println("Here");
 	}

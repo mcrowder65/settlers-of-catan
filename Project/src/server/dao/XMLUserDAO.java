@@ -65,9 +65,9 @@ public class XMLUserDAO implements IUserDAO{
 			XStream xStream = new XStream(new DomDriver());
 			InputStream inFile = new BufferedInputStream(new FileInputStream(destination));
 			users = (List<RegisteredPersonInfo>)xStream.fromXML(inFile);
-			for(int i=0; i<users.size(); i++){
+			//for(int i=0; i<users.size(); i++){
 				users.add(person);
-			}
+			//}
 			inFile.close();
 		}
 		else{

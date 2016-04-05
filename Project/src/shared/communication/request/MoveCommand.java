@@ -14,7 +14,6 @@ public abstract class MoveCommand extends Request {
 
 	protected int playerIndex;
 	protected String type;
-	protected GetModelResponse modelResponse;
 	protected MoveCommand(int playerIndex) throws IllegalArgumentException {
 		
 		if (playerIndex < 0 || playerIndex > 3)
@@ -36,9 +35,7 @@ public abstract class MoveCommand extends Request {
 	}
 	public abstract GetModelResponse execute();
 	
-	public GetModelResponse getModelResponse() {
-		return this.modelResponse;
-	}
+	
 
 	public String getMoveType() {
 		return type;

@@ -37,7 +37,7 @@ public class XMLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public List<RegisteredPersonInfo> getUsers() throws IOException {
-		String destination = "./Users.xml";
+		String destination = "xml/Users.xml";
 		List<RegisteredPersonInfo> users;
 		XStream xStream = new XStream(new DomDriver());
 		File f = new File(destination);
@@ -58,7 +58,7 @@ public class XMLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) throws IOException {
-		String destination = "./Users.xml";
+		String destination = "xml/Users.xml";
 		List<RegisteredPersonInfo> users = new ArrayList<RegisteredPersonInfo>();
 		File f = new File(destination); //creates the new file
 		if(f.exists()){

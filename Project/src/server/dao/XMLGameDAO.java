@@ -122,6 +122,7 @@ public class XMLGameDAO implements IGameDAO{
 			CommandParams params = (CommandParams)xStream.fromXML(inFile);
 			inFile.close();
 			f.delete();
+			
 			params.allCommands.add(command);
 			XStream xStream2 = new XStream(new DomDriver()); //new xStream
 			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
@@ -138,6 +139,7 @@ public class XMLGameDAO implements IGameDAO{
 			xStream.toXML(params,outFile);
 			outFile.close();
 		}
+		
 		
 	}
 	
@@ -181,25 +183,11 @@ public class XMLGameDAO implements IGameDAO{
 			CommandParams params = (CommandParams)xStream.fromXML(inFile);
 			params.allCommands = new ArrayList<MoveCommand>();
 			inFile.close();
+			f.delete();
 		}
 	}
 	
-	/**
-	 * Recursively defeats files from a directory and then deletes the directory
-	 * @param f File
-	 * @throws FileNotFoundException if the file isn't found
-	 */
-	public void delete(File f) throws FileNotFoundException{
-		if(f.isDirectory()){
-			for(File ff : f.listFiles()){
-				ff.delete();
-			}
-		}
-		if(f.delete() == false){
-			throw new FileNotFoundException("File Not Found");
-		}
 
-	}
 	/**
 	 * 
 	 * @param userID int 

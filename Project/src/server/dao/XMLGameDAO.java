@@ -57,8 +57,9 @@ public class XMLGameDAO implements IGameDAO{
 				XStream xStream = new XStream(new DomDriver());
 				InputStream inFile = new BufferedInputStream(new FileInputStream(file));
 				GameParams game = (GameParams)xStream.fromXML(inFile);
+				inFile.close();
 				
-				File joinDirectory = new File("xml/joinTable/"+game.getId());
+				File joinDirectory = new File("xml/joinTable"+game.getId());
 				if(joinDirectory.exists() == false){
 					return null; //no games exist
 				}

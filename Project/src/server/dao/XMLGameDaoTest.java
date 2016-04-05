@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import server.util.GameCombo;
 import server.util.ServerGameMap;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
@@ -115,14 +116,66 @@ public class XMLGameDaoTest {
 		dao.updateGame(2, model);
 	}
 	
-	@Test
+	
 	public void joinUserTest() throws IOException{
 		XMLGameDAO dao = new XMLGameDAO();
 		dao.joinUser(0, 1, CatanColor.blue, 0);
 		dao.joinUser(1, 1, CatanColor.brown, 1);
 		dao.joinUser(2, 1, CatanColor.green, 2);
 		dao.joinUser(3, 1, CatanColor.purple, 3);
+		dao.joinUser(0, 2, CatanColor.blue, 0);
+		dao.joinUser(1, 2, CatanColor.brown, 1);
+		dao.joinUser(2, 2, CatanColor.green, 2);
+		dao.joinUser(3, 2, CatanColor.purple, 3);
+		dao.joinUser(0, 3, CatanColor.blue, 0);
+		dao.joinUser(1, 3, CatanColor.brown, 1);
+		dao.joinUser(2, 3, CatanColor.green, 2);
+		dao.joinUser(3, 3, CatanColor.purple, 3);
 		
+	}
+	
+	@Test
+	public void getGamesTest() throws IOException{
+		XMLGameDAO dao = new XMLGameDAO();
+		dao.joinUser(0, 1, CatanColor.blue, 0);
+		dao.joinUser(1, 1, CatanColor.brown, 1);
+		dao.joinUser(2, 1, CatanColor.green, 2);
+		dao.joinUser(3, 1, CatanColor.purple, 3);
+		dao.joinUser(0, 2, CatanColor.blue, 0);
+		dao.joinUser(1, 2, CatanColor.brown, 1);
+		dao.joinUser(2, 2, CatanColor.green, 2);
+		dao.joinUser(3, 2, CatanColor.purple, 3);
+		dao.joinUser(0, 3, CatanColor.blue, 0);
+		dao.joinUser(1, 3, CatanColor.brown, 1);
+		dao.joinUser(2, 3, CatanColor.green, 2);
+		dao.joinUser(3, 3, CatanColor.purple, 3);
+		
+		
+		ServerGameModel model = new ServerGameModel();
+		ServerGameMap map = new ServerGameMap();
+		ServerPlayer p0 = new ServerPlayer();
+		ServerPlayer p1 = new ServerPlayer();
+		ServerPlayer p2 = new ServerPlayer();
+		ServerPlayer p3 = new ServerPlayer();
+		ServerPlayer[] players = new ServerPlayer[4];
+		players[0] = p0;
+		players[1] = p1;
+		players[2] = p2;
+		players[3] = p3;
+		
+		model.setServerGameMap(map);
+		model.setServerPlayers(players);
+		model.setBank(new ResourceList(1,1,1,1,1));
+		model.setDeck(new DevCardList(2,2,2,2,2));
+		
+		ServerGameModel model2 = model;
+		
+		dao.addGame(1, model, "SnellSucks");
+		dao.addGame(2, model2, "DopeSauce");
+		dao.addGame(3, model2, "balls");
+		
+		List<GameCombo> combo = dao.getGames();
+		System.out.println("Here");
 	}
 	
 

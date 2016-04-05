@@ -17,6 +17,7 @@ import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import shared.communication.request.MoveCommand;
 import shared.communication.request.RollNumberCommand;
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardList;
 import shared.definitions.ResourceList;
 
@@ -112,6 +113,15 @@ public class XMLGameDaoTest {
 		model.setDeck(new DevCardList(7,4,2,0,1));
 		dao.updateGame(1, model);
 		dao.updateGame(2, model);
+	}
+	
+	@Test
+	public void joinUserTest() throws IOException{
+		XMLGameDAO dao = new XMLGameDAO();
+		dao.joinUser(0, 1, CatanColor.blue, 0);
+		dao.joinUser(1, 1, CatanColor.brown, 1);
+		dao.joinUser(2, 1, CatanColor.green, 2);
+		dao.joinUser(3, 1, CatanColor.purple, 3);
 		
 	}
 	

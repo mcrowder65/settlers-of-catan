@@ -197,9 +197,9 @@ public class XMLGameDAO implements IGameDAO{
 	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws IOException {
-		String destination = "xml/joinTable/"+ gameID + "/" + userID +".xml";
-		boolean success = (new File("xml/joinTable"+gameID)).mkdirs();
-		if(success){
+		String destination = "xml/joinTable"+ gameID + "/" + userID +".xml";
+		(new File("xml/joinTable"+gameID)).mkdirs();
+		
 			File f = new File(destination);
 			if(f.exists()){
 				f.delete();
@@ -209,7 +209,7 @@ public class XMLGameDAO implements IGameDAO{
 			JoinUserParams joinUser = new JoinUserParams(userID,gameID,color,playerIndex);
 			xStream.toXML(joinUser,outFile);
 			outFile.close();
-		}
+		
 		
 	}
 

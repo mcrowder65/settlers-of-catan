@@ -91,5 +91,29 @@ public class XMLGameDaoTest {
 		dao.addGame(2, model2, "DopeSauce");
 		dao.addGame(3, model2, "balls");
 	}
+	
+	public void updateGameTest() throws IOException {
+		XMLGameDAO dao = new XMLGameDAO();
+		ServerGameModel model = new ServerGameModel();
+		ServerGameMap map = new ServerGameMap();
+		ServerPlayer p0 = new ServerPlayer();
+		ServerPlayer p1 = new ServerPlayer();
+		ServerPlayer p2 = new ServerPlayer();
+		ServerPlayer p3 = new ServerPlayer();
+		ServerPlayer[] players = new ServerPlayer[4];
+		players[0] = p0;
+		players[1] = p1;
+		players[2] = p2;
+		players[3] = p3;
+		
+		model.setServerGameMap(map);
+		model.setServerPlayers(players);
+		model.setBank(new ResourceList(3,0,0,1,1));
+		model.setDeck(new DevCardList(7,4,2,0,1));
+		dao.updateGame(1, model);
+		dao.updateGame(2, model);
+		
+	}
+	
 
 }

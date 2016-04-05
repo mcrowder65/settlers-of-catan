@@ -20,6 +20,9 @@ public abstract class PersistenceProvider {
 	 * num of commands before we write to disk
 	 */
 	protected int max;
+	
+	
+	protected int currentCommandCount = 0;
 	/**
 	 * array of the move commands before we write to disk
 	 */
@@ -91,6 +94,9 @@ public abstract class PersistenceProvider {
 	 */
 	public abstract void joinUser(int userID, int gameID, CatanColor color, int playerIndex);
 	
+	
+	
+	public abstract List<RegisteredPersonInfo> getUsers();
 	/**
 	 * gets the commands associated with a gameID
 	 * @param gameID int

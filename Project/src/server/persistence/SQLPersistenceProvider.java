@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.Game;
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.dao.SQLGameDAO;
@@ -48,8 +49,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	public SQLPersistenceProvider(int commandCount){
 		super(commandCount);
 		connection = null;
-		userDAO = new SQLUserDAO(connection);
-		gameDAO = new SQLGameDAO(connection);
+		userDAO = createUserDAO();
+		gameDAO = createGameDAO();
 		
 	}
 	
@@ -126,6 +127,17 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
+		}
+		
+		
+		commands[currentCommandCount++] = command;
+		if (currentCommandCount > max) {
+			currentCommandCount = 0;
+			flushGame(command.getGameCookie(), Game.instance().getGameId(command.getGameCookie()));
+			for (int n = 0; n < commands.length; n++)
+				commands[n] = null;
+			
 		}
 		
 	}
@@ -168,12 +180,21 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 					commands.get(x).execute();
 				}
 			}
+			try {
+				gameDAO.deleteCommands(games.get(i).model.getGameId());
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return games;
 	}
 
 	/**
-	 * Writes the entire game model to the database
+	 * Writes the entire game model to the database and deletes all the commands.
 	 * Clears the commands table
 	 * @param gameID int
 	 * @param serverGameModel ServerGameModel
@@ -188,6 +209,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		}
 		try {	
 			gameDAO.updateGame(gameID, serverGameModel);
+			gameDAO.deleteCommands(gameID);
 			endTransaction(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -300,6 +322,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
+		}
+	}
+
+	@Override
+	public List<RegisteredPersonInfo> getUsers() {
+		try {
+			return userDAO.getUsers();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

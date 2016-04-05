@@ -23,8 +23,8 @@ import shared.definitions.Player;
 
 public class Game {
 	
-	private ArrayList<GameCombo> arrayGames = new ArrayList<GameCombo>();
-	private ArrayList<RegisteredPersonInfo> registeredUsers = new ArrayList<RegisteredPersonInfo>();
+	private List<GameCombo> arrayGames = new ArrayList<GameCombo>();
+	private List<RegisteredPersonInfo> registeredUsers = new ArrayList<RegisteredPersonInfo>();
 	private static Game _instance;
 	public Object lock = new Object();
 	private PersistenceProvider persistenceProvider;
@@ -85,9 +85,16 @@ public class Game {
 			e.printStackTrace();
 		}
 	}
+
+	
 	
 	public PersistenceProvider getProvider() {
 		return persistenceProvider;
+	}
+	
+	public void restorePersistenceData() {
+		arrayGames = persistenceProvider.loadGames();
+		registeredUsers = persistenceProvider.getUsers();
 	}
 	
 	

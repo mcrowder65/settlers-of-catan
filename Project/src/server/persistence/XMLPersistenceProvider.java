@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.Game;
 import server.dao.IGameDAO;
 import server.dao.IUserDAO;
 import server.dao.XMLGameDAO;
@@ -13,7 +14,9 @@ import server.dao.XMLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
+import shared.communication.request.BuyDevCardCommand;
 import shared.communication.request.MoveCommand;
+import shared.communication.request.RobPlayerCommand;
 import shared.definitions.CatanColor;
 /**
  * Stores the delta between keys
@@ -50,6 +53,16 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 		}
 		
+
+		commands[currentCommandCount++] = command;
+		if (currentCommandCount > max) {
+			currentCommandCount = 0;
+			flushGame(command.getGameCookie(), Game.instance().getGameId(command.getGameCookie()));
+			for (int n = 0; n < commands.length; n++)
+				commands[n] = null;
+			
+		}
+		
 	}
 	
 	
@@ -65,6 +78,35 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		} 
+		
+		for(int i = 0; i < games.size(); i++){
+			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i + 1);
+			for(int x = 0; x < commands.size(); x++){
+				String moveType = commands.get(x).getMoveType();
+				if(moveType.equals("robPlayer")){ //check for reexecutes
+					RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
+					robPlayer.reExecute();
+				}
+				else if(moveType.equals("buyDevCard")){ //check for reexecutes
+					BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
+					devCard.reExecute();
+				}
+				else{
+					commands.get(x).execute();
+				}
+			}
+			try {
+				gameDAO.deleteCommands(games.get(i).model.getGameId());
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		return games;
 	}
 
@@ -72,6 +114,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	protected void flushGame(int gameID, ServerGameModel model) {
 		try {
 			gameDAO.updateGame(gameID, model);
+			gameDAO.deleteCommands(gameID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -162,6 +205,20 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 			gameDAO.dropTables();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public List<RegisteredPersonInfo> getUsers() {
+		try {
+			return userDAO.getUsers();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

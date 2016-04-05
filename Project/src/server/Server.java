@@ -78,8 +78,8 @@ public class Server {
 			System.out.println("Persistence identifier " + persistenceIdentifier + " was not found. Exiting.");
 			return;
 		}
-		
-	  
+		Game.instance().restorePersistenceData();
+	     
 		
 		
 		int port = 8081;

@@ -19,6 +19,20 @@ import shared.definitions.Player;
 public class JoinGameRequest extends Request {
 	int id;
 	CatanColor color;
+	public int getId() {
+		return id;
+	}
+
+	public CatanColor getColor() {
+		return color;
+	}
+
+	public int getPlayerID() {
+		return playerIDCookie;
+	}
+	public int getPlayerIndex() {
+		return Game.instance().getGameId(id).getLocalIndex(playerIDCookie);
+	}
 	/**
 	 * 
 	 * @param id id of the game you want to join

@@ -2,6 +2,7 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.request.*;
 import shared.communication.response.*;
 /**
@@ -28,7 +29,14 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 	@Override
 	public CreateGameResponse createGame(HttpExchange exchange) {
 		CreateGameRequest request = new CreateGameRequest(exchange);
-		return request.createGame();
+		CreateGameResponse response = request.createGame();
+		if (response.isSuccess()) {
+			Game.instance().getPersistenceProvider().addGame(
+					response.getGame().getId(),
+					Game.instance().getGameId(response.getGame().getId()),
+					response.getGame().getTitle());
+		}
+		return response;
 	}
 
 	/**
@@ -38,7 +46,11 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 	@Override
 	public Response joinGame(HttpExchange exchange) {
 		JoinGameRequest request = new JoinGameRequest(exchange);
-		return request.joinGame();
+		Response response = request.joinGame();
+		if (response.isSuccess()) {
+			Game.instance().getPersistenceProvider().joinUser(request.getPlayerID(), request.getId(), request.getColor(), request.getPlayerIndex());
+		}
+		return response;
 	}
 
 }

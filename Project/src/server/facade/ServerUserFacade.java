@@ -2,6 +2,8 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
+import server.util.RegisteredPersonInfo;
 import shared.communication.request.LoginRequest;
 import shared.communication.request.RegisterRequest;
 import shared.communication.response.Response;
@@ -28,7 +30,14 @@ public class ServerUserFacade implements IUserFacade {
 	@Override
 	public Response register(HttpExchange exchange) {
 		RegisterRequest request = new RegisterRequest(exchange);
-		return request.register();
+		Response response = request.register();
+		if (response.isSuccess()) {
+			RegisteredPersonInfo info = new RegisteredPersonInfo();
+			info.setUsername(request.getUsername());
+			info.setPassword(request.getPassword());
+			Game.instance().getPersistenceProvider().addUser(info);
+		}
+		return response;
 	}
 
 }

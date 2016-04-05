@@ -31,7 +31,15 @@ public class RegisterRequest extends Request {
 	   	 this.password = password;
     }
     
-    public Response register() {
+    public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public Response register() {
     	synchronized(Game.instance().lock){
 	    	Response response = new Response();
 	    	boolean userExists = Game.instance().userExists(username);

@@ -65,6 +65,8 @@ public abstract class PersistenceProvider {
 	 * @return a list of GameCombo
 	 */
     public abstract List<GameCombo> loadGames();
+    
+    public abstract void addGame(int id, ServerGameModel model, String title);
     /**
      * writes game to disk
      * @param gameID int

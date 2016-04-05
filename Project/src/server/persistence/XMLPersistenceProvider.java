@@ -80,6 +80,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 		} 
 		
+		
 		for(int i = 0; i < games.size(); i++){
 			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i + 1);
 			for(int x = 0; x < commands.size(); x++){
@@ -100,14 +101,15 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 				gameDAO.deleteCommands(games.get(i).model.getGameId());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
+				return games;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return games;
 			} catch (IOException e) {
 				e.printStackTrace();
+				return games;
 			}
 		}
-		
-		
 		return games;
 	}
 
@@ -222,6 +224,21 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+
+	@Override
+	public void addGame(int id, ServerGameModel model, String title) {
+		try {
+			gameDAO.addGame(id, model, title);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return;
+		}
+		
 	}
 	
 }

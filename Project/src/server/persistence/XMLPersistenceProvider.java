@@ -75,6 +75,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 		try {
 			games = (ArrayList<GameCombo>) gameDAO.getGames();
+			if (games == null) return new ArrayList<GameCombo>();
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		} 
@@ -212,7 +213,8 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
 		try {
-			return userDAO.getUsers();
+			List<RegisteredPersonInfo> users = userDAO.getUsers();
+			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

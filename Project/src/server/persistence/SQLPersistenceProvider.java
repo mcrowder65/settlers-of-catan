@@ -328,7 +328,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
 		try {
-			return userDAO.getUsers();
+			List<RegisteredPersonInfo> users = userDAO.getUsers();
+			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

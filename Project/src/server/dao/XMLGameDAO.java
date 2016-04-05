@@ -224,17 +224,17 @@ public class XMLGameDAO implements IGameDAO{
 	public void addGame(int id, ServerGameModel model, String title) throws IOException {
 		GameParams game = new GameParams(id, model, title);
 		String destination = "xml/allGames/"+ id + ".xml";
-		boolean success = (new File("xml/allGames")).mkdirs();
-		if(success){
-			File f = new File(destination);
-			if(f.exists()){
-				f.delete();
-			}
-			XStream xStream = new XStream(new DomDriver()); //new xStream
-			OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
-			xStream.toXML(game,outFile);
-			outFile.close();
+		(new File("xml/allGames")).mkdirs();
+		
+		File f = new File(destination);
+		if(f.exists()){
+			f.delete();
 		}
+		XStream xStream = new XStream(new DomDriver()); //new xStream
+		OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
+		xStream.toXML(game,outFile);
+		outFile.close();
+		
 		
 	}
 
@@ -272,9 +272,10 @@ public class XMLGameDAO implements IGameDAO{
 				if(ff.isDirectory()){
 					deleteAll(ff);
 				}
-				else{
+				
 					ff.delete();
-				}
+				
+				
 			}
 		}
 	}

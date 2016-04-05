@@ -99,7 +99,6 @@ public class FinishTurnCommand extends MoveCommand {
 			response.setJson(model.toString());
 			response.setSuccess(true);
 			
-			this.modelResponse = response;
 			return response;
 		}
 		

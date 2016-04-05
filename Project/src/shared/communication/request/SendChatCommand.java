@@ -79,8 +79,7 @@ public class SendChatCommand extends MoveCommand {
 	 		response.setSuccess(true);
 	 		response.setJson(model.toString());
 	 		
-	 		this.modelResponse = response;
-			return response; 
+	 		return response; 
 		}
 	}
 

@@ -106,8 +106,7 @@ public class SoldierCommand extends MoveCommand {
 	 			addGameLog(player,model,null);
 	 			response.setJson(model.toString());
 	 			
-	 			this.modelResponse = response;
-				return response;
+	 			return response;
 	 		}
 	 		ServerPlayer victim = model.getServerPlayers()[victimIndex]; //getting the victim
 	 		
@@ -122,8 +121,7 @@ public class SoldierCommand extends MoveCommand {
 	 			addGameLog(player,model,victim);
 	 			response.setJson(model.toString());
 	 			
-	 			this.modelResponse = response;
-				return response;
+	 			return response;
 			}
 	 		
 	 		ResourceType resource = model.generateRandomResource(); //gets random resource
@@ -145,8 +143,7 @@ public class SoldierCommand extends MoveCommand {
 			response.setSuccess(true);
 			response.setJson(model.toString());
 			
-			this.modelResponse = response;
-			return response; 
+		    return response; 
 		}
 	
 	}

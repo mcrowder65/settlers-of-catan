@@ -120,8 +120,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				model.setVersion(model.getVersion() + 1); //updates version
 	            response.setJson(model.toString());
 	            
-	            this.modelResponse = response;
-				return response;
+	            return response;
 			}
 			//lays a road if status is first round
 			if(status.equals("FirstRound")){
@@ -140,8 +139,7 @@ public class BuildSettlementCommand extends MoveCommand {
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
 	            
-	            this.modelResponse = response;
-				return response;
+	            return response;
 			}
 			//lays a settlement if the for normal play
 			if(status.equals("Playing")){
@@ -155,9 +153,8 @@ public class BuildSettlementCommand extends MoveCommand {
 				response.setSuccess(true);
 				model.setVersion(model.getVersion() + 1);
 	            response.setJson(model.toString());
-	            
-	            this.modelResponse = response;
-				return response;
+	           
+	            return response;
 			}
 			
 			//need to return some error

@@ -55,7 +55,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 
 		commands[currentCommandCount++] = command;
-		if (currentCommandCount > max) {
+		if (currentCommandCount >= max) {
 			currentCommandCount = 0;
 			flushGame(command.getGameCookie(), Game.instance().getGameId(command.getGameCookie()));
 			for (int n = 0; n < commands.length; n++)

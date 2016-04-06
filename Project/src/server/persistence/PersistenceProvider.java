@@ -66,6 +66,8 @@ public abstract class PersistenceProvider {
 	 */
     public abstract List<GameCombo> loadGames();
     
+    public abstract void executeCommands(List<GameCombo> games);
+    
     public abstract void addGame(int id, ServerGameModel model, String title);
     /**
      * writes game to disk

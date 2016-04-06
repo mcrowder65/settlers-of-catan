@@ -381,6 +381,12 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		
 	}
 
+	@Override
+	public void executeCommands(List<GameCombo> games) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 	

@@ -85,6 +85,9 @@ public class Game {
 	
 	public void restorePersistenceData() {
 		arrayGames = persistenceProvider.loadGames();
+		if(arrayGames != null){
+			persistenceProvider.executeCommands(arrayGames);
+		}
 		registeredUsers = persistenceProvider.getUsers();
 	}
 	

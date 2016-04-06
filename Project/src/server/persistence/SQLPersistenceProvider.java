@@ -178,7 +178,14 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		}
 		
 		for(int i = 0; i < games.size(); i++){
-			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i + 1);
+			ArrayList<MoveCommand> commands;
+			try {
+				commands = (ArrayList<MoveCommand>) gameDAO.getCommands(i + 1);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				endTransaction(false);
+				return games;
+			}
 			for(int x = 0; x < commands.size(); x++){
 				String moveType = commands.get(x).getMoveType();
 				if(moveType.equals("robPlayer")){ //check for reexecutes

@@ -258,7 +258,7 @@ public class XMLGameDAO implements IGameDAO{
 	 * drops all of the XML files
 	 */
 	@Override
-	public void dropTables() {
+	public void resetPersistence() {
 		File f = new File("xml");
 		this.deleteAll(f);
 	}
@@ -282,13 +282,6 @@ public class XMLGameDAO implements IGameDAO{
 		}
 	}
 
-	/**
-	 * don't do anything
-	 */
-	@Override
-	public void initDB() {
-		
-	}
 
 	/**
 	 * don't do anything

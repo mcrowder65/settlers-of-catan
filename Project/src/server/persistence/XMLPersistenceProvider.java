@@ -205,7 +205,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public void dropTables() {
 		try {
-			gameDAO.dropTables();
+			gameDAO.resetPersistence();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

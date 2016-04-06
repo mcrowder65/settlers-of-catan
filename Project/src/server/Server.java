@@ -90,7 +90,6 @@ public class Server {
 		}
 
 
-
 		for (PluginDefinition def : definitions) {
 			if (def.name.equals(persistenceIdentifier)) {
 				Game.instance().initPersistanceProvider(commandsBetweenCheckpoints, def.path);

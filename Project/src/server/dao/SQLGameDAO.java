@@ -281,7 +281,7 @@ public class SQLGameDAO implements IGameDAO{
 	}
 	
 	@Override
-	public void dropTables() throws SQLException {
+	public void resetPersistence() throws SQLException {
 		Statement stmnt = null;
 		
 		try{
@@ -292,62 +292,44 @@ public class SQLGameDAO implements IGameDAO{
 			throw new SQLException();
 		}
 		try{
-			String sql = "DROP TABLE IF EXISTS `commands`;";
+			String sql = "DROP TABLE IF EXISTS commands;";
+			sql = sql + "DROP TABLE IF EXISTS game_membership;";
+			sql = sql + "DROP TABLE IF EXISTS games;";
+			sql = sql + "DROP TABLE IF EXISTS users;";
+			stmnt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE games ("
+					+"id integer not null primary key autoincrement ,"
+					+"data longtext not null,"
+					+"title varchar(255) not null"
+				    +");";
 			stmnt.executeUpdate(sql);
 			
 			
-			sql = sql +""
-				+"	CREATE TABLE `commands` ("
-				+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
-				+"`data` longtext NOT NULL,"
-				+"`game_id` int(11) unsigned NOT NULL,"
-				+"PRIMARY KEY (`id`),"
-				+"KEY `commands to game` (`game_id`),"
-				+"CONSTRAINT `commands to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE"
-				+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			sql = " CREATE TABLE users ("
+					+"id integer not null primary key autoincrement,"
+					+"user varchar(255) not null,"
+					+"pass varchar(255) not null"
+					+");";
 			stmnt.executeUpdate(sql);
 			
-			sql = sql + "DROP TABLE IF EXISTS `game_membership`;";
+			sql = "CREATE TABLE commands ("
+				+"id integer not null primary key autoincrement,"
+				+"data longtext NOT NULL,"
+				+"game_id integer NOT NULL"
+				+");";
 			stmnt.executeUpdate(sql);
 			
-			sql = sql + ""
-					+ "CREATE TABLE `game_membership` ("
-					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
-					+"`user_id` int(11) unsigned NOT NULL,"
-					+"`game_id` int(11) unsigned NOT NULL,"
-					+"`color` varchar(255) NOT NULL DEFAULT '',"
-					+"`playerIndex` int(11) NOT NULL,"
-					+"PRIMARY KEY (`id`),"
-					+"KEY `join to game` (`game_id`),"
-					+"KEY `join to user` (`user_id`),"
-					+"CONSTRAINT `join to game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,"
-					+"CONSTRAINT `join to user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE"
-					+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			
+			sql = "CREATE TABLE game_membership ("
+					+"id integer NOT NULL primary key autoincrement,"
+					+"user_id integer unsigned not null,"
+					+"game_id integer unsigned not null,"
+					+"color varchar(255) not null DEFAULT '',"
+					+"playerIndex integer not null"
+					+");";
 			stmnt.executeUpdate(sql);
 			
-			sql = sql + "DROP TABLE IF EXISTS `games`;";
-			stmnt.executeUpdate(sql);
-			
-			sql = sql + ""
-					+ "CREATE TABLE `games` ("
-					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
-					+"`data` longtext NOT NULL,"
-					+"`title` varchar(255) NOT NULL DEFAULT '',"
-					+"PRIMARY KEY (`id`)"
-				    +") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-			stmnt.executeUpdate(sql);
-			
-			sql = sql + "DROP TABLE IF EXISTS `users`;";
-			stmnt.executeUpdate(sql);
-			
-			sql = sql + ""
-					+" CREATE TABLE `users` ("
-					+"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
-					+"`user` varchar(255) NOT NULL DEFAULT '',"
-					+"`pass` varchar(255) NOT NULL DEFAULT '',"
-					+"PRIMARY KEY (`id`)"
-					+") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-			stmnt.executeUpdate(sql);
 			stmnt.close();
 		
 		}
@@ -357,14 +339,6 @@ public class SQLGameDAO implements IGameDAO{
 		}	
 	}
 
-	@Override
-	public void initDB() throws SQLException{
-		try {
-			dropTables();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SQLException();
-		}
-	}
+	
 
 }

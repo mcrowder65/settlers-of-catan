@@ -1,0 +1,6 @@
+clean
+client
+compile
+make-tester-zip
+package
+test

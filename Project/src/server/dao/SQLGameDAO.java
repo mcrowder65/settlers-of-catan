@@ -50,7 +50,9 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public List<GameCombo> getGames() throws SQLException{
-
+		//GameCombo - ServerGameModel, GameInfo
+		//ServerGameModel from games list data
+		//GameInfo from game membership and games title
 		 ArrayList<ServerGameModel> serverGameModels = null;
 		 ArrayList<String> titles = null; //the id's of the games are -1 of what they are 
 		 								  //in the database, since arraylists are 0 indexed

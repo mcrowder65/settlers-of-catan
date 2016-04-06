@@ -1,0 +1,93 @@
+<project name="Project" default="compile" basedir=".">
+	<!-- Directory containing application source code -->
+	<property name="src" location="src"/>
+	
+	<!-- Directory containing testing source code -->
+	<property name="test" location="test"/>
+	
+	<!-- Directory containing Java libraries -->
+	<property name="lib" location="lib"/>
+	
+	<property name="build" location="bin"/>
+	<property name="images" location="images"/>
+
+	<property name="host" value="localhost"/>
+
+	<property name="port" value="8081"/>
+	
+	
+	
+	
+	
+	<!-- CLASS PATHS -->
+		<!-- *********** -->
+		<path id="lib-classpath">
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		
+		<path id="all-classpath">
+			<path refid="lib-classpath"/>
+			<pathelement location="${build}"/>
+		</path>
+	
+
+	<target name="compile" description="compile the source code">
+		<javac srcdir="${src}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="false" />
+		<javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="false" />
+	</target>
+
+	<target name="clean" description="delete build files">
+		<delete dir="${build}" />
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="test" description="run client test cases">
+		<java classname="generic.ClientTests" fork="yes">
+					<classpath>
+						<path refid="all-classpath"/>
+					</classpath>
+					<assertions>
+						<enable/>
+					</assertions>
+				</java>
+		
+	</target>
+	
+	<target name="package" depends="compile">
+		<jar jarfile="catan-client.jar" basedir="${build}">
+					<manifest>
+						<attribute name="Main-Class" value="client.main.Catan"/>
+						<!--<attribute name="Class-Path" 
+							value="lib/gson-2.2.4.jar" />-->
+					</manifest>
+			        <zipgroupfileset dir="${lib}" includes="**/*.jar" />
+				</jar>
+
+	
+	</target>
+	
+	<target name="client" description="run client">
+			<java fork="yes" jar="catan-client.jar">
+				<arg value="${host}"/>
+				<arg value="${port}"/>
+			</java>
+			
+			
+		</target>
+
+
+	<target name="make-tester-zip" depends="package" description="make a zip of the binaries">
+		<zip destfile="tester.zip">
+		   <zipfileset dir="${build}" prefix="bin" />
+		   <zipfileset dir="${lib}" prefix="lib"></zipfileset>
+		   <zipfileset dir="${images}" prefix="images"></zipfileset>
+		   <zipfileset dir="" includes="build.xml" ></zipfileset>
+		   <zipfileset dir="" includes="catan-client.jar" ></zipfileset>
+		</zip>
+		
+	</target>
+	
+</project>
+

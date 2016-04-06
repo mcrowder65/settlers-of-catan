@@ -68,13 +68,14 @@ public class Server {
 			System.out.println("Usage: ant our-server <persistence-type> <commands-between-checkpoints>");
 			return;
 		}
-		String persistenceIdentifier = args[0];
-		int commandsBetweenCheckpoints = Integer.parseInt(args[1]);
-
+		
 
 		List<PluginDefinition> definitions = ConfigurationTool.readConfigFile("plugin.xml");
 		ClassLoaderTool.loadPlugins("resources");
 
+		String persistenceIdentifier = "";
+		int commandsBetweenCheckpoints = 0;
+		
 		//Wipe out persistence data
 		if(args.length == 1) {
 			for (PluginDefinition def : definitions) {
@@ -82,6 +83,10 @@ public class Server {
 				Game.instance().getPersistenceProvider().dropTables();
 			}
 			return;
+		}
+		else {
+			persistenceIdentifier = args[0];
+			commandsBetweenCheckpoints = Integer.parseInt(args[1]);
 		}
 
 

@@ -87,7 +87,7 @@ public class SQLGameDAO implements IGameDAO{
 	        for(int i = 0; i < titles.size(); i++){
 	        	try {
 					PreparedStatement pstmt = null;
-					String mysqlstring="Select * from game_membership where game_id = " + (i+1) + ";";
+					String mysqlstring="Select * from game_membership where game_id = " + (i) + ";";
 					pstmt = conn.prepareStatement(mysqlstring);
 					ResultSet set = pstmt.executeQuery();
 					

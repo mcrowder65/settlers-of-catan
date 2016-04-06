@@ -198,7 +198,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				}
 				else{
 					commands.get(x).execute();
-				}
+				} 	
 			}
 			try {
 				gameDAO.deleteCommands(games.get(i).model.getGameId());

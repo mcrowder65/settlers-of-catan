@@ -38,7 +38,7 @@ public class XMLUserDAO implements IUserDAO{
 	@Override
 	public List<RegisteredPersonInfo> getUsers() throws IOException {
 		String destination = "xml/Users.xml";
-		List<RegisteredPersonInfo> users;
+		List<RegisteredPersonInfo> users = new ArrayList<RegisteredPersonInfo>();
 		XStream xStream = new XStream(new DomDriver());
 		File f = new File(destination);
 		if(f.exists()){

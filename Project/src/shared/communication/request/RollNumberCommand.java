@@ -58,7 +58,7 @@ public class RollNumberCommand extends MoveCommand {
 			}
 	  		
 	  		//checking the status
-	  		if(turnTracker.getStatus() != "Rolling"){
+	  		if(!turnTracker.getStatus().equals("Rolling")){
 	  			response.setSuccess(false);
 				response.setErrorMessage("Wrong status");
 				return response;

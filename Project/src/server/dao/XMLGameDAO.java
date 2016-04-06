@@ -54,7 +54,8 @@ public class XMLGameDAO implements IGameDAO{
 		List<PlayerInfo>players = new ArrayList<PlayerInfo>();
 		
 		for(File file : fileList){
-			if(file.isFile()){
+			if(file.isFile() && !file.getName().equals(".DS_Store")){
+				System.out.println(file.getPath());
 				XStream xStream = new XStream(new DomDriver());
 				InputStream inFile = new BufferedInputStream(new FileInputStream(file));
 				GameParams game = (GameParams)xStream.fromXML(inFile);

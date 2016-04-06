@@ -343,15 +343,21 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
 		try {
-			List<RegisteredPersonInfo> users = userDAO.getUsers();
-			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
+			startTransaction();
+		} catch (DatabaseException e1) {
+			e1.printStackTrace();
 			return null;
 		}
+		try {
+			List<RegisteredPersonInfo> users = userDAO.getUsers();
+			endTransaction(true);
+			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
+		} catch (IOException|SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -361,19 +367,32 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (DatabaseException e) {
 			return;
 		}
-		
 		try {
 			gameDAO.addGame(id, model, title);
-		} catch (IOException e) {
+			endTransaction(true);
+		} catch (IOException|SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
+		}
+		
+	}
+
+	@Override
+	public void initDB() {
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
 			return;
+		}
+		try {
+			gameDAO.initDB();
+			endTransaction(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
-			return;
 		}
-		endTransaction(true);
+		
 	}
 
 	

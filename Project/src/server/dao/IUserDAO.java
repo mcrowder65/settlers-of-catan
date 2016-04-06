@@ -2,6 +2,7 @@ package server.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface IUserDAO {
 	 * @throws IOException if there's an error
 	 */
 	public void addUser(RegisteredPersonInfo person) throws FileNotFoundException, IOException, SQLException;
+	
+	public void setConnection(Connection conn);
 }

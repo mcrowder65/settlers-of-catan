@@ -2,6 +2,7 @@ package server.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -83,4 +84,6 @@ public interface IGameDAO {
 	 * @throws SQLException 
 	 */
 	public void initDB() throws SQLException;
+	
+	public void setConnection(Connection conn);
 }

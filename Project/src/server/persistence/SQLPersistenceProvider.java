@@ -137,7 +137,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		
 		
 		commands[currentCommandCount++] = command;
-		if (currentCommandCount > max) {
+		if (currentCommandCount >= max) {
 			currentCommandCount = 0;
 			flushGame(command.getGameCookie(), Game.instance().getGameId(command.getGameCookie()));
 			for (int n = 0; n < commands.length; n++)
@@ -180,7 +180,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		for(int i = 0; i < games.size(); i++){
 			ArrayList<MoveCommand> commands;
 			try {
-				commands = (ArrayList<MoveCommand>) gameDAO.getCommands(i + 1);
+				commands = (ArrayList<MoveCommand>) gameDAO.getCommands(i);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				endTransaction(false);

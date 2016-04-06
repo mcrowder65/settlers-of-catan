@@ -209,23 +209,55 @@ public class SQLGameDAO implements IGameDAO{
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
 		//TODO make sure to update or add
-		
-		
-		String sColor = color.toString();
+		int id = -1;
 		try {
-			PreparedStatement pstmt = null;
-			String mysqlstring="insert into 'game_membership' (user_id, game_id, color, playerIndex) "
-					+ "values (?, ?, ?, ?);";
-			pstmt = conn.prepareStatement(mysqlstring);
-			pstmt.setInt(1, userID);
-			pstmt.setInt(2, gameID);
-			pstmt.setString(3, sColor);
-			pstmt.setInt(4, playerIndex);
-			pstmt.executeUpdate();
-			pstmt.close();
+			PreparedStatement pst = null;
+			String sql="Select * from game_membership where game_id = " + gameID + " and user_id = " + userID + ";";
+			pst = conn.prepareStatement(sql);
+			ResultSet rSet = pst.executeQuery();
+			
+			while(rSet.next()) { 
+				id = rSet.getInt(1);
+			}
+			rSet.close();
+			pst.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
+		}
+		
+		
+		String sColor = color.toString();
+		
+		if(id != -1){
+			try {
+				PreparedStatement pstmt = null;
+				String mysqlstring="update game_membership set color = ? where id = " + id + ";";
+				pstmt = conn.prepareStatement(mysqlstring);
+				pstmt.setString(1, sColor);
+				pstmt.executeUpdate();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
+		}
+		else{
+			try {
+				PreparedStatement pstmt = null;
+				String mysqlstring="insert into 'game_membership' (user_id, game_id, color, playerIndex) "
+						+ "values (?, ?, ?, ?);";
+				pstmt = conn.prepareStatement(mysqlstring);
+				pstmt.setInt(1, userID);
+				pstmt.setInt(2, gameID);
+				pstmt.setString(3, sColor);
+				pstmt.setInt(4, playerIndex);
+				pstmt.executeUpdate();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
 		}
 	}
 

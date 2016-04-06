@@ -12,23 +12,26 @@ import shared.definitions.*;
 
 public class AddAIRequest extends Request {
 
+	private int playerId;
+	private int playerIndex;
+	private CatanColor color;
 	AIType AIType;
 	public AddAIRequest(AIType AIType) throws IllegalArgumentException {
 		if (AIType == null)
 			throw new IllegalArgumentException("aitype cannot be null");
 		this.AIType = AIType;
 	}
-	
+		
 	public Response addAI() {
 		synchronized(Game.instance().lock){
 			Response response = new Response();
-			
-			int playerIndex = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
+
+			this.playerIndex = Game.instance().getGameId(gameIDCookie).getAmtOfPlayers();
 			IAIFacade facade = new ServerAIFacade(playerIndex, gameIDCookie);
 			
 			String name = Game.instance().getUnusedAiName(gameIDCookie);
-			CatanColor color = Game.instance().getUnusedColor(gameIDCookie);
-			int playerId = (playerIndex + 1) * -1;
+			this.color = Game.instance().getUnusedColor(gameIDCookie);
+			this.playerId = (playerIndex + 1) * -1;
 			
 			AIBase ai;
 			
@@ -76,5 +79,18 @@ public class AddAIRequest extends Request {
 		super(exchange);
 		AddAIRequest tmp = (AddAIRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		AIType = tmp.AIType;
+	}
+	
+	public int getUserId() {
+		return this.playerId;
+	}
+	public int getGameId() {
+		return this.gameIDCookie;
+	}
+	public CatanColor getColor() {
+		return this.color;
+	}
+	public int getPlayerIndex() {
+		return this.playerIndex;
 	}
 }

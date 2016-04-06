@@ -2,6 +2,7 @@ package server.facade;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Game;
 import shared.communication.request.*;
 import shared.communication.response.*;
 /**
@@ -28,7 +29,11 @@ public class ServerInnerGameFacade implements IInnerGameFacade {
 	@Override
 	public Response addAi(HttpExchange exchange) {
 		AddAIRequest request = new AddAIRequest(exchange);
-		return request.addAI();
+		Response response = request.addAI();
+		if (response.isSuccess()) {
+			Game.instance().getPersistenceProvider().joinUser(request.getUserId(), request.getGameId(), request.getColor(), request.getPlayerIndex());
+		}
+		return response;
 	}
 	
 	/**

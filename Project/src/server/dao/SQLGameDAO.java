@@ -39,7 +39,10 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
+	public void setConnection(Connection conn){
+		this.conn = conn;
+	}
 	/**
 	 * gets all the games in the game table of the SQL database
 	 * @return a list of GameCombos

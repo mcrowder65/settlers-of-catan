@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import server.util.RegisteredPersonInfo;
 import java.sql.*;
+import java.io.*;
 /**
  * add users to the user table in the SQL database
  * gets users from the user table in the SQL database
@@ -35,6 +36,10 @@ public class SQLUserDAO implements IUserDAO{
 		}
 	}
 	
+	@Override
+	public void setConnection(Connection conn){
+		this.conn = conn;
+	}
 	/**
 	 * gets all users from the User table in the SQL database
 	 * @return a list of RegisteredPersonInfo

@@ -110,4 +110,8 @@ public abstract class PersistenceProvider {
 	 */
 	public abstract void dropTables();
 	
+	/**
+	 * this inits the sqlite db
+	 */
+	public abstract void initDB();
 }

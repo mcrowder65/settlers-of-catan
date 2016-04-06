@@ -63,6 +63,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {	
 			connection = DriverManager.getConnection(DATABASE_URL);
 			connection.setAutoCommit(false);
+			userDAO.setConnection(connection);
+			gameDAO.setConnection(connection);
 		}
 		catch (SQLException e) {
 			throw new DatabaseException("Could not connect to database. Make sure " + 
@@ -84,6 +86,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			else {
 				connection.rollback();
 			}
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -92,6 +95,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			safeClose();
 			connection = null;
 		}
+		gameDAO.setConnection(connection);
+		userDAO.setConnection(connection);
 		
 	}
 	/**
@@ -190,19 +195,11 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			}
 			try {
 				gameDAO.deleteCommands(games.get(i).model.getGameId());
-			} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException | SQLException | IOException e) {
 				e.printStackTrace();
 				endTransaction(false);
 				return games;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				endTransaction(false);
-				return games;
-			} catch (IOException e) {
-				e.printStackTrace();
-				endTransaction(false);
-				return games;
-			}
+			} 
 		}
 		endTransaction(true);
 		return games;
@@ -343,15 +340,21 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
 		try {
-			List<RegisteredPersonInfo> users = userDAO.getUsers();
-			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
+			startTransaction();
+		} catch (DatabaseException e1) {
+			e1.printStackTrace();
 			return null;
 		}
+		try {
+			List<RegisteredPersonInfo> users = userDAO.getUsers();
+			endTransaction(true);
+			return users == null ? new ArrayList<RegisteredPersonInfo>() : users;
+		} catch (IOException|SQLException e) {
+			e.printStackTrace();
+			endTransaction(false);
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -361,19 +364,32 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (DatabaseException e) {
 			return;
 		}
-		
 		try {
 			gameDAO.addGame(id, model, title);
-		} catch (IOException e) {
+			endTransaction(true);
+		} catch (IOException|SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
+		}
+		
+	}
+
+	@Override
+	public void initDB() {
+		try {
+			startTransaction();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
 			return;
+		}
+		try {
+			gameDAO.initDB();
+			endTransaction(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
-			return;
 		}
-		endTransaction(true);
+		
 	}
 
 	

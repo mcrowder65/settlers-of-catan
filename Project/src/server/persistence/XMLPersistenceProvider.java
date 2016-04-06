@@ -240,5 +240,11 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		}
 		
 	}
+
+
+	@Override
+	public void initDB() {
+		
+	}
 	
 }

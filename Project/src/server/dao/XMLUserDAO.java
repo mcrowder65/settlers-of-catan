@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +79,15 @@ public class XMLUserDAO implements IUserDAO{
 		OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
 		xStream.toXML(users,outFile);
 		outFile.close();
+		
+	}
+
+	/**
+	 * don't do anything
+	 */
+	@Override
+	public void setConnection(Connection conn) {
+		// TODO Auto-generated method stub
 		
 	}
 

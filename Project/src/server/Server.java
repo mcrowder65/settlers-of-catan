@@ -100,6 +100,11 @@ public class Server {
 			System.out.println("Persistence identifier " + persistenceIdentifier + " was not found. Exiting.");
 			return;
 		}
+		
+		Game.instance().getPersistenceProvider().resetPersistence();
+		//TODO: temp
+		
+		
 		Game.instance().restorePersistenceData();
 
 

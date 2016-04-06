@@ -101,7 +101,7 @@ public class Server {
 			return;
 		}
 		
-		Game.instance().getPersistenceProvider().resetPersistence();
+		//Game.instance().getPersistenceProvider().resetPersistence();
 		//TODO: temp
 		
 		

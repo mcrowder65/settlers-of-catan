@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -286,6 +287,15 @@ public class XMLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void initDB() {
+		
+	}
+
+	/**
+	 * don't do anything
+	 */
+	@Override
+	public void setConnection(Connection conn) {
+		
 		
 	}
 

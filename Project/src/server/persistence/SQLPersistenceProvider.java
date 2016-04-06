@@ -63,6 +63,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {	
 			connection = DriverManager.getConnection(DATABASE_URL);
 			connection.setAutoCommit(false);
+			userDAO.setConnection(connection);
+			gameDAO.setConnection(connection);
 		}
 		catch (SQLException e) {
 			throw new DatabaseException("Could not connect to database. Make sure " + 
@@ -84,6 +86,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			else {
 				connection.rollback();
 			}
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -92,6 +95,8 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			safeClose();
 			connection = null;
 		}
+		gameDAO.setConnection(connection);
+		userDAO.setConnection(connection);
 		
 	}
 	/**
@@ -190,19 +195,11 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			}
 			try {
 				gameDAO.deleteCommands(games.get(i).model.getGameId());
-			} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException | SQLException | IOException e) {
 				e.printStackTrace();
 				endTransaction(false);
 				return games;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				endTransaction(false);
-				return games;
-			} catch (IOException e) {
-				e.printStackTrace();
-				endTransaction(false);
-				return games;
-			}
+			} 
 		}
 		endTransaction(true);
 		return games;

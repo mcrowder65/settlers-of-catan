@@ -80,7 +80,7 @@ public class Server {
 		if(args.length == 1) {
 			for (PluginDefinition def : definitions) {
 				Game.instance().initPersistanceProvider(1, def.path);
-				Game.instance().getPersistenceProvider().dropTables();
+				Game.instance().getPersistenceProvider().resetPersistence();
 			}
 			return;
 		}

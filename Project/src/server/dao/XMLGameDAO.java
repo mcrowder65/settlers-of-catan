@@ -281,4 +281,12 @@ public class XMLGameDAO implements IGameDAO{
 		}
 	}
 
+	/**
+	 * don't do anything
+	 */
+	@Override
+	public void initDB() {
+		
+	}
+
 }

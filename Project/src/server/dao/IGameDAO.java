@@ -78,5 +78,9 @@ public interface IGameDAO {
 	 * @throws SQLException 
 	 */
 	public void dropTables() throws SQLException;
-
+	/**
+	 * inits the db, just calls droptables
+	 * @throws SQLException 
+	 */
+	public void initDB() throws SQLException;
 }

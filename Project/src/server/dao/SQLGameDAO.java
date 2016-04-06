@@ -276,7 +276,7 @@ public class SQLGameDAO implements IGameDAO{
 		
 		return commands;
 	}
-
+	
 	@Override
 	public void dropTables() throws SQLException {
 		Statement stmnt = null;
@@ -352,6 +352,16 @@ public class SQLGameDAO implements IGameDAO{
 			e.printStackTrace();
 			throw new SQLException();
 		}	
+	}
+
+	@Override
+	public void initDB() throws SQLException{
+		try {
+			dropTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException();
+		}
 	}
 
 }

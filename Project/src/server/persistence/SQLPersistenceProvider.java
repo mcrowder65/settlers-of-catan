@@ -329,7 +329,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			return;
 		}
 		try {
-			gameDAO.dropTables();
+			gameDAO.resetPersistence();
 			endTransaction(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -383,7 +383,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			return;
 		}
 		try {
-			gameDAO.initDB();
+			gameDAO.resetPersistence();
 			endTransaction(true);
 		} catch (SQLException e) {
 			e.printStackTrace();

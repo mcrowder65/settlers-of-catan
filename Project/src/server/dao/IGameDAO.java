@@ -78,12 +78,7 @@ public interface IGameDAO {
 	 * drops the tables in the sqlite db or xml
 	 * @throws SQLException 
 	 */
-	public void dropTables() throws SQLException;
-	/**
-	 * inits the db, just calls droptables
-	 * @throws SQLException 
-	 */
-	public void initDB() throws SQLException;
-	
+	public void resetPersistence() throws SQLException;
+
 	public void setConnection(Connection conn);
 }

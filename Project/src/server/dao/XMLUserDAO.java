@@ -49,7 +49,7 @@ public class XMLUserDAO implements IUserDAO{
 			return users;
 		}
 		
-		return null;
+		return users;
 	}
 
 	/**

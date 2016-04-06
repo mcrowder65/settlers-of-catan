@@ -83,31 +83,33 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 		for(int i = 0; i < games.size(); i++){
 			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i + 1);
-			for(int x = 0; x < commands.size(); x++){
-				String moveType = commands.get(x).getMoveType();
-				if(moveType.equals("robPlayer")){ //check for reexecutes
-					RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
-					robPlayer.reExecute();
+			if(commands != null){
+				for(int x = 0; x < commands.size(); x++){
+					String moveType = commands.get(x).getMoveType();
+					if(moveType.equals("robPlayer")){ //check for reexecutes
+						RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
+						robPlayer.reExecute();
+					}
+					else if(moveType.equals("buyDevCard")){ //check for reexecutes
+						BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
+						devCard.reExecute();
+					}
+					else{
+						commands.get(x).execute();
+					}
 				}
-				else if(moveType.equals("buyDevCard")){ //check for reexecutes
-					BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
-					devCard.reExecute();
+				try {
+					gameDAO.deleteCommands(games.get(i).model.getGameId());
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					return games;
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return games;
+				} catch (IOException e) {
+					e.printStackTrace();
+					return games;
 				}
-				else{
-					commands.get(x).execute();
-				}
-			}
-			try {
-				gameDAO.deleteCommands(games.get(i).model.getGameId());
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				return games;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return games;
-			} catch (IOException e) {
-				e.printStackTrace();
-				return games;
 			}
 		}
 		return games;

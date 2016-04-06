@@ -64,7 +64,7 @@ public class Server {
 			}
 		}
 
-		if (args.length > 2) {
+		if (args.length < 1 || args.length > 2) {
 			System.out.println("Usage: ant our-server <persistence-type> <commands-between-checkpoints>");
 			return;
 		}

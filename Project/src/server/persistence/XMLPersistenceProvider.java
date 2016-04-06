@@ -176,7 +176,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 * is not implemented because we are writing to an XML file
 	 */
 	@Override
-	public void startTransaction() {
+	protected void startTransaction() {
 		// NULL FOR XML
 	}
 
@@ -185,7 +185,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 	 * @param commit boolean
 	 */
 	@Override
-	public void endTransaction(boolean commit) {
+	protected void endTransaction(boolean commit) {
 		// NULL FOR XML
 	}
 

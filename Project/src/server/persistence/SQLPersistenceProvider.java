@@ -59,7 +59,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * @throws DatabaseException 
 	 */
 	@Override
-	public void startTransaction() throws DatabaseException {
+	protected void startTransaction() throws DatabaseException {
 		try {	
 			connection = DriverManager.getConnection(DATABASE_URL);
 			connection.setAutoCommit(false);
@@ -78,7 +78,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * @param commit boolean
 	 */
 	@Override
-	public void endTransaction(boolean commit) {
+	protected void endTransaction(boolean commit) {
 		try {
 			if (commit) {
 				connection.commit();

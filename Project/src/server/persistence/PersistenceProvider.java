@@ -48,12 +48,12 @@ public abstract class PersistenceProvider {
 	/**
 	 * starts an SQL transaction
 	 */
-	public abstract void startTransaction() throws DatabaseException;
+	protected abstract void startTransaction() throws DatabaseException;
 	/**
 	 * ends a sql transaction
 	 * @param commit boolean
 	 */
-	public abstract void endTransaction(boolean commit);
+	protected abstract void endTransaction(boolean commit);
 	/**
 	 * adds a command to the command array 
 	 * calls the add a command to the DAOs

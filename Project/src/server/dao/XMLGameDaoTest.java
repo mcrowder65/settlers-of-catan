@@ -66,7 +66,7 @@ public class XMLGameDaoTest {
 	
 	public void deleteAll() throws IOException {
 		XMLGameDAO dao = new XMLGameDAO();
-		dao.dropTables();
+		dao.resetPersistence();
 	}
 	
 	public void addGameTest() throws IOException {

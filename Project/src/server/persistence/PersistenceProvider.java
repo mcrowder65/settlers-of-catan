@@ -108,10 +108,7 @@ public abstract class PersistenceProvider {
 	/**
 	 * this deletes the xml stuff and/or drops the sql tables
 	 */
-	public abstract void dropTables();
+	public abstract void resetPersistence();
 	
-	/**
-	 * this inits the sqlite db
-	 */
-	public abstract void initDB();
+
 }

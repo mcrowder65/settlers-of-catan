@@ -203,7 +203,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 
 
 	@Override
-	public void dropTables() {
+	public void resetPersistence() {
 		try {
 			gameDAO.resetPersistence();
 		} catch (SQLException e) {
@@ -241,10 +241,4 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 	}
 
-
-	@Override
-	public void initDB() {
-		
-	}
-	
 }

@@ -321,7 +321,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 * this drops all the tables in the sqlite db
 	 */
 	@Override
-	public void dropTables() {
+	public void resetPersistence() {
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -374,23 +374,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		
 	}
 
-	@Override
-	public void initDB() {
-		try {
-			startTransaction();
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-			return;
-		}
-		try {
-			gameDAO.resetPersistence();
-			endTransaction(true);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			endTransaction(false);
-		}
-		
-	}
+	
 
 	
 }

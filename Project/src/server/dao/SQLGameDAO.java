@@ -206,16 +206,19 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
+		//TODO make sure to update or add
+		
+		
 		String sColor = color.toString();
 		try {
 			PreparedStatement pstmt = null;
 			String mysqlstring="insert into 'game_membership' (user_id, game_id, color, playerIndex) "
 					+ "values (?, ?, ?, ?);";
 			pstmt = conn.prepareStatement(mysqlstring);
-			pstmt.setInt(2, userID);
-			pstmt.setInt(3, gameID);
-			pstmt.setString(4, sColor);
-			pstmt.setInt(playerIndex, playerIndex);
+			pstmt.setInt(1, userID);
+			pstmt.setInt(2, gameID);
+			pstmt.setString(3, sColor);
+			pstmt.setInt(4, playerIndex);
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {

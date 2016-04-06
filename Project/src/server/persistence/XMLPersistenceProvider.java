@@ -82,7 +82,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 		
 		for(int i = 0; i < games.size(); i++){
-			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i+1);
+			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i);
 			if(commands != null){
 				for(int x = 0; x < commands.size(); x++){
 					String moveType = commands.get(x).getMoveType();

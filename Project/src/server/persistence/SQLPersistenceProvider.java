@@ -2,6 +2,9 @@ package server.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -51,7 +54,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		connection = null;
 		userDAO = createUserDAO();
 		gameDAO = createGameDAO();
-		
+		Path path = Paths.get("directory/db.sqlite");
+		if(!Files.exists(path)){
+			boolean first = new File("database/").mkdirs();
+			
+			boolean second;
+			try {
+				second = new File("database/db.sqlite").createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			resetPersistence();
+		}
 	}
 	
 	/**
@@ -164,14 +179,14 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			games = (ArrayList<GameCombo>) gameDAO.getGames();
 			endTransaction(true);
+			return games;
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
 			games = null;
 		}
+		return null;
 		
-		endTransaction(true);
-		return games;
 	}
 	@Override
 	public void executeCommands(List<GameCombo> games){

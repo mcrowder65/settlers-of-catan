@@ -150,6 +150,7 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 					//return games;
 				}
 			}
+			flushGame(games.get(i).model.getGameId(),games.get(i).model);
 		}
 	}
 

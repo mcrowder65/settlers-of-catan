@@ -35,6 +35,7 @@ public class ServerUserFacade implements IUserFacade {
 			RegisteredPersonInfo info = new RegisteredPersonInfo();
 			info.setUsername(request.getUsername());
 			info.setPassword(request.getPassword());
+			info.setId(request.getID());
 			Game.instance().getPersistenceProvider().addUser(info);
 		}
 		return response;

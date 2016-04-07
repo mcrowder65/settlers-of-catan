@@ -18,6 +18,7 @@ import sun.misc.IOUtils;
 public class RegisterRequest extends Request {
     private String username;
     private String password;
+    private int ID;
     /**
      * Constructor
      * @param username - String
@@ -34,6 +35,10 @@ public class RegisterRequest extends Request {
     public String getUsername() {
 		return username;
 	}
+    
+    public int getID(){
+    	return ID;
+    }
 
 	public String getPassword() {
 		return password;
@@ -49,6 +54,7 @@ public class RegisterRequest extends Request {
 	    		return response;
 	    	}
 	    	int id = Game.instance().addUser(username, password);
+	    	this.ID = id;
 	    	
 	    	response.setErrorMessage("Success");
 	    	response.setSuccess(true);

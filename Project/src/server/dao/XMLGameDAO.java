@@ -55,6 +55,7 @@ public class XMLGameDAO implements IGameDAO{
 		
 		for(File file : fileList){
 			if(file.isFile() && !file.getName().equals(".DS_Store")){
+				players = new ArrayList<PlayerInfo>();
 				System.out.println(file.getPath());
 				XStream xStream = new XStream(new DomDriver());
 				InputStream inFile = new BufferedInputStream(new FileInputStream(file));
@@ -67,7 +68,7 @@ public class XMLGameDAO implements IGameDAO{
 				}
 				File[] gameFiles = joinDirectory.listFiles();
 				for(File f : gameFiles){
-					if(f.isFile()){
+					if(f.isFile() && !f.getName().equals(".DS_Store")){
 						XStream xStream2 = new XStream(new DomDriver());
 						InputStream inFile2 = new BufferedInputStream(new FileInputStream(f));
 						JoinUserParams user = (JoinUserParams)xStream2.fromXML(inFile2);

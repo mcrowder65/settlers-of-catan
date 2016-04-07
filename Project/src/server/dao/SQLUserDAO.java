@@ -76,19 +76,19 @@ public class SQLUserDAO implements IUserDAO{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) throws SQLException {
-	        try {
-				PreparedStatement pstmt = null;
-				String mysqlstring="insert into users (id, user, pass) values (?, ?, ?);";
-				pstmt = conn.prepareStatement(mysqlstring);
-				pstmt.setInt(1, person.getId());
-				pstmt.setString(2, person.getUsername());
-				pstmt.setString(3, person.getPassword());
-				pstmt.executeUpdate();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new SQLException();
-			}
+        try {
+			PreparedStatement pstmt = null;
+			String mysqlstring="insert into users (id, user, pass) values (?, ?, ?);";
+			pstmt = conn.prepareStatement(mysqlstring);
+			pstmt.setInt(1, person.getId());
+			pstmt.setString(2, person.getUsername());
+			pstmt.setString(3, person.getPassword());
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException();
+		}
 	}
 
 }

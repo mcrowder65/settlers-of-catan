@@ -170,21 +170,23 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			games = null;
 		}
 		
+		endTransaction(true);
+		return games;
+	}
+	@Override
+	public void executeCommands(List<GameCombo> games){
 		try {
 			startTransaction();
-		} catch (DatabaseException e1) {
-			e1.printStackTrace();
-			return games;
+		} catch (DatabaseException e2) {
+			e2.printStackTrace();
 		}
-		
 		for(int i = 0; i < games.size(); i++){
-			ArrayList<MoveCommand> commands;
+			ArrayList<MoveCommand> commands = null;
 			try {
 				commands = (ArrayList<MoveCommand>) gameDAO.getCommands(i);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				endTransaction(false);
-				return games;
 			}
 			for(int x = 0; x < commands.size(); x++){
 				String moveType = commands.get(x).getMoveType();
@@ -205,13 +207,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			} catch (IllegalArgumentException | SQLException | IOException e) {
 				e.printStackTrace();
 				endTransaction(false);
-				return games;
 			} 
 		}
-		endTransaction(true);
-		return games;
 	}
-
 	/**
 	 * Writes the entire game model to the database and deletes all the commands.
 	 * Clears the commands table
@@ -381,11 +379,6 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		
 	}
 
-	@Override
-	public void executeCommands(List<GameCombo> games) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 

@@ -122,7 +122,10 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 			if(commands != null){
 				for(int x = 0; x < commands.size(); x++){
 					String moveType = commands.get(x).getMoveType();
-					if(moveType.equals("robPlayer")){ //check for reexecutes
+					if(moveType == null){
+						commands.get(x).execute();
+					}
+					else if(moveType.equals("robPlayer")){ //check for reexecutes
 						RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
 						robPlayer.reExecute();
 					}

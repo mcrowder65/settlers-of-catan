@@ -332,7 +332,7 @@ public class SQLGameDAO implements IGameDAO{
 			while(rSet.next()) { 
 				
 				String data = rSet.getString(2);
-				MoveCommand command = (MoveCommand) Translator.jsonToObject(data, MoveCommand.class);
+				MoveCommand command = MoveCommand.interpretCommand(data);
 				command.setGameCookie(gameID);
 				commands.add(command);
 			}
@@ -345,6 +345,8 @@ public class SQLGameDAO implements IGameDAO{
 		
 		return commands;
 	}
+	
+	
 	
 	@Override
 	public void resetPersistence() throws SQLException {

@@ -53,6 +53,14 @@ public class OfferTradeCommand extends MoveCommand {
 		this.receiver = tmp.receiver;
 		
 	}
+	public OfferTradeCommand(String json) {
+		OfferTradeCommand tmp = (OfferTradeCommand)Translator.jsonToObject(json, this.getClass());
+		this.playerIndex = tmp.playerIndex;
+		this.type = tmp.type;
+		this.offer = tmp.offer;
+		this.receiver = tmp.receiver;
+		
+	}
 
 	@Override
 	public GetModelResponse execute() {

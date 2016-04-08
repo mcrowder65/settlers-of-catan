@@ -45,6 +45,12 @@ public class YearOfPlentyCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public YearOfPlentyCommand(String json) {
+		YearOfPlentyCommand tmp = (YearOfPlentyCommand)Translator.jsonToObject(json, this.getClass());
+		this.resource1 = tmp.resource1;
+		this.resource2 = tmp.resource2;
+		this.playerIndex = tmp.playerIndex;
+	}
 	/**
 	 * Function that executes the year of plenty.
 	 */

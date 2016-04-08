@@ -48,6 +48,13 @@ public class BuildCityCommand extends MoveCommand {
 		this.vertexLocation = tmp.vertexLocation;
 		
 	}
+	public BuildCityCommand(String json) {
+		BuildCityCommand tmp = (BuildCityCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.vertexLocation = tmp.vertexLocation;
+		
+	}
 
 	/**
 	 * Executes the logic to process the build city command

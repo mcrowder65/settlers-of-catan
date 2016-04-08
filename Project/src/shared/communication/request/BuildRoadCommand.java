@@ -41,6 +41,13 @@ public class BuildRoadCommand extends MoveCommand {
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 	}
+	public BuildRoadCommand(String json) {
+		BuildRoadCommand tmp = (BuildRoadCommand)Translator.jsonToObject(json, this.getClass());
+		this.free = tmp.free;
+		this.roadLocation = tmp.roadLocation;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+	}
 
 	/**
 	 * Executes the logic for the build road command

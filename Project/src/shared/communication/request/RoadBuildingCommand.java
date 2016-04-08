@@ -53,6 +53,13 @@ public class RoadBuildingCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public RoadBuildingCommand(String json) {
+		RoadBuildingCommand tmp = (RoadBuildingCommand)Translator.jsonToObject(json, this.getClass());
+		this.spot1 = tmp.spot1;
+		this.spot2 = tmp.spot2;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+	}
 	/**
 	 * This executes the road building.  return GetModelResponse
 	 */
@@ -140,4 +147,5 @@ public class RoadBuildingCommand extends MoveCommand {
 		model.addGameLogMessage(line3);
 	}
 
+	
 }

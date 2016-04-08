@@ -42,6 +42,13 @@ public class MonopolyCommand extends MoveCommand {
 		this.type = tmp.type; 
 		
 	}
+	public MonopolyCommand(String json) {
+		MonopolyCommand tmp = (MonopolyCommand)Translator.jsonToObject(json, this.getClass());
+		this.playerIndex = tmp.playerIndex;
+		this.resource = tmp.resource;
+		this.type = tmp.type; 
+		
+	}
 	/**
 	 * this executes the Monopoly command. returns GetModelResponse
 	 */

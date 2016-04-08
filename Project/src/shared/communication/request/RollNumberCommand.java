@@ -34,6 +34,13 @@ public class RollNumberCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public RollNumberCommand(String json) {
+		RollNumberCommand tmp = (RollNumberCommand)Translator.jsonToObject(json, this.getClass());
+		this.number = tmp.number;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		
+	}
 	/**
 	 * The function which executes rolling a number
 	 */

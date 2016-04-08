@@ -41,6 +41,12 @@ public class DiscardCardsCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		this.discardedCards = tmp.discardedCards;
 	}
+	public DiscardCardsCommand(String json) {
+		DiscardCardsCommand tmp = (DiscardCardsCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.discardedCards = tmp.discardedCards;
+	}
 	//For testing
 	public DiscardCardsCommand(int playerIndex, int gameIndex, ResourceList discardedCards) {
 		super(playerIndex);

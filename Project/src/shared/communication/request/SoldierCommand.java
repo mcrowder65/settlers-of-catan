@@ -41,6 +41,14 @@ public class SoldierCommand extends MoveCommand {
 		this.victimIndex = tmp.victimIndex;
 		
 	}
+	public SoldierCommand(String json) {
+		SoldierCommand tmp = (SoldierCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.location = tmp.location;
+		this.victimIndex = tmp.victimIndex;
+		
+	}
 	/**
 	 * Executes the Soldier - returns a GetModelResponse
 	 */

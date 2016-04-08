@@ -71,13 +71,10 @@ public class SQLGameDAO implements IGameDAO{
 					
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
-					ServerGameModel serverGameModelObject = (ServerGameModel) 
-							Translator.jsonToObject(serverGameModelString, ServerGameModel.class);
+					ServerGameModel serverGameModelObject = 
+							Translator.jsonToServerGameModel(serverGameModelString);
 					
 					String title = set.getString(3);
-					serverGameModelObject.setServerGameMap(serverGameModelObject.getMap());
-					serverGameModelObject.setServerPlayers(serverGameModelObject.getPlayers());
-					serverGameModelObject.setServerTurnTracker(serverGameModelObject.getTurnTracker());
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
 				}

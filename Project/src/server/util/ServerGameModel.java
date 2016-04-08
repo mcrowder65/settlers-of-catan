@@ -218,6 +218,7 @@ public class ServerGameModel extends GameModel{
  	public void setServerPlayers(Player[] players){
  		serverPlayers = new ServerPlayer[players.length];
  		for(int i = 0; i < players.length; i++){
+ 			if (players[i] == null) break;
  			serverPlayers[i] = new ServerPlayer();
  			serverPlayers[i].setCities(players[i].getCities());
  			serverPlayers[i].setColor(players[i].getColor());

@@ -139,18 +139,27 @@ public class SQLGameDAO implements IGameDAO{
 	    ArrayList<GameCombo> games = new ArrayList<GameCombo>();
 	    for(int i = 0; i < titles.size(); i++){
 	    	GameCombo temp = new GameCombo();
+	    	
+	    	
 	    	temp.info = new GameInfo(i, titles.get(i), players.get(i));
 	    	temp.model = serverGameModels.get(i);
+	    	temp.model.initAIColors();
+	    	temp.model.initAINames();
 	    	
-	    	if (temp.model.getServerPlayers() == null) //players haven't been written yet
+	    	if (temp.model.getServerPlayers() == null || temp.model.getServerPlayers().length == 0) //players haven't been written yet
 	    		temp.model.setServerPlayers(new ServerPlayer[4]);
 	    	
 	    	for (int n = 0; n < temp.info.getPlayers().size(); n++) {
-	    		if (temp.model.getServerPlayers()[n] == null)
-	    			temp.model.getServerPlayers()[n] = new ServerPlayer();
-	    		if (temp.info.getPlayers().size() > n)
-	    			temp.model.getServerPlayers()[n].setName(temp.info.getPlayers().get(n));
-	    		
+	    		if (temp.info.getPlayers().size() > n) {
+		    		if (temp.model.getServerPlayers()[n] == null)
+		    			temp.model.getServerPlayers()[n] = new ServerPlayer();
+		    		
+	    			temp.model.getServerPlayers()[n].setName(temp.info.getPlayers().get(n).getName());
+	    			temp.model.getServerPlayers()[n].setColor(temp.info.getPlayers().get(n).getColor());
+	    			temp.model.getServerPlayers()[n].setPlayerID(temp.info.getPlayers().get(n).getId());
+	    			temp.model.getServerPlayers()[n].setPlayerIndex(temp.info.getPlayers().get(n).getPlayerIndex());
+		    		
+	    		}
 
 	    	}
 	    

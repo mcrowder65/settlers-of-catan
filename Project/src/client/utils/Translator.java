@@ -22,6 +22,9 @@ public class Translator {
 
 	public Translator(){}
 	private static JsonTranslator jsonTranslator = new JsonTranslator();
+	public static ServerGameModel jsonToServerGameModel(String json){
+		return jsonTranslator.jsonToServerGameModel(json);
+	}
 	/**
 	 * Converts the JSON string to its java object representation
 	 * @param json The JSON string

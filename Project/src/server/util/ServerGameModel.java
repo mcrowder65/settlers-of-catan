@@ -203,6 +203,7 @@ public class ServerGameModel extends GameModel{
  		this.serverMap = serverMap;		
  	}		
  	public void setServerGameMap(GameMap gameMap){
+ 		serverMap = new ServerGameMap();
  		serverMap.setCities(gameMap.getCities());
  		serverMap.setHexes(gameMap.getHexes());
  		serverMap.setPorts(gameMap.getPorts());
@@ -217,6 +218,7 @@ public class ServerGameModel extends GameModel{
  	public void setServerPlayers(Player[] players){
  		serverPlayers = new ServerPlayer[players.length];
  		for(int i = 0; i < players.length; i++){
+ 			serverPlayers[i] = new ServerPlayer();
  			serverPlayers[i].setCities(players[i].getCities());
  			serverPlayers[i].setColor(players[i].getColor());
  			serverPlayers[i].setDiscarded(players[i].getDiscarded());
@@ -235,6 +237,7 @@ public class ServerGameModel extends GameModel{
  		}
  	}
  	public void setServerTurnTracker(TurnTracker turnTracker){
+ 		serverTurnTracker = new ServerTurnTracker();
  		serverTurnTracker.setCurrentTurn(turnTracker.getCurrentTurn());
  		serverTurnTracker.setLargestArmy(turnTracker.getLargestArmy());
  		serverTurnTracker.setLongestRoad(turnTracker.getLongestRoad());

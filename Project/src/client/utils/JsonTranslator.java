@@ -334,7 +334,23 @@ public class JsonTranslator {
 		int largestArmy = jsTurnTracker.get("largestArmy").getAsInt();
 		return new TurnTracker(currentTurn, status, longestRoad, largestArmy);
 	}
-
+	public ServerGameModel jsonToServerGameModel(String json){
+		GameModel gameModel = jsonToGameModel(json);
+		ServerGameModel serverGameModel = new ServerGameModel();
+		
+		serverGameModel.setBank(gameModel.getBank());
+		serverGameModel.setChat(gameModel.getChat());
+		serverGameModel.setDeck(gameModel.getDeck());
+		serverGameModel.setGameId(gameModel.getGameId());
+		serverGameModel.setLog(gameModel.getLog());
+		serverGameModel.setTradeOffer(gameModel.getTradeOffer());
+		serverGameModel.setVersion(gameModel.getVersion());
+		serverGameModel.setWinner(gameModel.getWinner());
+		serverGameModel.setServerGameMap(gameModel.getMap());
+		serverGameModel.setServerPlayers(gameModel.getPlayers());
+		serverGameModel.setServerTurnTracker(gameModel.getTurnTracker());
+		return serverGameModel;
+	}
 
 	//**********************************************************************************************************************************
 	//**********************************************************************************************************************************
@@ -343,7 +359,7 @@ public class JsonTranslator {
 	//************************             *********************************************************************************************
 	//**********************************************************************************************************************************
 	//**********************************************************************************************************************************
-
+	
 	public String modelToJson(ServerGameModel model) {
 
 		//Extracts all of the different parts from the model

@@ -28,8 +28,8 @@ public class Translator {
 	 * @return Returns an object of the given type, constructed from the json.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T jsonToObject(String json) throws IllegalArgumentException  {
-		return (T) jsonTranslator.makeObject(json);
+	public static <T> T jsonToGameModel(String json) throws IllegalArgumentException  {
+		return (T) jsonTranslator.makeGameModel(json);
 	}
 	public static Object makeGenericObject(String json, Object object) throws IllegalArgumentException {
 		return jsonTranslator.makeGenericObject(json,  object);

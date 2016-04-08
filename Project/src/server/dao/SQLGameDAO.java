@@ -302,7 +302,7 @@ public class SQLGameDAO implements IGameDAO{
 			while(rSet.next()) { 
 				
 				String data = rSet.getString(2);
-				MoveCommand command = Translator.jsonToObject(data);
+				MoveCommand command = Translator.jsonToGameModel(data);
 				commands.add(command);
 			}
 			rSet.close();

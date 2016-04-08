@@ -14,7 +14,7 @@ public class GetModelResponse extends Response {
 			if (json.equals("\"true\"")) {
 				updated = false;
 			} else {
-				model = Translator.jsonToObject(json);
+				model = Translator.jsonToGameModel(json);
 				updated = true;
 				this.json = json;
 			}

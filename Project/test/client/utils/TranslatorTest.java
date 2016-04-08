@@ -35,7 +35,7 @@ public class TranslatorTest {
 			e.printStackTrace();
 		}
 		
-		gameModel = Translator.jsonToObject(append.toString());
+		gameModel = Translator.jsonToGameModel(append.toString());
 	}
 
 	@AfterClass
@@ -67,7 +67,7 @@ public class TranslatorTest {
 			e.printStackTrace();
 		}
 		
-		Object temp = Translator.jsonToObject(append.toString());
+		Object temp = Translator.jsonToGameModel(append.toString());
 		String json = Translator.objectToJson(temp);
 		System.out.println(json);
 	}

@@ -60,7 +60,7 @@ public class JsonTranslator {
 		}
 		return games;
 	}
-	public GameModel makeObject(String json){
+	public GameModel makeGameModel(String json){
 		JsonParser parser = new JsonParser();
 		//		StringReader strReader = new StringReader(json);
 		//		JsonReader reader = new JsonReader(strReader);

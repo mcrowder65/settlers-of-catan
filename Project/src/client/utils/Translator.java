@@ -34,7 +34,7 @@ public class Translator {
 	public static Object jsonToObject(String json, Object object) throws IllegalArgumentException {
 		return jsonTranslator.jsonToObject(json,  object);
 	}
-	public static Object jsonToObject(String json, Class klass) throws IllegalArgumentException {
+	public static Object jsonToObject(String json, @SuppressWarnings("rawtypes") Class klass) throws IllegalArgumentException {
 		return jsonTranslator.jsonToObject(json,  klass);
 	}
 	

@@ -122,7 +122,7 @@ public class SQLGameDAO implements IGameDAO{
 								found = true;
 							}
 							if (!found) //No player found, add Ai player
-								players.get(i).add(new PlayerInfo(user_id, Game.instance().getUnusedAiName(i), color, playerIndex));
+								players.get(i).add(new PlayerInfo(user_id, "Temp", color, playerIndex));
 							rSet.close();
 							pst.close();
 						} catch (SQLException e) {

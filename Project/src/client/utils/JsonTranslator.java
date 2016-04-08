@@ -335,9 +335,21 @@ public class JsonTranslator {
 		return new TurnTracker(currentTurn, status, longestRoad, largestArmy);
 	}
 	public ServerGameModel jsonToServerGameModel(String json){
+		GameModel gameModel = jsonToGameModel(json);
+		ServerGameModel serverGameModel = new ServerGameModel();
 		
-		
-		return null;
+		serverGameModel.setBank(gameModel.getBank());
+		serverGameModel.setChat(gameModel.getChat());
+		serverGameModel.setDeck(gameModel.getDeck());
+		serverGameModel.setGameId(gameModel.getGameId());
+		serverGameModel.setLog(gameModel.getLog());
+		serverGameModel.setTradeOffer(gameModel.getTradeOffer());
+		serverGameModel.setVersion(gameModel.getVersion());
+		serverGameModel.setWinner(gameModel.getWinner());
+		serverGameModel.setServerGameMap(serverGameModel.getMap());
+		serverGameModel.setServerPlayers(serverGameModel.getPlayers());
+		serverGameModel.setServerTurnTracker(serverGameModel.getTurnTracker());
+		return serverGameModel;
 	}
 
 	//**********************************************************************************************************************************

@@ -46,7 +46,7 @@ public class RoadBuildingCommand extends MoveCommand {
 	}
 	public RoadBuildingCommand(HttpExchange exchange) {
 		super(exchange);
-		RoadBuildingCommand tmp = (RoadBuildingCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		RoadBuildingCommand tmp = (RoadBuildingCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.spot1 = tmp.spot1;
 		this.spot2 = tmp.spot2;
 		this.type = tmp.type;

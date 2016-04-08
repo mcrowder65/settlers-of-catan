@@ -52,7 +52,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 	
 	public MaritimeTradeCommand(HttpExchange exchange) {
 		super(exchange);
-		MaritimeTradeCommand tmp = (MaritimeTradeCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		MaritimeTradeCommand tmp = (MaritimeTradeCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.ratio = tmp.ratio;
 		this.playerIndex = tmp.playerIndex;
 		this.inputResource = tmp.inputResource;

@@ -11,9 +11,13 @@ import java.util.List;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.Translator;
+import server.Game;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameMap;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -68,8 +72,12 @@ public class SQLGameDAO implements IGameDAO{
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
 					ServerGameModel serverGameModelObject = (ServerGameModel) 
-							Translator.makeGenericObject(serverGameModelString, ServerGameModel.class);
+							Translator.jsonToObject(serverGameModelString, ServerGameModel.class);
+					
 					String title = set.getString(3);
+					serverGameModelObject.setServerGameMap(serverGameModelObject.getMap());
+					serverGameModelObject.setServerPlayers(serverGameModelObject.getPlayers());
+					serverGameModelObject.setServerTurnTracker(serverGameModelObject.getTurnTracker());
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
 				}
@@ -87,7 +95,7 @@ public class SQLGameDAO implements IGameDAO{
 	        for(int i = 0; i < titles.size(); i++){
 	        	try {
 					PreparedStatement pstmt = null;
-					String mysqlstring="Select * from game_membership where game_id = " + (i) + ";";
+					String mysqlstring="Select * from game_membership where game_id = " + (i) + " order by id ASC;";
 					pstmt = conn.prepareStatement(mysqlstring);
 					ResultSet set = pstmt.executeQuery();
 					
@@ -104,14 +112,17 @@ public class SQLGameDAO implements IGameDAO{
 							String sql="Select * from users where id = " + user_id + ";";
 							pst = conn.prepareStatement(sql);
 							ResultSet rSet = pst.executeQuery();
-							
+							boolean found = false;
 							while(rSet.next()) { 
 								
 								int pId = rSet.getInt(1);
 								String user = rSet.getString(2);
 								String pass = rSet.getString(3);
 								players.get(i).add(new PlayerInfo(user_id, user, color, playerIndex));
+								found = true;
 							}
+							if (!found) //No player found, add Ai player
+								players.get(i).add(new PlayerInfo(user_id, "Temp", color, playerIndex));
 							rSet.close();
 							pst.close();
 						} catch (SQLException e) {
@@ -208,7 +219,7 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
-		//TODO make sure to update or add
+
 		int id = -1;
 		try {
 			PreparedStatement pst = null;
@@ -302,7 +313,7 @@ public class SQLGameDAO implements IGameDAO{
 			while(rSet.next()) { 
 				
 				String data = rSet.getString(2);
-				MoveCommand command = Translator.jsonToObject(data);
+				MoveCommand command = (MoveCommand) Translator.jsonToObject(data, MoveCommand.class);
 				commands.add(command);
 			}
 			rSet.close();

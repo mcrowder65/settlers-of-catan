@@ -30,7 +30,7 @@ public class SendChatCommand extends MoveCommand {
 
 	public SendChatCommand(HttpExchange exchange) {
 		super(exchange);
-		SendChatCommand tmp = (SendChatCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		SendChatCommand tmp = (SendChatCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.content = tmp.content;
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;

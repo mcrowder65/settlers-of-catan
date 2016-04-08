@@ -62,7 +62,7 @@ public class LoginRequest extends Request {
      }
      public LoginRequest(HttpExchange exchange){
     	super(exchange);
-    	LoginRequest tmp = (LoginRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+    	LoginRequest tmp = (LoginRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
      	this.username = tmp.username;
      	this.password = tmp.password;
      	

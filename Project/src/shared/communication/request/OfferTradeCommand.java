@@ -46,7 +46,7 @@ public class OfferTradeCommand extends MoveCommand {
 	
 	public OfferTradeCommand(HttpExchange exchange) {
 		super(exchange);
-		OfferTradeCommand tmp = (OfferTradeCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		OfferTradeCommand tmp = (OfferTradeCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.playerIndex = tmp.playerIndex;
 		this.type = tmp.type;
 		this.offer = tmp.offer;

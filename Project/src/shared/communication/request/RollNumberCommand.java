@@ -28,7 +28,7 @@ public class RollNumberCommand extends MoveCommand {
 	}
 	public RollNumberCommand(HttpExchange exchange) {
 		super(exchange);
-		RollNumberCommand tmp = (RollNumberCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		RollNumberCommand tmp = (RollNumberCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.number = tmp.number;
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;

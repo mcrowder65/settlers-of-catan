@@ -53,6 +53,13 @@ public class BuildSettlementCommand extends MoveCommand {
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 	}
+	public BuildSettlementCommand(String json) {
+		BuildSettlementCommand tmp = (BuildSettlementCommand)Translator.jsonToObject(json, this.getClass());
+		this.free = tmp.free;
+		this.vertexLocation = tmp.vertexLocation;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+	}
 	/**
 	 * used specifically for junit testing
 	 * @param playerIndex

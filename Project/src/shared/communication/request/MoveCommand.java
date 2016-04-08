@@ -10,11 +10,11 @@ import shared.communication.response.GetModelResponse;
  * classes extend this abstract class.
  * @author mcrowder65
  */
-public abstract class MoveCommand extends Request {
-
+public class MoveCommand extends Request {
+	public MoveCommand(){}
 	protected int playerIndex;
 	protected String type;
-	protected MoveCommand(int playerIndex) throws IllegalArgumentException {
+	protected  MoveCommand(int playerIndex) throws IllegalArgumentException {
 		
 		if (playerIndex < 0 || playerIndex > 3)
 			throw new IllegalArgumentException("playerIndex must be between 0 and 3");
@@ -33,9 +33,15 @@ public abstract class MoveCommand extends Request {
 	protected MoveCommand(HttpExchange exchange) {
 		super(exchange);
 	}
-	public abstract GetModelResponse execute();
+	public MoveCommand(String json) {
+		MoveCommand tmp = (MoveCommand)Translator.jsonToObject(json, this.getClass());
+		this.playerIndex = tmp.playerIndex;
+		this.type = tmp.type;
+	}
 	
+	public  GetModelResponse execute() {return null;}
 	
+
 
 	public String getMoveType() {
 		return type;
@@ -67,5 +73,46 @@ public abstract class MoveCommand extends Request {
 		this.gameIDCookie = id;
 	}
 	
+	public static MoveCommand interpretCommand(String json) throws IllegalArgumentException {
+		MoveCommand base = new MoveCommand(json);
+		
+		switch (base.type) {
+		case "Year_Of_Plenty":
+			return new YearOfPlentyCommand(json);
+		case "Soldier":
+			return new SoldierCommand(json);
+		case "sendChat":
+			return new SendChatCommand(json);
+		case "rollNumber":
+			return new RollNumberCommand(json);
+		case "robPlayer":
+			return new RobPlayerCommand(json);
+		case "Road_Building":
+			return new RoadBuildingCommand(json);
+		case "Monument":
+			return new MonumentCommand(json);
+		case "Monopoly":
+			return new MonopolyCommand(json);
+		case "maritimeTrade":
+			return new MaritimeTradeCommand(json);
+		case "finishTurn":
+			return new FinishTurnCommand(json);
+		case "discardCards":
+			return new DiscardCardsCommand(json);
+		case "buyDevCard":
+			return new BuyDevCardCommand(json);
+		case "buildSettlement":
+			return new BuildSettlementCommand(json);
+		case "buildRoad":
+			return new BuildRoadCommand(json);
+		case "buildCity":
+			return new BuildCityCommand(json);
+		case "acceptTrade":
+			return new AcceptTradeCommand(json);
+		default:
+			throw new IllegalArgumentException("Command type '" + base.type + "' was not accounted for.");
+		}
+		
+	}
 	
 }

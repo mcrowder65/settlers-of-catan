@@ -17,6 +17,18 @@ import shared.locations.*;
  */
 public class ServerPlayer extends Player {
 
+	
+	
+	public ServerPlayer() {
+		this.setRoads(15);
+		this.setCities(4);
+		this.setSettlements(5);
+		
+		//TODO: Maybe wrong (eric)
+		this.setOldDevCards(new DevCardList());
+		this.setNewDevCards(new DevCardList());
+		this.setResources(new ResourceList());
+	}
 	/**
 	 * constructor for ServerPlayer
 	 * @param name
@@ -30,6 +42,8 @@ public class ServerPlayer extends Player {
 		this.setRoads(15);
 		this.setCities(4);
 		this.setSettlements(5);
+		
+		
 	}
 	
 	/**
@@ -43,12 +57,7 @@ public class ServerPlayer extends Player {
 				copy.getPlayerID(), copy.getResources(), copy.getRoads(), copy.getSettlements(),
 				copy.getSoldiers(), copy.getVictoryPoints());
 	}
-	/**
-	 * blank constructor for testing purposes
-	 */
-	public ServerPlayer() {
-		
-	}
+
 
 	/**
 	 * lays a normal road for the player

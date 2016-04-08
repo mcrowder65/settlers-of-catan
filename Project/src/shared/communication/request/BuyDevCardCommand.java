@@ -41,6 +41,12 @@ public class BuyDevCardCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public BuyDevCardCommand(String json) {
+		BuyDevCardCommand tmp = (BuyDevCardCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		
+	}
 	//For testing
 	public BuyDevCardCommand(int gameIndex, int playerIndex){
 		super(playerIndex);

@@ -1,6 +1,7 @@
 package server.persistence;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -235,9 +236,15 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				endTransaction(false);
 				return;
 			} 
-			endTransaction(true);
-			flushGame(games.get(i).model.getGameId(),games.get(i).model);
+			try {
+				gameDAO.updateGame(games.get(i).model.getGameId(),games.get(i).model);
+			} catch (Exception e) {
+				e.printStackTrace();
+				endTransaction(false);
+				return;
+			}
 		}
+		endTransaction(true);
 		
 	}
 	/**

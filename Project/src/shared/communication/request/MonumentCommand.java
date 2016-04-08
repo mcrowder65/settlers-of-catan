@@ -31,6 +31,12 @@ public class MonumentCommand extends MoveCommand {
 		this.type = tmp.type; 
 		
 	}
+	public MonumentCommand(String json) {
+		MonumentCommand tmp = (MonumentCommand)Translator.jsonToObject(json, this.getClass());
+		this.playerIndex = tmp.playerIndex;
+		this.type = tmp.type; 
+		
+	}
 	//For testing
 	public MonumentCommand(int playerIndex, int gameIndex) {
 		super(playerIndex);

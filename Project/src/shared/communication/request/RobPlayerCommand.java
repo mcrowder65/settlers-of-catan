@@ -47,6 +47,15 @@ public class RobPlayerCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public RobPlayerCommand(String json) {
+		RobPlayerCommand tmp = (RobPlayerCommand)Translator.jsonToObject(json, this.getClass());
+		this.location = tmp.location;
+		this.victimIndex = tmp.victimIndex;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+	
+	}
+	
 	/**
 	 * This executes the rob player.
 	 */

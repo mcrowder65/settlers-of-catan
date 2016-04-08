@@ -40,6 +40,13 @@ public class AcceptTradeCommand extends MoveCommand {
 		this.willAccept = tmp.willAccept;
 
 	}
+	public AcceptTradeCommand(String json) {
+		AcceptTradeCommand tmp = (AcceptTradeCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		this.willAccept = tmp.willAccept;
+
+	}
 
 	/**
 	 * Executes the logic to process the AcceptTrade command 

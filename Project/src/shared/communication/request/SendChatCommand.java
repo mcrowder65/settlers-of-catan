@@ -36,6 +36,13 @@ public class SendChatCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		
 	}
+	public SendChatCommand(String json) {
+		SendChatCommand tmp = (SendChatCommand)Translator.jsonToObject(json, this.getClass());
+		this.content = tmp.content;
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+		
+	}
 	/**
 	 * used for junit's exclusively
 	 * @param playerIndex

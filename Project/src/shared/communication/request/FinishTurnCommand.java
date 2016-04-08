@@ -43,6 +43,12 @@ public class FinishTurnCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 
 	}
+	public FinishTurnCommand(String json) {
+		FinishTurnCommand tmp = (FinishTurnCommand)Translator.jsonToObject(json, this.getClass());
+		this.type = tmp.type;
+		this.playerIndex = tmp.playerIndex;
+
+	}
 	/**
 	 * Executes the logic to process the finish turn command
 	 */

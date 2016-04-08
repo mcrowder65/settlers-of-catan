@@ -59,6 +59,15 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.outputResource = tmp.outputResource; 
 		
 	}
+	public MaritimeTradeCommand(String json) {
+		MaritimeTradeCommand tmp = (MaritimeTradeCommand)Translator.jsonToObject(json, this.getClass());
+		this.ratio = tmp.ratio;
+		this.playerIndex = tmp.playerIndex;
+		this.inputResource = tmp.inputResource;
+		this.outputResource = tmp.outputResource; 
+		
+	}
+	
 	//For Testing
 	public MaritimeTradeCommand(int playerIndex, int gameIndex, int ratio, ResourceType input, ResourceType output) {
 		super(playerIndex);

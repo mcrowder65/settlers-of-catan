@@ -89,7 +89,10 @@ public class JsonTranslator {
 		gameModel.setMap(map);
 
 		Player[] players =  makePlayers(jsonObj.getAsJsonArray("players"));
-		gameModel.setPlayers(players);
+		Player[] fullPlayers = new Player[4];
+		for (int n = 0; n < players.length; n++)
+			fullPlayers[n] = players[n];
+		gameModel.setPlayers(fullPlayers);
 
 		if (jsonObj.has("tradeOffer")) {
 			TradeOffer tradeOffer = makeTradeOffer((JsonObject)jsonObj.get("tradeOffer"));

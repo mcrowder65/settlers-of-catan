@@ -14,7 +14,10 @@ import client.utils.Translator;
 import server.Game;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
+import server.util.ServerGameMap;
 import server.util.ServerGameModel;
+import server.util.ServerPlayer;
+import server.util.ServerTurnTracker;
 import shared.communication.request.MoveCommand;
 import shared.definitions.CatanColor;
 /**
@@ -72,6 +75,9 @@ public class SQLGameDAO implements IGameDAO{
 							Translator.jsonToObject(serverGameModelString, ServerGameModel.class);
 					
 					String title = set.getString(3);
+					serverGameModelObject.setServerGameMap(serverGameModelObject.getMap());
+					serverGameModelObject.setServerPlayers(serverGameModelObject.getPlayers());
+					serverGameModelObject.setServerTurnTracker(serverGameModelObject.getTurnTracker());
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
 				}
@@ -307,7 +313,7 @@ public class SQLGameDAO implements IGameDAO{
 			while(rSet.next()) { 
 				
 				String data = rSet.getString(2);
-				MoveCommand command = Translator.jsonToGameModel(data);
+				MoveCommand command = (MoveCommand) Translator.jsonToObject(data, MoveCommand.class);
 				commands.add(command);
 			}
 			rSet.close();

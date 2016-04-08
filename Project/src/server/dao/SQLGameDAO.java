@@ -324,6 +324,7 @@ public class SQLGameDAO implements IGameDAO{
 				
 				String data = rSet.getString(2);
 				MoveCommand command = (MoveCommand) Translator.jsonToObject(data, MoveCommand.class);
+				command.setGameCookie(gameID);
 				commands.add(command);
 			}
 			rSet.close();

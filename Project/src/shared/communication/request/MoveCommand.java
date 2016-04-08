@@ -10,8 +10,8 @@ import shared.communication.response.GetModelResponse;
  * classes extend this abstract class.
  * @author mcrowder65
  */
-public abstract class MoveCommand extends Request {
-
+public class MoveCommand extends Request {
+	public MoveCommand(){}
 	protected int playerIndex;
 	protected String type;
 	protected MoveCommand(int playerIndex) throws IllegalArgumentException {
@@ -33,7 +33,8 @@ public abstract class MoveCommand extends Request {
 	protected MoveCommand(HttpExchange exchange) {
 		super(exchange);
 	}
-	public abstract GetModelResponse execute();
+	public GetModelResponse execute(){
+		return null;}
 	
 	
 

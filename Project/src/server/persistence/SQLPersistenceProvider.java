@@ -393,6 +393,12 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		}
 		
 	}
+	
+	@Override
+	public void update(int gameID, ServerGameModel model){
+	
+	}
+	
 
 
 	

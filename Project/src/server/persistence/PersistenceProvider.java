@@ -111,6 +111,10 @@ public abstract class PersistenceProvider {
 	 * this deletes the xml stuff and/or drops the sql tables
 	 */
 	public abstract void resetPersistence();
+	public void update(int gameID, ServerGameModel model) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

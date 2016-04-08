@@ -142,7 +142,7 @@ public class SQLGameDAO implements IGameDAO{
 	    ArrayList<GameCombo> games = new ArrayList<GameCombo>();
 	    for(int i = 0; i < titles.size(); i++){
 	    	GameCombo temp = new GameCombo();
-	    	temp.info = new GameInfo(i+1, titles.get(i), players.get(i));
+	    	temp.info = new GameInfo(i, titles.get(i), players.get(i));
 	    	temp.model = serverGameModels.get(i);
 	    	games.add(temp);
 	    }

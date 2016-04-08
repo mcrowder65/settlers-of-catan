@@ -65,10 +65,12 @@ public class JoinGameRequest extends Request {
 				playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
 				serverPlayer.setPlayerIndex(playerIndex);
 				Game.instance().addPlayer(id, serverPlayer);
+				//Game.instance().getPersistenceProvider().
 			}
 			response.setCookie("Set-cookie", "catan.game=" + id + ";Path=/;");
 			response.setErrorMessage("Success");
 			response.setSuccess(true);
+			
 			return response;
 		}
 	}

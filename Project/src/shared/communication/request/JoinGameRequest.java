@@ -60,13 +60,16 @@ public class JoinGameRequest extends Request {
 				serverPlayer = model.getPlayerByIndex(playerIndex);
 				serverPlayer.setColor(color); //TODO pointer issues
 				Game.instance().setPlayer(id, serverPlayer);
+				
+
 			}
 			//otherwise they're not in the game, find the index to use to add them to the game.
 			else{
 				playerIndex = model.getLocalIndexJoinGame(playerIDCookie);
 				serverPlayer.setPlayerIndex(playerIndex);
 				Game.instance().addPlayer(id, serverPlayer);
-				//Game.instance().getPersistenceProvider().
+				Game.instance().getPersistenceProvider().update(id, model);
+				
 			}
 			response.setCookie("Set-cookie", "catan.game=" + id + ";Path=/;");
 			response.setErrorMessage("Success");

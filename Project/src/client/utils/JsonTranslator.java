@@ -346,9 +346,9 @@ public class JsonTranslator {
 		serverGameModel.setTradeOffer(gameModel.getTradeOffer());
 		serverGameModel.setVersion(gameModel.getVersion());
 		serverGameModel.setWinner(gameModel.getWinner());
-		serverGameModel.setServerGameMap(serverGameModel.getMap());
-		serverGameModel.setServerPlayers(serverGameModel.getPlayers());
-		serverGameModel.setServerTurnTracker(serverGameModel.getTurnTracker());
+		serverGameModel.setServerGameMap(gameModel.getMap());
+		serverGameModel.setServerPlayers(gameModel.getPlayers());
+		serverGameModel.setServerTurnTracker(gameModel.getTurnTracker());
 		return serverGameModel;
 	}
 

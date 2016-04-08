@@ -20,17 +20,20 @@ import server.util.ServerGameMap;
 import server.util.ServerGameModel;
 import server.util.ServerPlayer;
 import server.util.ServerTurnTracker;
+@SuppressWarnings("unchecked")
 public class JsonTranslator {
 	public JsonTranslator(){}
 	public MirrorGameModel makeMirrorObject(GameModel gameModel){
 		return new MirrorGameModel(gameModel);
 	}
-	public Object makeGenericObject(String json, Object object){
+	public Object jsonToObject(String json, Object object){
 		return new Gson().fromJson(json, object.getClass());
 	}
-	public Object makeGenericObject(String json, Class klass) {
+	@SuppressWarnings("rawtypes" )
+	public Object jsonToObject(String json, Class klass) {
 		return new Gson().fromJson(json, klass);
 	}
+
 	public HashMap<String, String> makeKeyValuePairs(String json) {
 		return (HashMap<String,String>)(new Gson().fromJson(json, HashMap.class));
 	}
@@ -60,7 +63,7 @@ public class JsonTranslator {
 		}
 		return games;
 	}
-	public GameModel makeObject(String json){
+	public GameModel jsonToGameModel(String json){
 		JsonParser parser = new JsonParser();
 		//		StringReader strReader = new StringReader(json);
 		//		JsonReader reader = new JsonReader(strReader);

@@ -36,7 +36,7 @@ public class BuyDevCardCommand extends MoveCommand {
 
 	public BuyDevCardCommand(HttpExchange exchange) {
 		super(exchange);
-		BuyDevCardCommand tmp = (BuyDevCardCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		BuyDevCardCommand tmp = (BuyDevCardCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 		

@@ -47,7 +47,7 @@ public class BuildSettlementCommand extends MoveCommand {
 	}
 	public BuildSettlementCommand(HttpExchange exchange) {
 		super(exchange);
-		BuildSettlementCommand tmp = (BuildSettlementCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		BuildSettlementCommand tmp = (BuildSettlementCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.free = tmp.free;
 		this.vertexLocation = tmp.vertexLocation;
 		this.type = tmp.type;

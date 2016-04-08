@@ -47,6 +47,7 @@ public class JoinGameRequest extends Request {
 	}
 	
 	public Response joinGame() {
+		
 		synchronized(Game.instance().lock){
 			Response response = new Response();
 			Game game = Game.instance();
@@ -76,7 +77,7 @@ public class JoinGameRequest extends Request {
 	}
 	public JoinGameRequest(HttpExchange exchange){
 		super(exchange);
-		JoinGameRequest tmp = (JoinGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		JoinGameRequest tmp = (JoinGameRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.id = tmp.id;
 		this.color = tmp.color;
 	}

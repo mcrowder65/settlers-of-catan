@@ -74,7 +74,7 @@ public class RegisterRequest extends Request {
     }
     public RegisterRequest(HttpExchange exchange){
     	super(exchange);
-    	RegisterRequest tmp = (RegisterRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+    	RegisterRequest tmp = (RegisterRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
     	this.username = tmp.username;
     	this.password = tmp.password;
     	

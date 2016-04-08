@@ -93,7 +93,7 @@ public class CreateGameRequest extends Request {
 	}
 	public CreateGameRequest(HttpExchange exchange){
 		super(exchange);
-		CreateGameRequest tmp = (CreateGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		CreateGameRequest tmp = (CreateGameRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		setVariables(tmp.name, tmp.randomTiles, tmp.randomNumbers, tmp.randomPorts);
 	}
 	private void generatePorts(){

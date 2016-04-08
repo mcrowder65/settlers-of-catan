@@ -28,14 +28,14 @@ public class Translator {
 	 * @return Returns an object of the given type, constructed from the json.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T jsonToObject(String json) throws IllegalArgumentException  {
-		return (T) jsonTranslator.makeObject(json);
+	public static <T> T jsonToGameModel(String json) throws IllegalArgumentException  {
+		return (T) jsonTranslator.jsonToGameModel(json);
 	}
-	public static Object makeGenericObject(String json, Object object) throws IllegalArgumentException {
-		return jsonTranslator.makeGenericObject(json,  object);
+	public static Object jsonToObject(String json, Object object) throws IllegalArgumentException {
+		return jsonTranslator.jsonToObject(json,  object);
 	}
-	public static Object makeGenericObject(String json, Class klass) throws IllegalArgumentException {
-		return jsonTranslator.makeGenericObject(json,  klass);
+	public static Object jsonToObject(String json, @SuppressWarnings("rawtypes") Class klass) throws IllegalArgumentException {
+		return jsonTranslator.jsonToObject(json,  klass);
 	}
 	
 	public static List<GameInfo> makeListOfGames(String json){

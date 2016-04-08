@@ -54,19 +54,19 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		connection = null;
 		userDAO = createUserDAO();
 		gameDAO = createGameDAO();
-		Path path = Paths.get("directory/db.sqlite");
-		if(!Files.exists(path)){
-			boolean first = new File("database/").mkdirs();
-			
-			boolean second;
-			try {
-				second = new File("database/db.sqlite").createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			resetPersistence();
-		}
+//		Path path = Paths.get("directory/db.sqlite");
+//		if(!Files.exists(path)){
+//			boolean first = new File("database/").mkdirs();
+//			
+//			boolean second;
+//			try {
+//				second = new File("database/db.sqlite").createNewFile();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			resetPersistence();
+//		}
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class DiscardCardsCommand extends MoveCommand {
 	}
 	public DiscardCardsCommand(HttpExchange exchange) {
 		super(exchange);
-		DiscardCardsCommand tmp = (DiscardCardsCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		DiscardCardsCommand tmp = (DiscardCardsCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 		this.discardedCards = tmp.discardedCards;

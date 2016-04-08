@@ -42,7 +42,7 @@ public class BuildCityCommand extends MoveCommand {
 	 */
 	public BuildCityCommand(HttpExchange exchange) {
 		super(exchange);
-		BuildCityCommand tmp = (BuildCityCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		BuildCityCommand tmp = (BuildCityCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 		this.vertexLocation = tmp.vertexLocation;

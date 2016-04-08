@@ -316,7 +316,8 @@ public class MapController extends Controller implements IMapController, Observe
 		setSettlements(map.getSettlements(), model.getPlayers());
 		
 		if ( (currState instanceof FirstRoundState || currState instanceof SecondRoundState) 
-				&&  !getView().isOverlayShowing()) {
+				&& !getView().isOverlayShowing()) {
+			
 			getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 			//FIRST TWO ROUNDS
 			
@@ -389,7 +390,12 @@ public class MapController extends Controller implements IMapController, Observe
 		if (currState instanceof FirstRoundState ||
 		    currState instanceof SecondRoundState) {
 				
-				if (currState.getPlayerRoads() == currState.getPlayerSettlements())
+				/*if (currState.getPlayerRoads() == currState.getPlayerSettlements())
+					getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
+				else
+					getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);*/
+			
+				if (currState.getPlayerRoads()==15 || (currState.getPlayerRoads()==14 && currState.getPlayerSettlements() == 4))      
 					getView().startDrop(PieceType.ROAD, currState.getPlayerColor(), false);
 				else
 					getView().startDrop(PieceType.SETTLEMENT, currState.getPlayerColor(), false);

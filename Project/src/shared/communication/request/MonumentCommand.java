@@ -26,7 +26,7 @@ public class MonumentCommand extends MoveCommand {
 	
 	public MonumentCommand(HttpExchange exchange) {
 		super(exchange);
-		MonumentCommand tmp = (MonumentCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		MonumentCommand tmp = (MonumentCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.playerIndex = tmp.playerIndex;
 		this.type = tmp.type; 
 		

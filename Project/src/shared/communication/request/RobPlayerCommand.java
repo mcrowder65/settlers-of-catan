@@ -40,7 +40,7 @@ public class RobPlayerCommand extends MoveCommand {
 
 	public RobPlayerCommand(HttpExchange exchange) {
 		super(exchange);
-		RobPlayerCommand tmp = (RobPlayerCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		RobPlayerCommand tmp = (RobPlayerCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.location = tmp.location;
 		this.victimIndex = tmp.victimIndex;
 		this.type = tmp.type;

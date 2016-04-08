@@ -34,7 +34,7 @@ public class SoldierCommand extends MoveCommand {
 	}
 	public SoldierCommand(HttpExchange exchange) {
 		super(exchange);
-		SoldierCommand tmp = (SoldierCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		SoldierCommand tmp = (SoldierCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 		this.location = tmp.location;

@@ -77,7 +77,7 @@ public class AddAIRequest extends Request {
 	}
 	public AddAIRequest(HttpExchange exchange){
 		super(exchange);
-		AddAIRequest tmp = (AddAIRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		AddAIRequest tmp = (AddAIRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		AIType = tmp.AIType;
 	}
 	

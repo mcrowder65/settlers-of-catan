@@ -39,7 +39,7 @@ public class YearOfPlentyCommand extends MoveCommand {
 	
 	public YearOfPlentyCommand(HttpExchange exchange) {
 		super(exchange);
-		YearOfPlentyCommand tmp = (YearOfPlentyCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		YearOfPlentyCommand tmp = (YearOfPlentyCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.resource1 = tmp.resource1;
 		this.resource2 = tmp.resource2;
 		this.playerIndex = tmp.playerIndex;

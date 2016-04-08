@@ -74,7 +74,7 @@ public class JoinGameRequest extends Request {
 	}
 	public JoinGameRequest(HttpExchange exchange){
 		super(exchange);
-		JoinGameRequest tmp = (JoinGameRequest)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		JoinGameRequest tmp = (JoinGameRequest)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.id = tmp.id;
 		this.color = tmp.color;
 	}

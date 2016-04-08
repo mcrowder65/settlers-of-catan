@@ -68,7 +68,7 @@ public class SQLGameDAO implements IGameDAO{
 					int id = set.getInt(1);
 					String serverGameModelString = set.getString(2);
 					ServerGameModel serverGameModelObject = (ServerGameModel) 
-							Translator.makeGenericObject(serverGameModelString, ServerGameModel.class);
+							Translator.jsonToObject(serverGameModelString, ServerGameModel.class);
 					String title = set.getString(3);
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);

@@ -35,7 +35,7 @@ public class BuildRoadCommand extends MoveCommand {
 	}
 	public BuildRoadCommand(HttpExchange exchange) {
 		super(exchange);
-		BuildRoadCommand tmp = (BuildRoadCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		BuildRoadCommand tmp = (BuildRoadCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.free = tmp.free;
 		this.roadLocation = tmp.roadLocation;
 		this.type = tmp.type;

@@ -34,7 +34,7 @@ public class AcceptTradeCommand extends MoveCommand {
 
 	public AcceptTradeCommand(HttpExchange exchange) {
 		super(exchange);
-		AcceptTradeCommand tmp = (AcceptTradeCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		AcceptTradeCommand tmp = (AcceptTradeCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
 		this.willAccept = tmp.willAccept;

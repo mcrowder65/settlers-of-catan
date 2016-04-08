@@ -36,7 +36,7 @@ public class MonopolyCommand extends MoveCommand {
 
 	public MonopolyCommand(HttpExchange exchange) {
 		super(exchange);
-		MonopolyCommand tmp = (MonopolyCommand)Translator.makeGenericObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
+		MonopolyCommand tmp = (MonopolyCommand)Translator.jsonToObject(convertStreamToString(exchange.getRequestBody()), this.getClass());
 		this.playerIndex = tmp.playerIndex;
 		this.resource = tmp.resource;
 		this.type = tmp.type; 

@@ -141,6 +141,18 @@ public class SQLGameDAO implements IGameDAO{
 	    	GameCombo temp = new GameCombo();
 	    	temp.info = new GameInfo(i, titles.get(i), players.get(i));
 	    	temp.model = serverGameModels.get(i);
+	    	
+	    	if (temp.model.getServerPlayers() == null) //players haven't been written yet
+	    		temp.model.setServerPlayers(new ServerPlayer[4]);
+	    	
+	    	for (int n = 0; n < temp.info.getPlayers().size(); n++) {
+	    		if (temp.model.getServerPlayers()[n] == null)
+	    			temp.model.getServerPlayers()[n] = new ServerPlayer();
+	    		if (temp.info.getPlayers().size() > n)
+	    			temp.model.getServerPlayers()[n].setName(temp.info.getPlayers().get(n));
+	    		
+
+	    	}
 	    
 	    	games.add(temp);
 	    }

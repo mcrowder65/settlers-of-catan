@@ -223,7 +223,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				e.printStackTrace();
 				endTransaction(false);
 			} 
+			flushGame(games.get(i).model.getGameId(),games.get(i).model);
 		}
+		
 	}
 	/**
 	 * Writes the entire game model to the database and deletes all the commands.
@@ -396,7 +398,22 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	@Override
 	public void update(int gameID, ServerGameModel model){
-	
+		try {
+			startTransaction();
+		} catch (DatabaseException ex) {
+			ex.printStackTrace();
+			return;
+		}
+		try
+		{
+			gameDAO.updateGame(gameID, model);
+			gameDAO.deleteCommands(gameID);
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			endTransaction(false);
+			return;
+		}
 	}
 	
 

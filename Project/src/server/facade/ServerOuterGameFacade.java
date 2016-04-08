@@ -49,7 +49,7 @@ public class ServerOuterGameFacade implements IOuterGameFacade {
 		Response response = request.joinGame();
 		if (response.isSuccess()) {
 			Game.instance().getPersistenceProvider().joinUser(request.getPlayerID(), request.getId(), request.getColor(), request.getPlayerIndex());
-			
+			Game.instance().getPersistenceProvider().update(request.getId(), Game.instance().getGameId(request.getId()));
 		}
 		return response;
 	}

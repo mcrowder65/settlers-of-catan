@@ -232,6 +232,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				endTransaction(false);
 				return;
 			} 
+			endTransaction(true);
 			flushGame(games.get(i).model.getGameId(),games.get(i).model);
 		}
 		

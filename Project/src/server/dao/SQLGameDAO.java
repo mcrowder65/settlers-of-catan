@@ -141,6 +141,7 @@ public class SQLGameDAO implements IGameDAO{
 	    	GameCombo temp = new GameCombo();
 	    	temp.info = new GameInfo(i, titles.get(i), players.get(i));
 	    	temp.model = serverGameModels.get(i);
+	    
 	    	games.add(temp);
 	    }
 		return games;

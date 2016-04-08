@@ -69,6 +69,7 @@ public class SQLGameDAO implements IGameDAO{
 					String serverGameModelString = set.getString(2);
 					ServerGameModel serverGameModelObject = (ServerGameModel) 
 							Translator.jsonToObject(serverGameModelString, ServerGameModel.class);
+					
 					String title = set.getString(3);
 					serverGameModels.add(serverGameModelObject);
 					titles.add(title);
@@ -208,7 +209,7 @@ public class SQLGameDAO implements IGameDAO{
 	 */
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex) throws SQLException{
-		//TODO make sure to update or add
+
 		int id = -1;
 		try {
 			PreparedStatement pst = null;

@@ -11,6 +11,7 @@ import java.util.List;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.Translator;
+import server.Game;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
@@ -88,7 +89,7 @@ public class SQLGameDAO implements IGameDAO{
 	        for(int i = 0; i < titles.size(); i++){
 	        	try {
 					PreparedStatement pstmt = null;
-					String mysqlstring="Select * from game_membership where game_id = " + (i) + ";";
+					String mysqlstring="Select * from game_membership where game_id = " + (i) + " order by id ASC;";
 					pstmt = conn.prepareStatement(mysqlstring);
 					ResultSet set = pstmt.executeQuery();
 					
@@ -105,14 +106,17 @@ public class SQLGameDAO implements IGameDAO{
 							String sql="Select * from users where id = " + user_id + ";";
 							pst = conn.prepareStatement(sql);
 							ResultSet rSet = pst.executeQuery();
-							
+							boolean found = false;
 							while(rSet.next()) { 
 								
 								int pId = rSet.getInt(1);
 								String user = rSet.getString(2);
 								String pass = rSet.getString(3);
 								players.get(i).add(new PlayerInfo(user_id, user, color, playerIndex));
+								found = true;
 							}
+							if (!found) //No player found, add Ai player
+								players.get(i).add(new PlayerInfo(user_id, Game.instance().getUnusedAiName(i), color, playerIndex));
 							rSet.close();
 							pst.close();
 						} catch (SQLException e) {

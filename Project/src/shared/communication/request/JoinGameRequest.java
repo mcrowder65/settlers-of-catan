@@ -47,6 +47,7 @@ public class JoinGameRequest extends Request {
 	}
 	
 	public Response joinGame() {
+		
 		synchronized(Game.instance().lock){
 			Response response = new Response();
 			Game game = Game.instance();

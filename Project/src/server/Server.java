@@ -58,7 +58,7 @@ public class Server {
 
 		//Wipe out persistence data
 		if(args.length == 1){
-			if(!args[0].equals("Wipeout")){
+			if(!args[0].equals("wipeout")){
 				System.out.println("Usage: ant our-server <Wipeout>");
 				return;
 			}

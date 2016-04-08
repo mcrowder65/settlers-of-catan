@@ -138,6 +138,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addCommand(MoveCommand command) {
+		System.out.println("addCommand");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -173,6 +174,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<GameCombo> loadGames() {
+		System.out.println("loadGames");
 		ArrayList<GameCombo> games = null;
 		try {
 			startTransaction();
@@ -195,6 +197,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	}
 	@Override
 	public void executeCommands(List<GameCombo> games){
+		System.out.println("executeCommands");
 		try {
 			startTransaction();
 		} catch (DatabaseException e2) {
@@ -252,6 +255,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	protected void flushGame(int gameID, ServerGameModel serverGameModel) {
+		System.out.println("flushGame");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -297,6 +301,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */ 
 	@Override
 	public void joinUser(int userID, int gameID, CatanColor color, int playerIndex){
+		System.out.println("joinUser");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -320,6 +325,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person){
+		System.out.println("addUser");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -344,6 +350,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public List<MoveCommand> getCommands(int gameID) {
+		System.out.println("getCommands");
 		List<MoveCommand> commands = null;
 		try {
 			startTransaction();
@@ -368,6 +375,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	public void resetPersistence() {
+		System.out.println("resetPersistence");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -387,6 +395,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	@Override
 	public List<RegisteredPersonInfo> getUsers() {
+		System.out.println("getUsers");
 		try {
 			startTransaction();
 		} catch (DatabaseException e1) {
@@ -408,6 +417,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 
 	@Override
 	public void addGame(int id, ServerGameModel model, String title) {
+		System.out.println("addGame");
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
@@ -427,6 +437,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	
 	@Override
 	public void update(int gameID, ServerGameModel model){
+		System.out.println("update");
 		try {
 			startTransaction();
 		} catch (DatabaseException ex) {

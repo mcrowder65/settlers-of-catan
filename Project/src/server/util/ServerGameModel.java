@@ -17,7 +17,8 @@ import shared.definitions.Hex;
 import shared.definitions.MessageLine;
 import shared.definitions.Player;
 import shared.definitions.ResourceList;
-import shared.definitions.ResourceType;		
+import shared.definitions.ResourceType;
+import shared.definitions.TurnTracker;
 import shared.locations.VertexObject;
 
 /**
@@ -201,9 +202,44 @@ public class ServerGameModel extends GameModel{
  	public void setServerGameMap(ServerGameMap serverMap){		
  		this.serverMap = serverMap;		
  	}		
+ 	public void setServerGameMap(GameMap gameMap){
+ 		serverMap.setCities(gameMap.getCities());
+ 		serverMap.setHexes(gameMap.getHexes());
+ 		serverMap.setPorts(gameMap.getPorts());
+ 		serverMap.setRadius(gameMap.getRadius());
+ 		serverMap.setRoads(gameMap.getRoads());
+ 		serverMap.setRobber(gameMap.getRobber());
+ 		serverMap.setSettlements(gameMap.getSettlements());
+ 	}
  	public void setServerPlayers(ServerPlayer[] serverPlayers){		
  		this.serverPlayers = serverPlayers;		
 	}		
+ 	public void setServerPlayers(Player[] players){
+ 		serverPlayers = new ServerPlayer[players.length];
+ 		for(int i = 0; i < players.length; i++){
+ 			serverPlayers[i].setCities(players[i].getCities());
+ 			serverPlayers[i].setColor(players[i].getColor());
+ 			serverPlayers[i].setDiscarded(players[i].getDiscarded());
+ 			serverPlayers[i].setMonuments(players[i].getMonuments());
+ 			serverPlayers[i].setName(players[i].getName());
+ 			serverPlayers[i].setNewDevCards(players[i].getNewDevCards());
+ 			serverPlayers[i].setOldDevCards(players[i].getOldDevCards());
+ 			serverPlayers[i].setPlayedDevCard(players[i].getPlayedDevCard());
+ 			serverPlayers[i].setPlayerID(players[i].getPlayerID());
+ 			serverPlayers[i].setPlayerIndex(players[i].getPlayerIndex());
+ 			serverPlayers[i].setResources(players[i].getResources());
+ 			serverPlayers[i].setRoads(players[i].getRoads());
+ 			serverPlayers[i].setSettlements(players[i].getSettlements());
+ 			serverPlayers[i].setSoldiers(players[i].getSoldiers());
+ 			serverPlayers[i].setVictoryPoints(players[i].getVictoryPoints());
+ 		}
+ 	}
+ 	public void setServerTurnTracker(TurnTracker turnTracker){
+ 		serverTurnTracker.setCurrentTurn(turnTracker.getCurrentTurn());
+ 		serverTurnTracker.setLargestArmy(turnTracker.getLargestArmy());
+ 		serverTurnTracker.setLongestRoad(turnTracker.getLongestRoad());
+ 		serverTurnTracker.setStatus(turnTracker.getStatus());
+ 	}
 	public void setServerTurnTracker(ServerTurnTracker serverTurnTracker){		
 		this.serverTurnTracker = serverTurnTracker;		
 	}		

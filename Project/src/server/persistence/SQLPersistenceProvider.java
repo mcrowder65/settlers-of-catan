@@ -76,6 +76,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	@Override
 	protected void startTransaction() throws DatabaseException {
 		try {	
+			System.out.println("start transaction");
 			connection = DriverManager.getConnection(DATABASE_URL);
 			connection.setAutoCommit(false);
 			userDAO.setConnection(connection);
@@ -94,6 +95,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 	 */
 	@Override
 	protected void endTransaction(boolean commit) {
+		System.out.println("end transaction");
 		try {
 			if (commit) {
 				connection.commit();
@@ -103,7 +105,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			}
 			
 		}
-		catch (SQLException e) {
+		catch (NullPointerException | SQLException e) {
 			e.printStackTrace();
 		}
 		finally {
@@ -139,6 +141,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try {
@@ -174,6 +177,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return null;
 		}
 		try {
@@ -194,6 +198,9 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e2) {
 			e2.printStackTrace();
+			endTransaction(false);
+			return;
+			
 		}
 		for(int i = 0; i < games.size(); i++){
 			ArrayList<MoveCommand> commands = null;
@@ -202,6 +209,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				endTransaction(false);
+				return;
 			}
 			for(int x = 0; x < commands.size(); x++){
 				String moveType = commands.get(x).getMoveType();
@@ -222,6 +230,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			} catch (IllegalArgumentException | SQLException | IOException e) {
 				e.printStackTrace();
 				endTransaction(false);
+				return;
 			} 
 			flushGame(games.get(i).model.getGameId(),games.get(i).model);
 		}
@@ -239,6 +248,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try {	
@@ -248,6 +258,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (Exception e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
 		}
 		
 	}
@@ -282,6 +293,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try {
@@ -290,6 +302,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
 		}
 	}
 	
@@ -303,6 +316,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try {
@@ -311,6 +325,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
 		}
 		
 	}
@@ -326,6 +341,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return commands;
 		}
 		try {
@@ -348,6 +364,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try {
@@ -356,6 +373,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
 		}
 	}
 
@@ -365,6 +383,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException e1) {
 			e1.printStackTrace();
+			endTransaction(false);
 			return null;
 		}
 		try {
@@ -384,6 +403,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		try {
 			startTransaction();
 		} catch (DatabaseException e) {
+			endTransaction(false);
 			return;
 		}
 		try {
@@ -392,6 +412,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 		} catch (IOException|SQLException e) {
 			e.printStackTrace();
 			endTransaction(false);
+			return;
 		}
 		
 	}
@@ -402,13 +423,14 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			startTransaction();
 		} catch (DatabaseException ex) {
 			ex.printStackTrace();
+			endTransaction(false);
 			return;
 		}
 		try
 		{
 			gameDAO.updateGame(gameID, model);
 			gameDAO.deleteCommands(gameID);
-			
+			endTransaction(true);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			endTransaction(false);

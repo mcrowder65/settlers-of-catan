@@ -153,12 +153,7 @@ public class OfferTradeCommand extends MoveCommand {
 	 		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
 	 		model.setTradeOffer(trade);
 	 		
-	 		//AIs can't make trades
-	 		if (Game.instance().getGameId(gameID).getServerPlayers()[receiver].getPlayerID() < 0) {
-	 			AcceptTradeCommand rejectTrade = new AcceptTradeCommand(receiver, false);
-	 			rejectTrade.setGameCookie(gameID);
-	 			rejectTrade.execute();
-	 		} 
+	 
 	 		
 	 		model.setVersion(model.getVersion() + 1);//setting the version
 	 		response.setSuccess(true);

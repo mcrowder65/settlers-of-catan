@@ -149,12 +149,7 @@ public class RollNumberCommand extends MoveCommand {
 		  		    model.getServerPlayers()[n].getNumOfCards() > 7 ? false : true
 		  					);
 		  			
-		  			//Discard for ai's
-		  			if (!model.getServerPlayers()[n].getDiscarded()) {
-		  				turnTracker.handleAITurn(gameID, n);
-		  				if (model.getServerPlayers()[n].getPlayerID() < 0)
-		  					model.getServerPlayers()[n].setDiscarded(true);
-		  			}
+		  			
 		  		}
 	  			
 		  		boolean doneDiscarding = true;

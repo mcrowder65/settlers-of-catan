@@ -9,6 +9,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
 
 import client.utils.Translator;
+import shared.communication.response.GetModelResponse;
 /**
  * Request class.
  * @author mcrowder65
@@ -44,5 +45,9 @@ public abstract class Request {
 	}
 	protected String getCookie(){
 		return totalCookie;
+	}
+	public GetModelResponse reExecute() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

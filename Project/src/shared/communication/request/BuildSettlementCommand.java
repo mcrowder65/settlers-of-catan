@@ -170,7 +170,100 @@ public class BuildSettlementCommand extends MoveCommand {
 			return response;
 		}
 	}
-	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			int gameIndex = gameID; //getting all the info needed to execute the command from the cookies and http exchange
+			//int playerIndex = playerID;	
+			VertexLocation loc = this.getLocation().getOriginal();			
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		String status = turnTracker.getStatus();
+	 		VertexObject vertex = new VertexObject(playerIndex,loc);
+
+	 		//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response;		
+			}
+			if(status.equals("FirstRound") || status.equals("SecondRound")){
+				if(!map.canBuildSettlementFirstRound(vertex)){ //making sure settlement can be built during the first two rounds
+					//need to return some error here
+					response.setSuccess(false);
+					response.setErrorMessage("bad location");
+					return response;
+				}
+			}
+			//lays settlement during the second round 
+			if(status.equals("SecondRound")){
+				map.laySettlement(vertex,true);
+				List<VertexObject>settlements = map.getSecondRoundSettlements(playerIndex);
+				for(int i=0; i<settlements.size(); i++){
+					if(settlements.get(i)!=null){
+						issueResource(settlements.get(i),map,player);
+					}
+				}
+				
+				player.removeSettlement(); //removes settlement from player count
+				player.addVictoryPoints(); //adds victory points
+				
+				//setting winnder
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
+				addGameLog(player,model); //adds message to gamelog
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1); //updates version
+	            response.setJson(model.toString());
+	            
+	            return response;
+			}
+			//lays a road if status is first round
+			if(status.equals("FirstRound")){
+				map.laySettlement(vertex,false);
+				player.removeSettlement();
+				player.addVictoryPoints(); //adds victory points
+				
+				//sets the winner
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
+				
+				//need to return that it was successful 
+				addGameLog(player,model);
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+	            
+	            return response;
+			}
+			//lays a settlement if the for normal play
+			if(status.equals("Playing")){
+				map.laySettlement(vertex,false);
+				player.laySettlement();
+				//sets the winner
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
+				addGameLog(player,model);
+				response.setSuccess(true);
+				model.setVersion(model.getVersion() + 1);
+	            response.setJson(model.toString());
+	           
+	            return response;
+			}
+			
+			//need to return some error
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response;
+		}
+	}
 	/**
 	 * updates the game log
 	 * @param player

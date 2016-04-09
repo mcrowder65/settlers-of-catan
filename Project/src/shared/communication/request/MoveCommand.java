@@ -115,4 +115,9 @@ public class MoveCommand extends Request {
 		
 	}
 	
+	public GetModelResponse reExecute(int gameID, int playerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

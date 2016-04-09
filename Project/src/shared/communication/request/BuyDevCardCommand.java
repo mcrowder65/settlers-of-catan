@@ -135,9 +135,9 @@ public class BuyDevCardCommand extends MoveCommand {
 		model.addGameLogMessage(line);
 	}
 	
-	public GetModelResponse reExecute() {
-		int gameIndex = this.gameIDCookie;
-		int playerIndex = this.getPlayerIndex();			
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		int gameIndex = gameID;
+		//int playerIndex = playerID;			
  		Game game = Game.instance();		
  		ServerGameModel model = game.getGameId(gameIndex);			
  		ServerPlayer player = model.getServerPlayers()[playerIndex];

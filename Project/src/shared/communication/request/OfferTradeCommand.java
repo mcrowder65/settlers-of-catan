@@ -114,5 +114,58 @@ public class OfferTradeCommand extends MoveCommand {
 	 		return response; 
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = playerID;	
+			ResourceList offer = this.getOffer();	
+	 		Game game = Game.instance();	
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		String status = turnTracker.getStatus();
+	 		
+	 		//if pos player is giving if neg player is recieving
+	 		ResourceList normalizedList = model.getRecievingResourceList(offer);
+	 		if(player.canMakeTrade(normalizedList) == false){
+	 			response.setSuccess(false);
+				response.setErrorMessage("Not enough resources");
+				return response;
+	 		}
+	 		//checking the status
+	 		if(status != "Playing"){
+	 			response.setSuccess(false);
+				response.setErrorMessage("Wrong Status");
+				return response;
+	 		}
+	 		//checking the turn
+	 		if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; 		
+			}
+	 		//creating the trade offer
+	 		TradeOffer trade = new TradeOffer(playerIndex,getReceiver(),offer);
+	 		model.setTradeOffer(trade);
+	 		
+	 		//AIs can't make trades
+	 		if (Game.instance().getGameId(gameID).getServerPlayers()[receiver].getPlayerID() < 0) {
+	 			AcceptTradeCommand rejectTrade = new AcceptTradeCommand(receiver, false);
+	 			rejectTrade.setGameCookie(gameID);
+	 			rejectTrade.execute();
+	 		} 
+	 		
+	 		model.setVersion(model.getVersion() + 1);//setting the version
+	 		response.setSuccess(true);
+	 		response.setJson(model.toString());
+	 		
+	 		return response; 
+		}
+	}
 
 }

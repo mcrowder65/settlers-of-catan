@@ -105,6 +105,59 @@ public class AcceptTradeCommand extends MoveCommand {
 		}
 	}
 
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = this.getPlayerIndex();		
+			Game game = Game.instance();	
+			GetModelResponse response = new GetModelResponse();
+			ServerGameModel model = game.getGameId(gameIndex);		
+			ServerGameMap map = model.getServerMap();		
+			ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+			ServerPlayer player = model.getServerPlayers()[playerIndex];
+			String status = turnTracker.getStatus();
+			TradeOffer offer = model.getTradeOffer();
+			
+			//checking to make sure the reciever is correct
+			if(offer.getReciever() != playerIndex){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong Player");
+				return response;
+			}
+	
+			//deconstucting the offer
+			ResourceList resources = offer.getOffer();
+			int brick = resources.getBrick();
+			int wheat = resources.getWheat();
+			int ore = resources.getOre();
+			int sheep = resources.getSheep();
+			int wood = resources.getWood();
+			
+			//executing the trade
+			if(willAccept == true){
+				int sender = offer.getSender();
+				ServerPlayer sendingPlayer = model.getServerPlayers()[sender];
+				//if negative take away from the sending and add to the sender
+				//if resources positive take away from the sender and add them to the sending
+				//player has the income offer. sending player sends the offer
+				distributeResources(ResourceType.BRICK, brick, player, sendingPlayer);
+				distributeResources(ResourceType.WHEAT, wheat, player, sendingPlayer);
+				distributeResources(ResourceType.ORE, ore, player, sendingPlayer);
+				distributeResources(ResourceType.SHEEP, sheep, player, sendingPlayer);
+				distributeResources(ResourceType.WOOD, wood, player, sendingPlayer);
+				model.setVersion(model.getVersion() + 1);
+			}
+			addGameLog(offer); //adding to the game log
+			
+			model.setTradeOffer(null); //resetting the trade offer
+			response.setJson(model.toString());
+			response.setSuccess(true);
+			
+			return response;
+		}
+	}
 	/**
 	 * This method is in charge of removing and adding the corresponding resources according
 	 * to the offer accepted. 

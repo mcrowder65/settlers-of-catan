@@ -121,6 +121,76 @@ public class MonopolyCommand extends MoveCommand {
 			return response;
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = playerID;		
+	 		Game game = Game.instance();	
+	 		GetModelResponse response = new GetModelResponse();
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		ServerPlayer[] allPlayers = model.getServerPlayers();
+	 		String status = turnTracker.getStatus();
+	 		ResourceType resource = getResource();
+	 		
+	 		//setting the headers
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + player.getName() + "\"," +
+						   "\"password\":\"" + game.getPassword(player.getName()) + "\"," + 
+				           "\"playerID\":" + player.getPlayerID() + "}", "UTF-8" ) + ";catan.game=" + gameID);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}
+			
+			//check status
+			if(!status.equals("Playing")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+			}
+			
+			//checks to make sure the player has a monopoly card and hasnt already played a dev card
+			if(!player.canPlayMonopolyCard()){
+				response.setSuccess(false);
+				response.setErrorMessage("Player cannot play monopoly card");
+				return response;
+			}
+			//excuting the monopoly command
+			for(int i=0; i<allPlayers.length; i++){
+				if(i != playerIndex){
+					ServerPlayer player2 = allPlayers[i];
+					if(player2.getResources().hasResource(resource)){
+						int num = player2.getResources().numResource(resource);
+						player.getResources().addResource(resource,num);
+						player2.getResources().removeResource(resource,num);
+					}
+				}
+			}
+			player.playMonopolyCard(); //charging the player for the monopoly card
+			player.setPlayedDevCard(true);
+			model.setVersion(model.getVersion()  + 1);//updating the version
+			addGameLog(player,model);
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			
+			return response;
+		}
+	}
 	/**
 	 * updates the game log
 	 * @param player

@@ -157,6 +157,83 @@ public class MaritimeTradeCommand extends MoveCommand {
 		}
 	}
 	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+
+			//int playerIndex=playerID;			
+	 		int index =gameID;		
+	 		GetModelResponse response = new GetModelResponse();	
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(index);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];		
+	 		int ratio = this.ratio;		
+	 		ResourceType input = this.getInput();
+	 		ResourceType output = this.getOutput();
+	 		
+	 		//setting the response header
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + player.getName() + "\"," +
+						   "\"password\":\"" + game.getPassword(player.getName()) + "\"," + 
+				           "\"playerID\":" + player.getPlayerID() + "}", "UTF-8" ) + ";catan.game=" + gameID);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+			//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}
+			
+			String status = turnTracker.getStatus();		
+			//making sure its the right status		
+			if(!status.equals("Playing")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response; //Need to throw some error here		
+			}	
+			//checking to see if the player has the resources 
+			if(player.getResources().hasResourceCertainNumber(input,ratio) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Doesnt have resource");
+				return response;
+			}
+			//checking to see if the bank has the resources
+			if(model.getBank().hasResource(output) == false){
+				response.setSuccess(false);
+				response.setErrorMessage("Bank is all out of that resource");
+				return response;
+			}
+			
+			//checks to see if the player has the necessary ports
+			if(ratio <4){
+				if(checkPorts(map,input) == false){
+					response.setSuccess(false);
+					response.setErrorMessage("Player does not have necessary port");
+					return response;
+				}
+			}
+			
+			//makes the trade
+			player.addResource(output);
+			player.getResources().removeResource(input, ratio);
+			model.getBank().removeResource(output,1);
+			model.setVersion(model.getVersion() + 1); //updating the version
+			response.setSuccess(true);
+			response.setJson(model.toString());
+			
+			return response;
+		}
+	}
+	
 	/**
 	 * checks to see if the player has the proper ports 
 	 * @param map

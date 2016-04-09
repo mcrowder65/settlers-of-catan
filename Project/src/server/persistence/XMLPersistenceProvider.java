@@ -14,6 +14,7 @@ import server.dao.XMLUserDAO;
 import server.util.GameCombo;
 import server.util.RegisteredPersonInfo;
 import server.util.ServerGameModel;
+import shared.communication.request.BuildRoadCommand;
 import shared.communication.request.BuyDevCardCommand;
 import shared.communication.request.MoveCommand;
 import shared.communication.request.RobPlayerCommand;
@@ -100,18 +101,18 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 				for(int x = 0; x < commands.size(); x++){
 					String moveType = commands.get(x).getMoveType();
 					if(moveType == null){
-						commands.get(x).execute();
+						commands.get(x).reExecute(games.get(i).info.getId(),commands.get(x).getPlayerIndex());
 					}
 					else if(moveType.equals("robPlayer")){ //check for reexecutes
 						RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
-						robPlayer.reExecute();
+						robPlayer.reExecute(games.get(i).info.getId(),robPlayer.getPlayerIndex());
 					}
 					else if(moveType.equals("buyDevCard")){ //check for reexecutes
 						BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
-						devCard.reExecute();
+						devCard.reExecute(games.get(i).info.getId(),devCard.getPlayerIndex());
 					}
 					else{
-						commands.get(x).execute();
+						commands.get(x).reExecute(games.get(i).info.getId(),commands.get(x).getPlayerIndex());
 					}
 				}
 				try {

@@ -116,6 +116,66 @@ public class DiscardCardsCommand extends MoveCommand {
 			return null;
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		try{
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = playerID;	
+			ResourceList cards = this.getDiscardedCards();	
+			Game game = Game.instance();	
+			GetModelResponse response = new GetModelResponse();
+			ServerGameModel model = game.getGameId(gameIndex);		
+			ServerGameMap map = model.getServerMap();		
+			ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+			ServerPlayer player = model.getServerPlayers()[playerIndex];
+			String status = turnTracker.getStatus();
+			
+			//checking to see if the player doesnt have enough cards
+			if(player.getNumOfCards()<8){
+				response.setSuccess(false);
+				response.setErrorMessage("Not enough cards to discard");
+				return response;
+			}
+			
+			//checking the status
+			if(!status.equals("Discarding")){
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong status");
+				return response;
+			}
+			//checking to see if the player already discarded this round
+			if(player.getDiscarded() == true){
+	 			response.setSuccess(false);
+	 			response.setErrorMessage("Already discarded");
+	 			return response;
+	 		}
+			//executing the discard
+			player.discardCards(cards);
+			if(model.allPlayersDiscarded() == true){
+				turnTracker.setStatus("Robbing");
+				
+				//If it's the ai's turn and a human is done discarding
+				if (!suppressAIHandling) //Don't want to fire this when the ai will handle it anyway
+					turnTracker.handleAITurn(gameIDCookie, turnTracker.getCurrentTurn());
+			
+					
+	 		}
+			model.setVersion(model.getVersion() + 1); //updating the version num
+			response.setSuccess(true);
+			
+			response.setJson(model.toString());
+			
+			return response;
+		}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			
+			return null;
+		}
+	}
 
 	ResourceList discardedCards;
 	

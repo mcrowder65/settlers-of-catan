@@ -208,6 +208,14 @@ public class Game {
 		}
 		return -1;
 	}
+	
+	public String getPassword(String username) {
+		for (RegisteredPersonInfo person : registeredUsers) {
+			if (person.getUsername().equals(username))
+				return person.getPassword();
+		}
+		return null;
+	}
 
 	/**
 	 * 

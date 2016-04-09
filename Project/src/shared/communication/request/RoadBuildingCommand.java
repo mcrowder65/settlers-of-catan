@@ -129,6 +129,73 @@ public class RoadBuildingCommand extends MoveCommand {
 			return response;
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = playerID;	
+	 		EdgeLocation loc1 = this.getSpot1();	
+	 		EdgeLocation loc2 = this.getSpot2();
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		
+	 		//setting cookie headers
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + player.getName() + "\"," +
+						   "\"password\":\"" + game.getPassword(player.getName()) + "\"," + 
+				           "\"playerID\":" + player.getPlayerID() + "}", "UTF-8" ) + ";catan.game=" + gameID);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 				
+			//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}		
+					
+			String status = turnTracker.getStatus();		
+			//making sure its the right status				
+			if(status.equals("Playing")){		
+				if(!player.canPlayRoadBuilding()){
+					response.setSuccess(false);
+					response.setErrorMessage("Player cannot play card");
+					return response;
+				}
+				if(!map.canUseRoadBuilder(playerIndex,loc1,loc2)){ //checks to see if the map can use the roadbuilder
+					response.setSuccess(false);
+					response.setErrorMessage("Wrong Location");
+					return response;
+				}
+				map.buildRoad(new EdgeValue(playerIndex,loc1)); //build road one
+				map.buildRoad(new EdgeValue(playerIndex,loc2)); //builder road 2 
+				player.layRoadBuilder(); //charge player
+				player.setPlayedDevCard(true);
+				model.setVersion(model.getVersion() + 1); //setting version
+				addGameLog(player,model);
+				response.setSuccess(true);
+				response.setJson(model.toString());
+				Game.instance().getGameId(gameID).findLongestRoad();
+				
+				return response;
+			}		
+					
+			//wrong status
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response;
+		}
+	}
 
 	/**
 	 * updating the gamelog

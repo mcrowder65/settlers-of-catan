@@ -104,6 +104,66 @@ public class MonumentCommand extends MoveCommand {
 			return response; //need to return some error here
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = playerID;		
+	 		Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);		
+	 		ServerGameMap map = model.getServerMap();		
+	 		ServerTurnTracker turnTracker = model.getServerTurnTracker();		
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		//adds response headers
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + player.getName() + "\"," +
+						   "\"password\":\"" + game.getPassword(player.getName()) + "\"," + 
+				           "\"playerID\":" + player.getPlayerID() + "}", "UTF-8" ) + ";catan.game=" + gameID);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 				
+			//making sure its the players turn		
+			if(checkTurn(turnTracker,playerIndex) == false){		
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response; //Need to throw some error here		
+			}		
+					
+			String status = turnTracker.getStatus();
+			
+			//checking to see if the playr can play the monument card
+			if(!player.canPlayMonumentCard()){
+				response.setSuccess(false);
+				response.setErrorMessage("Player cannot play monument card");
+				return response; 
+			}
+			
+			//making sure its the right status		
+			if(status.equals("Playing")){
+				player.playMonument(); //playing the monument card
+				//checking the winner
+				if(player.getVictoryPoints() > 9){
+					model.setWinner(playerIndex);
+				}
+				model.setVersion(model.getVersion() + 1);
+				addGameLog(player,model);
+				response.setSuccess(true);
+				response.setJson(model.toString());
+				
+				return response;
+			}
+			response.setSuccess(false);
+			response.setErrorMessage("Wrong status");
+			return response; //need to return some error here
+		}
+	}
 	/**
 	 * updating the gameLog
 	 * @param player

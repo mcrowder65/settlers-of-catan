@@ -109,6 +109,64 @@ public class FinishTurnCommand extends MoveCommand {
 		}
 		
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+	
+		synchronized(Game.instance().lock){
+			int gameIndex = gameID;
+			//int playerIndex = playerID;
+
+			Game game = Game.instance();
+			ServerGameModel model = game.getGameId(gameIndex);
+			ServerTurnTracker turnTracker = model.getServerTurnTracker();
+			GetModelResponse response = new GetModelResponse();
+			String status = turnTracker.getStatus();
+			ServerPlayer player = model.getServerPlayers()[playerIndex];
+			
+		
+			if(!checkTurn(turnTracker, playerIndex)) {
+				response.setSuccess(false);
+				response.setErrorMessage("Wrong turn");
+				return response;
+				
+			}
+			
+			model.setVersion(model.getVersion() + 1);
+			//turnTracker.advanceTurn();
+			
+			if(status.equals("FirstRound")){
+				if (playerIndex == 3){ 
+					turnTracker.setStatus("SecondRound");
+				}
+				else{
+					turnTracker.advanceTurn();
+				}
+			} 
+			else if (status.equals("SecondRound")) {
+				if (playerIndex == 0){
+					turnTracker.setStatus("Rolling");
+				}
+				else{
+					turnTracker.decreaseTurn();
+				}
+			} 
+			else {
+				turnTracker.advanceTurn();
+				turnTracker.setStatus("Rolling");
+			}
+			
+			addGameLog(player,model);
+			turnTracker.handleAITurn(gameIndex, turnTracker.getCurrentTurn());
+			player.updateOldDevCard();
+			player.setPlayedDevCard(false);
+			response.setJson(model.toString());
+			response.setSuccess(true);
+			
+			return response;
+		}
+		
+	}
 	public void addGameLog(ServerPlayer player, ServerGameModel model){
 		String message = player.getName() + "'s turn just ended";
 		MessageLine line = new MessageLine(message,player.getName());

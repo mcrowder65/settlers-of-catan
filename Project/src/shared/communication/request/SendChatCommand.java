@@ -89,6 +89,39 @@ public class SendChatCommand extends MoveCommand {
 	 		return response; 
 		}
 	}
+	
+	@Override
+	public GetModelResponse reExecute(int gameID, int playerIndex) {
+		synchronized(Game.instance().lock){
+			//getting all the info needed to execute the command from the cookies and http exchange
+			int gameIndex = gameID;
+			//int playerIndex = this.getPlayerIndex();	
+			Game game = Game.instance();		
+	 		ServerGameModel model = game.getGameId(gameIndex);				
+	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
+	 		GetModelResponse response = new GetModelResponse();
+	 		MessageLine line = new MessageLine(getContent(),player.getName());
+	 		model.addChatMessage(line); //adding the message to the model
+	 		
+	 		//updating the response header
+	 		try {
+				response.setCookie("Set-cookie", "catan.user=" +
+						URLEncoder.encode("{" +
+					       "\"authentication\":\"" + "1142128101" + "\"," +
+				           "\"name\":\"" + player.getName() + "\"," +
+						   "\"password\":\"" + game.getPassword(player.getName()) + "\"," + 
+				           "\"playerID\":" + player.getPlayerID() + "}", "UTF-8" ) + ";catan.game=" + gameID);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	 		
+	 		model.setVersion(model.getVersion() + 1); //updating the version
+	 		response.setSuccess(true);
+	 		response.setJson(model.toString());
+	 		
+	 		return response; 
+		}
+	}
 
 	
 	public String getContent() {

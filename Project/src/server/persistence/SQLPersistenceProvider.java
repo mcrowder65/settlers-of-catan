@@ -230,14 +230,14 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				} 	
 			}
 			try {
-				gameDAO.deleteCommands(games.get(i).model.getGameId());
+				gameDAO.deleteCommands(games.get(i).info.getId());
 			} catch (IllegalArgumentException | SQLException | IOException e) {
 				e.printStackTrace();
 				endTransaction(false);
 				return;
 			} 
 			try {
-				gameDAO.updateGame(games.get(i).model.getGameId(),games.get(i).model);
+				gameDAO.updateGame(games.get(i).info.getId(),games.get(i).model);
 			} catch (Exception e) {
 				e.printStackTrace();
 				endTransaction(false);

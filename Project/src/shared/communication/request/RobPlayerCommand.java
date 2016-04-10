@@ -53,7 +53,7 @@ public class RobPlayerCommand extends MoveCommand {
 		this.victimIndex = tmp.victimIndex;
 		this.type = tmp.type;
 		this.playerIndex = tmp.playerIndex;
-	
+		this.resourceGenerated = tmp.resourceGenerated;
 	}
 	
 	/**
@@ -170,7 +170,6 @@ public class RobPlayerCommand extends MoveCommand {
 			response.setJson(model.toString());
 			return response; 
 		}
-		
 
 		victim.removeResource(resourceGenerated);//remove resource from the victim
 		player.addResource(resourceGenerated);

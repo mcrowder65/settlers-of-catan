@@ -57,6 +57,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		this.inputResource = tmp.inputResource;
 		this.outputResource = tmp.outputResource; 
+		this.type = tmp.type;
 		
 	}
 	public MaritimeTradeCommand(String json) {
@@ -65,6 +66,7 @@ public class MaritimeTradeCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		this.inputResource = tmp.inputResource;
 		this.outputResource = tmp.outputResource; 
+		this.type = "maritimeTrade";
 		
 	}
 	

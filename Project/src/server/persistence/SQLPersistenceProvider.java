@@ -214,11 +214,11 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				String moveType = commands.get(x).getMoveType();
 				if(moveType.equals("robPlayer")){ //check for reexecutes
 					RobPlayerCommand robPlayer = (RobPlayerCommand) commands.get(x);
-					robPlayer.reExecute();
+					robPlayer.reExecute(games.get(i).info.getId(),robPlayer.getPlayerIndex());
 				}
 				else if(moveType.equals("buyDevCard")){ //check for reexecutes
 					BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
-					devCard.reExecute();
+					devCard.reExecute(games.get(i).info.getId(),devCard.getPlayerIndex());
 				}
 				else{
 					commands.get(x).execute();

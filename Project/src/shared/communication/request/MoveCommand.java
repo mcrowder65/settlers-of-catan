@@ -75,7 +75,6 @@ public class MoveCommand extends Request {
 	
 	public static MoveCommand interpretCommand(String json) throws IllegalArgumentException {
 		MoveCommand base = new MoveCommand(json);
-		
 		switch (base.type) {
 		case "Year_Of_Plenty":
 			return new YearOfPlentyCommand(json);

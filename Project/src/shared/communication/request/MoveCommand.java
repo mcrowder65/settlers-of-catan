@@ -109,6 +109,8 @@ public class MoveCommand extends Request {
 			return new BuildCityCommand(json);
 		case "acceptTrade":
 			return new AcceptTradeCommand(json);
+		case "offerTrade":
+			return new OfferTradeCommand(json);
 		default:
 			throw new IllegalArgumentException("Command type '" + base.type + "' was not accounted for.");
 		}

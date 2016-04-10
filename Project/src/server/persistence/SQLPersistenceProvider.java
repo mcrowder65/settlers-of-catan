@@ -66,7 +66,7 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			resetPersistence();
+			resetPersistence(); //inits the db
 		}
 	}
 	

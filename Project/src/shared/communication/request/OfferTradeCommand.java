@@ -85,7 +85,7 @@ public class OfferTradeCommand extends MoveCommand {
 				return response;
 	 		}
 	 		//checking the status
-	 		if(status != "Playing"){
+	 		if(!status.equals("Playing")){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Wrong Status");
 				return response;
@@ -138,7 +138,7 @@ public class OfferTradeCommand extends MoveCommand {
 				return response;
 	 		}
 	 		//checking the status
-	 		if(status != "Playing"){
+	 		if(!status.equals("Playing")){
 	 			response.setSuccess(false);
 				response.setErrorMessage("Wrong Status");
 				return response;

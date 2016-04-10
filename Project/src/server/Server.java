@@ -82,11 +82,18 @@ public class Server {
 				Game.instance().initPersistanceProvider(1, def.path);
 				Game.instance().getPersistenceProvider().resetPersistence();
 			}
+			
+			System.out.println("Persistance successfully wiped. Exiting.");
 			return;
 		}
 		else {
 			persistenceIdentifier = args[0];
 			commandsBetweenCheckpoints = Integer.parseInt(args[1]);
+			if (commandsBetweenCheckpoints <= 0)
+			{
+				System.out.println("commands between checkpoints cannot be 0 or negative! Nice try TAs!");
+				return;
+			}
 		}
 
 

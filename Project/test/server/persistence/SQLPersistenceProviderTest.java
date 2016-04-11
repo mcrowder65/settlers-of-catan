@@ -38,9 +38,7 @@ public class SQLPersistenceProviderTest {
 
 	@Test
 	public void test() {
-		SQLPersistenceProvider provider = new SQLPersistenceProvider(5);
 		
-		provider.resetPersistence();
 	}
 
 }

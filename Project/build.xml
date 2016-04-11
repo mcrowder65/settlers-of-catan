@@ -15,6 +15,10 @@
 
 	<property name="port" value="8081"/>
 	
+	<property name="persistence" value="sqlite"/>
+		
+	<property name="max" value="10"/>
+		
 	
 	
 	
@@ -95,14 +99,16 @@
 	
 	<target name="our-server" description="run server">
 			<java fork="yes" jar="catan-server.jar">
-				<arg value="${port}"/>
+				<arg value="${persistence}"/>
+				<arg value="${max}"/>
 			</java>
 			
 			
 		</target>
 	<target name="server" description="run server">
 			<java fork="yes" jar="catan-server.jar">
-				<arg value="${port}"/>
+				<arg value="${persistence}"/>
+				<arg value="${max}"/>
 			</java>
 			
 			

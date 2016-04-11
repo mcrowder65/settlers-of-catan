@@ -66,6 +66,7 @@ public class FacadeTests {
 	}
 	@Test
 	public void bLogin() {
+		facade.register("matt", "crowder");
 		boolean login = facade.login("matt", "crowder");
 		if(login == false) fail();
 		login = facade.login("quinn", "snell");

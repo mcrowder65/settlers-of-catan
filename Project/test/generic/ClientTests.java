@@ -12,7 +12,8 @@ public class ClientTests {
 
 	
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
-		new Server().run(new String[] {"8081"});
+		new Server().run(new String[] {"wipeout"});
+		new Server().run(new String[] {"sqlite", "9000"});
 		
 		String[] testClasses = new String[] {
 				"client.utils.TranslatorTest",

@@ -110,13 +110,17 @@ public class FinishTurnCommand extends MoveCommand {
 		
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
-	
 		synchronized(Game.instance().lock){
+			//setting up info to execute the command
 			int gameIndex = gameID;
-			//int playerIndex = playerID;
-
 			Game game = Game.instance();
 			ServerGameModel model = game.getGameId(gameIndex);
 			ServerTurnTracker turnTracker = model.getServerTurnTracker();
@@ -124,17 +128,16 @@ public class FinishTurnCommand extends MoveCommand {
 			String status = turnTracker.getStatus();
 			ServerPlayer player = model.getServerPlayers()[playerIndex];
 			
-		
+			//checking to make sure its the player's turn
 			if(!checkTurn(turnTracker, playerIndex)) {
 				response.setSuccess(false);
 				response.setErrorMessage("Wrong turn");
 				return response;
-				
 			}
 			
-			model.setVersion(model.getVersion() + 1);
-			//turnTracker.advanceTurn();
+			model.setVersion(model.getVersion() + 1); //updates the version number
 			
+			//checking to see if status is first round
 			if(status.equals("FirstRound")){
 				if (playerIndex == 3){ 
 					turnTracker.setStatus("SecondRound");
@@ -143,6 +146,7 @@ public class FinishTurnCommand extends MoveCommand {
 					turnTracker.advanceTurn();
 				}
 			} 
+			// checking to see if the status is second round
 			else if (status.equals("SecondRound")) {
 				if (playerIndex == 0){
 					turnTracker.setStatus("Rolling");
@@ -156,7 +160,7 @@ public class FinishTurnCommand extends MoveCommand {
 				turnTracker.setStatus("Rolling");
 			}
 			
-			addGameLog(player,model);
+			addGameLog(player,model); //adds info to the game log
 			player.updateOldDevCard();
 			player.setPlayedDevCard(false);
 			response.setJson(model.toString());

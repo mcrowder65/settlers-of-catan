@@ -117,13 +117,18 @@ public class DiscardCardsCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		try{
 		synchronized(Game.instance().lock){
 			//getting all the info needed to execute the command from the cookies and http exchange
-			int gameIndex = gameID;
-			//int playerIndex = playerID;	
+			int gameIndex = gameID;	
 			ResourceList cards = this.getDiscardedCards();	
 			Game game = Game.instance();	
 			GetModelResponse response = new GetModelResponse();
@@ -159,15 +164,12 @@ public class DiscardCardsCommand extends MoveCommand {
 				
 				//If it's the ai's turn and a human is done discarding
 				if (!suppressAIHandling) //Don't want to fire this when the ai will handle it anyway
-					turnTracker.handleAITurn(gameIDCookie, turnTracker.getCurrentTurn());
-			
-					
+					turnTracker.handleAITurn(gameIDCookie, turnTracker.getCurrentTurn());	
 	 		}
+			
 			model.setVersion(model.getVersion() + 1); //updating the version num
 			response.setSuccess(true);
-			
 			response.setJson(model.toString());
-			
 			return response;
 		}
 		}catch(Exception ex) {

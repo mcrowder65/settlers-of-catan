@@ -114,6 +114,12 @@ public class RollNumberCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){

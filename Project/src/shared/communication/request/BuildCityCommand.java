@@ -134,13 +134,18 @@ public class BuildCityCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){
 			
 			//getting all the info needed to execute the command from the cookies and http exchange
-			int gameIndex = gameID;
-			//int playerIndex = playerIndex;	
+			int gameIndex = gameID;	
 			VertexLocation loc = this.getLocation().getOriginal();		
 	 		Game game = Game.instance();	
 	 		GetModelResponse response = new GetModelResponse();
@@ -150,7 +155,6 @@ public class BuildCityCommand extends MoveCommand {
 	 		ServerPlayer player = model.getServerPlayers()[playerIndex];
 	 		String status = turnTracker.getStatus();
 	 		VertexObject vertex = new VertexObject(playerIndex,loc);
-	 		
 	 		
 	 		//setting the cookie headers
 	 		try {
@@ -203,7 +207,7 @@ public class BuildCityCommand extends MoveCommand {
 				return response;
 			}
 			
-			//command was unsucesful
+			//command was unsuccesful
 			response.setSuccess(false);
 			response.setErrorMessage("Unreachable");
 			return response;

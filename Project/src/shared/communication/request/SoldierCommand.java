@@ -159,6 +159,12 @@ public class SoldierCommand extends MoveCommand {
 	
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){
@@ -238,8 +244,7 @@ public class SoldierCommand extends MoveCommand {
 	 			
 	 			return response;
 			}
-	 		
-			
+	 			
 			//executing the rob
 			victim.removeResource(this.resourceRandom);
 			player.addResource(this.resourceRandom);

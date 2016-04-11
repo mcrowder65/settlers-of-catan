@@ -130,12 +130,17 @@ public class RoadBuildingCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){
 			//getting all the info needed to execute the command from the cookies and http exchange
-			int gameIndex = gameID;
-			//int playerIndex = playerID;	
+			int gameIndex = gameID;	
 	 		EdgeLocation loc1 = this.getSpot1();	
 	 		EdgeLocation loc2 = this.getSpot2();
 	 		Game game = Game.instance();		

@@ -121,13 +121,17 @@ public class MonopolyCommand extends MoveCommand {
 			return response;
 		}
 	}
-	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){
 			//getting all the info needed to execute the command from the cookies and http exchange
-			int gameIndex = gameID;
-			//int playerIndex = playerID;		
+			int gameIndex = gameID;		
 	 		Game game = Game.instance();	
 	 		GetModelResponse response = new GetModelResponse();
 	 		ServerGameModel model = game.getGameId(gameIndex);		

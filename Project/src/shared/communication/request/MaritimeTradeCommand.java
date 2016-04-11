@@ -159,12 +159,16 @@ public class MaritimeTradeCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		synchronized(Game.instance().lock){
-			//getting all the info needed to execute the command from the cookies and http exchange
-
-			//int playerIndex=playerID;			
+			//getting all the info needed to execute the command from the cookies and http exchange			
 	 		int index =gameID;		
 	 		GetModelResponse response = new GetModelResponse();	
 	 		Game game = Game.instance();		

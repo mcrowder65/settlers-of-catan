@@ -133,10 +133,15 @@ public class RobPlayerCommand extends MoveCommand {
 		}
 	}
 	
+	/**
+	 * reexecutes the command after it has been reloaded from the database
+	 * @param gameID int
+	 * @param playerIndex int
+	 * @return GetModelResponse
+	 */
 	@Override
 	public GetModelResponse reExecute(int gameID, int playerIndex) {
 		int gameIndex = gameID;
-		//int playerIndex = playerID;	
 		int victimIndex = this.getVictimIndex();
 		HexLocation location = this.getLocation();
 		Game game = Game.instance();		

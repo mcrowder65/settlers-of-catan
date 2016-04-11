@@ -21,6 +21,7 @@ public class SoldierCommand extends MoveCommand {
 
 	private HexLocation location;
 	private int victimIndex;
+	private ResourceType resourceRandom;
 	public SoldierCommand(int playerIndex, HexLocation location, int victimIndex) throws IllegalArgumentException {
 		super(playerIndex);
 		if (victimIndex < -1 || victimIndex > 3) 
@@ -138,6 +139,8 @@ public class SoldierCommand extends MoveCommand {
 			while(victim.getResources().hasResource(resource) == false){
 				resource = model.generateRandomResource();
 			}
+			//storing for re-executing
+			this.resourceRandom = resource; 
 			
 			//executing the rob
 			victim.removeResource(resource);
@@ -236,16 +239,10 @@ public class SoldierCommand extends MoveCommand {
 	 			return response;
 			}
 	 		
-	 		ResourceType resource = model.generateRandomResource(); //gets random resource
-			
-	 		//keeps generating random resources if the victim doesn't have one
-			while(victim.getResources().hasResource(resource) == false){
-				resource = model.generateRandomResource();
-			}
 			
 			//executing the rob
-			victim.removeResource(resource);
-			player.addResource(resource);
+			victim.removeResource(this.resourceRandom);
+			player.addResource(this.resourceRandom);
 			model.setVersion(model.getVersion() +1);
 			addGameLog(player,model,victim);
 			player.playSoldierCard();

@@ -19,7 +19,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import server.util.RegisteredPersonInfo;
 /**
- * adds and retrievs data from the user xml file
+ * adds and retrieves data from the user XML file
  * @author Brennen
  *
  */
@@ -32,16 +32,18 @@ public class XMLUserDAO implements IUserDAO{
 	
 
 	/**
-	 * gets all users from the user xml file
+	 * gets all users from the user XML file
 	 * @return a list of List of RegisteredPersonInfo
 	 * @throws IOException if error occurs
 	 */
 	@Override
 	public List<RegisteredPersonInfo> getUsers() throws IOException {
-		String destination = "xml/Users.xml";
+		String destination = "xml/Users.xml"; //creates the destination
 		List<RegisteredPersonInfo> users = new ArrayList<RegisteredPersonInfo>();
 		XStream xStream = new XStream(new DomDriver());
-		File f = new File(destination);
+		File f = new File(destination); //creates a new file
+	
+		//reads in the users from the XML file
 		if(f.exists()){
 			InputStream	inFile = new BufferedInputStream(new FileInputStream(destination));
 			users = (List<RegisteredPersonInfo>)xStream.fromXML(inFile);
@@ -53,28 +55,28 @@ public class XMLUserDAO implements IUserDAO{
 	}
 
 	/**
-	 * adds a user to the user xml file
+	 * adds a user to the user XML file
 	 * @param person RegeristeredPersonInfo
 	 * @throws IOException 
 	 */
 	@Override
 	public void addUser(RegisteredPersonInfo person) throws IOException {
-		String destination = "xml/Users.xml";
+		String destination = "xml/Users.xml"; //creates a destination
 		List<RegisteredPersonInfo> users = new ArrayList<RegisteredPersonInfo>();
 		File f = new File(destination); //creates the new file
+		//gets users and then adds the new one
 		if(f.exists()){
 			XStream xStream = new XStream(new DomDriver());
 			InputStream inFile = new BufferedInputStream(new FileInputStream(destination));
 			users = (List<RegisteredPersonInfo>)xStream.fromXML(inFile);
-			//for(int i=0; i<users.size(); i++){
-				users.add(person);
-			//}
+			users.add(person);
 			inFile.close();
 		}
 		else{
-			users.add(person);
+			users.add(person); //adds a user when its the first user in the file
 		}
 		
+		//writes all the users back to the file
 		XStream xStream = new XStream(new DomDriver()); //new xStream
 		OutputStream outFile = new BufferedOutputStream(new FileOutputStream(destination));
 		xStream.toXML(users,outFile);
@@ -84,11 +86,9 @@ public class XMLUserDAO implements IUserDAO{
 
 	/**
 	 * don't do anything
+	 * used for SQL
 	 */
 	@Override
-	public void setConnection(Connection conn) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setConnection(Connection conn) {}
 
 }

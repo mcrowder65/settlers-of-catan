@@ -37,7 +37,6 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		
 		this.gameDAO = this.createGameDAO();
 		this.userDAO = this.createUserDAO();
-		
 	}
 	
 
@@ -93,11 +92,17 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 		}
 	}
 	
+	/**
+	 * reexecute the commands from the command file
+	 * @param games
+	 */
 	public void executeCommands(List<GameCombo> games){
+		//loops through all the games
 		for(int i = 0; i < games.size(); i++){
-			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i);
+			ArrayList<MoveCommand> commands = (ArrayList<MoveCommand>) getCommands(i); //gets all the commands for that game
 			ServerGameModel model1 = games.get(i).model;
-			if(commands != null){
+			if(commands != null){ //checks to see if the commands are null
+				//loops through the commands calling reexecute on them
 				for(int x = 0; x < commands.size(); x++){
 					String moveType = commands.get(x).getMoveType();
 					if(moveType == null){
@@ -112,23 +117,23 @@ public class XMLPersistenceProvider extends PersistenceProvider{
 						devCard.reExecute(games.get(i).info.getId(),devCard.getPlayerIndex());
 					}
 					else{
-						commands.get(x).reExecute(games.get(i).info.getId(),commands.get(x).getPlayerIndex());
+						commands.get(x).reExecute(games.get(i).info.getId(),commands.get(x).getPlayerIndex()); //calls reexecute
 					}
 				}
 				try {
-					gameDAO.deleteCommands(games.get(i).model.getGameId());
+					gameDAO.deleteCommands(games.get(i).model.getGameId()); //deletes the command file
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
-					//return games;
+	
 				} catch (SQLException e) {
 					e.printStackTrace();
-					//return games;
+					
 				} catch (IOException e) {
 					e.printStackTrace();
-					//return games;
+					
 				}
 			}
-			flushGame(games.get(i).model.getGameId(),games.get(i).model);
+			flushGame(games.get(i).model.getGameId(),games.get(i).model); //flush the new updated model to the file
 		}
 	}
 

@@ -48,7 +48,7 @@ public class SoldierCommand extends MoveCommand {
 		this.playerIndex = tmp.playerIndex;
 		this.location = tmp.location;
 		this.victimIndex = tmp.victimIndex;
-		
+		this.resourceRandom = tmp.resourceRandom;
 	}
 	/**
 	 * Executes the Soldier - returns a GetModelResponse

@@ -23,6 +23,7 @@ import server.util.ServerGameModel;
 import shared.communication.request.BuyDevCardCommand;
 import shared.communication.request.MoveCommand;
 import shared.communication.request.RobPlayerCommand;
+import shared.communication.request.SoldierCommand;
 import shared.definitions.CatanColor;
 /**
  * Stores the delta between keys
@@ -219,6 +220,10 @@ public class SQLPersistenceProvider extends PersistenceProvider{
 				else if(moveType.equals("buyDevCard")){ //check for reexecutes
 					BuyDevCardCommand devCard = (BuyDevCardCommand) commands.get(x);
 					devCard.reExecute(games.get(i).info.getId(),devCard.getPlayerIndex());
+				}
+				else if(moveType.equals("Soldier")){ //check for reexecutes
+					SoldierCommand soldier = (SoldierCommand) commands.get(x);
+					soldier.reExecute(games.get(i).info.getId(),soldier.getPlayerIndex());
 				}
 				else{
 					commands.get(x).execute();
